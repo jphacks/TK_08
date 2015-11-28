@@ -54,14 +54,3 @@ exports.get = function(id, callback) {
 exports.get_event = function(callback) {
   db.view('events/major', callback);
 };
-
-/*
-exports.get_event = function(major, callback) {
-  console.log(major);
-  db.view('events/major',major, function (err, res) {
-    console.log(res);
-    res.forEach(function (row) {
-      console.log("en: %s  desc: %s", row.event_name, row.description);
-    });
-  });
-};*/

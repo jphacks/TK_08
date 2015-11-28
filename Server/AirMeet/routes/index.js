@@ -4,14 +4,11 @@
 var express = require('express');
 var uuid = require('node-uuid');
 var moment = require('moment');
+var async = require('async');
 var api = require('../api/api.js');
 var package = require('../package.json');
 
-var success = {
-  message : null,
-  code : 200
-};
-var error = {};
+
 
 // (b)ルーターの作成
 var router = express.Router();
@@ -21,8 +18,14 @@ router.get('/', function(req, res) {
     res.send('Hello World');
 });
 
+
 // (2)イベント登録(ダイアログ表示)
 router.post('/event_regist', function(req, res) {
+  var success = {
+    message : null,
+    code : 200
+  };
+  var error = {};
   var id = uuid.v4();
   var en = req.body.event_name;
   var rn = req.body.room_name;
@@ -70,6 +73,7 @@ router.post('/event_regist', function(req, res) {
 
 // event_registがGETならエラー
 router.get('/event_regist', function(req, res) {
+  var error = {};
   error.message = "Error: Cannot GET";
   error.code = 400;
   var str = JSON.stringify(error);
@@ -77,8 +81,14 @@ router.get('/event_regist', function(req, res) {
 });
 
 
+
 // eventを得る
 router.get('/get_event', function(req, res) {
+  var success = {
+    message : null,
+    code : 200
+  };
+  var error = {};
   var major = String(req.param('major'));
   if(!major){
     error.message = "Error: major is missing";
@@ -86,22 +96,30 @@ router.get('/get_event', function(req, res) {
   }
 
   api.get_event(function(err, events) {
-    events.forEach(function(row) {
-      if(row.major == major){
-        console.log(row);
-        res.send(row);
+    //console.log(events);
+    if(events.length){
+      var flag = 0;
+      events.forEach(function(row) {
+        if(row.major == major){
+          row.code = 200;
+          res.send(row);
+          flag = 1;
+        }
+      });
+      if(flag == 0){
+        error.message = "Error: Major does not match";
+        error.code = 400;
       }
-    });
+    }else{
+      error.message = "Error: Event does not exist";
+      error.code = 500;
+    }
+    if(Object.keys(error).length){
+      var str = JSON.stringify(error);
+      res.send(str);
+    }
   });
 });
 
-// (6)既存メモの削除
-router.delete('/memos/:id([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})', function(req, res) {
-  var id = req.param('id');
-
-  memo.remove(id, function(err) {
-    res.redirect('/');
-  });
-});
 
 module.exports = router;
