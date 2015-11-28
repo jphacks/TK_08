@@ -29,9 +29,9 @@ class ChildListViewController: UIViewController,UITableViewDelegate, UITableView
         let tag2:Dictionary<String,String> = ["age":"40","趣味":"みゅーず"]
         
         //子追加
-        let child1:ChildModel = ChildModel(image: UIImage(named: "go_face.png")!, backgroundImage:  UIImage(named: "back.png")!, name: "go", tag: tag)
-        let child2:ChildModel = ChildModel(image: UIImage(named: "go_face.png")!, backgroundImage:  UIImage(named: "back.png")!, name: "goooo", tag: tag2)
-        let child3:ChildModel = ChildModel(image: UIImage(named: "go_face.png")!, backgroundImage:  UIImage(named: "back.png")!, name: "goooooo", tag: tag)
+        let child1:ChildModel = ChildModel(image: UIImage(named: "go_face.png")!, backgroundImage:  UIImage(named: "go_back.png")!, name: "go", tag: tag)
+        let child2:ChildModel = ChildModel(image: UIImage(named: "go_face.png")!, backgroundImage:  UIImage(named: "go_back.png")!, name: "goooo", tag: tag2)
+        let child3:ChildModel = ChildModel(image: UIImage(named: "go_face.png")!, backgroundImage:  UIImage(named: "go_back.png")!, name: "goooooo", tag: tag)
         
         childs.append(child1)
         childs.append(child2)
