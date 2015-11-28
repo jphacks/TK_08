@@ -7,6 +7,12 @@ var moment = require('moment');
 var api = require('../api/api.js');
 var package = require('../package.json');
 
+var success = {
+  message : null,
+  code : 200
+};
+var error = {};
+
 // (b)ルーターの作成
 var router = express.Router();
 
@@ -16,28 +22,54 @@ router.get('/', function(req, res) {
 });
 
 // (2)イベント登録(ダイアログ表示)
-router.post('/event_registration', function(req, res) {
+router.post('/event_regist', function(req, res) {
   var id = uuid.v4();
-  var doc = {
-    event_name : req.body.event_name,
-    room_name : req.body.room_name,
-    description : req.body.description,
-    updatedAt : moment().zone('+0900').format('YYYY/MM/DD HH:mm:ss')
-  };
+  var en = req.body.event_name;
+  var rn = req.body.room_name;
+  var desc = req.body.description;
 
-  api.save(id, doc, function(err) {
-    res.send('insert_event %s',err);
-  });
+  if(!en){
+    error.message = "Error: event_name is missing";
+    error.code = 500;
+  }
+  if(!rn){
+    error.message = "Error: room_name is missing";
+    error.code = 500;
+  }
+
+  if(!Object.keys(error).length){
+    var doc = {
+      type : "event",
+      event_name : en,
+      room_name : rn,
+      description : desc,
+      regist_date : moment().zone('+0900').format('YYYY/MM/DD HH:mm:ss')
+    };
+    api.save(id, doc, function(err) {
+      if(err){
+        error.message = "Error: Event registration failed";
+        error.code = "400";
+        var str = JSON.stringify(error);
+      }else{
+        success.message = "Event registration success"
+        var str = JSON.stringify(success);
+      }
+      res.send(str);
+    });
+  }else{
+    var str = JSON.stringify(error);
+    res.send(str);
+  }
 });
 
+router.get('/event_regist', function(req, res) {
+  error.message = "Error: Cannot GET";
+  error.code = "500";
+  var str = JSON.stringify(error);
+  res.send(str);
+});
 // (3)既存メモの編集(ダイアログ表示)
-router.get('/memos/:id([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})', function(req, res) {
-  var id = req.param('id');
 
-  memo.get(id, function(err, doc) {
-    res.render('dialog', { id : id, doc : doc });
-  });
-});
 
 // (4)新規メモの保存
 router.post('/memos', function(req, res) {
