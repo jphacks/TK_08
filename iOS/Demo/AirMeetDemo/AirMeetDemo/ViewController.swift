@@ -76,7 +76,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate{
     }
     
     
-    //以下 CCLocationManagerデリゲートの実装---------------------------------------------->
+    //以下 CLLocationManagerデリゲートの実装---------------------------------------------->
     
     /*
     - (void)locationManager:(CLLocationManager *)manager didStartMonitoringForRegion:(CLRegion *)region
@@ -84,9 +84,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate{
     manager : The location manager object reporting the event.
     region  : The region that is being monitored.
     */
+    
     func locationManager(manager: CLLocationManager, didStartMonitoringForRegion region: CLRegion) {
         manager.requestStateForRegion(region)
         self.status.text = "Scanning..."
+        
+        manager.requestStateForRegion(self.region);
     }
     
     /*
@@ -97,9 +100,34 @@ class ViewController: UIViewController, CLLocationManagerDelegate{
     region  :The region whose state was determined.
     */
     func locationManager(manager: CLLocationManager, didDetermineState state: CLRegionState, forRegion inRegion: CLRegion) {
-        if (state == .Inside) {
-            //領域内にはいったときに距離測定を開始
-            manager.startRangingBeaconsInRegion(region)
+        
+        print("locationManager")
+        
+        switch (state) {
+            
+        case .Inside: // すでに領域内にいる場合は（didEnterRegion）は呼ばれない
+            
+            manager.startRangingBeaconsInRegion(region);
+            // →(didRangeBeacons)で測定をはじめる
+            print("Inside")
+            break;
+            
+        case .Outside:
+            
+            print("Outside")
+            // 領域外→領域に入った場合はdidEnterRegionが呼ばれる
+            break;
+            
+        case .Unknown:
+            
+            print("Unknown")
+            // 不明→領域に入った場合はdidEnterRegionが呼ばれる
+            break;
+            
+        default:
+            
+            break;
+            
         }
     }
     
@@ -111,6 +139,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate{
     region  : The region for which the error occurred.
     error   : An error object containing the error code that indicates why region monitoring failed.
     */
+    
+    
+    
     func locationManager(manager: CLLocationManager, monitoringDidFailForRegion region: CLRegion?, withError error: NSError) {
         print("monitoringDidFailForRegion \(error)")
         self.status.text = "Error :("
@@ -130,11 +161,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate{
     func locationManager(manager: CLLocationManager, didEnterRegion region: CLRegion) {
         manager.startRangingBeaconsInRegion(region as! CLBeaconRegion)
         self.status.text = "Possible Match"
+        sendLocalNotificationWithMessage("領域に入りました")
     }
     
     func locationManager(manager: CLLocationManager, didExitRegion region: CLRegion) {
         manager.stopRangingBeaconsInRegion(region as! CLBeaconRegion)
         reset()
+        sendLocalNotificationWithMessage("領域から出ました")
     }
     
     /*
@@ -199,6 +232,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate{
         self.minor.text    = "none"
         self.accuracy.text = "none"
         self.rssi.text     = "none"
+    }
+    
+    //ローカル通知
+    func sendLocalNotificationWithMessage(message: String!) {
+        let notification:UILocalNotification = UILocalNotification()
+        notification.alertBody = message
+        
+        UIApplication.sharedApplication().scheduleLocalNotification(notification)
     }
     
     override func didReceiveMemoryWarning() {
