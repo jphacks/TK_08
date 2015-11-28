@@ -27,15 +27,20 @@ router.post('/event_regist', function(req, res) {
   var en = req.body.event_name;
   var rn = req.body.room_name;
   var desc = req.body.description;
-
+  var mand = req.body.mandatory_filed;
+  var major = req.body.major;
   if(!en){
     error.message = "Error: event_name is missing";
-    error.code = 500;
+    error.code = 400;
   }
   if(!rn){
     error.message = "Error: room_name is missing";
-    error.code = 500;
+    error.code = 400;
   }
+  /*if(!mand){
+    error.message = "Error: mandatory_filed is missing";
+    error.code = 400;
+  }*/
 
   if(!Object.keys(error).length){
     var doc = {
@@ -43,12 +48,13 @@ router.post('/event_regist', function(req, res) {
       event_name : en,
       room_name : rn,
       description : desc,
+      major : major,
       regist_date : moment().zone('+0900').format('YYYY/MM/DD HH:mm:ss')
     };
     api.save(id, doc, function(err) {
       if(err){
         error.message = "Error: Event registration failed";
-        error.code = "400";
+        error.code = 500;
         var str = JSON.stringify(error);
       }else{
         success.message = "Event registration success"
@@ -62,40 +68,30 @@ router.post('/event_regist', function(req, res) {
   }
 });
 
+// event_registがGETならエラー
 router.get('/event_regist', function(req, res) {
   error.message = "Error: Cannot GET";
-  error.code = "500";
+  error.code = 400;
   var str = JSON.stringify(error);
   res.send(str);
 });
-// (3)既存メモの編集(ダイアログ表示)
 
 
-// (4)新規メモの保存
-router.post('/memos', function(req, res) {
-  var id = uuid.v4();
-  var doc = {
-    title : req.body.title,
-    content : req.body.content,
-    updatedAt : moment().zone('+0900').format('YYYY/MM/DD HH:mm:ss')
-  };
+// eventを得る
+router.get('/get_event', function(req, res) {
+  var major = String(req.param('major'));
+  if(!major){
+    error.message = "Error: major is missing";
+    error.code = 400;
+  }
 
-  memo.save(id, doc, function(err) {
-    res.redirect('/');
-  });
-});
-
-// (5)既存メモの保存
-router.put('/memos/:id([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})', function(req, res) {
-  var id = req.param('id');
-  var doc = {
-    title : req.body.title,
-    content : req.body.content,
-    updatedAt : moment().zone('+0900').format('YYYY/MM/DD HH:mm:ss')
-  };
-
-  memo.save(id, doc, function(err) {
-    res.redirect('/');
+  api.get_event(function(err, events) {
+    events.forEach(function(row) {
+      if(row.major == major){
+        console.log(row);
+        res.send(row);
+      }
+    });
   });
 });
 

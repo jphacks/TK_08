@@ -44,3 +44,24 @@ exports.save = function(id, doc, callback) {
 exports.remove = function(id, callback) {
   db.remove(id, callback);
 };
+
+// (2)メモの取得
+exports.get = function(id, callback) {
+  db.get(id, callback);
+};
+
+// Majorの値と一致するイベントを取得
+exports.get_event = function(callback) {
+  db.view('events/major', callback);
+};
+
+/*
+exports.get_event = function(major, callback) {
+  console.log(major);
+  db.view('events/major',major, function (err, res) {
+    console.log(res);
+    res.forEach(function (row) {
+      console.log("en: %s  desc: %s", row.event_name, row.description);
+    });
+  });
+};*/
