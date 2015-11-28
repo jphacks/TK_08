@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Main-->
@@ -17,19 +18,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B7s-bL-Hn4">
-                                <rect key="frame" x="0.0" y="280" width="100" height="100"/>
-                                <animations/>
-                                <color key="backgroundColor" red="0.50196078430000002" green="0.80000000000000004" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Meet">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="MeetButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="UfE-IV-yI1"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cN1-DT-uAk">
-                                <rect key="frame" x="0.0" y="388" width="100" height="100"/>
+                                <rect key="frame" x="108" y="64" width="100" height="100"/>
                                 <animations/>
                                 <color key="backgroundColor" red="0.50196078430000002" green="0.80000000000000004" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="Profile">
@@ -37,17 +27,6 @@
                                 </state>
                                 <connections>
                                     <action selector="ProfileButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="oem-wD-EPf"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D25-8u-CeH">
-                                <rect key="frame" x="0.0" y="172" width="100" height="100"/>
-                                <animations/>
-                                <color key="backgroundColor" red="0.50196078430000002" green="0.80000000000000004" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="子">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="ChildButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="tL1-Nf-s0b"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VEk-fR-oYd">
@@ -61,11 +40,95 @@
                                     <action selector="ParentButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="fTa-Rc-JAI"/>
                                 </connections>
                             </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="cYS-hX-xwA">
+                                <rect key="frame" x="0.0" y="350" width="600" height="250"/>
+                                <animations/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="250" id="70V-aA-IFt"/>
+                                </constraints>
+                                <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <color key="sectionIndexBackgroundColor" red="0.50196078430000002" green="0.80000000000000004" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="EventTableViewCell" id="W1z-SW-1YB" customClass="EventTableViewCell" customModule="AirMeet" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="600" height="100"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="W1z-SW-1YB" id="hXd-v6-aQr">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="100"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FRw-mQ-oIb">
+                                                    <rect key="frame" x="8" y="8" width="584" height="84"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="EventName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nZf-84-hXQ">
+                                                            <rect key="frame" x="122" y="8" width="378" height="30"/>
+                                                            <animations/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mtq-kN-fQX">
+                                                            <rect key="frame" x="508" y="8" width="68" height="68"/>
+                                                            <animations/>
+                                                            <color key="backgroundColor" red="0.50196078430000002" green="0.80000000000000004" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="24"/>
+                                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="RoomName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="reF-AI-VaJ">
+                                                            <rect key="frame" x="122" y="46" width="378" height="30"/>
+                                                            <animations/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <animations/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </view>
+                                            </subviews>
+                                            <animations/>
+                                            <constraints>
+                                                <constraint firstItem="FRw-mQ-oIb" firstAttribute="leading" secondItem="hXd-v6-aQr" secondAttribute="leadingMargin" id="IpB-xV-VyC"/>
+                                                <constraint firstItem="FRw-mQ-oIb" firstAttribute="bottom" secondItem="hXd-v6-aQr" secondAttribute="bottomMargin" id="SMI-xW-9aZ"/>
+                                                <constraint firstItem="FRw-mQ-oIb" firstAttribute="trailing" secondItem="hXd-v6-aQr" secondAttribute="trailingMargin" id="SQA-rO-yoX"/>
+                                                <constraint firstItem="FRw-mQ-oIb" firstAttribute="top" secondItem="hXd-v6-aQr" secondAttribute="topMargin" id="jDG-ew-Bt2"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <animations/>
+                                        <color key="backgroundColor" red="0.50196078430000002" green="0.80000000000000004" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <outlet property="ChildNumberLabel" destination="Mtq-kN-fQX" id="nHc-N6-jC3"/>
+                                            <outlet property="EventNameLabel" destination="nZf-84-hXQ" id="KTH-DT-Tdg"/>
+                                            <outlet property="RoomNameLabel" destination="reF-AI-VaJ" id="wMF-6N-pVz"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B7s-bL-Hn4">
+                                <rect key="frame" x="221" y="64" width="100" height="100"/>
+                                <animations/>
+                                <color key="backgroundColor" red="0.50196078430000002" green="0.80000000000000004" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Meet">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="MeetButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="UfE-IV-yI1"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="cYS-hX-xwA" secondAttribute="trailing" constant="-20" id="MXK-Sh-aJa"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="cYS-hX-xwA" secondAttribute="bottom" id="Zqm-6E-V6t"/>
+                            <constraint firstItem="cYS-hX-xwA" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="t3s-54-w57"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Main" id="cK8-mR-h7z"/>
+                    <connections>
+                        <outlet property="EventTableView" destination="cYS-hX-xwA" id="2aR-aQ-I6r"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

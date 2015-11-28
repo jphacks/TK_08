@@ -16,9 +16,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var isChild: Bool!
     var isParent:Bool!
+    
+    var selectEvent: EventModel?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        //ナビゲーションバータイトルの色
+        //Navigationbar色
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         
        
