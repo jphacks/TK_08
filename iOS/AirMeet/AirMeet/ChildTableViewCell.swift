@@ -12,8 +12,9 @@ class ChildTableViewCell: UITableViewCell {
     
     
     @IBOutlet weak var imageImageView: UIImageView!
-    @IBOutlet weak var backImageView: UIImageView!
-    
+
+  
+    @IBOutlet weak var backImageView: SABlurImageView!
     @IBOutlet weak var nameLabel: UILabel!
     
     
@@ -32,8 +33,13 @@ class ChildTableViewCell: UITableViewCell {
     
     func setCell(childModel:ChildModel){
         
+       
+        
+        
         self.imageImageView.image = childModel.image
         self.backImageView.image = childModel.backgroundImage
+        self.backImageView.addBlurEffect(100)
+        
         self.nameLabel.text = childModel.name
     
     }
