@@ -41,6 +41,7 @@
 		46B6118E1C09F83500102AC0 /* go_face.png in Resources */ = {isa = PBXBuildFile; fileRef = 46B6118D1C09F83500102AC0 /* go_face.png */; };
 		46B611901C09F85900102AC0 /* go_back.png in Resources */ = {isa = PBXBuildFile; fileRef = 46B6118F1C09F85900102AC0 /* go_back.png */; };
 		46B611921C09F92500102AC0 /* icon-A-95.png in Resources */ = {isa = PBXBuildFile; fileRef = 46B611911C09F92500102AC0 /* icon-A-95.png */; };
+		C77446A01C0A0CCA006AB841 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C774469F1C0A0CCA006AB841 /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -101,6 +102,7 @@
 		46B6118D1C09F83500102AC0 /* go_face.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = go_face.png; sourceTree = "<group>"; };
 		46B6118F1C09F85900102AC0 /* go_back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = go_back.png; sourceTree = "<group>"; };
 		46B611911C09F92500102AC0 /* icon-A-95.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-A-95.png"; sourceTree = "<group>"; };
+		C774469F1C0A0CCA006AB841 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +110,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C77446A01C0A0CCA006AB841 /* CoreLocation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -131,6 +134,7 @@
 		46B611131C09447D00102AC0 = {
 			isa = PBXGroup;
 			children = (
+				C774469F1C0A0CCA006AB841 /* CoreLocation.framework */,
 				46B6111E1C09447D00102AC0 /* AirMeet */,
 				46B611331C09447D00102AC0 /* AirMeetTests */,
 				46B6113E1C09447D00102AC0 /* AirMeetUITests */,
@@ -354,6 +358,12 @@
 				TargetAttributes = {
 					46B6111B1C09447D00102AC0 = {
 						CreatedOnToolsVersion = 7.1.1;
+						DevelopmentTeam = YZQ5H72H89;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					46B6112F1C09447D00102AC0 = {
 						CreatedOnToolsVersion = 7.1.1;
@@ -585,10 +595,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = AirMeet/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = koooootake.AirMeet;
+				PRODUCT_BUNDLE_IDENTIFIER = com.osatou.AirMeet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -596,10 +609,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = AirMeet/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = koooootake.AirMeet;
+				PRODUCT_BUNDLE_IDENTIFIER = com.osatou.AirMeet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

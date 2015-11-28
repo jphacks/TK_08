@@ -14,6 +14,7 @@
 		C774467C1C09602D006AB841 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C774467A1C09602D006AB841 /* LaunchScreen.storyboard */; };
 		C77446871C09602D006AB841 /* AirMeetDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77446861C09602D006AB841 /* AirMeetDemoTests.swift */; };
 		C77446921C09602D006AB841 /* AirMeetDemoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77446911C09602D006AB841 /* AirMeetDemoUITests.swift */; };
+		C77446A21C0A0D6A006AB841 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C77446A11C0A0D6A006AB841 /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		C774468D1C09602D006AB841 /* AirMeetDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AirMeetDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C77446911C09602D006AB841 /* AirMeetDemoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirMeetDemoUITests.swift; sourceTree = "<group>"; };
 		C77446931C09602D006AB841 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C77446A11C0A0D6A006AB841 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C77446A21C0A0D6A006AB841 /* CoreLocation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,6 +80,7 @@
 		C77446651C09602D006AB841 = {
 			isa = PBXGroup;
 			children = (
+				C77446A11C0A0D6A006AB841 /* CoreLocation.framework */,
 				C77446701C09602D006AB841 /* AirMeetDemo */,
 				C77446851C09602D006AB841 /* AirMeetDemoTests */,
 				C77446901C09602D006AB841 /* AirMeetDemoUITests */,
