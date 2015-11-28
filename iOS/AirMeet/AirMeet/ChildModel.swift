@@ -7,17 +7,23 @@
 //
 
 import Foundation
+import UIKit
 
 class ChildModel : NSObject {
     
-    var time:String
-    var place:String
+    
+    var image:UIImage
+    var backgroundImage:UIImage
+    var name:String
+    var tag:Dictionary<String,String>
     
     
-    init(time: String, place:String) {
+    init(image:UIImage,backgroundImage:UIImage,name:String,tag:Dictionary<String,String>) {
         
-        self.time = time
-        self.place = place
+        self.image = image
+        self.backgroundImage = backgroundImage
+        self.name = name
+        self.tag = tag
         
     }
     
