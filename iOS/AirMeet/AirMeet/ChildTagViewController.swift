@@ -11,6 +11,8 @@ import UIKit
 class ChildTagViewController: UIViewController {
     
     
+    @IBOutlet weak var TagTableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //ナビゲーションバーの色
