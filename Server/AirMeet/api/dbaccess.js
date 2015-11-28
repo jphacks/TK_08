@@ -1,4 +1,4 @@
-// MemoApp – api/api.js
+// AirMeet – api/dbacess.js
 
 // (a)使用モジュールの読み込み
 var cradle = require('cradle');
@@ -52,5 +52,23 @@ exports.get = function(id, callback) {
 
 // Majorの値と一致するイベントを取得
 exports.get_event = function(callback) {
-  db.view('events/major', callback);
+  db.view('events/get', callback);
+};
+
+exports.gen_rand = function(){
+  var flag = 1;
+  while(flag == 1){
+    flag = 0;
+    var rand = Math.floor( Math.random() * 65535 );
+    db.view('events/major',function(err, res) {
+      res.forEach(function(row) {
+        console.log("2 "+row);
+        if(row.major == rand){
+          console.log("3 "+row.major);
+          flag = 1;
+        }
+      });
+    });
+  }
+  return rand;
 };
