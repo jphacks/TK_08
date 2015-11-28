@@ -92,6 +92,9 @@ class ParentSettingViewController: UIViewController,UITextFieldDelegate {
         //通信するお
         appDelegate.isParent = true
         
+       
+        
+        
     }
     @IBAction func unwindToTop(segue: UIStoryboardSegue) {
     }
