@@ -14,7 +14,6 @@ class ParentSettingViewController: UIViewController,UITextFieldDelegate {
     
     @IBOutlet weak var EventNameTextField: UITextField!
     @IBOutlet weak var RoomNameTextField: UITextField!
-    @IBOutlet weak var EventDescriptionTextField: UITextField!
     
     //ここに最初からつっこむとoptionalエラー
     //var event:EventModel?
@@ -33,12 +32,9 @@ class ParentSettingViewController: UIViewController,UITextFieldDelegate {
         
         self.EventNameTextField.delegate = self
         self.RoomNameTextField.delegate = self
-        self.EventDescriptionTextField.delegate = self
         
         self.EventNameTextField.tag = 0
         self.RoomNameTextField.tag = 1
-        self.EventDescriptionTextField.tag = 2
-        
     }
     
     

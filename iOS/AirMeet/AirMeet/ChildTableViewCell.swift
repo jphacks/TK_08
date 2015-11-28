@@ -33,12 +33,10 @@ class ChildTableViewCell: UITableViewCell {
     
     func setCell(childModel:ChildModel){
         
-       
-        
-        
-        self.imageImageView.image = childModel.image
         self.backImageView.image = childModel.backgroundImage
         self.backImageView.addBlurEffect(100)
+        
+        self.imageImageView.image = childModel.image
         
         self.nameLabel.text = childModel.name
     
