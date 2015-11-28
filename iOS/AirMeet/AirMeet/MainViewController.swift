@@ -23,6 +23,7 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
     
     //majorIDリスト用のグローバル変数
     var majorIDList:[NSNumber] = []
+    var majorIDListOld:[NSNumber] = []
     //-----------
     
     @IBOutlet weak var backImageView: UIImageView!
@@ -61,8 +62,6 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         EventTableView.dataSource = self
         
         //------go
-        //majorIIをプリントできるように
-        
         //CLBeaconRegionを生成
         region = CLBeaconRegion(proximityUUID:proximityUUID!,identifier:"AirMeet")
         //デリゲートの設定
@@ -110,9 +109,8 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         
         majorIDList = []
         
-        //print(beacons)
-        
         if(beacons.count == 0) {
+            //リストに何も受信していないことを表示
             print("nothing")
             return
         }
@@ -128,11 +126,18 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         if(beacons.count != 0){
             let set = NSOrderedSet(array: majorIDList)
             majorIDList = set.array as! [NSNumber]
-            print(majorIDList)
         }
         
-        //ここでサーバー？
-        print(majorIDList)
+        //-------go
+        //ここで変更があったか検証します
+        //サーバーにアクセス
+        if(majorIDList.count != majorIDListOld.count){
+            print("change list")
+            print(majorIDList)
+            majorIDListOld = majorIDList
+        }else{
+            print("same")
+        }
         
         /*
         beaconから取得できるデータ
