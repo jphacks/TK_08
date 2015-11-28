@@ -14,74 +14,74 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     
     var window: UIWindow?
     var manager: CLLocationManager!
+    var locationManager: CLLocationManager!
     
     //バックグラウンド
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
-        application.cancelAllLocalNotifications()
-        // ユーザのpush通知許可をもらうための設定
-        let settings:UIUserNotificationSettings =
-            UIUserNotificationSettings(forTypes:
-                [UIUserNotificationType.Sound,
-                    UIUserNotificationType.Badge,
-                    UIUserNotificationType.Alert], categories: nil)
+        //　ボタン付きの通知の通知設定を作成する
+        let settings = createInteractiveNotificationSettings()
         
-        
+        // アプリケーションに通知設定を登録
         application.registerUserNotificationSettings(settings)
-        application.registerForRemoteNotifications()
-        //位置情報使用許可申請
-//        self.manager = CLLocationManager()
-//        self.manager.delegate = self;
-//        //常に許可
-//        self.manager.requestAlwaysAuthorization()
-//        
-//        application.registerUserNotificationSettings(
-//            UIUserNotificationSettings(forTypes:
-//                [UIUserNotificationType.Sound,
-//                    UIUserNotificationType.Badge,
-//                    UIUserNotificationType.Alert], categories: nil)
-//        )
+    
+        self.locationManager = CLLocationManager()
+        self.locationManager.delegate = self
+        // 位置情報使用許可を求める
+        self.locationManager.requestWhenInUseAuthorization()
         
         return true
     }
     
-//    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-//        switch status {
-//        case .Authorized, .AuthorizedWhenInUse:
-//            print("位置情報利用可")
-//            // Local Notificationを実行
-//            let uuid: NSUUID! = NSUUID(UUIDString:"B9407F30-F5F8-466E-AFF9-33333B57FE6D")
-//            let message = "iBeacon電波を受信しました"
-//            // ビーコン領域をトリガーとした通知を作成(後述)
-//            let notification = createRegionNotification(uuid, message: message)
-//            // 通知を登録する
-//            UIApplication.sharedApplication().scheduleLocalNotification(notification)
-//        default:
-//            print("位置情報利用不可")
-//        }
-//    }
-//    
-//    func createRegionNotification(uuid: NSUUID, message: String) -> UILocalNotification{
-//        
-//        print("scheduled notification")
-//        
-//        // ## ビーコン領域を作成 ##
-//        let beaconRegion :CLBeaconRegion = CLBeaconRegion(proximityUUID: uuid, identifier: "RegionId")
-//        beaconRegion.notifyEntryStateOnDisplay = false
-//        beaconRegion.notifyOnEntry = true
-//        // 領域に入ったときにも出たときにも通知される
-//        // 今回は領域から出たときの通知はRegion側でOFFにしておく
-//        beaconRegion.notifyOnExit = true
-//    
-//        let notification = UILocalNotification()
-//        notification.soundName = UILocalNotificationDefaultSoundName
-//        notification.alertBody = message
-//        
-//        notification.region = beaconRegion
-//        notification.regionTriggersOnce = false
-//        
-//        return notification
-//    }
+    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+        
+        if status == .AuthorizedWhenInUse {
+            let uuid: NSUUID! = NSUUID(UUIDString:"B9407F30-F5F8-466E-AFF9-33333B57FE6D")
+            let message = "AirMeetエリア内にいます"
+            
+            // ビーコン領域をトリガーとした通知を作成(後述)
+            let notification = createRegionNotification(uuid, message: message)
+            // 通知を登録する
+            UIApplication.sharedApplication().scheduleLocalNotification(notification)
+        }
+    }
+    
+    private func createRegionNotification(uuid: NSUUID, message: String) -> UILocalNotification {
+        
+        // ## ビーコン領域を作成 ##
+        let beaconRegion :CLBeaconRegion = CLBeaconRegion(proximityUUID: uuid, identifier: "RegionId")
+        beaconRegion.notifyEntryStateOnDisplay = false
+        beaconRegion.notifyOnEntry = true
+        // 領域に入ったときにも出たときにも通知される
+        // 今回は領域から出たときの通知はRegion側でOFFにしておく
+        beaconRegion.notifyOnExit = false
+        
+        // ## 通知を作成し、領域を設定 ##
+        let notification = UILocalNotification()
+        notification.soundName = UILocalNotificationDefaultSoundName
+        notification.alertBody = message
+        UIApplication.sharedApplication().scheduleLocalNotification(notification)
+        
+        // 通知の対象となる領域 *今回のポイント
+        notification.region = beaconRegion
+        // 一度だけの通知かどうか
+        notification.regionTriggersOnce = false
+        // 後述するボタン付き通知のカテゴリ名を指定
+        //notification.category = "NOTIFICATION_CATEGORY_INTERACTIVE"
+        
+        return notification
+    }
+    
+    private func createInteractiveNotificationSettings() -> UIUserNotificationSettings {
+    
+        let notificationSettings =  UIUserNotificationSettings(forTypes:
+                       [UIUserNotificationType.Sound,
+                        UIUserNotificationType.Badge,
+                        UIUserNotificationType.Alert], categories: nil)
+        
+        // この通知設定を登録する
+        return notificationSettings
+    }
     
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -91,6 +91,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     func applicationDidEnterBackground(application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        
     }
     
     func applicationWillEnterForeground(application: UIApplication) {
@@ -107,25 +108,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     
     //アプリがフォアグラウンド状態
     func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
-        
-//        if (application.applicationState == UIApplicationState.Active) {
-//            // foreground時のlocal notification
-//            print("active")
-//            var alert = UIAlertView()
-//            alert.title = "Foreground"
-//            alert.message = notification.alertBody
-//            alert.addButtonWithTitle(notification.alertAction!)
-//            alert.show()
-//        } else {
-//            // background時のlocal notification
-//            print("background")
-//            var alert = UIAlertView()
-//            alert.title = "Background"
-//            alert.message = notification.alertBody
-//            alert.addButtonWithTitle(notification.alertAction!)
-//            alert.show()
-//        }
-        
+                
     }
     
     

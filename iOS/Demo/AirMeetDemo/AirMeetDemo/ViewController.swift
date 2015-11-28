@@ -29,11 +29,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate{
     var region  = CLBeaconRegion()
     var manager = CLLocationManager()
     
+    var majorIDList:[NSNumber] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         //CLBeaconRegionを生成
-        region = CLBeaconRegion(proximityUUID:proximityUUID!,identifier:"EstimoteRegion")
+        region = CLBeaconRegion(proximityUUID:proximityUUID!,identifier:"AirMeet")
         
         //デリゲートの設定
         manager.delegate = self
@@ -45,6 +47,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate{
         Denied          --  ユーザーがこのアプリでの位置情報サービスへのアクセスを許可していない
         Authorized      --  位置情報サービスへのアクセスを許可している
         */
+        
         switch CLLocationManager.authorizationStatus() {
         case .Authorized, .AuthorizedWhenInUse:
             //iBeaconによる領域観測を開始する
@@ -56,11 +59,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate{
             self.status.text = "Starting Monitor"
             //デバイスに許可を促す
             
-            /****** swift2.0で動くように変更 ******/
             let deviceVer = UIDevice.currentDevice().systemVersion
-            //if(UIDevice.currentDevice().systemVersion.substringToIndex(1).toInt() >= 8){
             if(Int(deviceVer.substringToIndex(deviceVer.startIndex.advancedBy(1))) >= 8){
-                /***********************************/
                 
                 //iOS8以降は許可をリクエストする関数をCallする
                 self.manager.requestAlwaysAuthorization()
@@ -101,7 +101,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate{
     */
     func locationManager(manager: CLLocationManager, didDetermineState state: CLRegionState, forRegion inRegion: CLRegion) {
         
-        print("locationManager")
+        print("didDetermineState")
         
         switch (state) {
             
@@ -123,11 +123,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate{
             print("Unknown")
             // 不明→領域に入った場合はdidEnterRegionが呼ばれる
             break;
-            
-        default:
-            
-            break;
-            
         }
     }
     
@@ -139,8 +134,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate{
     region  : The region for which the error occurred.
     error   : An error object containing the error code that indicates why region monitoring failed.
     */
-    
-    
     
     func locationManager(manager: CLLocationManager, monitoringDidFailForRegion region: CLRegion?, withError error: NSError) {
         print("monitoringDidFailForRegion \(error)")
@@ -161,13 +154,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate{
     func locationManager(manager: CLLocationManager, didEnterRegion region: CLRegion) {
         manager.startRangingBeaconsInRegion(region as! CLBeaconRegion)
         self.status.text = "Possible Match"
-        sendLocalNotificationWithMessage("領域に入りました")
     }
     
+    //ここのDELEGATEは動いてるかも
     func locationManager(manager: CLLocationManager, didExitRegion region: CLRegion) {
         manager.stopRangingBeaconsInRegion(region as! CLBeaconRegion)
         reset()
-        sendLocalNotificationWithMessage("領域から出ました")
     }
     
     /*
@@ -179,22 +171,27 @@ class ViewController: UIViewController, CLLocationManagerDelegate{
     region  : The region object containing the parameters that were used to locate the beacons
     */
     
-    /****** swift2.0で動くように変更 ******/
-    /*****  NSArray => [CLBeacon] *****/
-    func locationManager(manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], inRegion region: CLBeaconRegion) {
-//        if(beacons.count != 0){
-//            print(beacons)
-//            count = beacons.count
-//        }
+    func locationManager(manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], inRegion region:CLBeaconRegion) {
+
+        majorIDList = []
+        
+        //print(beacons)
         
         if(beacons.count == 0) {
+            print("nothing")
             return
         }
         //複数あった場合は一番先頭のものを処理する
         let beacon = beacons[0]
         
-        if(beacon != 0){
-            //setLocalNotification()
+        for i in 0..<beacons.count{
+            majorIDList.append(beacons[i].major)
+        }
+        
+        if(beacons.count != 0){
+            let set = NSOrderedSet(array: majorIDList)
+            majorIDList = set.array as! [NSNumber]
+            print(majorIDList)
         }
         
         /*
@@ -232,35 +229,5 @@ class ViewController: UIViewController, CLLocationManagerDelegate{
         self.minor.text    = "none"
         self.accuracy.text = "none"
         self.rssi.text     = "none"
-    }
-    
-    //ローカル通知
-    func sendLocalNotificationWithMessage(message: String!) {
-        let notification:UILocalNotification = UILocalNotification()
-        notification.alertBody = message
-        
-        UIApplication.sharedApplication().scheduleLocalNotification(notification)
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    func setLocalNotification(){
-        // push設定
-        // 登録済みのスケジュールをすべてリセット
-        UIApplication.sharedApplication().cancelAllLocalNotifications()
-        
-        let notification = UILocalNotification()
-        notification.alertAction = "アプリに戻る"
-        notification.alertBody = "Pushデモだよ"
-        notification.fireDate = NSDate(timeIntervalSinceNow: 0.1)  // Test
-        notification.soundName = UILocalNotificationDefaultSoundName
-        // アイコンバッジに1を表示(アイコンバッジ：アイコンの右上につく未読などの数値)
-        notification.applicationIconBadgeNumber = 1
-        // あとのためにIdを割り振っておく
-        notification.userInfo = ["notifyId": "ranking_update"]
-        UIApplication.sharedApplication().scheduleLocalNotification(notification)
     }
 }
