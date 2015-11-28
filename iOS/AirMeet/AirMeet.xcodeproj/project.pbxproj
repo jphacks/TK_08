@@ -7,64 +7,96 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		46F4AE1B1C09311C0081B086 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46F4AE1A1C09311C0081B086 /* AppDelegate.swift */; };
-		46F4AE1D1C09311C0081B086 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46F4AE1C1C09311C0081B086 /* ViewController.swift */; };
-		46F4AE201C09311C0081B086 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46F4AE1E1C09311C0081B086 /* Main.storyboard */; };
-		46F4AE221C09311C0081B086 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 46F4AE211C09311C0081B086 /* Assets.xcassets */; };
-		46F4AE251C09311C0081B086 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46F4AE231C09311C0081B086 /* LaunchScreen.storyboard */; };
-		46F4AE301C09311C0081B086 /* AirMeetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46F4AE2F1C09311C0081B086 /* AirMeetTests.swift */; };
-		46F4AE3B1C09311C0081B086 /* AirMeetUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46F4AE3A1C09311C0081B086 /* AirMeetUITests.swift */; };
+		46B611201C09447D00102AC0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B6111F1C09447D00102AC0 /* AppDelegate.swift */; };
+		46B611221C09447D00102AC0 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B611211C09447D00102AC0 /* MainViewController.swift */; };
+		46B611251C09447D00102AC0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46B611231C09447D00102AC0 /* Main.storyboard */; };
+		46B611271C09447D00102AC0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 46B611261C09447D00102AC0 /* Assets.xcassets */; };
+		46B6112A1C09447D00102AC0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46B611281C09447D00102AC0 /* LaunchScreen.storyboard */; };
+		46B611351C09447D00102AC0 /* AirMeetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B611341C09447D00102AC0 /* AirMeetTests.swift */; };
+		46B611401C09447D00102AC0 /* AirMeetUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B6113F1C09447D00102AC0 /* AirMeetUITests.swift */; };
+		46B6114E1C09477D00102AC0 /* Parent.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46B6114D1C09477D00102AC0 /* Parent.storyboard */; };
+		46B611501C0947A600102AC0 /* Child.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46B6114F1C0947A600102AC0 /* Child.storyboard */; };
+		46B611521C09487600102AC0 /* ParentSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B611511C09487600102AC0 /* ParentSettingViewController.swift */; };
+		46B611541C09488600102AC0 /* ChildSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B611531C09488600102AC0 /* ChildSettingViewController.swift */; };
+		46B611561C094BA700102AC0 /* ParentLockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B611551C094BA700102AC0 /* ParentLockViewController.swift */; };
+		46B611581C09510100102AC0 /* ChildListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B611571C09510100102AC0 /* ChildListViewController.swift */; };
+		46B6115C1C09519100102AC0 /* ChildTagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B6115B1C09519100102AC0 /* ChildTagViewController.swift */; };
+		46B6115E1C09521600102AC0 /* ChildFirstSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B6115D1C09521600102AC0 /* ChildFirstSettingViewController.swift */; };
+		46B611601C09527F00102AC0 /* ChildMeetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B6115F1C09527F00102AC0 /* ChildMeetViewController.swift */; };
+		46B611621C0955F000102AC0 /* ChildListDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B611611C0955F000102AC0 /* ChildListDetailViewController.swift */; };
+		46B611681C095C3900102AC0 /* Meet.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46B611671C095C3900102AC0 /* Meet.storyboard */; };
+		46B6116B1C095C6800102AC0 /* MeetListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B6116A1C095C6800102AC0 /* MeetListViewController.swift */; };
+		46B6116D1C09660A00102AC0 /* MeetListDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B6116C1C09660A00102AC0 /* MeetListDetailViewController.swift */; };
+		46B6116F1C0966F300102AC0 /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46B6116E1C0966F300102AC0 /* Profile.storyboard */; };
+		46B611721C09676E00102AC0 /* ProfileSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B611711C09676E00102AC0 /* ProfileSettingViewController.swift */; };
+		46B611741C096BE100102AC0 /* ChildRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B611731C096BE100102AC0 /* ChildRoomViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		46F4AE2C1C09311C0081B086 /* PBXContainerItemProxy */ = {
+		46B611311C09447D00102AC0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 46F4AE0F1C09311C0081B086 /* Project object */;
+			containerPortal = 46B611141C09447D00102AC0 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 46F4AE161C09311C0081B086;
+			remoteGlobalIDString = 46B6111B1C09447D00102AC0;
 			remoteInfo = AirMeet;
 		};
-		46F4AE371C09311C0081B086 /* PBXContainerItemProxy */ = {
+		46B6113C1C09447D00102AC0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 46F4AE0F1C09311C0081B086 /* Project object */;
+			containerPortal = 46B611141C09447D00102AC0 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 46F4AE161C09311C0081B086;
+			remoteGlobalIDString = 46B6111B1C09447D00102AC0;
 			remoteInfo = AirMeet;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		46F4AE171C09311C0081B086 /* AirMeet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AirMeet.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		46F4AE1A1C09311C0081B086 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		46F4AE1C1C09311C0081B086 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		46F4AE1F1C09311C0081B086 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		46F4AE211C09311C0081B086 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		46F4AE241C09311C0081B086 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		46F4AE261C09311C0081B086 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		46F4AE2B1C09311C0081B086 /* AirMeetTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AirMeetTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		46F4AE2F1C09311C0081B086 /* AirMeetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirMeetTests.swift; sourceTree = "<group>"; };
-		46F4AE311C09311C0081B086 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		46F4AE361C09311C0081B086 /* AirMeetUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AirMeetUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		46F4AE3A1C09311C0081B086 /* AirMeetUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirMeetUITests.swift; sourceTree = "<group>"; };
-		46F4AE3C1C09311C0081B086 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		46B6111C1C09447D00102AC0 /* AirMeet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AirMeet.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		46B6111F1C09447D00102AC0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		46B611211C09447D00102AC0 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		46B611241C09447D00102AC0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		46B611261C09447D00102AC0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		46B611291C09447D00102AC0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		46B6112B1C09447D00102AC0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		46B611301C09447D00102AC0 /* AirMeetTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AirMeetTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		46B611341C09447D00102AC0 /* AirMeetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirMeetTests.swift; sourceTree = "<group>"; };
+		46B611361C09447D00102AC0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		46B6113B1C09447D00102AC0 /* AirMeetUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AirMeetUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		46B6113F1C09447D00102AC0 /* AirMeetUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirMeetUITests.swift; sourceTree = "<group>"; };
+		46B611411C09447D00102AC0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		46B6114D1C09477D00102AC0 /* Parent.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Parent.storyboard; sourceTree = "<group>"; };
+		46B6114F1C0947A600102AC0 /* Child.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Child.storyboard; sourceTree = "<group>"; };
+		46B611511C09487600102AC0 /* ParentSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParentSettingViewController.swift; sourceTree = "<group>"; };
+		46B611531C09488600102AC0 /* ChildSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChildSettingViewController.swift; sourceTree = "<group>"; };
+		46B611551C094BA700102AC0 /* ParentLockViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParentLockViewController.swift; sourceTree = "<group>"; };
+		46B611571C09510100102AC0 /* ChildListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChildListViewController.swift; sourceTree = "<group>"; };
+		46B6115B1C09519100102AC0 /* ChildTagViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChildTagViewController.swift; sourceTree = "<group>"; };
+		46B6115D1C09521600102AC0 /* ChildFirstSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChildFirstSettingViewController.swift; sourceTree = "<group>"; };
+		46B6115F1C09527F00102AC0 /* ChildMeetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChildMeetViewController.swift; sourceTree = "<group>"; };
+		46B611611C0955F000102AC0 /* ChildListDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChildListDetailViewController.swift; sourceTree = "<group>"; };
+		46B611671C095C3900102AC0 /* Meet.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Meet.storyboard; sourceTree = "<group>"; };
+		46B6116A1C095C6800102AC0 /* MeetListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetListViewController.swift; sourceTree = "<group>"; };
+		46B6116C1C09660A00102AC0 /* MeetListDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetListDetailViewController.swift; sourceTree = "<group>"; };
+		46B6116E1C0966F300102AC0 /* Profile.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
+		46B611711C09676E00102AC0 /* ProfileSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileSettingViewController.swift; sourceTree = "<group>"; };
+		46B611731C096BE100102AC0 /* ChildRoomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChildRoomViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		46F4AE141C09311C0081B086 /* Frameworks */ = {
+		46B611191C09447D00102AC0 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		46F4AE281C09311C0081B086 /* Frameworks */ = {
+		46B6112D1C09447D00102AC0 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		46F4AE331C09311C0081B086 /* Frameworks */ = {
+		46B611381C09447D00102AC0 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -74,67 +106,147 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		46F4AE0E1C09311C0081B086 = {
+		46B611131C09447D00102AC0 = {
 			isa = PBXGroup;
 			children = (
-				46F4AE191C09311C0081B086 /* AirMeet */,
-				46F4AE2E1C09311C0081B086 /* AirMeetTests */,
-				46F4AE391C09311C0081B086 /* AirMeetUITests */,
-				46F4AE181C09311C0081B086 /* Products */,
+				46B6111E1C09447D00102AC0 /* AirMeet */,
+				46B611331C09447D00102AC0 /* AirMeetTests */,
+				46B6113E1C09447D00102AC0 /* AirMeetUITests */,
+				46B6111D1C09447D00102AC0 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		46F4AE181C09311C0081B086 /* Products */ = {
+		46B6111D1C09447D00102AC0 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				46F4AE171C09311C0081B086 /* AirMeet.app */,
-				46F4AE2B1C09311C0081B086 /* AirMeetTests.xctest */,
-				46F4AE361C09311C0081B086 /* AirMeetUITests.xctest */,
+				46B6111C1C09447D00102AC0 /* AirMeet.app */,
+				46B611301C09447D00102AC0 /* AirMeetTests.xctest */,
+				46B6113B1C09447D00102AC0 /* AirMeetUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		46F4AE191C09311C0081B086 /* AirMeet */ = {
+		46B6111E1C09447D00102AC0 /* AirMeet */ = {
 			isa = PBXGroup;
 			children = (
-				46F4AE1A1C09311C0081B086 /* AppDelegate.swift */,
-				46F4AE1C1C09311C0081B086 /* ViewController.swift */,
-				46F4AE1E1C09311C0081B086 /* Main.storyboard */,
-				46F4AE211C09311C0081B086 /* Assets.xcassets */,
-				46F4AE231C09311C0081B086 /* LaunchScreen.storyboard */,
-				46F4AE261C09311C0081B086 /* Info.plist */,
+				46B6111F1C09447D00102AC0 /* AppDelegate.swift */,
+				46B611231C09447D00102AC0 /* Main.storyboard */,
+				46B611211C09447D00102AC0 /* MainViewController.swift */,
+				46B611701C0966FE00102AC0 /* Profile */,
+				46B611691C095C4400102AC0 /* Meet */,
+				46B611591C09510600102AC0 /* Parent */,
+				46B6115A1C09511000102AC0 /* Child */,
+				46B611261C09447D00102AC0 /* Assets.xcassets */,
+				46B611281C09447D00102AC0 /* LaunchScreen.storyboard */,
+				46B6112B1C09447D00102AC0 /* Info.plist */,
 			);
 			path = AirMeet;
 			sourceTree = "<group>";
 		};
-		46F4AE2E1C09311C0081B086 /* AirMeetTests */ = {
+		46B611331C09447D00102AC0 /* AirMeetTests */ = {
 			isa = PBXGroup;
 			children = (
-				46F4AE2F1C09311C0081B086 /* AirMeetTests.swift */,
-				46F4AE311C09311C0081B086 /* Info.plist */,
+				46B611341C09447D00102AC0 /* AirMeetTests.swift */,
+				46B611361C09447D00102AC0 /* Info.plist */,
 			);
 			path = AirMeetTests;
 			sourceTree = "<group>";
 		};
-		46F4AE391C09311C0081B086 /* AirMeetUITests */ = {
+		46B6113E1C09447D00102AC0 /* AirMeetUITests */ = {
 			isa = PBXGroup;
 			children = (
-				46F4AE3A1C09311C0081B086 /* AirMeetUITests.swift */,
-				46F4AE3C1C09311C0081B086 /* Info.plist */,
+				46B6113F1C09447D00102AC0 /* AirMeetUITests.swift */,
+				46B611411C09447D00102AC0 /* Info.plist */,
 			);
 			path = AirMeetUITests;
+			sourceTree = "<group>";
+		};
+		46B611591C09510600102AC0 /* Parent */ = {
+			isa = PBXGroup;
+			children = (
+				46B6114D1C09477D00102AC0 /* Parent.storyboard */,
+				46B611511C09487600102AC0 /* ParentSettingViewController.swift */,
+				46B611551C094BA700102AC0 /* ParentLockViewController.swift */,
+			);
+			name = Parent;
+			sourceTree = "<group>";
+		};
+		46B6115A1C09511000102AC0 /* Child */ = {
+			isa = PBXGroup;
+			children = (
+				46B6114F1C0947A600102AC0 /* Child.storyboard */,
+				46B611731C096BE100102AC0 /* ChildRoomViewController.swift */,
+				46B6115D1C09521600102AC0 /* ChildFirstSettingViewController.swift */,
+				46B611651C09562000102AC0 /* Tag */,
+				46B611641C09561600102AC0 /* Meet */,
+				46B611631C09560C00102AC0 /* List */,
+				46B611661C09562E00102AC0 /* Setting */,
+			);
+			name = Child;
+			sourceTree = "<group>";
+		};
+		46B611631C09560C00102AC0 /* List */ = {
+			isa = PBXGroup;
+			children = (
+				46B611571C09510100102AC0 /* ChildListViewController.swift */,
+				46B611611C0955F000102AC0 /* ChildListDetailViewController.swift */,
+			);
+			name = List;
+			sourceTree = "<group>";
+		};
+		46B611641C09561600102AC0 /* Meet */ = {
+			isa = PBXGroup;
+			children = (
+				46B6115F1C09527F00102AC0 /* ChildMeetViewController.swift */,
+			);
+			name = Meet;
+			sourceTree = "<group>";
+		};
+		46B611651C09562000102AC0 /* Tag */ = {
+			isa = PBXGroup;
+			children = (
+				46B6115B1C09519100102AC0 /* ChildTagViewController.swift */,
+			);
+			name = Tag;
+			sourceTree = "<group>";
+		};
+		46B611661C09562E00102AC0 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				46B611531C09488600102AC0 /* ChildSettingViewController.swift */,
+			);
+			name = Setting;
+			sourceTree = "<group>";
+		};
+		46B611691C095C4400102AC0 /* Meet */ = {
+			isa = PBXGroup;
+			children = (
+				46B611671C095C3900102AC0 /* Meet.storyboard */,
+				46B6116C1C09660A00102AC0 /* MeetListDetailViewController.swift */,
+				46B6116A1C095C6800102AC0 /* MeetListViewController.swift */,
+			);
+			name = Meet;
+			sourceTree = "<group>";
+		};
+		46B611701C0966FE00102AC0 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				46B6116E1C0966F300102AC0 /* Profile.storyboard */,
+				46B611711C09676E00102AC0 /* ProfileSettingViewController.swift */,
+			);
+			name = Profile;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		46F4AE161C09311C0081B086 /* AirMeet */ = {
+		46B6111B1C09447D00102AC0 /* AirMeet */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 46F4AE3F1C09311D0081B086 /* Build configuration list for PBXNativeTarget "AirMeet" */;
+			buildConfigurationList = 46B611441C09447D00102AC0 /* Build configuration list for PBXNativeTarget "AirMeet" */;
 			buildPhases = (
-				46F4AE131C09311C0081B086 /* Sources */,
-				46F4AE141C09311C0081B086 /* Frameworks */,
-				46F4AE151C09311C0081B086 /* Resources */,
+				46B611181C09447D00102AC0 /* Sources */,
+				46B611191C09447D00102AC0 /* Frameworks */,
+				46B6111A1C09447D00102AC0 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -142,69 +254,69 @@
 			);
 			name = AirMeet;
 			productName = AirMeet;
-			productReference = 46F4AE171C09311C0081B086 /* AirMeet.app */;
+			productReference = 46B6111C1C09447D00102AC0 /* AirMeet.app */;
 			productType = "com.apple.product-type.application";
 		};
-		46F4AE2A1C09311C0081B086 /* AirMeetTests */ = {
+		46B6112F1C09447D00102AC0 /* AirMeetTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 46F4AE421C09311D0081B086 /* Build configuration list for PBXNativeTarget "AirMeetTests" */;
+			buildConfigurationList = 46B611471C09447D00102AC0 /* Build configuration list for PBXNativeTarget "AirMeetTests" */;
 			buildPhases = (
-				46F4AE271C09311C0081B086 /* Sources */,
-				46F4AE281C09311C0081B086 /* Frameworks */,
-				46F4AE291C09311C0081B086 /* Resources */,
+				46B6112C1C09447D00102AC0 /* Sources */,
+				46B6112D1C09447D00102AC0 /* Frameworks */,
+				46B6112E1C09447D00102AC0 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				46F4AE2D1C09311C0081B086 /* PBXTargetDependency */,
+				46B611321C09447D00102AC0 /* PBXTargetDependency */,
 			);
 			name = AirMeetTests;
 			productName = AirMeetTests;
-			productReference = 46F4AE2B1C09311C0081B086 /* AirMeetTests.xctest */;
+			productReference = 46B611301C09447D00102AC0 /* AirMeetTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		46F4AE351C09311C0081B086 /* AirMeetUITests */ = {
+		46B6113A1C09447D00102AC0 /* AirMeetUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 46F4AE451C09311D0081B086 /* Build configuration list for PBXNativeTarget "AirMeetUITests" */;
+			buildConfigurationList = 46B6114A1C09447D00102AC0 /* Build configuration list for PBXNativeTarget "AirMeetUITests" */;
 			buildPhases = (
-				46F4AE321C09311C0081B086 /* Sources */,
-				46F4AE331C09311C0081B086 /* Frameworks */,
-				46F4AE341C09311C0081B086 /* Resources */,
+				46B611371C09447D00102AC0 /* Sources */,
+				46B611381C09447D00102AC0 /* Frameworks */,
+				46B611391C09447D00102AC0 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				46F4AE381C09311C0081B086 /* PBXTargetDependency */,
+				46B6113D1C09447D00102AC0 /* PBXTargetDependency */,
 			);
 			name = AirMeetUITests;
 			productName = AirMeetUITests;
-			productReference = 46F4AE361C09311C0081B086 /* AirMeetUITests.xctest */;
+			productReference = 46B6113B1C09447D00102AC0 /* AirMeetUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		46F4AE0F1C09311C0081B086 /* Project object */ = {
+		46B611141C09447D00102AC0 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0710;
 				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = koooootake;
 				TargetAttributes = {
-					46F4AE161C09311C0081B086 = {
+					46B6111B1C09447D00102AC0 = {
 						CreatedOnToolsVersion = 7.1.1;
 					};
-					46F4AE2A1C09311C0081B086 = {
+					46B6112F1C09447D00102AC0 = {
 						CreatedOnToolsVersion = 7.1.1;
-						TestTargetID = 46F4AE161C09311C0081B086;
+						TestTargetID = 46B6111B1C09447D00102AC0;
 					};
-					46F4AE351C09311C0081B086 = {
+					46B6113A1C09447D00102AC0 = {
 						CreatedOnToolsVersion = 7.1.1;
-						TestTargetID = 46F4AE161C09311C0081B086;
+						TestTargetID = 46B6111B1C09447D00102AC0;
 					};
 				};
 			};
-			buildConfigurationList = 46F4AE121C09311C0081B086 /* Build configuration list for PBXProject "AirMeet" */;
+			buildConfigurationList = 46B611171C09447D00102AC0 /* Build configuration list for PBXProject "AirMeet" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -212,37 +324,41 @@
 				en,
 				Base,
 			);
-			mainGroup = 46F4AE0E1C09311C0081B086;
-			productRefGroup = 46F4AE181C09311C0081B086 /* Products */;
+			mainGroup = 46B611131C09447D00102AC0;
+			productRefGroup = 46B6111D1C09447D00102AC0 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				46F4AE161C09311C0081B086 /* AirMeet */,
-				46F4AE2A1C09311C0081B086 /* AirMeetTests */,
-				46F4AE351C09311C0081B086 /* AirMeetUITests */,
+				46B6111B1C09447D00102AC0 /* AirMeet */,
+				46B6112F1C09447D00102AC0 /* AirMeetTests */,
+				46B6113A1C09447D00102AC0 /* AirMeetUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		46F4AE151C09311C0081B086 /* Resources */ = {
+		46B6111A1C09447D00102AC0 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				46F4AE251C09311C0081B086 /* LaunchScreen.storyboard in Resources */,
-				46F4AE221C09311C0081B086 /* Assets.xcassets in Resources */,
-				46F4AE201C09311C0081B086 /* Main.storyboard in Resources */,
+				46B6112A1C09447D00102AC0 /* LaunchScreen.storyboard in Resources */,
+				46B611681C095C3900102AC0 /* Meet.storyboard in Resources */,
+				46B6114E1C09477D00102AC0 /* Parent.storyboard in Resources */,
+				46B611501C0947A600102AC0 /* Child.storyboard in Resources */,
+				46B611271C09447D00102AC0 /* Assets.xcassets in Resources */,
+				46B6116F1C0966F300102AC0 /* Profile.storyboard in Resources */,
+				46B611251C09447D00102AC0 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		46F4AE291C09311C0081B086 /* Resources */ = {
+		46B6112E1C09447D00102AC0 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		46F4AE341C09311C0081B086 /* Resources */ = {
+		46B611391C09447D00102AC0 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -252,59 +368,71 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		46F4AE131C09311C0081B086 /* Sources */ = {
+		46B611181C09447D00102AC0 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				46F4AE1D1C09311C0081B086 /* ViewController.swift in Sources */,
-				46F4AE1B1C09311C0081B086 /* AppDelegate.swift in Sources */,
+				46B611221C09447D00102AC0 /* MainViewController.swift in Sources */,
+				46B611601C09527F00102AC0 /* ChildMeetViewController.swift in Sources */,
+				46B6115E1C09521600102AC0 /* ChildFirstSettingViewController.swift in Sources */,
+				46B611201C09447D00102AC0 /* AppDelegate.swift in Sources */,
+				46B611521C09487600102AC0 /* ParentSettingViewController.swift in Sources */,
+				46B611561C094BA700102AC0 /* ParentLockViewController.swift in Sources */,
+				46B611721C09676E00102AC0 /* ProfileSettingViewController.swift in Sources */,
+				46B611541C09488600102AC0 /* ChildSettingViewController.swift in Sources */,
+				46B6115C1C09519100102AC0 /* ChildTagViewController.swift in Sources */,
+				46B6116B1C095C6800102AC0 /* MeetListViewController.swift in Sources */,
+				46B611741C096BE100102AC0 /* ChildRoomViewController.swift in Sources */,
+				46B611621C0955F000102AC0 /* ChildListDetailViewController.swift in Sources */,
+				46B6116D1C09660A00102AC0 /* MeetListDetailViewController.swift in Sources */,
+				46B611581C09510100102AC0 /* ChildListViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		46F4AE271C09311C0081B086 /* Sources */ = {
+		46B6112C1C09447D00102AC0 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				46F4AE301C09311C0081B086 /* AirMeetTests.swift in Sources */,
+				46B611351C09447D00102AC0 /* AirMeetTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		46F4AE321C09311C0081B086 /* Sources */ = {
+		46B611371C09447D00102AC0 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				46F4AE3B1C09311C0081B086 /* AirMeetUITests.swift in Sources */,
+				46B611401C09447D00102AC0 /* AirMeetUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		46F4AE2D1C09311C0081B086 /* PBXTargetDependency */ = {
+		46B611321C09447D00102AC0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 46F4AE161C09311C0081B086 /* AirMeet */;
-			targetProxy = 46F4AE2C1C09311C0081B086 /* PBXContainerItemProxy */;
+			target = 46B6111B1C09447D00102AC0 /* AirMeet */;
+			targetProxy = 46B611311C09447D00102AC0 /* PBXContainerItemProxy */;
 		};
-		46F4AE381C09311C0081B086 /* PBXTargetDependency */ = {
+		46B6113D1C09447D00102AC0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 46F4AE161C09311C0081B086 /* AirMeet */;
-			targetProxy = 46F4AE371C09311C0081B086 /* PBXContainerItemProxy */;
+			target = 46B6111B1C09447D00102AC0 /* AirMeet */;
+			targetProxy = 46B6113C1C09447D00102AC0 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		46F4AE1E1C09311C0081B086 /* Main.storyboard */ = {
+		46B611231C09447D00102AC0 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				46F4AE1F1C09311C0081B086 /* Base */,
+				46B611241C09447D00102AC0 /* Base */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
-		46F4AE231C09311C0081B086 /* LaunchScreen.storyboard */ = {
+		46B611281C09447D00102AC0 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				46F4AE241C09311C0081B086 /* Base */,
+				46B611291C09447D00102AC0 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -312,7 +440,7 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		46F4AE3D1C09311D0081B086 /* Debug */ = {
+		46B611421C09447D00102AC0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -356,7 +484,7 @@
 			};
 			name = Debug;
 		};
-		46F4AE3E1C09311D0081B086 /* Release */ = {
+		46B611431C09447D00102AC0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -393,7 +521,7 @@
 			};
 			name = Release;
 		};
-		46F4AE401C09311D0081B086 /* Debug */ = {
+		46B611451C09447D00102AC0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -404,7 +532,7 @@
 			};
 			name = Debug;
 		};
-		46F4AE411C09311D0081B086 /* Release */ = {
+		46B611461C09447D00102AC0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -415,7 +543,7 @@
 			};
 			name = Release;
 		};
-		46F4AE431C09311D0081B086 /* Debug */ = {
+		46B611481C09447D00102AC0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -427,7 +555,7 @@
 			};
 			name = Debug;
 		};
-		46F4AE441C09311D0081B086 /* Release */ = {
+		46B611491C09447D00102AC0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -439,7 +567,7 @@
 			};
 			name = Release;
 		};
-		46F4AE461C09311D0081B086 /* Debug */ = {
+		46B6114B1C09447D00102AC0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				INFOPLIST_FILE = AirMeetUITests/Info.plist;
@@ -451,7 +579,7 @@
 			};
 			name = Debug;
 		};
-		46F4AE471C09311D0081B086 /* Release */ = {
+		46B6114C1C09447D00102AC0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				INFOPLIST_FILE = AirMeetUITests/Info.plist;
@@ -466,40 +594,40 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		46F4AE121C09311C0081B086 /* Build configuration list for PBXProject "AirMeet" */ = {
+		46B611171C09447D00102AC0 /* Build configuration list for PBXProject "AirMeet" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				46F4AE3D1C09311D0081B086 /* Debug */,
-				46F4AE3E1C09311D0081B086 /* Release */,
+				46B611421C09447D00102AC0 /* Debug */,
+				46B611431C09447D00102AC0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		46F4AE3F1C09311D0081B086 /* Build configuration list for PBXNativeTarget "AirMeet" */ = {
+		46B611441C09447D00102AC0 /* Build configuration list for PBXNativeTarget "AirMeet" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				46F4AE401C09311D0081B086 /* Debug */,
-				46F4AE411C09311D0081B086 /* Release */,
+				46B611451C09447D00102AC0 /* Debug */,
+				46B611461C09447D00102AC0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 		};
-		46F4AE421C09311D0081B086 /* Build configuration list for PBXNativeTarget "AirMeetTests" */ = {
+		46B611471C09447D00102AC0 /* Build configuration list for PBXNativeTarget "AirMeetTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				46F4AE431C09311D0081B086 /* Debug */,
-				46F4AE441C09311D0081B086 /* Release */,
+				46B611481C09447D00102AC0 /* Debug */,
+				46B611491C09447D00102AC0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 		};
-		46F4AE451C09311D0081B086 /* Build configuration list for PBXNativeTarget "AirMeetUITests" */ = {
+		46B6114A1C09447D00102AC0 /* Build configuration list for PBXNativeTarget "AirMeetUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				46F4AE461C09311D0081B086 /* Debug */,
-				46F4AE471C09311D0081B086 /* Release */,
+				46B6114B1C09447D00102AC0 /* Debug */,
+				46B6114C1C09447D00102AC0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 46F4AE0F1C09311C0081B086 /* Project object */;
+	rootObject = 46B611141C09447D00102AC0 /* Project object */;
 }
