@@ -11,7 +11,7 @@ http://airmeet.mybluemix.net/event_regist
 |:--|:--:|:--|
 |event_name|○|イベント名|
 |room_name|○|会場名|
-|description|○|説明文|
+|description||説明文|
 
 
 ### レスポンス
