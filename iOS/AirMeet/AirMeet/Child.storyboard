@@ -17,8 +17,36 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="EventName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XeQ-Fm-jiO">
+                                <rect key="frame" x="20" y="37" width="560" height="70"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="RoomName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VlF-eC-vS2">
+                                <rect key="frame" x="20" y="120" width="560" height="70"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="ChildNumber" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T6q-wc-BqL">
+                                <rect key="frame" x="20" y="284" width="560" height="70"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="EventDescription" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S6d-Tk-rUV">
+                                <rect key="frame" x="20" y="198" width="560" height="70"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="omS-yd-Z3k">
-                                <rect key="frame" x="36" y="94" width="100" height="100"/>
+                                <rect key="frame" x="227" y="374" width="100" height="100"/>
                                 <animations/>
                                 <color key="backgroundColor" red="0.50196078430000002" green="0.80000000000000004" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="参加！">
@@ -26,6 +54,7 @@
                                 </state>
                                 <connections>
                                     <action selector="ChildStartButton:" destination="FAh-JI-MxM" eventType="touchUpInside" id="2sN-Vv-SNZ"/>
+                                    <action selector="EventOKButton:" destination="07g-Af-pOp" eventType="touchUpInside" id="oBN-KI-7OD"/>
                                     <segue destination="FAh-JI-MxM" kind="show" id="8q8-WZ-lAq"/>
                                 </connections>
                             </button>
@@ -33,6 +62,12 @@
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <outlet property="ChildNumberLabel" destination="T6q-wc-BqL" id="62B-XG-oxM"/>
+                        <outlet property="EventDescriptionLabel" destination="S6d-Tk-rUV" id="qTS-ZZ-WhM"/>
+                        <outlet property="EventNameLabel" destination="XeQ-Fm-jiO" id="J4B-z5-JO6"/>
+                        <outlet property="RoomNameLabel" destination="VlF-eC-vS2" id="Agc-Ba-1zV"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z0b-to-8Y6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -329,7 +364,6 @@
         <!--Setting-->
         <scene sceneID="jHP-rw-0WH">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="qqw-y2-A20" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Nsh-qi-A4q" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Setting" id="f7p-d6-ZfF"/>
                     <toolbarItems/>
@@ -343,6 +377,7 @@
                         <segue destination="oJG-xN-1H6" kind="relationship" relationship="rootViewController" id="55V-o7-xBw"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qqw-y2-A20" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1480" y="1842"/>
         </scene>

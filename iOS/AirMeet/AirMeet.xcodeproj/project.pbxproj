@@ -30,6 +30,13 @@
 		46B6116F1C0966F300102AC0 /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46B6116E1C0966F300102AC0 /* Profile.storyboard */; };
 		46B611721C09676E00102AC0 /* ProfileSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B611711C09676E00102AC0 /* ProfileSettingViewController.swift */; };
 		46B611741C096BE100102AC0 /* ChildRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B611731C096BE100102AC0 /* ChildRoomViewController.swift */; };
+		46B611771C096EE100102AC0 /* AirMeet-white.png in Resources */ = {isa = PBXBuildFile; fileRef = 46B611761C096EE100102AC0 /* AirMeet-white.png */; };
+		46B611791C096F0B00102AC0 /* AirMeet-color_heart.png in Resources */ = {isa = PBXBuildFile; fileRef = 46B611781C096F0B00102AC0 /* AirMeet-color_heart.png */; };
+		46B6117B1C096F1100102AC0 /* AirMeet-color.png in Resources */ = {isa = PBXBuildFile; fileRef = 46B6117A1C096F1100102AC0 /* AirMeet-color.png */; };
+		46B6117D1C09721D00102AC0 /* ChildTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B6117C1C09721D00102AC0 /* ChildTableViewCell.swift */; };
+		46B6117F1C09726300102AC0 /* ChildModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B6117E1C09726300102AC0 /* ChildModel.swift */; };
+		46B611811C09773B00102AC0 /* EventModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B611801C09773B00102AC0 /* EventModel.swift */; };
+		46B611831C0977E200102AC0 /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B611821C0977E200102AC0 /* EventTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +86,13 @@
 		46B6116E1C0966F300102AC0 /* Profile.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
 		46B611711C09676E00102AC0 /* ProfileSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileSettingViewController.swift; sourceTree = "<group>"; };
 		46B611731C096BE100102AC0 /* ChildRoomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChildRoomViewController.swift; sourceTree = "<group>"; };
+		46B611761C096EE100102AC0 /* AirMeet-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AirMeet-white.png"; sourceTree = "<group>"; };
+		46B611781C096F0B00102AC0 /* AirMeet-color_heart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AirMeet-color_heart.png"; sourceTree = "<group>"; };
+		46B6117A1C096F1100102AC0 /* AirMeet-color.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AirMeet-color.png"; sourceTree = "<group>"; };
+		46B6117C1C09721D00102AC0 /* ChildTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChildTableViewCell.swift; sourceTree = "<group>"; };
+		46B6117E1C09726300102AC0 /* ChildModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChildModel.swift; sourceTree = "<group>"; };
+		46B611801C09773B00102AC0 /* EventModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventModel.swift; sourceTree = "<group>"; };
+		46B611821C0977E200102AC0 /* EventTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,11 +145,16 @@
 			children = (
 				46B6111F1C09447D00102AC0 /* AppDelegate.swift */,
 				46B611231C09447D00102AC0 /* Main.storyboard */,
+				46B6117C1C09721D00102AC0 /* ChildTableViewCell.swift */,
+				46B6117E1C09726300102AC0 /* ChildModel.swift */,
+				46B611821C0977E200102AC0 /* EventTableViewCell.swift */,
+				46B611801C09773B00102AC0 /* EventModel.swift */,
 				46B611211C09447D00102AC0 /* MainViewController.swift */,
 				46B611701C0966FE00102AC0 /* Profile */,
 				46B611691C095C4400102AC0 /* Meet */,
 				46B611591C09510600102AC0 /* Parent */,
 				46B6115A1C09511000102AC0 /* Child */,
+				46B611751C096ED000102AC0 /* Image */,
 				46B611261C09447D00102AC0 /* Assets.xcassets */,
 				46B611281C09447D00102AC0 /* LaunchScreen.storyboard */,
 				46B6112B1C09447D00102AC0 /* Info.plist */,
@@ -235,6 +254,16 @@
 				46B611711C09676E00102AC0 /* ProfileSettingViewController.swift */,
 			);
 			name = Profile;
+			sourceTree = "<group>";
+		};
+		46B611751C096ED000102AC0 /* Image */ = {
+			isa = PBXGroup;
+			children = (
+				46B611781C096F0B00102AC0 /* AirMeet-color_heart.png */,
+				46B6117A1C096F1100102AC0 /* AirMeet-color.png */,
+				46B611761C096EE100102AC0 /* AirMeet-white.png */,
+			);
+			name = Image;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -342,12 +371,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				46B6112A1C09447D00102AC0 /* LaunchScreen.storyboard in Resources */,
+				46B611771C096EE100102AC0 /* AirMeet-white.png in Resources */,
 				46B611681C095C3900102AC0 /* Meet.storyboard in Resources */,
 				46B6114E1C09477D00102AC0 /* Parent.storyboard in Resources */,
 				46B611501C0947A600102AC0 /* Child.storyboard in Resources */,
 				46B611271C09447D00102AC0 /* Assets.xcassets in Resources */,
 				46B6116F1C0966F300102AC0 /* Profile.storyboard in Resources */,
+				46B611791C096F0B00102AC0 /* AirMeet-color_heart.png in Resources */,
 				46B611251C09447D00102AC0 /* Main.storyboard in Resources */,
+				46B6117B1C096F1100102AC0 /* AirMeet-color.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -372,10 +404,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46B611831C0977E200102AC0 /* EventTableViewCell.swift in Sources */,
+				46B6117F1C09726300102AC0 /* ChildModel.swift in Sources */,
 				46B611221C09447D00102AC0 /* MainViewController.swift in Sources */,
 				46B611601C09527F00102AC0 /* ChildMeetViewController.swift in Sources */,
 				46B6115E1C09521600102AC0 /* ChildFirstSettingViewController.swift in Sources */,
 				46B611201C09447D00102AC0 /* AppDelegate.swift in Sources */,
+				46B611811C09773B00102AC0 /* EventModel.swift in Sources */,
 				46B611521C09487600102AC0 /* ParentSettingViewController.swift in Sources */,
 				46B611561C094BA700102AC0 /* ParentLockViewController.swift in Sources */,
 				46B611721C09676E00102AC0 /* ProfileSettingViewController.swift in Sources */,
@@ -385,6 +420,7 @@
 				46B611741C096BE100102AC0 /* ChildRoomViewController.swift in Sources */,
 				46B611621C0955F000102AC0 /* ChildListDetailViewController.swift in Sources */,
 				46B6116D1C09660A00102AC0 /* MeetListDetailViewController.swift in Sources */,
+				46B6117D1C09721D00102AC0 /* ChildTableViewCell.swift in Sources */,
 				46B611581C09510100102AC0 /* ChildListViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -610,6 +646,7 @@
 				46B611461C09447D00102AC0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		46B611471C09447D00102AC0 /* Build configuration list for PBXNativeTarget "AirMeetTests" */ = {
 			isa = XCConfigurationList;
@@ -618,6 +655,7 @@
 				46B611491C09447D00102AC0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		46B6114A1C09447D00102AC0 /* Build configuration list for PBXNativeTarget "AirMeetUITests" */ = {
 			isa = XCConfigurationList;
@@ -626,6 +664,7 @@
 				46B6114C1C09447D00102AC0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
