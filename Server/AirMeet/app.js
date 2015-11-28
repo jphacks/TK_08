@@ -1,29 +1,29 @@
-/*eslint-env node*/
+// AirMeet - app.js
 
-//------------------------------------------------------------------------------
-// node.js starter application for Bluemix
-//------------------------------------------------------------------------------
-
-// This application uses express as its web server
-// for more info, see: http://expressjs.com
+// (a)使用モジュールの読み込み
 var express = require('express');
+var path = require('path');
+var logger = require('morgan');
+var bodyParser = require('body-parser');
+var methodOverride = require('method-override');
+var routes = require('./routes');
 
-// cfenv provides access to your Cloud Foundry environment
-// for more info, see: https://www.npmjs.com/package/cfenv
-var cfenv = require('cfenv');
-
-// create a new express server
+// (b)アプリケーションの作成
 var app = express();
 
-// serve the files out of ./public as our main files
-app.use(express.static(__dirname + '/public'));
+// (c)ビューの設定
+//app.set('views', path.join(__dirname, 'views'));
+//app.set('view engine', 'ejs');
 
-// get the app environment from Cloud Foundry
-var appEnv = cfenv.getAppEnv();
+// (d)ミドルウェアの設定
+app.use(logger('dev'));
+app.use(bodyParser.urlencoded({ extended : true }));
+app.use(methodOverride('_method'));
 
-// start server on the specified port and binding host
-app.listen(appEnv.port, '0.0.0.0', function() {
+// (e)ルーティングの設定
+app.use('/', routes);
 
-	// print a message when the server starts listening
-  console.log("server starting on " + appEnv.url);
+// (f)リクエストの受け付け
+var server = app.listen(process.env.PORT || 3000, function() {
+  console.log('Listening on port %d', server.address().port);
 });
