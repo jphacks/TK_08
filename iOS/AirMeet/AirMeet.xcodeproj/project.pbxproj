@@ -37,6 +37,9 @@
 		46B6117F1C09726300102AC0 /* ChildModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B6117E1C09726300102AC0 /* ChildModel.swift */; };
 		46B611811C09773B00102AC0 /* EventModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B611801C09773B00102AC0 /* EventModel.swift */; };
 		46B611831C0977E200102AC0 /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B611821C0977E200102AC0 /* EventTableViewCell.swift */; };
+		46B611871C09948400102AC0 /* go_face.png in Resources */ = {isa = PBXBuildFile; fileRef = 46B611861C09948400102AC0 /* go_face.png */; };
+		46B611891C09949B00102AC0 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 46B611881C09949B00102AC0 /* back.png */; };
+		46B6118C1C09A44D00102AC0 /* TagTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B6118B1C09A44D00102AC0 /* TagTableView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,6 +96,9 @@
 		46B6117E1C09726300102AC0 /* ChildModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChildModel.swift; sourceTree = "<group>"; };
 		46B611801C09773B00102AC0 /* EventModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventModel.swift; sourceTree = "<group>"; };
 		46B611821C0977E200102AC0 /* EventTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
+		46B611861C09948400102AC0 /* go_face.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = go_face.png; sourceTree = "<group>"; };
+		46B611881C09949B00102AC0 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
+		46B6118B1C09A44D00102AC0 /* TagTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagTableView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,10 +152,10 @@
 				46B6111F1C09447D00102AC0 /* AppDelegate.swift */,
 				46B611231C09447D00102AC0 /* Main.storyboard */,
 				46B6117C1C09721D00102AC0 /* ChildTableViewCell.swift */,
-				46B6117E1C09726300102AC0 /* ChildModel.swift */,
 				46B611821C0977E200102AC0 /* EventTableViewCell.swift */,
-				46B611801C09773B00102AC0 /* EventModel.swift */,
+				46B6118B1C09A44D00102AC0 /* TagTableView.swift */,
 				46B611211C09447D00102AC0 /* MainViewController.swift */,
+				46B6118A1C09A40B00102AC0 /* Model */,
 				46B611701C0966FE00102AC0 /* Profile */,
 				46B611691C095C4400102AC0 /* Meet */,
 				46B611591C09510600102AC0 /* Parent */,
@@ -259,11 +265,22 @@
 		46B611751C096ED000102AC0 /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				46B611881C09949B00102AC0 /* back.png */,
+				46B611861C09948400102AC0 /* go_face.png */,
 				46B611781C096F0B00102AC0 /* AirMeet-color_heart.png */,
 				46B6117A1C096F1100102AC0 /* AirMeet-color.png */,
 				46B611761C096EE100102AC0 /* AirMeet-white.png */,
 			);
 			name = Image;
+			sourceTree = "<group>";
+		};
+		46B6118A1C09A40B00102AC0 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				46B6117E1C09726300102AC0 /* ChildModel.swift */,
+				46B611801C09773B00102AC0 /* EventModel.swift */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -377,6 +394,8 @@
 				46B611501C0947A600102AC0 /* Child.storyboard in Resources */,
 				46B611271C09447D00102AC0 /* Assets.xcassets in Resources */,
 				46B6116F1C0966F300102AC0 /* Profile.storyboard in Resources */,
+				46B611871C09948400102AC0 /* go_face.png in Resources */,
+				46B611891C09949B00102AC0 /* back.png in Resources */,
 				46B611791C096F0B00102AC0 /* AirMeet-color_heart.png in Resources */,
 				46B611251C09447D00102AC0 /* Main.storyboard in Resources */,
 				46B6117B1C096F1100102AC0 /* AirMeet-color.png in Resources */,
@@ -408,6 +427,7 @@
 				46B6117F1C09726300102AC0 /* ChildModel.swift in Sources */,
 				46B611221C09447D00102AC0 /* MainViewController.swift in Sources */,
 				46B611601C09527F00102AC0 /* ChildMeetViewController.swift in Sources */,
+				46B6118C1C09A44D00102AC0 /* TagTableView.swift in Sources */,
 				46B6115E1C09521600102AC0 /* ChildFirstSettingViewController.swift in Sources */,
 				46B611201C09447D00102AC0 /* AppDelegate.swift in Sources */,
 				46B611811C09773B00102AC0 /* EventModel.swift in Sources */,

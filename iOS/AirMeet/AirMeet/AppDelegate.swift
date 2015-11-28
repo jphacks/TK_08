@@ -18,6 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var isParent:Bool!
     
     var selectEvent: EventModel?
+    var selectChild: ChildModel?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         //Navigationbar色

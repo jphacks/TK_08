@@ -13,7 +13,6 @@ class EventTableViewCell: UITableViewCell {
     
     @IBOutlet weak var EventNameLabel: UILabel!
     @IBOutlet weak var RoomNameLabel: UILabel!
-    
     @IBOutlet weak var ChildNumberLabel: UILabel!
     
     override func awakeFromNib() {
