@@ -14,13 +14,15 @@ http://airmeet.mybluemix.net/event_regist
 |description||説明文|
 
 
-### レスポンス
+### レスポンス(JSON形式)
 #### 成功時
-Event registration success.
-
+```
+{"message":"なんかメッセージ","code":200}
+```
 #### 失敗時
-Event registration failed.
-
+```
+{"message":"なんかメッセージ","code":500}
+```
 ## 会場の削除
 
 ## 会場の確認
