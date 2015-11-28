@@ -13,6 +13,12 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
     
+    @IBOutlet weak var backImageView: UIImageView!
+    @IBOutlet weak var imageImageView: UIImageView!
+    
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var detailLabel: UILabel!
+    
     @IBOutlet weak var EventTableView: UITableView!
     
     var events:[EventModel] = [EventModel]()
@@ -42,9 +48,13 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         EventTableView.delegate = self
         EventTableView.dataSource = self
         
+ 
+        
         //会場追加
-        let event:EventModel = EventModel(eventName: "JPHacks", roomName: "東大", childNumber: 50, eventDescription: "aaa")
+        let event:EventModel = EventModel(eventName: "JPHacks-東京会場", roomName: "東京大学 本郷キャンパス215教室", childNumber: 50, eventDescription: "aaa")
         events.append(event)
+        
+        
  
     }
     

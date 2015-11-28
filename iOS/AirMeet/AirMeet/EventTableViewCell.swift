@@ -13,7 +13,7 @@ class EventTableViewCell: UITableViewCell {
     
     @IBOutlet weak var EventNameLabel: UILabel!
     @IBOutlet weak var RoomNameLabel: UILabel!
-    @IBOutlet weak var ChildNumberLabel: UILabel!
+    //@IBOutlet weak var ChildNumberLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -33,7 +33,7 @@ class EventTableViewCell: UITableViewCell {
         
         self.EventNameLabel.text = eventModel.eventName
         self.RoomNameLabel.text = eventModel.roomName
-        self.ChildNumberLabel.text = String(eventModel.childNumber)
+        //self.ChildNumberLabel.text = String(eventModel.childNumber)
         
     }
 }

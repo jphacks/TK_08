@@ -18,13 +18,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AirMeet-white.png" translatesAutoresizingMaskIntoConstraints="NO" id="CrA-eg-kll">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AirMeet-color_heart.png" translatesAutoresizingMaskIntoConstraints="NO" id="CrA-eg-kll">
                                 <rect key="frame" x="180" y="236" width="240" height="128"/>
                                 <animations/>
                             </imageView>
                         </subviews>
                         <animations/>
-                        <color key="backgroundColor" red="0.50196078431372548" green="0.80000000000000004" blue="0.87450980392156863" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="CrA-eg-kll" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="216" id="5Bg-xB-AMZ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="CrA-eg-kll" secondAttribute="trailing" constant="160" id="FPd-U7-ETb"/>
@@ -39,6 +39,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="AirMeet-white.png" width="388" height="132"/>
+        <image name="AirMeet-color_heart.png" width="388" height="132"/>
     </resources>
 </document>
