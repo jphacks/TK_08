@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  ParentLockViewController.swift
 //  AirMeet
 //
 //  Created by koooootake on 2015/11/28.
@@ -8,18 +8,24 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-
+class ParentLockSettingViewController: UIViewController {
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
     }
-
+    
+    //終了
+    @IBAction func ParentStopButton(sender: AnyObject) {
+        
+        self.navigationController?.popToRootViewControllerAnimated(true)
+        
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
+    
+    
 }
-
