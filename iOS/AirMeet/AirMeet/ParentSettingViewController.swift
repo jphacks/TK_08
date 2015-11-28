@@ -35,6 +35,9 @@ class ParentSettingViewController: UIViewController,UITextFieldDelegate {
         
         self.EventNameTextField.tag = 0
         self.RoomNameTextField.tag = 1
+        
+        eventName = "test"
+        roomName = "test"
     }
     
     
@@ -88,7 +91,30 @@ class ParentSettingViewController: UIViewController,UITextFieldDelegate {
         //通信するお
         appDelegate.isParent = true
         
-       
+       // let URL = NSURL(string: "http://airmeet.mybluemix.net/event_regist")
+        
+       // let jsonData :NSData = NSData(contentsOfURL: URL)!
+       // let json :Dictionary = NSJSONSerialization.JSONObjectWithData(jsonData, options: nil, error: nil) as NSDictionary
+        
+        //サーバーと通信ーーー
+        
+        let json = JSON(url: "http://192.168.11.46:3000/event_regist?event_name=(eventName)&room_name=(roomName)")
+        
+        let line = json["major"]
+        
+        print("ああああ：\(line)")
+        
+        appDelegate.parentID = "\(line)"
+        
+        //画面遷移
+        performSegueWithIdentifier("startSegue",sender: nil)
+        
+        /*let post="event_name=aaa&room_name=sss"
+        let postData=post.dataUsingEncoding(NSUTF8StringEncoding)
+        let url = NSURL(string:"http://airmeet.mybluemix.net/event_regist")!
+        let request = NSMutableURLRequest(URL: url)
+        request.HTTPMethod="POST"
+        request.HTTPBody=postData*/
         
         
     }

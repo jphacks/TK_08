@@ -30,7 +30,6 @@
                                 </state>
                                 <connections>
                                     <action selector="ParentStartButton:" destination="dl5-lv-6jl" eventType="touchUpInside" id="60l-cn-23j"/>
-                                    <segue destination="cPN-Po-HNe" kind="showDetail" id="PK7-gn-ngx"/>
                                 </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="EventName" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aZA-qq-qfr">
@@ -60,6 +59,7 @@
                     <connections>
                         <outlet property="EventNameTextField" destination="aZA-qq-qfr" id="RYp-Xx-dtK"/>
                         <outlet property="RoomNameTextField" destination="w8d-3a-hVh" id="KaH-vC-7It"/>
+                        <segue destination="cPN-Po-HNe" kind="showDetail" identifier="startSegue" id="ILD-H8-d9z"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="o2L-ng-qIO" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -12,6 +12,7 @@ import CoreBluetooth
 
 class ParentLockSettingViewController: UIViewController , CBPeripheralManagerDelegate{
     
+    let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     // LocationManager.
     var myPheripheralManager:CBPeripheralManager!
     
@@ -36,7 +37,10 @@ class ParentLockSettingViewController: UIViewController , CBPeripheralManagerDel
         
         // Major.
         //サーバーから値を受け取ったと仮定
-        let myMajor : CLBeaconMajorValue = 510
+        
+        print("サーバーからきたお:\(appDelegate.parentID)")
+        
+        let myMajor : CLBeaconMajorValue = UInt16(appDelegate.parentID!)!
         
         // BeaconRegionを定義.
         let myBeaconRegion = CLBeaconRegion(proximityUUID: myProximityUUID!, major: myMajor, identifier: myIdentifier)
