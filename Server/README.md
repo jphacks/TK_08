@@ -13,7 +13,10 @@ http://airmeet.mybluemix.net/register_event
 |event_name|○|イベント名|
 |room_name|○|会場名|
 |description||説明文|
-|mandatory_filed|○|ユーザに入力させる必須項目<br>JSON形式|
+|items|○|ユーザに入力させる必須項目<br>配列形式|
+
+例
+http://airmeet.mybluemix.net/register_event?event_name=event1&room_name=room1&items=[hobby,presentation]
 
 ### レスポンスボディ(JSON形式)
 #### 成功時
@@ -158,9 +161,11 @@ http://airmeet.mybluemix.net/register_user
 #### 成功時
 ```
 {
+    "id": "自分のid",
     "users": [  
         {
-            "name": "参加している他のユーザ",
+            "id": "参加している他のユーザのid"
+            "name": "参加している他のユーザの名前",
             "image": "画像のURL",
             "items": {
                 "",
@@ -198,3 +203,37 @@ http://airmeet.mybluemix.net/register_user
 
 
 ## ユーザ登録の削除
+### リクエストURL
+http://airmeet.mybluemix.net/remove_user
+
+メソッド:GET
+
+### リクエストクエリパラメータ
+|キー|必須|説明|
+|:--|:--:|:--|
+|id|○|削除したいユーザのID|
+
+### レスポンスボディ(JSON形式)
+#### 成功時
+```
+{
+    "message": "なんか成功って感じのメッセージ",
+    "code": 200
+}
+```
+
+#### 失敗時(クライアントエラー)
+```
+{
+    "message": "なんかメッセージ",
+    "code": 400
+}
+```
+
+#### 失敗時(サーバエラー)
+```
+{
+    "message": "なんかメッセージ",
+    "code": 500
+}
+```
