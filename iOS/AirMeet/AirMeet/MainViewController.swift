@@ -94,7 +94,6 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
             //self.status.text = "Restricted Monitor"
         }
         
-        print(majorIDList)
         //---------------
         
         
@@ -120,15 +119,20 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         //複数あった場合は一番先頭のものを処理する
         let beacon = beacons[0]
         
+        //ここでつっこみ
         for i in 0..<beacons.count{
             majorIDList.append(beacons[i].major)
         }
         
+        //重複捨て
         if(beacons.count != 0){
             let set = NSOrderedSet(array: majorIDList)
             majorIDList = set.array as! [NSNumber]
             print(majorIDList)
         }
+        
+        //ここでサーバー？
+        print(majorIDList)
         
         /*
         beaconから取得できるデータ
