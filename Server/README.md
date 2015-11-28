@@ -2,8 +2,10 @@
 
 ## 会場の登録
 ### リクエストURL
-http://http://airmeet.mybluemix.net/event_registration
+http://airmeet.mybluemix.net/event_regist
+
 メソッド:POST
+
 ### リクエストボディ
 |キー|必須|説明|
 |:--|:--:|:--|
