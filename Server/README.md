@@ -13,10 +13,10 @@ http://airmeet.mybluemix.net/register_event
 |event_name|○|イベント名|
 |room_name|○|会場名|
 |description||説明文|
-|items|○|ユーザに入力させる必須項目<br>配列形式|
+|items|○|ユーザに入力させる必須項目<br>","区切り|
 
 例  
-http://airmeet.mybluemix.net/register_event?event_name=event1&room_name=room1&items=[hobby,presentation]
+http://airmeet.mybluemix.net/register_event?event_name=event1&room_name=room1&items=hobby,presentation
 
 ### レスポンスボディ(JSON形式)
 #### 成功時
@@ -140,7 +140,7 @@ http://airmeet.mybluemix.net/get_event_info
 ```
 
 
-## 会場へのユーザの登録&現在の参加者の取得
+## 会場へのユーザの登録
 
 ### リクエストURL
 http://airmeet.mybluemix.net/register_user
@@ -150,7 +150,7 @@ http://airmeet.mybluemix.net/register_user
 ### リクエストクエリパラメータ
 |キー|必須|説明|
 |:--|:--:|:--|
-|major||親機からiBeaconで取得したmajorの値|
+|major|○|親機からiBeaconで取得したmajorの値|
 |name|○|名前|
 |image|○|画像|
 |image_header||ヘッダ画像|
@@ -162,6 +162,44 @@ http://airmeet.mybluemix.net/register_user
 ```
 {
     "id": "自分のid",
+    "message": "なんか成功って感じのメッセージ",
+    "code": 200
+}
+```
+
+#### 失敗時(クライアントエラー)
+```
+{
+    "message":"なんかメッセージ",
+    "code":400
+}
+```
+
+#### 失敗時(サーバエラー)
+```
+{
+    "message":"なんかメッセージ",
+    "code":500
+}
+```
+
+## 現在の参加者の取得
+### リクエストURL
+http://airmeet.mybluemix.net/get_participants
+
+メソッド:GET
+
+### リクエストクエリパラメータ
+|キー|必須|説明|
+|:--|:--:|:--|
+|major|○|親機からiBeaconで取得したmajorの値|
+|id|○|自分のID|
+
+
+### レスポンスボディ(JSON形式)
+#### 成功時
+```
+{
     "users": [  
         {
             "id": "参加している他のユーザのid"
