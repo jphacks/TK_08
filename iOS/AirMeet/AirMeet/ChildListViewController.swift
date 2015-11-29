@@ -40,6 +40,28 @@ class ChildListViewController: UIViewController,UITableViewDelegate, UITableView
         
     }
     
+    //ここで再読み込み
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        //ここで、truefalseチェック
+        print("app：\(appDelegate.selectEvent!.eventID)")
+        
+        var isInEvent:Bool = true
+        
+        //処理
+        
+        if isInEvent{
+            
+        }else{
+           /* let alert = UIAlertController(title:"会場を抜けました",message:"",preferredStyle:UIAlertControllerStyle.Alert)
+            let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+            alert.addAction(okAction)
+            presentViewController(alert, animated: true, completion: nil)*/
+        }
+        
+        
+    }
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath:NSIndexPath) -> UITableViewCell {
         
         let cell:ChildTableViewCell = tableView.dequeueReusableCellWithIdentifier("ChildTableViewCell", forIndexPath: indexPath) as! ChildTableViewCell

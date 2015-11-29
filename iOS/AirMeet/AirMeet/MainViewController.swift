@@ -98,7 +98,7 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         
         detailLabel.text = "ごーだよーーーーーーーみんなげんきーーーーーーーーたのしいねーーーーーーーーーーーーーーーーーーーー"
         //会場追加
-        let event:EventModel = EventModel(eventName: "JPHacks-東京会場", roomName: "東京大学 本郷キャンパス215教室", childNumber: 50, eventDescription: "aaa")
+        let event:EventModel = EventModel(eventName: "JPHacks-東京会場", roomName: "東京大学 本郷キャンパス215教室", childNumber: 50, eventDescription: "aaa",eventID:5550)
         events.append(event)
         
         
