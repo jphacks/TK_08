@@ -250,7 +250,7 @@
                   moduleName = "AirMeet"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/koooootake/Desktop/TOJOHacks/GitHub/TK_08/iOS/AirMeet/AirMeet/ChildListViewController.swift"
-                  timestampString = "470465265.925919"
+                  timestampString = "470465754.956144"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "80"
@@ -265,7 +265,7 @@
                   moduleName = "AirMeet"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/koooootake/Desktop/TOJOHacks/GitHub/TK_08/iOS/AirMeet/AirMeet/ChildListViewController.swift"
-                  timestampString = "470465265.926347"
+                  timestampString = "470465754.956331"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "80"
@@ -480,6 +480,22 @@
             startingLineNumber = "106"
             endingLineNumber = "106"
             landmarkName = "ParentStartButton(_:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AirMeet/EventTableViewCell.swift"
+            timestampString = "470465698.835898"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "39"
+            endingLineNumber = "39"
+            landmarkName = "setCell(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

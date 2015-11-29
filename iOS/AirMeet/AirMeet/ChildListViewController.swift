@@ -76,7 +76,7 @@ class ChildListViewController: UIViewController,UITableViewDelegate, UITableView
             let alert = UIAlertController(title:"会場を抜けました",message:"",preferredStyle:UIAlertControllerStyle.Alert)
             let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
             alert.addAction(okAction)
-            presentViewController(alert, animated: true, completion: nil);
+            //presentViewController(alert, animated: true, completion: nil);
         }
         
         

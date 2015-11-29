@@ -161,6 +161,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		46435BEE1C0ABD8800361ABA /* TableView */ = {
+			isa = PBXGroup;
+			children = (
+				46B6117C1C09721D00102AC0 /* ChildTableViewCell.swift */,
+				46B611821C0977E200102AC0 /* EventTableViewCell.swift */,
+				46B6118B1C09A44D00102AC0 /* TagTableView.swift */,
+				46858F1C1C0A260E003190CB /* SettingTagTableView.swift */,
+			);
+			name = TableView;
+			sourceTree = "<group>";
+		};
 		46858F051C0A09C9003190CB /* SABlurImageView */ = {
 			isa = PBXGroup;
 			children = (
@@ -197,12 +208,9 @@
 			children = (
 				46B6111F1C09447D00102AC0 /* AppDelegate.swift */,
 				46B611231C09447D00102AC0 /* Main.storyboard */,
-				46B6117C1C09721D00102AC0 /* ChildTableViewCell.swift */,
-				46B611821C0977E200102AC0 /* EventTableViewCell.swift */,
-				46B6118B1C09A44D00102AC0 /* TagTableView.swift */,
-				46858F1C1C0A260E003190CB /* SettingTagTableView.swift */,
 				46B611211C09447D00102AC0 /* MainViewController.swift */,
 				46858F241C0A3B38003190CB /* json.swift */,
+				46435BEE1C0ABD8800361ABA /* TableView */,
 				46B6118A1C09A40B00102AC0 /* Model */,
 				46B611701C0966FE00102AC0 /* Profile */,
 				46B611691C095C4400102AC0 /* Meet */,

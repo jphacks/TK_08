@@ -31,8 +31,17 @@ class EventTableViewCell: UITableViewCell {
     
     func setCell(eventModel:EventModel){
         
+        
         self.EventNameLabel.text = eventModel.eventName
         self.RoomNameLabel.text = eventModel.roomName
+        
+        if eventModel.eventName == "nil"{
+            self.userInteractionEnabled = false
+            
+        }else{
+            self.userInteractionEnabled = true
+            
+        }
         //self.ChildNumberLabel.text = String(eventModel.childNumber)
         
     }

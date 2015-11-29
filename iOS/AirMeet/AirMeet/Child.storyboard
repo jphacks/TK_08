@@ -997,13 +997,12 @@
                     <connections>
                         <segue destination="7Ih-MF-wjk" kind="relationship" relationship="viewControllers" id="2Cx-xm-vaL"/>
                         <segue destination="G2r-Ka-SqO" kind="relationship" relationship="viewControllers" id="2Kf-cn-2Vp"/>
-                        <segue destination="urh-AA-slc" kind="relationship" relationship="viewControllers" id="GEG-sa-WYP"/>
                         <segue destination="Nsh-qi-A4q" kind="relationship" relationship="viewControllers" id="hjm-yD-IYe"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sYw-LC-OYQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="724" y="418"/>
+            <point key="canvasLocation" x="718" y="166"/>
         </scene>
         <!--List-->
         <scene sceneID="u2a-Wg-beZ">
@@ -1065,26 +1064,6 @@
             </objects>
             <point key="canvasLocation" x="1480" y="1842"/>
         </scene>
-        <!--Meet-->
-        <scene sceneID="h3E-pF-Ra0">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="urh-AA-slc" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Meet" image="tab-meet_w.png" id="Oyh-cj-qc5"/>
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Hhb-0a-nzI">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <animations/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="VUG-RX-MVJ" kind="relationship" relationship="rootViewController" id="axs-Dp-9fy"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="BrJ-eE-5vw" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1480" y="1149"/>
-        </scene>
     </scenes>
     <resources>
         <image name="go_back.png" width="2448" height="3264"/>
@@ -1092,7 +1071,6 @@
         <image name="icon-A-95.png" width="95" height="95"/>
         <image name="tab-account_w.png" width="80" height="40"/>
         <image name="tab-list_w.png" width="80" height="40"/>
-        <image name="tab-meet_w.png" width="80" height="40"/>
         <image name="tab-search_w.png" width="80" height="40"/>
     </resources>
 </document>
