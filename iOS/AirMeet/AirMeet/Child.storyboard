@@ -303,16 +303,6 @@
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="EventName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dre-dj-eMU">
-                                        <rect key="frame" x="100" y="16" width="477" height="40"/>
-                                        <animations/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="GP4-hG-PbP"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="18"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-A-95.png" translatesAutoresizingMaskIntoConstraints="NO" id="FoG-nq-XoS">
                                         <rect key="frame" x="24" y="16" width="68" height="68"/>
                                         <animations/>
@@ -323,6 +313,16 @@
                                             <constraint firstAttribute="height" constant="68" id="y2F-Vv-vab"/>
                                         </constraints>
                                     </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="EventName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dre-dj-eMU">
+                                        <rect key="frame" x="100" y="16" width="477" height="40"/>
+                                        <animations/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="GP4-hG-PbP"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="18"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -365,13 +365,13 @@
                                                         <constraint firstAttribute="width" constant="94" id="nns-cU-bcF"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tag" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ei2-Ox-rug">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tag" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ei2-Ox-rug">
                                                     <rect key="frame" x="118" y="61" width="466" height="42"/>
                                                     <animations/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="42" id="5Y6-2p-zFd"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="11"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -411,6 +411,7 @@
                                         <color key="backgroundColor" red="0.50196078430000002" green="0.80000000000000004" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <outlet property="backImageView" destination="k0c-uL-8gk" id="tBV-pT-c5D"/>
+                                            <outlet property="detailLabel" destination="ei2-Ox-rug" id="d1d-BM-f80"/>
                                             <outlet property="imageImageView" destination="7FH-7Q-wSr" id="6qP-FW-Wzl"/>
                                             <outlet property="nameLabel" destination="vEg-oj-NJx" id="RtA-7A-G7a"/>
                                         </connections>
@@ -447,6 +448,8 @@
                     <navigationItem key="navigationItem" title="will Meet" id="u9s-Zb-qI0"/>
                     <connections>
                         <outlet property="ChildTableView" destination="MPU-iL-159" id="mEV-CQ-Fbg"/>
+                        <outlet property="eventLabel" destination="Dre-dj-eMU" id="54j-Yx-npA"/>
+                        <outlet property="roomLabels" destination="98V-Xg-3zl" id="hxb-WV-tAf"/>
                         <segue destination="b8L-iR-8HT" kind="show" identifier="showDetail" id="er9-au-EZP"/>
                     </connections>
                 </viewController>
@@ -486,18 +489,29 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hcr-qc-UiA">
-                                <rect key="frame" x="532" y="156" width="48" height="30"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="go_back.png" translatesAutoresizingMaskIntoConstraints="NO" id="MY4-8T-Vna">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="148"/>
+                                <animations/>
+                                <color key="backgroundColor" red="1" green="0.47626573830000002" blue="0.45458508720000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="120" id="ULj-as-HLz"/>
+                                    <constraint firstAttribute="height" constant="148" id="YbS-zD-A9S"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="ULj-as-HLz"/>
+                                    </mask>
+                                </variation>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="go_face.png" translatesAutoresizingMaskIntoConstraints="NO" id="wqx-c6-CTr">
+                                <rect key="frame" x="20" y="130" width="100" height="100"/>
                                 <animations/>
                                 <color key="backgroundColor" red="0.50196078430000002" green="0.80000000000000004" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="1hA-lu-yAl"/>
-                                    <constraint firstAttribute="width" constant="48" id="5yM-hR-QRQ"/>
+                                    <constraint firstAttribute="height" constant="100" id="6F5-vv-hO9"/>
+                                    <constraint firstAttribute="width" constant="100" id="O4S-wU-cOE"/>
                                 </constraints>
-                                <state key="normal" title="Meet">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
+                            </imageView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="50" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="1dZ-lP-DKx">
                                 <rect key="frame" x="0.0" y="321" width="600" height="230"/>
                                 <animations/>
@@ -558,34 +572,6 @@
                                     </mask>
                                 </variation>
                             </tableView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="go_face.png" translatesAutoresizingMaskIntoConstraints="NO" id="wqx-c6-CTr">
-                                <rect key="frame" x="20" y="130" width="100" height="100"/>
-                                <animations/>
-                                <color key="backgroundColor" red="0.50196078430000002" green="0.80000000000000004" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="100" id="6F5-vv-hO9"/>
-                                    <constraint firstAttribute="width" constant="100" id="O4S-wU-cOE"/>
-                                </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="35"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="go_back.png" translatesAutoresizingMaskIntoConstraints="NO" id="MY4-8T-Vna">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="148"/>
-                                <animations/>
-                                <color key="backgroundColor" red="1" green="0.47626573830000002" blue="0.45458508720000002" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="120" id="ULj-as-HLz"/>
-                                    <constraint firstAttribute="height" constant="148" id="YbS-zD-A9S"/>
-                                </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="ULj-as-HLz"/>
-                                    </mask>
-                                </variation>
-                            </imageView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -593,18 +579,16 @@
                             <constraint firstItem="1dZ-lP-DKx" firstAttribute="top" secondItem="wqx-c6-CTr" secondAttribute="bottom" constant="8" id="4P8-OY-S5n"/>
                             <constraint firstAttribute="trailingMargin" secondItem="4qk-Sf-pyW" secondAttribute="trailing" constant="56" id="ArK-kd-pNf"/>
                             <constraint firstItem="gGs-Xo-NWz" firstAttribute="top" secondItem="1dZ-lP-DKx" secondAttribute="bottom" id="Czt-6u-HAC"/>
-                            <constraint firstItem="Hcr-qc-UiA" firstAttribute="leading" secondItem="4qk-Sf-pyW" secondAttribute="trailing" constant="8" id="IJW-Kb-VDr"/>
                             <constraint firstItem="4qk-Sf-pyW" firstAttribute="leading" secondItem="wqx-c6-CTr" secondAttribute="trailing" constant="8" id="IbA-9t-62u"/>
                             <constraint firstItem="MY4-8T-Vna" firstAttribute="leading" secondItem="YpZ-zK-oly" secondAttribute="leadingMargin" constant="-20" id="MJk-M5-2px"/>
-                            <constraint firstItem="Hcr-qc-UiA" firstAttribute="trailing" secondItem="YpZ-zK-oly" secondAttribute="trailingMargin" id="OBB-Sy-IAx"/>
                             <constraint firstItem="1dZ-lP-DKx" firstAttribute="top" secondItem="c6t-cu-fA2" secondAttribute="bottom" constant="8" id="Qoz-vs-Ubu"/>
                             <constraint firstItem="wqx-c6-CTr" firstAttribute="top" secondItem="kdL-w8-rGR" secondAttribute="bottom" constant="80" id="U33-by-V53"/>
                             <constraint firstItem="1dZ-lP-DKx" firstAttribute="leading" secondItem="YpZ-zK-oly" secondAttribute="leadingMargin" constant="-20" id="dMM-QC-xsY"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="4qk-Sf-pyW" secondAttribute="trailing" constant="56" id="gmV-Jb-Dbr"/>
                             <constraint firstItem="MY4-8T-Vna" firstAttribute="top" secondItem="YpZ-zK-oly" secondAttribute="topMargin" constant="28" id="gqs-FP-88U"/>
                             <constraint firstItem="4qk-Sf-pyW" firstAttribute="top" secondItem="MY4-8T-Vna" secondAttribute="bottom" constant="8" id="h2v-Sj-suO"/>
                             <constraint firstAttribute="trailingMargin" secondItem="1dZ-lP-DKx" secondAttribute="trailing" constant="-20" id="i2L-8Z-vmY"/>
                             <constraint firstItem="c6t-cu-fA2" firstAttribute="leading" secondItem="YpZ-zK-oly" secondAttribute="leadingMargin" id="i7i-5e-oTq"/>
-                            <constraint firstItem="Hcr-qc-UiA" firstAttribute="top" secondItem="MY4-8T-Vna" secondAttribute="bottom" constant="8" id="jjh-nR-7Bd"/>
                             <constraint firstItem="wqx-c6-CTr" firstAttribute="leading" secondItem="YpZ-zK-oly" secondAttribute="leadingMargin" id="k7K-nM-kSL"/>
                             <constraint firstItem="wqx-c6-CTr" firstAttribute="top" secondItem="kdL-w8-rGR" secondAttribute="bottom" constant="66" id="nyH-R1-TfN"/>
                             <constraint firstAttribute="trailingMargin" secondItem="MY4-8T-Vna" secondAttribute="trailing" constant="-20" id="oN9-ON-3EL"/>
@@ -624,6 +608,7 @@
                     <connections>
                         <outlet property="TagTableView" destination="1dZ-lP-DKx" id="voX-IO-AoP"/>
                         <outlet property="backImageView" destination="MY4-8T-Vna" id="RP0-ct-8Yt"/>
+                        <outlet property="detail" destination="c6t-cu-fA2" id="Jce-Rm-ym1"/>
                         <outlet property="imageImageView" destination="wqx-c6-CTr" id="JZ7-ty-Hdb"/>
                         <outlet property="nameLabel" destination="4qk-Sf-pyW" id="qfF-Ma-uPV"/>
                     </connections>
@@ -814,33 +799,6 @@
                                     <segue destination="9bg-QI-95u" kind="unwind" unwindAction="unwindToTop:" id="2ar-iA-eyW"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RoomName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lAy-SO-Uto">
-                                <rect key="frame" x="100" y="116" width="477" height="13"/>
-                                <animations/>
-                                <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="13"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="EventName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wRY-cK-Hmo">
-                                <rect key="frame" x="100" y="72" width="477" height="40"/>
-                                <animations/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="KDF-ZN-Gap"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="18"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-A-95.png" translatesAutoresizingMaskIntoConstraints="NO" id="PV4-fY-W7K">
-                                <rect key="frame" x="24" y="72" width="68" height="68"/>
-                                <animations/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="68" id="0Xg-59-pI1"/>
-                                    <constraint firstAttribute="height" constant="68" id="D1c-T5-iqP"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="68" id="Ico-IH-rXE"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="68" id="RVM-7H-Du0"/>
-                                </constraints>
-                            </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="go_back.png" translatesAutoresizingMaskIntoConstraints="NO" id="2ee-5V-dF3">
                                 <rect key="frame" x="0.0" y="206" width="600" height="120"/>
                                 <animations/>
@@ -929,6 +887,33 @@
                                     </mask>
                                 </variation>
                             </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RoomName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lAy-SO-Uto">
+                                <rect key="frame" x="100" y="116" width="477" height="13"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="13"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="EventName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wRY-cK-Hmo">
+                                <rect key="frame" x="100" y="72" width="477" height="40"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="KDF-ZN-Gap"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="18"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-A-95.png" translatesAutoresizingMaskIntoConstraints="NO" id="PV4-fY-W7K">
+                                <rect key="frame" x="24" y="72" width="68" height="68"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="68" id="0Xg-59-pI1"/>
+                                    <constraint firstAttribute="height" constant="68" id="D1c-T5-iqP"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="68" id="Ico-IH-rXE"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="68" id="RVM-7H-Du0"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -958,6 +943,10 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Setting" id="gjV-sm-MHP"/>
+                    <connections>
+                        <outlet property="eventLabel" destination="wRY-cK-Hmo" id="atf-Vv-WUa"/>
+                        <outlet property="roomLabel" destination="lAy-SO-Uto" id="Xpu-4q-xas"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5e1-dP-Dcm" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="9bg-QI-95u" userLabel="Exit" sceneMemberID="exit"/>

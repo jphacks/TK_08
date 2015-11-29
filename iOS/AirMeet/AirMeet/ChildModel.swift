@@ -16,14 +16,16 @@ class ChildModel : NSObject {
     var backgroundImage:UIImage
     var name:String
     var tag:Dictionary<String,String>
+    var detail:String
     
     
-    init(image:UIImage,backgroundImage:UIImage,name:String,tag:Dictionary<String,String>) {
+    init(image:UIImage,backgroundImage:UIImage,name:String,tag:Dictionary<String,String>,detail:String) {
         
         self.image = image
         self.backgroundImage = backgroundImage
         self.name = name
         self.tag = tag
+        self.detail = detail
         
     }
     
