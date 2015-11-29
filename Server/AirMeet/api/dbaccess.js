@@ -52,7 +52,7 @@ exports.get = function(id, callback) {
 
 // Majorの値と一致するイベントを取得
 exports.get_event = function(callback) {
-  db.view('events/get', callback);
+  db.view('events/get_info', callback);
 };
 
 exports.gen_rand = function(){
@@ -62,13 +62,18 @@ exports.gen_rand = function(){
     var rand = Math.floor( Math.random() * 65535 );
     db.view('events/major',function(err, res) {
       res.forEach(function(row) {
-        console.log("2 "+row);
+        //console.log("2 "+row);
         if(row.major == rand){
-          console.log("3 "+row.major);
+          //console.log("3 "+row.major);
           flag = 1;
         }
       });
     });
   }
   return rand;
+};
+
+// Majorの値と一致するイベントを取得
+exports.get_participants = function(callback) {
+  db.view('users/get_participants', callback);
 };

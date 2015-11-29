@@ -60,6 +60,7 @@ router.get('/register_event', function(req, res) {
       room_name : rn,
       description : desc,
       major : major,
+      items : items,
       regist_date : moment().zone('+0900').format('YYYY/MM/DD HH:mm:ss')
     };
     dba.save(id, doc, function(err) {
@@ -93,7 +94,7 @@ router.get('/register_event', function(req, res) {
 
 
 // eventを得る
-router.get('/get_event', function(req, res) {
+router.get('/get_event_info', function(req, res) {
   var success = {
     message : null,
     code : 200
@@ -111,7 +112,7 @@ router.get('/get_event', function(req, res) {
       events.forEach(function(row) {
         if(row.major == major){
           row.code = 200;
-          delete row.major;
+          row.items = row.items.split(',');
           res.send(row);
           flag = 1;
         }
@@ -129,6 +130,126 @@ router.get('/get_event', function(req, res) {
       res.send(str);
     }
   });
+});
+
+router.post('/register_user', function(req, res) {
+  var success = {
+    id : null,
+    message : null,
+    code : 200
+  };
+  var error = {};
+  var id = uuid.v4();
+
+  var major = req.body.major;
+  var name = req.body.name;
+  var image = req.body.image;
+  var image_header = req.body.image_header;
+  var items = req.body.items;
+
+  if(!major){
+    error.message = "Error: major is missing";
+    error.code = 400;
+  }
+  if(!name){
+    error.message = "Error: name is missing";
+    error.code = 400;
+  }
+  if(!items){
+    error.message = "Error: items is missing";
+    error.code = 400;
+  }
+
+  if(!Object.keys(error).length){
+    console.log(major);
+    var doc = {
+      type : "user",
+      major : major,
+      name : name,
+      image : image,
+      image_header : image_header,
+      items : items,
+      regist_date : moment().zone('+0900').format('YYYY/MM/DD HH:mm:ss')
+    };
+    dba.save(id, doc, function(err) {
+      if(err){
+        error.message = "Error: User registration failed";
+        error.code = 500;
+        var str = JSON.stringify(error);
+      }else{
+        success.id = id;
+        success.message = "User registration success";
+        var str = JSON.stringify(success);
+      }
+      res.send(str);
+    });
+  }else{
+    var str = JSON.stringify(error);
+    res.send(str);
+  }
+});
+
+
+// 参加者を取得
+router.get('/get_participants', function(req, res) {
+  var success = {
+    major : null,
+    message : null,
+    code : 200
+  };
+  var error = {};
+
+  var major = req.param("major");
+  var id = req.param("id");
+
+  if(!major){
+    error.message = "Error: major is missing";
+    error.code = 400;
+  }
+  if(!id){
+    error.message = "Error: id is missing";
+    error.code = 400;
+  }
+
+  if(!Object.keys(error).length){
+    console.log(major);
+    dba.get_participants(function(err,users) {
+      if(users.length){
+        var flag = 0;
+        var obj = {
+          users : [],
+          code : 200
+        };
+        users.forEach(function(row) {
+          console.log("1"+row.major);
+          if(row.major == major){
+            console.log("2");
+            row.code
+            //row.items = row.items.split(',');
+            //row.items = (new Function("return " + row.items))();
+            obj.users.push(row);
+            flag = 1;
+          }
+        });
+        if(flag == 0){
+          error.message = "Participant does not match";
+          error.code = 200;
+        }else{
+          res.send(obj);
+        }
+      }else{
+        error.message = "Participant does not exist";
+        error.code = 200;
+      }
+      if(Object.keys(error).length){
+        var str = JSON.stringify(error);
+        res.send(str);
+      }
+    });
+  }else{
+    var str = JSON.stringify(error);
+    res.send(str);
+  }
 });
 
 
