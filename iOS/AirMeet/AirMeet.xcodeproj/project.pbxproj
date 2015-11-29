@@ -18,6 +18,8 @@
 		46858F1F1C0A30CF003190CB /* img-A-415.png in Resources */ = {isa = PBXBuildFile; fileRef = 46858F1E1C0A30CF003190CB /* img-A-415.png */; };
 		46858F221C0A334D003190CB /* AirMeet-color_heart.png in Resources */ = {isa = PBXBuildFile; fileRef = 46858F201C0A334D003190CB /* AirMeet-color_heart.png */; };
 		46858F231C0A334D003190CB /* AirMeet-color.png in Resources */ = {isa = PBXBuildFile; fileRef = 46858F211C0A334D003190CB /* AirMeet-color.png */; };
+		46858F251C0A3B38003190CB /* json.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46858F241C0A3B38003190CB /* json.swift */; };
+		46858F271C0A7691003190CB /* mask.png in Resources */ = {isa = PBXBuildFile; fileRef = 46858F261C0A7691003190CB /* mask.png */; };
 		46B611201C09447D00102AC0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B6111F1C09447D00102AC0 /* AppDelegate.swift */; };
 		46B611221C09447D00102AC0 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B611211C09447D00102AC0 /* MainViewController.swift */; };
 		46B611251C09447D00102AC0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46B611231C09447D00102AC0 /* Main.storyboard */; };
@@ -82,6 +84,8 @@
 		46858F1E1C0A30CF003190CB /* img-A-415.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img-A-415.png"; sourceTree = "<group>"; };
 		46858F201C0A334D003190CB /* AirMeet-color_heart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AirMeet-color_heart.png"; sourceTree = "<group>"; };
 		46858F211C0A334D003190CB /* AirMeet-color.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AirMeet-color.png"; sourceTree = "<group>"; };
+		46858F241C0A3B38003190CB /* json.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = json.swift; sourceTree = "<group>"; };
+		46858F261C0A7691003190CB /* mask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mask.png; sourceTree = "<group>"; };
 		46B6111C1C09447D00102AC0 /* AirMeet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AirMeet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		46B6111F1C09447D00102AC0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		46B611211C09447D00102AC0 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -195,6 +199,7 @@
 				46B611691C095C4400102AC0 /* Meet */,
 				46B611591C09510600102AC0 /* Parent */,
 				46B6115A1C09511000102AC0 /* Child */,
+				46858F241C0A3B38003190CB /* json.swift */,
 				46858F051C0A09C9003190CB /* SABlurImageView */,
 				46B611751C096ED000102AC0 /* Image */,
 				46B611261C09447D00102AC0 /* Assets.xcassets */,
@@ -302,6 +307,7 @@
 		46B611751C096ED000102AC0 /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				46858F261C0A7691003190CB /* mask.png */,
 				46858F1E1C0A30CF003190CB /* img-A-415.png */,
 				46858F121C0A1337003190CB /* tab-account_w.png */,
 				46858F131C0A1337003190CB /* tab-list_w.png */,
@@ -448,6 +454,7 @@
 				46B611921C09F92500102AC0 /* icon-A-95.png in Resources */,
 				46B611271C09447D00102AC0 /* Assets.xcassets in Resources */,
 				46858F231C0A334D003190CB /* AirMeet-color.png in Resources */,
+				46858F271C0A7691003190CB /* mask.png in Resources */,
 				46858F191C0A1337003190CB /* tab-search_w.png in Resources */,
 				46858F171C0A1337003190CB /* tab-list_w.png in Resources */,
 				46B611901C09F85900102AC0 /* go_back.png in Resources */,
@@ -501,6 +508,7 @@
 				46B6116D1C09660A00102AC0 /* MeetListDetailViewController.swift in Sources */,
 				46B6117D1C09721D00102AC0 /* ChildTableViewCell.swift in Sources */,
 				46B611581C09510100102AC0 /* ChildListViewController.swift in Sources */,
+				46858F251C0A3B38003190CB /* json.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -647,6 +655,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.osatou.AirMeet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -661,6 +670,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.osatou.AirMeet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

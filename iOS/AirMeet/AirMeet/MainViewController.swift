@@ -52,7 +52,7 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         //Navigationbar画像
         let titleImageView = UIImageView( image: UIImage(named: "AirMeet-white.png"))
         titleImageView.contentMode = .ScaleAspectFit
-        titleImageView.frame = CGRectMake(0, 0, self.view.frame.width, self.navigationController!.navigationBar.frame.height*0.7)
+        titleImageView.frame = CGRectMake(0, 0, self.view.frame.width, self.navigationController!.navigationBar.frame.height*0.8)
         self.navigationItem.titleView = titleImageView
         
         appDelegate.isChild = false
@@ -94,8 +94,9 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         }
         
         //---------------
+       
         
-        
+        detailLabel.text = "ごーだよーーーーーーーみんなげんきーーーーーーーーたのしいねーーーーーーーーーーーーーーーーーーーー"
         //会場追加
         let event:EventModel = EventModel(eventName: "JPHacks-東京会場", roomName: "東京大学 本郷キャンパス215教室", childNumber: 50, eventDescription: "aaa")
         events.append(event)
@@ -208,7 +209,7 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         appDelegate.selectEvent = events[indexPath.row]
         
         let storyboard: UIStoryboard = UIStoryboard(name: "Child", bundle: NSBundle.mainBundle())
-        let childViewController: ChildRoomViewController = storyboard.instantiateInitialViewController() as! ChildRoomViewController
+        let childViewController: ChildFirstSettingViewController = storyboard.instantiateInitialViewController() as! ChildFirstSettingViewController
         
         self.navigationController?.pushViewController(childViewController, animated: true)
         
@@ -229,7 +230,7 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
     @IBAction func ChildButton(sender: AnyObject) {
         
         let storyboard: UIStoryboard = UIStoryboard(name: "Child", bundle: NSBundle.mainBundle())
-        let childViewController: ChildRoomViewController = storyboard.instantiateInitialViewController() as! ChildRoomViewController
+        let childViewController: ChildFirstSettingViewController = storyboard.instantiateInitialViewController() as! ChildFirstSettingViewController
         
         self.navigationController?.pushViewController(childViewController, animated: true)
         
@@ -253,6 +254,7 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         
     }
     
+ 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -260,4 +262,5 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
     
     
 }
+
 
