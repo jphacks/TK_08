@@ -25,14 +25,15 @@ class ChildListViewController: UIViewController,UITableViewDelegate, UITableView
         ChildTableView.delegate = self
         ChildTableView.dataSource = self
         
-        let tag:Dictionary<String,String> = ["age":"22","趣味":"デレステ"]
-        let tag2:Dictionary<String,String> = ["age":"40","趣味":"みゅーず"]
+        let tag1:Dictionary<String,String> = ["年齢":"22","所属":"筑波大学","趣味":"スクフェス"]
+        let tag2:Dictionary<String,String> = ["年齢":"40","所属":"東京大学","趣味":"スクフェス"]
+        let tag3:Dictionary<String,String> = ["年齢":"22","所属":"筑波大学","趣味":"デレステ"]
         
 
         //子追加
-        let child1:ChildModel = ChildModel(image: UIImage(named: "go_face.png")!, backgroundImage:  UIImage(named: "go_back.png")!, name: "go", tag: tag)
-        let child2:ChildModel = ChildModel(image: UIImage(named: "go_face.png")!, backgroundImage:  UIImage(named: "go_back.png")!, name: "goooo", tag: tag2)
-        let child3:ChildModel = ChildModel(image: UIImage(named: "go_face.png")!, backgroundImage:  UIImage(named: "go_back.png")!, name: "goooooo", tag: tag)
+        let child1:ChildModel = ChildModel(image: UIImage(named: "go_face.png")!, backgroundImage:  UIImage(named: "go_back.png")!, name: "さとうごう", tag: tag1)
+        let child2:ChildModel = ChildModel(image: UIImage(named: "IMG_9004.JPG")!, backgroundImage:  UIImage(named: "IMG_9003.JPG")!, name: "いい子", tag: tag2)
+        let child3:ChildModel = ChildModel(image: UIImage(named: "IMG_8996.JPG")!, backgroundImage:  UIImage(named: "IMG_9002.JPG")!, name: "うぉるこふ", tag: tag3)
         
         childs.append(child1)
         childs.append(child2)
