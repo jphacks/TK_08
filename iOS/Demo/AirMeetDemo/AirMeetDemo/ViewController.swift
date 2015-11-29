@@ -109,6 +109,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate{
             
             manager.startRangingBeaconsInRegion(region);
             // →(didRangeBeacons)で測定をはじめる
+            print("Yeahhhhhh")
             print("Inside")
             break;
             
