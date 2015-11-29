@@ -13,6 +13,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var navigationController: UINavigationController?
+    
+    var test: UIApplication?
+    var notification = UILocalNotification()
 
     var isChild: Bool!
     var isParent:Bool!
@@ -29,11 +32,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //Navigationbar色
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         
-       
+        application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes:
+            [UIUserNotificationType.Sound,
+                UIUserNotificationType.Alert], categories: nil))
+        
+        // アプリに登録されている全ての通知を削除
+        UIApplication.sharedApplication().cancelAllLocalNotifications()
         
         return true
     }
 
+    func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
+        
+        print("in")
+        
+        var alert = UIAlertView()
+        alert.title = "Message"
+        alert.message = notification.alertBody
+        alert.addButtonWithTitle(notification.alertAction)
+        alert.show()
+    }
+    
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
@@ -54,6 +73,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    }
+
+    func pushControll(){
+        // push設定
+        // 登録済みのスケジュールをすべてリセット
+        print("push")
+        //application!.cancelAllLocalNotifications()
+        
+        
+        notification.alertAction = "AirMeet"
+        notification.alertBody = "iBeacon範囲に入りました"
+        notification.soundName = UILocalNotificationDefaultSoundName
+        // あとのためにIdを割り振っておく
+        notification.userInfo = ["notifyId": "AirMeet"]
+        UIApplication.sharedApplication().scheduleLocalNotification(notification)
+        
     }
 
 
