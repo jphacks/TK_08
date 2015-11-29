@@ -107,33 +107,56 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         
         majorIDList = []
         
+        var event:EventModel!
+        
         if(beacons.count == 0) {
             //リストに何も受信していないことを表示
             print("nothing")
             appDelegate.majorID = []
+            
+            
+            if(majorIDList.count != majorIDListOld.count){
+                
+                event = EventModel(eventName: "nil", roomName: "nil", childNumber: 0, eventDescription: "nil",eventID:0)
+                print("通信失敗結果だよ!")
+            }
+            
             return
+            
         }
+        
         //複数あった場合は一番先頭のものを処理する
         let beacon = beacons[0]
         
-        //ここでつっこみ
+        //ここでつっこ
         for i in 0..<beacons.count{
             majorIDList.append(beacons[i].major)
         }
-        
+    
+    
         //重複捨て
         if(beacons.count != 0){
             let set = NSOrderedSet(array: majorIDList)
             majorIDList = set.array as! [NSNumber]
         }
         
+        
+        majorIDList = majorIDList.reverse()
+        
+        
+        
+       
+        
+        
         //-------go
         //ここで変更があったか検証します
         //サーバーにアクセス
+        
+        majorIDList = majorIDList.reverse()
+        
         if(majorIDList.count != majorIDListOld.count){
             print("change list")
             print(majorIDList)
-            majorIDList = majorIDList.reverse()
             
             events = []
     
@@ -144,16 +167,31 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
            // let line = json["major"]
            // appDelegate.parentID = "\(line)"
             
-            let event:EventModel = EventModel(eventName: "\(json["event_name"])", roomName: "\(json["room_name"])", childNumber: 0, eventDescription: "\(json["description"])",eventID: majorIDList[0])
+           
             
-            print("通信結果だよ!\(json["event_name"]),\(json["room_name"]),\(majorIDList[0])")
+            print(json["code"])
             
+            if String(json["code"]) == "400"{
+                
+                event = EventModel(eventName: "nil", roomName: "nil", childNumber: 0, eventDescription: "nil",eventID: majorIDList[0])
+                
+                 print("通信失敗結果だよ!\(json["event_name"]),\(majorIDList[0])")
+                
+            }else{
             
+                event = EventModel(eventName: "\(json["event_name"])", roomName: "\(json["room_name"])", childNumber: 0, eventDescription: "\(json["description"])",eventID: majorIDList[0])
+            
+        
+                print("通信結果だよ!\(json["event_name"]),\(json["room_name"]),\(majorIDList[0])")
+            
+            }
             events.append(event)
             EventTableView.reloadData()
             
+            
             appDelegate.majorID = majorIDList
             majorIDListOld = majorIDList
+            
             
         }else{
             print("same")
