@@ -13,40 +13,49 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var test: UIApplication?
+    var notification = UILocalNotification()
     
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        
-       
-        
-        // アプリに登録されている全ての通知を削除
-        UIApplication.sharedApplication().cancelAllLocalNotifications()
         
         application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes:
             [UIUserNotificationType.Sound,
                 UIUserNotificationType.Alert], categories: nil))
         
+        // アプリに登録されている全ての通知を削除
+        UIApplication.sharedApplication().cancelAllLocalNotifications()
+    
         //pushControll(application)
         
         return true
     }
     
-    func pushControll(application:UIApplication){
+    func pushControll(){
         print(ViewController().isChange)
-        if(ViewController().isChange){
-        // push設定
+                // push設定
         // 登録済みのスケジュールをすべてリセット
         print("push")
         //application!.cancelAllLocalNotifications()
         
-        var notification = UILocalNotification()
+      
         notification.alertAction = "AirMeet"
         notification.alertBody = "iBeacon範囲に入りました"
         notification.soundName = UILocalNotificationDefaultSoundName
         // あとのためにIdを割り振っておく
         notification.userInfo = ["notifyId": "AirMeet"]
-        application.scheduleLocalNotification(notification)
-        }
+        UIApplication.sharedApplication().scheduleLocalNotification(notification)
+        
+    }
+    
+    func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
+        
+        print("in")
+        
+        var alert = UIAlertView()
+        alert.title = "Message"
+        alert.message = notification.alertBody
+        alert.addButtonWithTitle(notification.alertAction)
+        alert.show()
     }
     
     func applicationWillResignActive(application: UIApplication) {

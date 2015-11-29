@@ -111,7 +111,8 @@ class ViewController: UIViewController,CLLocationManagerDelegate{
             majorIDListOld = majorIDList
             
             isChange = true
-            
+            print(beacon.major)
+            AppDelegate().pushControll()
             
         }else{
             print("same")
