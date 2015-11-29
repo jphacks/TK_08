@@ -98,7 +98,7 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         
         detailLabel.text = "ごーだよーーーーーーーみんなげんきーーーーーーーーたのしいねーーーーーーーーーーーーーーーーーーーー"
         //会場追加
-        let event:EventModel = EventModel(eventName: "JPHacks-東京会場", roomName: "東京大学 本郷キャンパス215教室", childNumber: 50, eventDescription: "aaa",eventID:5550)
+        let event:EventModel = EventModel(eventName: "JPHacks-東京会場", roomName: "東京大学 本郷キャンパス215教室", childNumber: 50, eventDescription: "aaa",eventID:203)
         events.append(event)
         
         
@@ -113,6 +113,7 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         if(beacons.count == 0) {
             //リストに何も受信していないことを表示
             print("nothing")
+            appDelegate.majorID = []
             return
         }
         //複数あった場合は一番先頭のものを処理する
@@ -135,6 +136,7 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         if(majorIDList.count != majorIDListOld.count){
             print("change list")
             print(majorIDList)
+            appDelegate.majorID = majorIDList
             majorIDListOld = majorIDList
         }else{
             print("same")

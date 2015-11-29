@@ -21,6 +21,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var selectChild: ChildModel?
     
     var parentID: String?
+    
+    var majorID:[NSNumber] = []
+    var majorIDOld:[NSNumber] = []
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         //Navigationbar色

@@ -43,16 +43,35 @@ class ChildListViewController: UIViewController,UITableViewDelegate, UITableView
     //ここで再読み込み
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        //ここで、truefalseチェック
-        print("app：\(appDelegate.selectEvent!.eventID)")
         
+        var eventID = NSNumber(unsignedShort: appDelegate.selectEvent!.eventID)
+        var majorID = appDelegate.majorID
         var isInEvent:Bool = true
         
+        //ここで、truefalseチェック
+        print("eventID：\(eventID)")
+        print("majorID:\(majorID)")
+        
         //処理
+        if(majorID.count != 0){
+            for i in 0..<majorID.count{
+                if(majorID[i] == eventID){
+                    isInEvent = true
+                    print("match")
+                    break
+                }else{
+                    print("not macth")
+                    isInEvent = false
+                }
+            }
+        }else{
+            isInEvent = false
+        }
         
         if isInEvent{
-            
+            print("stay in")
         }else{
+            print("left")
            /* let alert = UIAlertController(title:"会場を抜けました",message:"",preferredStyle:UIAlertControllerStyle.Alert)
             let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
             alert.addAction(okAction)
