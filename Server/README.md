@@ -15,7 +15,7 @@ http://airmeet.mybluemix.net/register_event
 |description||説明文|
 |items|○|ユーザに入力させる必須項目<br>配列形式|
 
-例
+例  
 http://airmeet.mybluemix.net/register_event?event_name=event1&room_name=room1&items=[hobby,presentation]
 
 ### レスポンスボディ(JSON形式)
@@ -108,7 +108,7 @@ http://airmeet.mybluemix.net/get_event_info
 }
 ```
 
-例
+例  
 ```
 {
     "event_name": "JPHACKS",
