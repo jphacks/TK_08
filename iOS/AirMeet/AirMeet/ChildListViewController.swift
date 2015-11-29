@@ -44,7 +44,7 @@ class ChildListViewController: UIViewController,UITableViewDelegate, UITableView
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        let eventID = NSNumber(unsignedShort: appDelegate.selectEvent!.eventID)
+        let eventID = appDelegate.selectEvent!.eventID
         var majorID = appDelegate.majorID
         var isInEvent:Bool = true
         

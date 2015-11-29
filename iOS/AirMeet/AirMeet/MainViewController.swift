@@ -100,9 +100,6 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         //会場追加
         let event:EventModel = EventModel(eventName: "JPHacks-東京会場", roomName: "東京大学 本郷キャンパス215教室", childNumber: 50, eventDescription: "aaa",eventID:203)
         events.append(event)
-        
-        
-        
     }
     
     ///-----go
@@ -136,8 +133,28 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         if(majorIDList.count != majorIDListOld.count){
             print("change list")
             print(majorIDList)
+            
+            
+            events = []
+    
+            //サーバーと通信ーーー
+            let json = JSON(url: "http://airmeet.mybluemix.net/get_event_info?major=\(majorIDList[0])")
+            
+            
+            let line = json["major"]
+            appDelegate.parentID = "\(line)"
+            
+            let event:EventModel = EventModel(eventName: "\(json["event_name"])", roomName: "\(json["room_name"])", childNumber: 0, eventDescription: "\(json["description"])",eventID: majorIDList[0])
+            
+            print("\(json["event_name"]),\(json["room_name"]),\(majorIDList[0])")
+            
+            
+            events.append(event)
+            EventTableView.reloadData()
+            
             appDelegate.majorID = majorIDList
             majorIDListOld = majorIDList
+            
         }else{
             print("same")
         }
