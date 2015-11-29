@@ -158,6 +158,8 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
             print("change list")
             print(majorIDList)
             
+            AppDelegate().pushControll()
+            
             events = []
     
             //サーバーと通信ーーー
