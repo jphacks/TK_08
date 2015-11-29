@@ -28,7 +28,8 @@ class ChildFirstSettingViewController: UIViewController,UITableViewDelegate, UIT
         SettingTableView.delegate = self
         SettingTableView.dataSource = self
         
-        //eventLabel.text
+        eventLabel.text = "\(appDelegate.selectEvent!.eventName)"
+        roomLabel.text = "\(appDelegate.selectEvent!.roomName)"
         
         
     }

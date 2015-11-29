@@ -154,11 +154,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AirMeet/ChildFirstSettingViewController.swift"
-            timestampString = "470465234.057125"
+            timestampString = "470465416.698809"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "44"
-            endingLineNumber = "44"
+            startingLineNumber = "45"
+            endingLineNumber = "45"
             landmarkName = "ChildFirstSettingViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -250,12 +250,12 @@
                   moduleName = "AirMeet"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/koooootake/Desktop/TOJOHacks/GitHub/TK_08/iOS/AirMeet/AirMeet/ChildListViewController.swift"
-                  timestampString = "470460794.879881"
+                  timestampString = "470465265.925919"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "79"
-                  endingLineNumber = "79"
-                  offsetFromSymbolStart = "3428">
+                  startingLineNumber = "80"
+                  endingLineNumber = "80"
+                  offsetFromSymbolStart = "2792">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -265,12 +265,12 @@
                   moduleName = "AirMeet"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/koooootake/Desktop/TOJOHacks/GitHub/TK_08/iOS/AirMeet/AirMeet/ChildListViewController.swift"
-                  timestampString = "470460794.880165"
+                  timestampString = "470465265.926347"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "79"
-                  endingLineNumber = "79"
-                  offsetFromSymbolStart = "3536">
+                  startingLineNumber = "80"
+                  endingLineNumber = "80"
+                  offsetFromSymbolStart = "2816">
                </Location>
             </Locations>
          </BreakpointContent>
