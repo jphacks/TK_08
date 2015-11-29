@@ -1013,9 +1013,9 @@
         <image name="go_back.png" width="2448" height="3264"/>
         <image name="go_face.png" width="2448" height="2448"/>
         <image name="icon-A-95.png" width="95" height="95"/>
-        <image name="tab-account_w.png" width="160" height="80"/>
-        <image name="tab-list_w.png" width="160" height="80"/>
-        <image name="tab-meet_w.png" width="160" height="80"/>
-        <image name="tab-search_w.png" width="160" height="80"/>
+        <image name="tab-account_w.png" width="80" height="40"/>
+        <image name="tab-list_w.png" width="80" height="40"/>
+        <image name="tab-meet_w.png" width="80" height="40"/>
+        <image name="tab-search_w.png" width="80" height="40"/>
     </resources>
 </document>
