@@ -1,4 +1,5 @@
 # AirMeet
+![screen_main](https://github.com/jphacks/TK_08/blob/master/Design/Logo/AirMeet-color_heart.png)   
 AirMeetは、あなたと初対面の人との会話のきっかけを作ります
 
 ## 製品概要
