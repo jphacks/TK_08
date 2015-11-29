@@ -133,7 +133,7 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         if(majorIDList.count != majorIDListOld.count){
             print("change list")
             print(majorIDList)
-            
+            majorIDList = majorIDList.reverse()
             
             events = []
     
@@ -141,12 +141,12 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
             let json = JSON(url: "http://airmeet.mybluemix.net/get_event_info?major=\(majorIDList[0])")
             
             
-            let line = json["major"]
-            appDelegate.parentID = "\(line)"
+           // let line = json["major"]
+           // appDelegate.parentID = "\(line)"
             
             let event:EventModel = EventModel(eventName: "\(json["event_name"])", roomName: "\(json["room_name"])", childNumber: 0, eventDescription: "\(json["description"])",eventID: majorIDList[0])
             
-            print("\(json["event_name"]),\(json["room_name"]),\(majorIDList[0])")
+            print("通信結果だよ!\(json["event_name"]),\(json["room_name"]),\(majorIDList[0])")
             
             
             events.append(event)
