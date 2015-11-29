@@ -14,14 +14,16 @@ class EventModel : NSObject {
     var roomName:String
     var childNumber:Int
     var eventDescription:String
+    var eventID:NSNumber
     
     
-    init(eventName: String, roomName: String, childNumber:Int, eventDescription: String) {
+    init(eventName: String, roomName: String, childNumber:Int, eventDescription: String,eventID:NSNumber) {
         
         self.eventName = eventName
         self.roomName = roomName
         self.childNumber = childNumber
         self.eventDescription = eventDescription
+        self.eventID = eventID
         
     }
     

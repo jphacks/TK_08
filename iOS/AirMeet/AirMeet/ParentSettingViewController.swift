@@ -96,14 +96,13 @@ class ParentSettingViewController: UIViewController,UITextFieldDelegate {
        // let jsonData :NSData = NSData(contentsOfURL: URL)!
        // let json :Dictionary = NSJSONSerialization.JSONObjectWithData(jsonData, options: nil, error: nil) as NSDictionary
         
-        //サーバーと通信ーーー
+        let eve: String = eventName!.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
+        let room: String = roomName!.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
         
-        let json = JSON(url: "http://192.168.11.46:3000/event_regist?event_name=(eventName)&room_name=(roomName)")
+        //サーバーと通信ーーー
+        let json = JSON(url: "http://airmeet.mybluemix.net/register_event?event_name=\(eve)&room_name=\(room)&items=belong,hobby,presentation")
         
         let line = json["major"]
-        
-        print("ああああ：\(line)")
-        
         appDelegate.parentID = "\(line)"
         
         //画面遷移

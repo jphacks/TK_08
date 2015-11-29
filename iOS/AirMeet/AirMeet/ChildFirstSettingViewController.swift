@@ -13,6 +13,8 @@ class ChildFirstSettingViewController: UIViewController,UITableViewDelegate, UIT
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
     @IBOutlet weak var SettingTableView: UITableView!
+    @IBOutlet weak var eventLabel: UILabel!
+    @IBOutlet weak var roomLabel: UILabel!
     
     let testTag = [["name": "age", "detail" :"22"],["name": "趣味は", "detail" :"デレステだよん"],["name": "キャラクター", "detail" :"ジバニャン"],["name": "趣味は1", "detail" :"デレステだよん1"],["name": "キャラクター2", "detail" :"ジバニャン2"]]
     var tagCount:Int = 0
@@ -25,6 +27,9 @@ class ChildFirstSettingViewController: UIViewController,UITableViewDelegate, UIT
         
         SettingTableView.delegate = self
         SettingTableView.dataSource = self
+        
+        eventLabel.text = "\(appDelegate.selectEvent!.eventName)"
+        roomLabel.text = "\(appDelegate.selectEvent!.roomName)"
         
         
     }

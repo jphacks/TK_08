@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -18,18 +17,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AirMeet-color_heart.png" translatesAutoresizingMaskIntoConstraints="NO" id="CrA-eg-kll">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AirMeet-color_heart.png" translatesAutoresizingMaskIntoConstraints="NO" id="HSS-pv-mFw">
                                 <rect key="frame" x="180" y="236" width="240" height="128"/>
                                 <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="240" id="7gl-XT-Lqf"/>
+                                    <constraint firstAttribute="height" constant="128" id="OSo-LV-hKn"/>
+                                </constraints>
                             </imageView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="CrA-eg-kll" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="216" id="5Bg-xB-AMZ"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="CrA-eg-kll" secondAttribute="trailing" constant="160" id="FPd-U7-ETb"/>
-                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="CrA-eg-kll" secondAttribute="bottom" constant="236" id="SWQ-XP-IJj"/>
-                            <constraint firstItem="CrA-eg-kll" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="160" id="reV-M0-Y6P"/>
+                            <constraint firstItem="HSS-pv-mFw" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="LjT-n4-mIl"/>
+                            <constraint firstItem="HSS-pv-mFw" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="RTZ-DZ-Src"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -39,6 +40,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="AirMeet-color_heart.png" width="388" height="132"/>
+        <image name="AirMeet-color_heart.png" width="391" height="135"/>
     </resources>
 </document>

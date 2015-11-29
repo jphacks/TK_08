@@ -24,6 +24,7 @@ class ViewController: UIViewController,CLLocationManagerDelegate{
     @IBOutlet weak var distance: UILabel!
     
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    var isChange:Bool = false
     
     //--------go
     //UUIDは送信機側とフォーマットも合わせる
@@ -108,8 +109,14 @@ class ViewController: UIViewController,CLLocationManagerDelegate{
             print("change list")
             print(majorIDList)
             majorIDListOld = majorIDList
+            
+            isChange = true
+            print(beacon.major)
+            AppDelegate().pushControll()
+            
         }else{
             print("same")
+            isChange = false
         }
         
         /*

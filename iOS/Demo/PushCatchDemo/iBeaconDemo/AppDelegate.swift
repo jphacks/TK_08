@@ -7,86 +7,55 @@
 //
 
 import UIKit
-import CoreLocation
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var locationManager: CLLocationManager!
+    var test: UIApplication?
+    var notification = UILocalNotification()
+    
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        
-        // アプリに登録されている全ての通知を削除
-        UIApplication.sharedApplication().cancelAllLocalNotifications()
         
         application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes:
             [UIUserNotificationType.Sound,
                 UIUserNotificationType.Alert], categories: nil))
-
         
-        //　ボタン付きの通知の通知設定を作成する
-        let settings = createInteractiveNotificationSettings()
-        // アプリケーションに通知設定を登録
-        application.registerUserNotificationSettings(settings)
-        
-        self.locationManager = CLLocationManager()
-        self.locationManager.delegate = self
-        // 位置情報使用許可を求める
-        self.locationManager.requestAlwaysAuthorization()
+        // アプリに登録されている全ての通知を削除
+        UIApplication.sharedApplication().cancelAllLocalNotifications()
+    
+        //pushControll(application)
         
         return true
     }
     
-    // 位置情報使用許可の認証状態が変わったタイミングで呼ばれるデリゲートメソッド
-    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+    func pushControll(){
+        print(ViewController().isChange)
+                // push設定
+        // 登録済みのスケジュールをすべてリセット
+        print("push")
+        //application!.cancelAllLocalNotifications()
         
-        if status == .AuthorizedWhenInUse {
-            let uuid: NSUUID! = NSUUID(UUIDString:"B9407F30-F5F8-466E-AFF9-33333B57FE6D")
-            let message = "AirMeetを受信しています"
-            
-            // ビーコン領域をトリガーとした通知を作成(後述)
-            let notification = createRegionNotification(uuid, message: message)
-            
-
-            // 通知を登録する
-            UIApplication.sharedApplication().scheduleLocalNotification(notification)
-        }
+      
+        notification.alertAction = "AirMeet"
+        notification.alertBody = "iBeacon範囲に入りました"
+        notification.soundName = UILocalNotificationDefaultSoundName
+        // あとのためにIdを割り振っておく
+        notification.userInfo = ["notifyId": "AirMeet"]
+        UIApplication.sharedApplication().scheduleLocalNotification(notification)
+        
     }
     
-    private func createRegionNotification(uuid: NSUUID, message: String) -> UILocalNotification {
+    func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
         
-        // ## ビーコン領域を作成 ##
-        let beaconRegion :CLBeaconRegion = CLBeaconRegion(proximityUUID: uuid, identifier: "RegionId")
-        beaconRegion.notifyEntryStateOnDisplay = false
-        beaconRegion.notifyOnEntry = true
-        // 領域に入ったときにも出たときにも通知される
-        // 今回は領域から出たときの通知はRegion側でOFFにしておく
-        beaconRegion.notifyOnExit = false
+        print("in")
         
-        // ## 通知を作成し、領域を設定 ##
-        let notification = UILocalNotification()
-        notification.soundName = UILocalNotificationDefaultSoundName
-        notification.alertBody = message
-        
-        // 通知の対象となる領域 *今回のポイント
-        notification.region = beaconRegion
-        // 一度だけの通知かどうか
-        notification.regionTriggersOnce = false
-        // 後述するボタン付き通知のカテゴリ名を指定
-        //notification.category = "NOTIFICATION_CATEGORY_INTERACTIVE"
-        
-        return notification
-    }
-
-    private func createInteractiveNotificationSettings() -> UIUserNotificationSettings {
-
-        let notificationSettings =  UIUserNotificationSettings(forTypes:
-            [UIUserNotificationType.Sound,
-                UIUserNotificationType.Alert], categories: nil)
-        
-        // この通知設定を登録する
-        return notificationSettings
+        var alert = UIAlertView()
+        alert.title = "Message"
+        alert.message = notification.alertBody
+        alert.addButtonWithTitle(notification.alertAction)
+        alert.show()
     }
     
     func applicationWillResignActive(application: UIApplication) {
