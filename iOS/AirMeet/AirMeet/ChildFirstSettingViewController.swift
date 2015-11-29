@@ -14,7 +14,7 @@ class ChildFirstSettingViewController: UIViewController,UITableViewDelegate, UIT
     
     @IBOutlet weak var SettingTableView: UITableView!
     
-    let testTag:Dictionary<String,String> = ["age":"22","趣味":"デレステ"]
+    let testTag = [["name": "age", "detail" :"22"],["name": "趣味は", "detail" :"デレステだよん"],["name": "キャラクター", "detail" :"ジバニャン"],["name": "趣味は1", "detail" :"デレステだよん1"],["name": "キャラクター2", "detail" :"ジバニャン2"]]
     var tagCount:Int = 0
     
     override func viewDidLoad() {
@@ -44,17 +44,11 @@ class ChildFirstSettingViewController: UIViewController,UITableViewDelegate, UIT
         
         cell.tagDetailTextField.delegate = self
         
-        for (names, details) in testTag{
-            
-            if tagCount-1 == indexPath.row{
-                
-                cell.setCell(names,detail:details)
-                print("\(names):\(details)")
-                
-            }
-            tagCount++
-            
-        }
+        // testTagの一行分の内容を入れる
+        let object = testTag[indexPath.row]
+
+        cell.TagNameLabel?.text = object["name"]!
+        cell.tagDetailTextField?.text = object["detail"]!
         
         return cell
     }
