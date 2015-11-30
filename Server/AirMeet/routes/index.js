@@ -37,10 +37,7 @@ router.post('/register_event', function(req, res) {
     error.message = "Error: event_name is missing";
     error.code = 400;
   }
-  if(!rn){
-    error.message = "Error: room_name is missing";
-    error.code = 400;
-  }
+  
   if(!items){
     error.message = "Error: items is missing";
     error.code = 400;
@@ -87,20 +84,39 @@ router.get('/register_event', function(req, res) {
 });
 
 
-/////
+//-------------------------------------------------//
 // イベント情報を取得
+//-------------------------------------------------//
 router.get('/event_info', function(req, res) {
   var success = {
     message : null,
     code : 200
   };
   var error = {};
-  var major = String(req.param('major'));
+  var major = req.param('major');
   if(!major){
     error.message = "Error: major is missing";
     error.code = 400;
   }
 
+  dba.get_event(major, function(err, event) {
+    console.log("2 "+err);
+    console.log("2 "+event);
+    if(event){
+      console.log(event);
+      //row.code = 200;
+      //row.items = row.items.split(',');
+      //res.send(row);
+    }else{
+      error.message = "Error: Event does not exist";
+      error.code = 500;
+    }
+    if(Object.keys(error).length){
+      var str = JSON.stringify(error);
+      res.send(str);
+    }
+  });
+  /*
   dba.get_event(function(err, events) {
     if(events.length){
       var flag = 0;
@@ -125,6 +141,7 @@ router.get('/event_info', function(req, res) {
       res.send(str);
     }
   });
+  */
 });
 
 //イベントへのユーザ登録

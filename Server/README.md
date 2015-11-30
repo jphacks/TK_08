@@ -19,7 +19,7 @@ http://airmeet.mybluemix.net/register_event
 |キー|必須|説明|
 |:--|:--:|:--|
 |event_name|○|イベント名|
-|room_name|○|会場名|
+|room_name||会場名|
 |description||説明文|
 |items|○|ユーザに入力させる必須項目<br>","区切り|
 
