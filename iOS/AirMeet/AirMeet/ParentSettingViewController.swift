@@ -96,12 +96,11 @@ class ParentSettingViewController: UIViewController,UITextFieldDelegate {
        // let jsonData :NSData = NSData(contentsOfURL: URL)!
        // let json :Dictionary = NSJSONSerialization.JSONObjectWithData(jsonData, options: nil, error: nil) as NSDictionary
         
-        let eve: String = eventName!.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
-        let room: String = roomName!.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
+        let event:String = eventName!.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
+        let room:String = roomName!.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
         
-        //サーバーと通信ーーー
-        let json = JSON(url: "http://airmeet.mybluemix.net/register_event?event_name=\(eve)&room_name=\(room)&items=belong,hobby,presentation")
-        
+        //サーバーと通信
+        let json = JSON(url: "http://airmeet.mybluemix.net/register_event?event_name=\(event)&room_name=\(room)&items=belong,hobby,presentation")
         let line = json["major"]
         appDelegate.parentID = "\(line)"
         
