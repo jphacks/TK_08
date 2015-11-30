@@ -6,10 +6,10 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Profile-->
+        <!--Profile Setting-->
         <scene sceneID="uGa-U0-Kd0">
             <objects>
-                <viewController storyboardIdentifier="ProfileSettingViewController" title="Profile" id="PMu-U7-3SU" customClass="ProfileViewController" customModule="AirMeet" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ProfileSettingViewController" title="Profile Setting" id="PMu-U7-3SU" customClass="ProfileViewController" customModule="AirMeet" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="VZh-qI-qek"/>
                         <viewControllerLayoutGuide type="bottom" id="fYb-bX-V3f"/>

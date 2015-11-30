@@ -494,7 +494,7 @@ extension ENSideMenu: UIDynamicAnimatorDelegate {
     }
     
     public func dynamicAnimatorWillResume(animator: UIDynamicAnimator) {
-        print("resume")
+        
     }
 }
 

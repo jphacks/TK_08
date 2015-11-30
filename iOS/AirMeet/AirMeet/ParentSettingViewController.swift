@@ -15,12 +15,11 @@ class ParentSettingViewController: UIViewController,UITextFieldDelegate {
     @IBOutlet weak var EventNameTextField: UITextField!
     @IBOutlet weak var RoomNameTextField: UITextField!
     
-    //ここに最初からつっこむとoptionalエラー
-    //var event:EventModel?
-    
     var eventName:String?
     var roomName:String?
     var eventDescription:String?
+
+    @IBOutlet weak var MakeAirMeetButton: UIButton!
     
     
     override func viewDidLoad() {
@@ -29,15 +28,14 @@ class ParentSettingViewController: UIViewController,UITextFieldDelegate {
         self.navigationController?.navigationBar.barTintColor=UIColor(red: 128.0/255.0, green: 204.0/255.0, blue: 223.0/255.0, alpha: 1)//水色
         self.navigationController?.navigationBar.tintColor=UIColor.whiteColor()
         
-        
         self.EventNameTextField.delegate = self
         self.RoomNameTextField.delegate = self
         
         self.EventNameTextField.tag = 0
         self.RoomNameTextField.tag = 1
         
-        eventName = "test"
-        roomName = "test"
+        MakeAirMeetButton.enabled = false
+        MakeAirMeetButton.alpha = 0.5
     }
     
     
@@ -60,11 +58,11 @@ class ParentSettingViewController: UIViewController,UITextFieldDelegate {
         switch textField.tag{
         case 0:
             eventName = textField.text!
-            print("EventName:\(textField.text!)")
+            //print("EventName:\(textField.text!)")
             
         case 1:
             roomName = textField.text!
-            print("RoomName:\(textField.text!)")
+            //print("RoomName:\(textField.text!)")
             
         case 2:
             eventDescription = textField.text!
@@ -73,7 +71,6 @@ class ParentSettingViewController: UIViewController,UITextFieldDelegate {
         default:
             break
         }
-
         
         return true
     }
@@ -82,6 +79,15 @@ class ParentSettingViewController: UIViewController,UITextFieldDelegate {
     //改行ボタンが押された際に呼ばれるデリゲートメソッド.
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
+        
+        if eventName == nil{
+            MakeAirMeetButton.enabled = false
+            MakeAirMeetButton.alpha = 0.5
+        }else{
+            MakeAirMeetButton.enabled = true
+            MakeAirMeetButton.alpha = 1.0
+        }
+        
         return true
     }
 
@@ -89,26 +95,46 @@ class ParentSettingViewController: UIViewController,UITextFieldDelegate {
     //親モード開始！
     @IBAction func ParentStartButton(sender: AnyObject) {
         
-        
-        
-        //通信するお
-        
-        
-       // let URL = NSURL(string: "http://airmeet.mybluemix.net/event_regist")
-        
-       // let jsonData :NSData = NSData(contentsOfURL: URL)!
-       // let json :Dictionary = NSJSONSerialization.JSONObjectWithData(jsonData, options: nil, error: nil) as NSDictionary
-        
+        //文字コード
         let event:String = eventName!.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
-        let room:String = roomName!.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
+        
+        let room:String
+        if roomName != nil{
+        
+            room = roomName!.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
+        }else{
+            room = ""
+        }
         
         //サーバーと通信
         let json = JSON(url: "http://airmeet.mybluemix.net/register_event?event_name=\(event)&room_name=\(room)&items=belong,hobby,presentation")
-        let line = json["major"]
-        appDelegate.parentID = "\(line)"
-        appDelegate.isParent = true
-        //画面遷移
-        performSegueWithIdentifier("startSegue",sender: nil)
+        
+        let code:String = "\(json["code"])"
+        let major = json["major"]
+        let message = json["message"]
+        
+        print(json["code"])
+        
+        if code == "200"{
+       
+        
+            appDelegate.parentID = "\(major)"
+            appDelegate.isParent = true
+            //画面遷移
+            performSegueWithIdentifier("startSegue",sender: nil)
+            
+        }else{
+            print(message)
+            
+            let alert = UIAlertController(title:"False Make AirMeet",message:nil,preferredStyle:UIAlertControllerStyle.Alert)
+            let okAction = UIAlertAction(title: "OK", style: .Default) {
+                action in
+            }
+            alert.addAction(okAction)
+            presentViewController(alert, animated: true, completion: nil)
+            
+            appDelegate.isParent = false
+        }
         
         /*let post="event_name=aaa&room_name=sss"
         let postData=post.dataUsingEncoding(NSUTF8StringEncoding)
@@ -119,6 +145,7 @@ class ParentSettingViewController: UIViewController,UITextFieldDelegate {
         
         
     }
+    
     @IBAction func unwindToTop(segue: UIStoryboardSegue) {
     }
     

@@ -49,13 +49,34 @@ class MyMenuTableViewController: UITableViewController {
         if (cell == nil) {
             cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "CELL")
             cell!.backgroundColor = UIColor.clearColor()
-            cell!.textLabel?.textColor = UIColor.darkGrayColor()
+            cell!.textLabel?.textColor = UIColor.whiteColor()
             let selectedBackgroundView = UIView(frame: CGRectMake(0, 0, cell!.frame.size.width, cell!.frame.size.height))
             selectedBackgroundView.backgroundColor = UIColor.grayColor().colorWithAlphaComponent(0.2)
             cell!.selectedBackgroundView = selectedBackgroundView
         }
         
-        cell!.textLabel?.text = "ViewController #\(indexPath.row+1)"
+        switch (indexPath.row) {
+        case 0:
+            cell!.textLabel?.text = "HOME"
+            
+            break
+        case 1:
+            cell!.textLabel?.text = "Meeted Book"
+           
+            break
+        case 2:
+            cell!.textLabel?.text = "Make AirMeet"
+            break
+        case 3:
+            cell!.textLabel?.text = "Profile Setting"
+            break
+            
+        default:
+    
+            break
+        }
+        
+        
         
         return cell!
     }
@@ -66,10 +87,8 @@ class MyMenuTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        print("did select row: \(indexPath.row)")
-        
         if (indexPath.row == selectedMenuItem) {
-            return
+            //return
         }
         
         selectedMenuItem = indexPath.row
@@ -79,16 +98,26 @@ class MyMenuTableViewController: UITableViewController {
         var destViewController : UIViewController
         switch (indexPath.row) {
         case 0:
-            destViewController = mainStoryboard.instantiateViewControllerWithIdentifier("ViewController1")
+            destViewController = mainStoryboard.instantiateViewControllerWithIdentifier("Main")
+            
             break
         case 1:
-            destViewController = mainStoryboard.instantiateViewControllerWithIdentifier("ViewController2")
+            let storyboard: UIStoryboard = UIStoryboard(name: "Meet", bundle: NSBundle.mainBundle())
+            destViewController = storyboard.instantiateInitialViewController() as! MeetListViewController
+            
             break
         case 2:
-            destViewController = mainStoryboard.instantiateViewControllerWithIdentifier("ViewController3")
+            let storyboard: UIStoryboard = UIStoryboard(name: "Parent", bundle: NSBundle.mainBundle())
+            destViewController = storyboard.instantiateInitialViewController() as! ParentSettingViewController
+            break
+            
+        case 3:
+            let storyboard: UIStoryboard = UIStoryboard(name: "Profile", bundle: NSBundle.mainBundle())
+            destViewController = storyboard.instantiateInitialViewController() as! ProfileViewController
+            
             break
         default:
-            destViewController = mainStoryboard.instantiateViewControllerWithIdentifier("ViewController4")
+            destViewController = mainStoryboard.instantiateViewControllerWithIdentifier("Main")
             break
         }
         sideMenuController()?.setContentViewController(destViewController)

@@ -119,28 +119,6 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         toggleSideMenuView()
     }
     
-    // MARK: - ENSideMenu Delegate
-    func sideMenuWillOpen() {
-        print("sideMenuWillOpen")
-    }
-    
-    func sideMenuWillClose() {
-        print("sideMenuWillClose")
-    }
-    
-    func sideMenuShouldOpenSideMenu() -> Bool {
-        print("sideMenuShouldOpenSideMenu")
-        return true
-    }
-    
-    func sideMenuDidClose() {
-        print("sideMenuDidClose")
-    }
-    
-    func sideMenuDidOpen() {
-        print("sideMenuDidOpen")
-    }
-    
     //iBecon
     func locationManager(manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], inRegion region:CLBeaconRegion) {
         
