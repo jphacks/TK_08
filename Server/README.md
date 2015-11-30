@@ -13,9 +13,9 @@ API一覧
 ### リクエストURL
 http://airmeet.mybluemix.net/register_event
 
-メソッド:GET
+メソッド:POST
 
-### リクエストクエリパラメータ
+### リクエストボディ
 |キー|必須|説明|
 |:--|:--:|:--|
 |event_name|○|イベント名|
@@ -28,7 +28,7 @@ http://airmeet.mybluemix.net/register_event?event_name=event1&room_name=room1&it
 
 ### レスポンスボディ(JSON形式)
 #### 成功時
-```
+```json
 {
     "major": 数字,
     "message": "なんかメッセージ",
@@ -37,7 +37,7 @@ http://airmeet.mybluemix.net/register_event?event_name=event1&room_name=room1&it
 ```
 
 #### 失敗時(クライアントエラー)
-```
+```json
 {
     "message": "なんかメッセージ",
     "code": 400
@@ -45,7 +45,7 @@ http://airmeet.mybluemix.net/register_event?event_name=event1&room_name=room1&it
 ```
 
 #### 失敗時(サーバエラー)
-```
+```json
 {
     "message": "なんかメッセージ",
     "code": 500
@@ -56,16 +56,16 @@ http://airmeet.mybluemix.net/register_event?event_name=event1&room_name=room1&it
 ### リクエストURL
 http://airmeet.mybluemix.net/remove_event
 
-メソッド:GET
+メソッド:POST
 
-### リクエストクエリパラメータ
+### リクエストボディ
 |キー|必須|説明|
 |:--|:--:|:--|
 |major|○|親機のmajorの値|
 
 ### レスポンスボディ(JSON形式)
 #### 成功時
-```
+```json
 {
     "message": "なんか成功って感じのメッセージ",
     "code": 200
@@ -73,7 +73,7 @@ http://airmeet.mybluemix.net/remove_event
 ```
 
 #### 失敗時(クライアントエラー)
-```
+```json
 {
     "message": "なんかメッセージ",
     "code": 400
@@ -81,7 +81,7 @@ http://airmeet.mybluemix.net/remove_event
 ```
 
 #### 失敗時(サーバエラー)
-```
+```json
 {
     "message": "なんかメッセージ",
     "code": 500
@@ -102,7 +102,7 @@ http://airmeet.mybluemix.net/event_info
 
 ### レスポンスボディ(JSON形式)
 #### 成功時
-```
+```json
 {
     "event_name": "イベント名",
     "room_name": "ルーム名",
@@ -117,7 +117,7 @@ http://airmeet.mybluemix.net/event_info
 ```
 
 例  
-```
+```json
 {
     "event_name": "JPHACKS",
     "room_name": "東京大学 本郷キャンパス 工学部2号館 213教室",
@@ -132,7 +132,7 @@ http://airmeet.mybluemix.net/event_info
 }
 ```
 #### 失敗時(クライアントエラー)
-```
+```json
 {
     "message": "なんかメッセージ",
     "code": 400
@@ -140,7 +140,7 @@ http://airmeet.mybluemix.net/event_info
 ```
 
 #### 失敗時(サーバエラー)
-```
+```json
 {
     "message": "なんかメッセージ",
     "code": 500
@@ -153,9 +153,9 @@ http://airmeet.mybluemix.net/event_info
 ### リクエストURL
 http://airmeet.mybluemix.net/register_user
 
-メソッド:GET
+メソッド:POST
 
-### リクエストクエリパラメータ
+### リクエストボディ
 |キー|必須|説明|
 |:--|:--:|:--|
 |major|○|親機からiBeaconで取得したmajorの値|
@@ -167,7 +167,7 @@ http://airmeet.mybluemix.net/register_user
 
 ### レスポンスボディ(JSON形式)
 #### 成功時
-```
+```json
 {
     "id": "自分のid",
     "message": "なんか成功って感じのメッセージ",
@@ -176,7 +176,7 @@ http://airmeet.mybluemix.net/register_user
 ```
 
 #### 失敗時(クライアントエラー)
-```
+```json
 {
     "message":"なんかメッセージ",
     "code":400
@@ -184,7 +184,7 @@ http://airmeet.mybluemix.net/register_user
 ```
 
 #### 失敗時(サーバエラー)
-```
+```json
 {
     "message":"なんかメッセージ",
     "code":500
@@ -206,24 +206,24 @@ http://airmeet.mybluemix.net/participants
 
 ### レスポンスボディ(JSON形式)
 #### 成功時
-```
+```json
 {
     "users": [  
         {
-            "id": "参加している他のユーザのid"
+            "id": "参加している他のユーザのid",
             "name": "参加している他のユーザの名前",
             "image": "画像のURL",
             "items": {
-                "",
-                ""
+                "": "",
+                "": "",
             }
         },
         {
             "name": "参加している他のユーザ",
             "image": "画像のURL",
             "items": {
-                "",
-                ""
+                "": "",
+                "": "",
             }
         }
     ],
@@ -232,7 +232,7 @@ http://airmeet.mybluemix.net/participants
 ```
 
 #### 失敗時(クライアントエラー)
-```
+```json
 {
     "message":"なんかメッセージ",
     "code":400
@@ -240,7 +240,7 @@ http://airmeet.mybluemix.net/participants
 ```
 
 #### 失敗時(サーバエラー)
-```
+```json
 {
     "message":"なんかメッセージ",
     "code":500
@@ -252,16 +252,16 @@ http://airmeet.mybluemix.net/participants
 ### リクエストURL
 http://airmeet.mybluemix.net/remove_user
 
-メソッド:GET
+メソッド:POST
 
-### リクエストクエリパラメータ
+### リクエストボディ
 |キー|必須|説明|
 |:--|:--:|:--|
 |id|○|削除したいユーザのID|
 
 ### レスポンスボディ(JSON形式)
 #### 成功時
-```
+```json
 {
     "message": "なんか成功って感じのメッセージ",
     "code": 200
@@ -269,7 +269,7 @@ http://airmeet.mybluemix.net/remove_user
 ```
 
 #### 失敗時(クライアントエラー)
-```
+```json
 {
     "message": "なんかメッセージ",
     "code": 400
@@ -277,7 +277,7 @@ http://airmeet.mybluemix.net/remove_user
 ```
 
 #### 失敗時(サーバエラー)
-```
+```json
 {
     "message": "なんかメッセージ",
     "code": 500

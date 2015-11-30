@@ -18,8 +18,8 @@ router.get('/', function(req, res) {
 
 
 // イベント登録
-//router.post('/register_event', function(req, res) {
-router.get('/register_event', function(req, res) {
+router.post('/register_event', function(req, res) {
+//router.get('/register_event', function(req, res) {
   var success = {
     major : null,
     message : null,
@@ -27,16 +27,11 @@ router.get('/register_event', function(req, res) {
   };
   var error = {};
   var id = uuid.v4();
-  /*
+
   var en = req.body.event_name;
   var rn = req.body.room_name;
   var desc = req.body.description;
-  var mand = req.body.mandatory_filed;
-  */
-  var en = req.param('event_name');
-  var rn = req.param('room_name');
-  var desc = req.param('description');
-  var items = req.param('items');
+  var items = req.body.items;
 
   if(!en){
     error.message = "Error: event_name is missing";
@@ -81,8 +76,8 @@ router.get('/register_event', function(req, res) {
   }
 });
 
-/*
-// register_eventがGETならエラー
+
+//register_eventがGETならエラー
 router.get('/register_event', function(req, res) {
   var error = {};
   error.message = "Error: Cannot GET";
@@ -90,10 +85,10 @@ router.get('/register_event', function(req, res) {
   var str = JSON.stringify(error);
   res.send(str);
 });
-*/
 
 
-// eventを得る
+/////
+// イベント情報を取得
 router.get('/event_info', function(req, res) {
   var success = {
     message : null,
@@ -132,6 +127,7 @@ router.get('/event_info', function(req, res) {
   });
 });
 
+//イベントへのユーザ登録
 router.post('/register_user', function(req, res) {
   var success = {
     id : null,
