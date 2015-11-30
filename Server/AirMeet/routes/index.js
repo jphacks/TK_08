@@ -94,7 +94,7 @@ router.get('/register_event', function(req, res) {
 
 
 // eventを得る
-router.get('/get_event_info', function(req, res) {
+router.get('/event_info', function(req, res) {
   var success = {
     message : null,
     code : 200
@@ -191,7 +191,7 @@ router.post('/register_user', function(req, res) {
 
 
 // 参加者を取得
-router.get('/get_participants', function(req, res) {
+router.get('/participants', function(req, res) {
   var success = {
     major : null,
     message : null,
