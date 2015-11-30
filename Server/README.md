@@ -1,12 +1,12 @@
 # AirMeet WebAPI
 
 API一覧
-[イベントの登録](#register_event)
-[イベントの削除](#remove_event)
-[イベントの情報取得](#event_info)
-[イベントへのユーザの登録](#register_user)
-[イベント参加者の取得](#participants)
-[ユーザ登録の削除](#remove_user)
+- [イベントの登録](#register_event)
+- [イベントの削除](#remove_event)
+- [イベントの情報取得](#event_info)
+- [イベントへのユーザの登録](#register_user)
+- [イベント参加者の取得](#participants)
+- [ユーザ登録の削除](#remove_user)
 
 ## <a id ="register_event">イベントの登録</a>
 親機はイベント名、会場名、説明文、子機に入力させる必須項目などを設定し、サーバに送る
