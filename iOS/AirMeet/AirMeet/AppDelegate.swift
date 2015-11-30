@@ -45,13 +45,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
         
-        print("in")
+        print("notification")
+        let alert = UIAlertController(title:"notification",message:"\(notification.alertBody)",preferredStyle:UIAlertControllerStyle.Alert)
+        let okAction = UIAlertAction(title: "OK", style: .Default) {
+            action in
+        }
+        alert.addAction(okAction)
         
-        var alert = UIAlertView()
-        alert.title = "Message"
-        alert.message = notification.alertBody
-        alert.addButtonWithTitle(notification.alertAction)
-        alert.show()
+        self.window?.rootViewController!.presentViewController(alert, animated: true, completion: nil)
+
     }
     
     func applicationWillResignActive(application: UIApplication) {
