@@ -7,15 +7,13 @@
 //
 
 import UIKit
-//------go
 import CoreLocation
 //
 
-class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataSource ,CLLocationManagerDelegate{
+class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataSource ,CLLocationManagerDelegate,ENSideMenuDelegate{
     
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
-    //--------go
     //UUIDは送信機側とフォーマットも合わせる
     let proximityUUID = NSUUID(UUIDString:"B9407F30-F5F8-466E-AFF9-33333B57FE6D")
     var region  = CLBeaconRegion()
@@ -24,7 +22,6 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
     //majorIDリスト用のグローバル変数
     var majorIDList:[NSNumber] = []
     var majorIDListOld:[NSNumber] = []
-    //-----------
     
     @IBOutlet weak var backImageView: UIImageView!
     @IBOutlet weak var imageImageView: UIImageView!
@@ -33,6 +30,12 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
     @IBOutlet weak var detailLabel: UILabel!
     
     @IBOutlet weak var EventTableView: UITableView!
+    
+    @IBOutlet weak var profileChangeButton: UIButton!
+    
+    @IBOutlet weak var faceLinkLabel: UILabel!
+    @IBOutlet weak var twitterLinkLabel: UILabel!
+    
     
     var events:[EventModel] = [EventModel]()
     
@@ -45,6 +48,9 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.sideMenuController()?.sideMenu?.delegate = self
+        
         //Navigationbar色
         self.navigationController?.navigationBar.barTintColor=UIColor(red: 128.0/255.0, green: 204.0/255.0, blue: 223.0/255.0, alpha: 1)//水色
         self.navigationController?.navigationBar.tintColor=UIColor.whiteColor()
@@ -61,7 +67,22 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         EventTableView.delegate = self
         EventTableView.dataSource = self
         
-        //------go
+        //アイコンまる
+        imageImageView.layer.cornerRadius = imageImageView.frame.size.width/2.0
+        imageImageView.layer.masksToBounds = true
+        imageImageView.layer.borderColor = UIColor.whiteColor().CGColor
+        imageImageView.layer.borderWidth = 3.0
+        
+        profileChangeButton.layer.borderColor = UIColor.lightGrayColor().CGColor
+        profileChangeButton.layer.borderWidth = 1.0
+        
+        //自己紹介
+        detailLabel.text = "自己紹介をしますすううううううううううううううううううううううううううううううううううううううううううううううううううううううううううううううううううううううううううううううううううううううううううううううううううううううううう"
+        //会場追加
+        //let event:EventModel = EventModel(eventName: "JPHacks-東京会場", roomName: "東京大学 本郷キャンパス215教室", childNumber: 50, eventDescription: "aaa",eventID:203)
+        //events.append(event)
+        
+        //------iBecon
         //CLBeaconRegionを生成
         region = CLBeaconRegion(proximityUUID:proximityUUID!,identifier:"AirMeet")
         //デリゲートの設定
@@ -70,69 +91,90 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         switch CLLocationManager.authorizationStatus() {
         case .Authorized, .AuthorizedWhenInUse:
             //iBeaconによる領域観測を開始する
-            print("観測開始")
-            //self.status.text = "Starting Monitor"
+            print("iBecon Start")
             self.manager.startRangingBeaconsInRegion(self.region)
         case .NotDetermined:
-            print("許可承認")
-            //self.status.text = "Starting Monitor"
+            print("iBecon No Permit")
             //デバイスに許可を促す
-            
             let deviceVer = UIDevice.currentDevice().systemVersion
+            
             if(Int(deviceVer.substringToIndex(deviceVer.startIndex.advancedBy(1))) >= 8){
-                
                 //iOS8以降は許可をリクエストする関数をCallする
                 self.manager.requestAlwaysAuthorization()
-                print("OK")
+                print("iBecon OK")
             }else{
                 self.manager.startRangingBeaconsInRegion(self.region)
             }
+            
         case .Restricted, .Denied:
             //デバイスから拒否状態
-            print("Restricted")
-            //self.status.text = "Restricted Monitor"
+            print("iBecon Restricted")
         }
         
         //---------------
-       
-        
-        detailLabel.text = "ごーだよーーーーーーーみんなげんきーーーーーーーーたのしいねーーーーーーーーーーーーーーーーーーーー"
-        //会場追加
-        let event:EventModel = EventModel(eventName: "JPHacks-東京会場", roomName: "東京大学 本郷キャンパス215教室", childNumber: 50, eventDescription: "aaa",eventID:203)
-        events.append(event)
     }
     
-    ///-----go
+    
+    @IBAction func MenuButton(sender: AnyObject) {
+        toggleSideMenuView()
+    }
+    
+    // MARK: - ENSideMenu Delegate
+    func sideMenuWillOpen() {
+        print("sideMenuWillOpen")
+    }
+    
+    func sideMenuWillClose() {
+        print("sideMenuWillClose")
+    }
+    
+    func sideMenuShouldOpenSideMenu() -> Bool {
+        print("sideMenuShouldOpenSideMenu")
+        return true
+    }
+    
+    func sideMenuDidClose() {
+        print("sideMenuDidClose")
+    }
+    
+    func sideMenuDidOpen() {
+        print("sideMenuDidOpen")
+    }
+    
+    //iBecon
     func locationManager(manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], inRegion region:CLBeaconRegion) {
         
         majorIDList = []
         
-        var event:EventModel!
+        
         
         if(beacons.count == 0) {
-            //リストに何も受信していないことを表示
-            print("nothing")
+            //受信していない
+            print("No iBecon")
             appDelegate.majorID = []
-            
-            
+            //変更があったとき
             if(majorIDList.count != majorIDListOld.count){
+                print("iBecon change")
+                events = []
+               // let event = EventModel(eventName: "nil", roomName: "nil", childNumber: 0, eventDescription: "nil",eventID:0)
+               // events.append(event)
+               // EventTableView.deleteRowsAtIndexPaths([NSIndexPath(index: 0)], withRowAnimation: .Automatic)
                 
-                event = EventModel(eventName: "nil", roomName: "nil", childNumber: 0, eventDescription: "nil",eventID:0)
-                print("通信失敗結果だよ!")
+                EventTableView.reloadData()
+                
             }
             
-            return
+            majorIDListOld = majorIDList
             
+            return
         }
         
         //複数あった場合は一番先頭のものを処理する
         let beacon = beacons[0]
         
-        //ここでつっこ
         for i in 0..<beacons.count{
             majorIDList.append(beacons[i].major)
         }
-    
     
         //重複捨て
         if(beacons.count != 0){
@@ -140,56 +182,41 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
             majorIDList = set.array as! [NSNumber]
         }
         
-        
         majorIDList = majorIDList.reverse()
         
-        
-        
-       
-        
-        
-        //-------go
-        //ここで変更があったか検証します
-        //サーバーにアクセス
-        
-        majorIDList = majorIDList.reverse()
-        
+        //変更があったときの処理
         if(majorIDList.count != majorIDListOld.count){
-            print("change list")
+            print("iBecon change")
             print(majorIDList)
             
             AppDelegate().pushControll()
-            
             events = []
-    
-            //サーバーと通信ーーー
-            let json = JSON(url: "http://airmeet.mybluemix.net/get_event_info?major=\(majorIDList[0])")
             
-            
-           // let line = json["major"]
-           // appDelegate.parentID = "\(line)"
-            
-           
-            
-            print(json["code"])
-            
-            if String(json["code"]) == "400"{
+            //サーバーに接続
+            for majorID in majorIDList{
                 
-                event = EventModel(eventName: "nil", roomName: "nil", childNumber: 0, eventDescription: "nil",eventID: majorIDList[0])
+                let json = JSON(url: "http://airmeet.mybluemix.net/get_event_info?major=\(majorID)")
+
+                print("Server Reserve Code = \(json["code"])")
                 
-                 print("通信失敗結果だよ!\(json["event_name"]),\(majorIDList[0])")
+                //失敗
+                if String(json["code"]) == "400"{
+                    
+                    //event = EventModel(eventName: "nil", roomName: "nil", childNumber: 0, eventDescription: "nil",eventID: majorID)
+                    print("Server Connection Error[\(majorID)]：\(json["event_name"])")
                 
-            }else{
-            
-                event = EventModel(eventName: "\(json["event_name"])", roomName: "\(json["room_name"])", childNumber: 0, eventDescription: "\(json["description"])",eventID: majorIDList[0])
-            
-        
-                print("通信結果だよ!\(json["event_name"]),\(json["room_name"]),\(majorIDList[0])")
-            
+                //成功
+                }else{
+                    
+                    let event = EventModel(eventName: "\(json["event_name"])", roomName: "\(json["room_name"])", childNumber: 0, eventDescription: "\(json["description"])",eventID: majorID)
+                    events.append(event)
+                    
+                    print("Server Connection Sucsess[\(majorID)]：\(json["event_name"]) - \(json["room_name"])")
+                
+                }
             }
-            events.append(event)
+
             EventTableView.reloadData()
-            
             
             appDelegate.majorID = majorIDList
             majorIDListOld = majorIDList
@@ -253,15 +280,11 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
     
     // セクションの行数
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("events.count:\(events.count)")
         return events.count
     }
     
     //cellが選択されたとき
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        // selectGroup = appDelegate.groupArray[indexPath.row] as! String
-        //画面遷移
-        //performSegueWithIdentifier("showGroup",sender: nil)
         
         print(indexPath.row)
         

@@ -38,7 +38,7 @@ class ParentLockSettingViewController: UIViewController , CBPeripheralManagerDel
         // Major.
         //サーバーから値を受け取ったと仮定
         
-        print("サーバーからきたお:\(appDelegate.parentID)")
+        print("サーバーからきたお:\(appDelegate.parentID!)")
         
         let myMajor : CLBeaconMajorValue = UInt16(appDelegate.parentID!)!
         

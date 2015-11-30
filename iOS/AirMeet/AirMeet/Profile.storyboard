@@ -70,7 +70,7 @@
                                                         <constraint firstAttribute="width" constant="130" id="KFz-gS-e7U"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Tag" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6jG-oQ-jPg">
@@ -132,7 +132,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="go_back.png" width="2448" height="3264"/>
+        <image name="go_back.png" width="600" height="120"/>
         <image name="go_face.png" width="2448" height="2448"/>
     </resources>
 </document>

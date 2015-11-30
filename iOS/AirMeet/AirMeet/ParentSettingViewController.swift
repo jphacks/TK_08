@@ -88,8 +88,11 @@ class ParentSettingViewController: UIViewController,UITextFieldDelegate {
     
     //親モード開始！
     @IBAction func ParentStartButton(sender: AnyObject) {
+        
+        
+        
         //通信するお
-        appDelegate.isParent = true
+        
         
        // let URL = NSURL(string: "http://airmeet.mybluemix.net/event_regist")
         
@@ -103,7 +106,7 @@ class ParentSettingViewController: UIViewController,UITextFieldDelegate {
         let json = JSON(url: "http://airmeet.mybluemix.net/register_event?event_name=\(event)&room_name=\(room)&items=belong,hobby,presentation")
         let line = json["major"]
         appDelegate.parentID = "\(line)"
-        
+        appDelegate.isParent = true
         //画面遷移
         performSegueWithIdentifier("startSegue",sender: nil)
         

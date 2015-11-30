@@ -46,13 +46,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
         
         print("notification")
-        let alert = UIAlertController(title:"notification",message:"\(notification.alertBody)",preferredStyle:UIAlertControllerStyle.Alert)
+        let alert = UIAlertController(title:"\(notification.alertBody!)",message:nil,preferredStyle:UIAlertControllerStyle.Alert)
         let okAction = UIAlertAction(title: "OK", style: .Default) {
             action in
         }
         alert.addAction(okAction)
         
-        self.window?.rootViewController!.presentViewController(alert, animated: true, completion: nil)
+        //self.window?.rootViewController!.presentViewController(alert, animated: true, completion: nil)
 
     }
     
