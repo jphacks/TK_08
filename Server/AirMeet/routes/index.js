@@ -18,8 +18,8 @@ router.get('/', function(req, res) {
 
 
 // イベント登録
-//router.post('/register_event', function(req, res) {
-router.get('/register_event', function(req, res) {
+router.post('/register_event', function(req, res) {
+//router.get('/register_event', function(req, res) {
   var success = {
     major : null,
     message : null,
@@ -27,25 +27,17 @@ router.get('/register_event', function(req, res) {
   };
   var error = {};
   var id = uuid.v4();
-  /*
+
   var en = req.body.event_name;
   var rn = req.body.room_name;
   var desc = req.body.description;
-  var mand = req.body.mandatory_filed;
-  */
-  var en = req.param('event_name');
-  var rn = req.param('room_name');
-  var desc = req.param('description');
-  var items = req.param('items');
+  var items = req.body.items;
 
   if(!en){
     error.message = "Error: event_name is missing";
     error.code = 400;
   }
-  if(!rn){
-    error.message = "Error: room_name is missing";
-    error.code = 400;
-  }
+  
   if(!items){
     error.message = "Error: items is missing";
     error.code = 400;
@@ -81,8 +73,8 @@ router.get('/register_event', function(req, res) {
   }
 });
 
-/*
-// register_eventがGETならエラー
+
+//register_eventがGETならエラー
 router.get('/register_event', function(req, res) {
   var error = {};
   error.message = "Error: Cannot GET";
@@ -90,22 +82,41 @@ router.get('/register_event', function(req, res) {
   var str = JSON.stringify(error);
   res.send(str);
 });
-*/
 
 
-// eventを得る
+//-------------------------------------------------//
+// イベント情報を取得
+//-------------------------------------------------//
 router.get('/event_info', function(req, res) {
   var success = {
     message : null,
     code : 200
   };
   var error = {};
-  var major = String(req.param('major'));
+  var major = req.param('major');
   if(!major){
     error.message = "Error: major is missing";
     error.code = 400;
   }
 
+  dba.get_event(major, function(err, event) {
+    console.log("2 "+err);
+    console.log("2 "+event);
+    if(event){
+      console.log(event);
+      //row.code = 200;
+      //row.items = row.items.split(',');
+      //res.send(row);
+    }else{
+      error.message = "Error: Event does not exist";
+      error.code = 500;
+    }
+    if(Object.keys(error).length){
+      var str = JSON.stringify(error);
+      res.send(str);
+    }
+  });
+  /*
   dba.get_event(function(err, events) {
     if(events.length){
       var flag = 0;
@@ -130,8 +141,10 @@ router.get('/event_info', function(req, res) {
       res.send(str);
     }
   });
+  */
 });
 
+//イベントへのユーザ登録
 router.post('/register_user', function(req, res) {
   var success = {
     id : null,
