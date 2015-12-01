@@ -193,7 +193,7 @@
                                     <constraint firstAttribute="height" constant="50" id="5iK-QH-VMU"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="20"/>
-                                <state key="normal" title="End AirMeet">
+                                <state key="normal" title="Stop AirMeet">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>

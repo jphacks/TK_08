@@ -79,10 +79,10 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         profileChangeButton.layer.borderColor = UIColor.lightGrayColor().CGColor
         profileChangeButton.layer.borderWidth = 1.0
         
-      //  let ud = NSUserDefaults.standardUserDefaults()
+        //let ud = NSUserDefaults.standardUserDefaults()
         
-      //  ud.setObject(tags[0].detail, forKey: "name")
-      //  ud.setObject(tags[1].detail, forKey: "detail")
+        //ud.setObject(tags[0].detail, forKey: "name")
+        //ud.setObject(tags[1].detail, forKey: "detail")
 
         
         //会場追加
@@ -127,8 +127,12 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         
         //プロフィール更新
         let defaults = NSUserDefaults.standardUserDefaults()
-        if defaults.stringForKey("name") == nil || defaults.stringForKey("facebook") == nil{
+        if defaults.stringForKey("name") == nil || defaults.stringForKey("facebook") == nil || defaults.objectForKey("image") == nil{
             print("First Launch")
+            
+            defaults.setObject(UIImagePNGRepresentation(imageImageView.image!), forKey: "image")
+            defaults.setObject(UIImagePNGRepresentation(backImageView.image!), forKey: "back")
+            
             let storyboard: UIStoryboard = UIStoryboard(name: "Profile", bundle: NSBundle.mainBundle())
             let profileViewController: ProfileViewController = storyboard.instantiateInitialViewController() as! ProfileViewController
             
@@ -143,6 +147,13 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
             faceLinkLabel.text = "\(defaults.stringForKey("facebook")!)"
             //twitter
             twitterLinkLabel.text = "\(defaults.stringForKey("twitter")!)"
+            
+            //画像
+            let imageData:NSData = defaults.objectForKey("image") as! NSData
+            imageImageView.image = UIImage(data:imageData)
+            
+            let backData:NSData = defaults.objectForKey("back") as! NSData
+            backImageView.image = UIImage(data: backData)
         }
         
     }
@@ -307,8 +318,6 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         self.navigationController?.pushViewController(childViewController, animated: true)
         
     }
-    
-    
     
     //親
     @IBAction func ParentButton(sender: AnyObject) {

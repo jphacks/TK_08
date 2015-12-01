@@ -26,14 +26,6 @@
                                     <constraint firstAttribute="height" constant="120" id="ZYF-qs-Kjm"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SBH-by-qU5">
-                                <rect key="frame" x="0.0" y="20" width="600" height="120"/>
-                                <animations/>
-                                <color key="backgroundColor" white="0.75" alpha="0.50366870777027029" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="120" id="1av-QJ-E7X"/>
-                                </constraints>
-                            </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="go_face.png" translatesAutoresizingMaskIntoConstraints="NO" id="71e-jI-XEs">
                                 <rect key="frame" x="20" y="92" width="100" height="100"/>
                                 <animations/>
@@ -51,7 +43,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vry-TD-O9p">
                                 <rect key="frame" x="20" y="92" width="100" height="100"/>
                                 <animations/>
-                                <color key="backgroundColor" white="0.75" alpha="0.50366870779999995" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.5" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="100" id="dfo-I6-Tx9"/>
                                     <constraint firstAttribute="height" constant="120" id="hJ2-Xr-XCr"/>
@@ -140,6 +132,17 @@
                                     </mask>
                                 </variation>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SBH-by-qU5">
+                                <rect key="frame" x="0.0" y="20" width="600" height="120"/>
+                                <animations/>
+                                <color key="backgroundColor" white="0.5" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="120" id="1av-QJ-E7X"/>
+                                </constraints>
+                                <connections>
+                                    <action selector="settingBackButton:" destination="PMu-U7-3SU" eventType="touchUpInside" id="oFm-SR-Rbc"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

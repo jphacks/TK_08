@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController,UITableViewDelegate, UITableViewDataSource,UITextFieldDelegate,UIScrollViewDelegate  {
+class ProfileViewController: UIViewController,UITableViewDelegate, UITableViewDataSource,UITextFieldDelegate,UIScrollViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate  {
     
     @IBOutlet weak var SettingTableView: UITableView!
     
@@ -18,12 +18,7 @@ class ProfileViewController: UIViewController,UITableViewDelegate, UITableViewDa
 
     var tags:[TagModel] = [TagModel]()
 
-    @IBAction func settingImageButton(sender: AnyObject) {
-        let index:NSIndexPath = NSIndexPath(forRow: 2, inSection: 0)
-        
-        SettingTableView.scrollToRowAtIndexPath(index, atScrollPosition:UITableViewScrollPosition.Bottom , animated:true)
-    }
-    
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -44,16 +39,24 @@ class ProfileViewController: UIViewController,UITableViewDelegate, UITableViewDa
         SettingTableView.dataSource = self
         SettingTableView.scrollEnabled = true
         
+        let defaults = NSUserDefaults.standardUserDefaults()
         
-        let tag1:TagModel = TagModel(name:"アカウント名",detail: "ごー")
-        let tag2:TagModel = TagModel(name:"自己紹介",detail: "うひょおおお")
-        let tag3:TagModel = TagModel(name:"FaceBook",detail: "砂糖ごう")
-        let tag4:TagModel = TagModel(name:"Twitter", detail: "@gooo")
+        //設定
+        let tag1:TagModel = TagModel(name:"アカウント名",detail: "\(defaults.stringForKey("name")!)")
+        let tag2:TagModel = TagModel(name:"自己紹介",detail: "\(defaults.stringForKey("detail")!)")
+        let tag3:TagModel = TagModel(name:"FaceBook",detail: "\(defaults.stringForKey("facebook")!)")
+        let tag4:TagModel = TagModel(name:"Twitter", detail: "\(defaults.stringForKey("twitter")!)")
         
         tags.append(tag1)
         tags.append(tag2)
         tags.append(tag3)
         tags.append(tag4)
+        
+        let imageData:NSData = defaults.objectForKey("image") as! NSData
+        imageImageView.image = UIImage(data:imageData)
+        
+        let backData:NSData = defaults.objectForKey("back") as! NSData
+        backImageView.image = UIImage(data: backData)
         
     }
     
@@ -153,6 +156,69 @@ class ProfileViewController: UIViewController,UITableViewDelegate, UITableViewDa
         
         print("Save")
     }
+    //顔画像
+    @IBAction func settingImageButton(sender: AnyObject) {
+        
+        let pickerController = UIImagePickerController()
+        pickerController.delegate = self
+        pickerController.view.tag = 0
+        pickerController.allowsEditing = true
+        UIImagePickerControllerSourceType.PhotoLibrary
+        self.presentViewController(pickerController, animated: true, completion: nil)
+        
+    }
+    //背景画像
+    @IBAction func settingBackButton(sender: AnyObject) {
+        
+        let pickerController = UIImagePickerController()
+        pickerController.delegate = self
+        pickerController.view.tag = 1
+        pickerController.allowsEditing = true
+        UIImagePickerControllerSourceType.PhotoLibrary
+        self.presentViewController(pickerController, animated: true, completion: nil)
+    }
+    
+    
+    // 画像が選択されたとき
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
+        // アルバム画面を閉じる
+        picker.dismissViewControllerAnimated(true, completion: nil);
+        
+       
+        
+        // 画像をリサイズしたい
+        switch picker.view.tag{
+        case 0:
+            imageImageView.image = image
+            let defaults = NSUserDefaults.standardUserDefaults()
+            defaults.setObject(UIImagePNGRepresentation(image), forKey: "image")
+            break
+        case 1:
+            backImageView.image = image
+            let defaults = NSUserDefaults.standardUserDefaults()
+            defaults.setObject(UIImagePNGRepresentation(image), forKey: "back")
+            break
+        default:
+            break
+        }
+        
+    }
+    
+    // 画像をリサイズしたい
+    func resize(image: UIImage, width: Int, height: Int) -> UIImage {
+        //let imageRef: CGImageRef = image.CGImage!
+        //let sourceWidth: Int = CGImageGetWidth(imageRef)
+        //let sourceHeight: Int = CGImageGetHeight(imageRef)
+        
+        let size: CGSize = CGSize(width: width, height: height)
+        UIGraphicsBeginImageContext(size)
+        image.drawInRect(CGRectMake(0, 0, size.width, size.height))
+        
+        let resizeImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return resizeImage
+    }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

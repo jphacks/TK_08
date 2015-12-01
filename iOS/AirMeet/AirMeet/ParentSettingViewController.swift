@@ -109,7 +109,9 @@ class ParentSettingViewController: UIViewController,UITextFieldDelegate,NSURLSes
         }
         
         // 通信用のConfigを生成.
-        let myConfig:NSURLSessionConfiguration = NSURLSessionConfiguration.backgroundSessionConfigurationWithIdentifier("backgroundTask")
+        let myConfig:NSURLSessionConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()
+            
+            //backgroundSessionConfigurationWithIdentifier("defaultTask")
         // Sessionを生成.
         let mySession:NSURLSession = NSURLSession(configuration: myConfig, delegate: self, delegateQueue: nil)
         
@@ -123,6 +125,7 @@ class ParentSettingViewController: UIViewController,UITextFieldDelegate,NSURLSes
         request.HTTPBody = postData
         
         let task:NSURLSessionDataTask = mySession.dataTaskWithRequest(request)
+        print("Start Session")
         task.resume()
         
         MakeAirMeetButton.enabled = false
@@ -133,9 +136,6 @@ class ParentSettingViewController: UIViewController,UITextFieldDelegate,NSURLSes
     //通信終了
     func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveData data: NSData) {
         
-        // 帰ってきたデータを文字列に変換.
-        //var jsonData:NSString = NSString(data: data, encoding: NSUTF8StringEncoding)!
-        
         //Json解析
         let json = JSON(data:data)
         
@@ -143,7 +143,7 @@ class ParentSettingViewController: UIViewController,UITextFieldDelegate,NSURLSes
         let major = json["major"]
         let message = json["message"]
         
-        print(json["code"])
+        print("code : \(json["code"])")
         //成功
         if code == "200"{
             
@@ -152,7 +152,7 @@ class ParentSettingViewController: UIViewController,UITextFieldDelegate,NSURLSes
             //画面遷移
             performSegueWithIdentifier("startSegue",sender: nil)
             
-            //失敗
+        //失敗
         }else{
             print(message)
             
@@ -166,14 +166,9 @@ class ParentSettingViewController: UIViewController,UITextFieldDelegate,NSURLSes
             appDelegate.isParent = false
         }
         
-        
-        // バックグラウンドだとUIの処理が出来ないので、メインスレッドでUIの処理を行わせる.
-        dispatch_async(dispatch_get_main_queue(), {
-            
-            self.MakeAirMeetButton.enabled = true
-            self.MakeAirMeetButton.alpha = 1.0
-        })
-        
+        //self.MakeAirMeetButton.enabled = true
+        //self.MakeAirMeetButton.alpha = 1.0
+ 
     }
     
     @IBAction func unwindToTop(segue: UIStoryboardSegue) {
