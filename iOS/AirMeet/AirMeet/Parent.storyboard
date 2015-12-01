@@ -6,10 +6,10 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--New Air Meet-->
+        <!--Make AirMeet-->
         <scene sceneID="SId-m5-KXl">
             <objects>
-                <viewController storyboardIdentifier="ParentSettingViewController" title="New Air Meet" id="dl5-lv-6jl" customClass="ParentSettingViewController" customModule="AirMeet" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ParentSettingViewController" title="Make AirMeet" id="dl5-lv-6jl" customClass="ParentSettingViewController" customModule="AirMeet" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="DlO-hl-LXM"/>
                         <viewControllerLayoutGuide type="bottom" id="xdZ-ij-LIu"/>
@@ -18,6 +18,90 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="RoomName" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="w8d-3a-hVh" customClass="HoshiTextField" customModule="AirMeet" customModuleProvider="target">
+                                <rect key="frame" x="20" y="86" width="560" height="50"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="560" id="DeP-bq-GiX"/>
+                                    <constraint firstAttribute="width" constant="391" id="HOY-Ny-32P"/>
+                                    <constraint firstAttribute="height" constant="50" id="Pcg-EN-dGs"/>
+                                    <constraint firstAttribute="height" constant="61" id="jXn-5B-IZi"/>
+                                </constraints>
+                                <color key="textColor" red="0.50196078430000002" green="0.80000000000000004" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="15"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="borderInactiveColor">
+                                        <color key="value" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="borderActiveColor">
+                                        <color key="value" red="0.50196078430000002" green="0.80000000000000004" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
+                                        <color key="value" red="0.50196078430000002" green="0.80000000000000004" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="placeholderFontScale">
+                                        <real key="value" value="0.80000000000000004"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="DeP-bq-GiX"/>
+                                        <exclude reference="HOY-Ny-32P"/>
+                                        <exclude reference="jXn-5B-IZi"/>
+                                    </mask>
+                                </variation>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="EventName" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aZA-qq-qfr" customClass="HoshiTextField" customModule="AirMeet" customModuleProvider="target">
+                                <rect key="frame" x="20" y="28" width="560" height="50"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="391" id="1uF-uj-Bbl"/>
+                                    <constraint firstAttribute="height" constant="50" id="QAS-E5-qOV"/>
+                                    <constraint firstAttribute="height" constant="61" id="cEl-Lg-4wQ"/>
+                                    <constraint firstAttribute="width" constant="560" id="jHY-wt-Lwc"/>
+                                </constraints>
+                                <color key="textColor" red="0.50196078430000002" green="0.80000000000000004" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="15"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="borderInactiveColor">
+                                        <color key="value" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="borderActiveColor">
+                                        <color key="value" red="0.50196078430000002" green="0.80000000000000004" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="placeholderFontScale">
+                                        <real key="value" value="0.80000000000000004"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
+                                        <color key="value" red="0.50196078430000002" green="0.80000000000000004" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="1uF-uj-Bbl"/>
+                                        <exclude reference="cEl-Lg-4wQ"/>
+                                        <exclude reference="jHY-wt-Lwc"/>
+                                    </mask>
+                                </variation>
+                            </textField>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="vOe-84-jLz">
+                                <rect key="frame" x="0.0" y="187" width="600" height="335"/>
+                                <animations/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="　　参加者に公開を求める情報" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E9v-vA-3ou">
+                                <rect key="frame" x="0.0" y="162" width="600" height="25"/>
+                                <animations/>
+                                <color key="backgroundColor" red="0.50196078430000002" green="0.80000000000000004" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="25" id="Oke-Cl-CDR"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="14"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ec5-aq-o9H">
                                 <rect key="frame" x="20" y="530" width="560" height="50"/>
                                 <animations/>
@@ -25,99 +109,62 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="sXr-i1-RA4"/>
                                 </constraints>
-                                <state key="normal" title="Start">
+                                <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="20"/>
+                                <state key="normal" title="Make AirMeet">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="3"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="ParentStartButton:" destination="dl5-lv-6jl" eventType="touchUpInside" id="60l-cn-23j"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="test" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="w8d-3a-hVh">
-                                <rect key="frame" x="189" y="144" width="365" height="61"/>
-                                <animations/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="391" id="HOY-Ny-32P"/>
-                                    <constraint firstAttribute="height" constant="61" id="jXn-5B-IZi"/>
-                                </constraints>
-                                <color key="textColor" red="0.50196078430000002" green="0.80000000000000004" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="HOY-Ny-32P"/>
-                                    </mask>
-                                </variation>
-                            </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="EventName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9QN-2k-T1H">
-                                <rect key="frame" x="20" y="64" width="166" height="61"/>
-                                <animations/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="166" id="vZf-NR-TgU"/>
-                                    <constraint firstAttribute="height" constant="61" id="zmR-GD-C59"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RoomName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZNT-Yf-s7t">
-                                <rect key="frame" x="20" y="144" width="166" height="61"/>
-                                <animations/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="166" id="E5E-N1-B73"/>
-                                    <constraint firstAttribute="height" constant="61" id="h0L-CC-XaH"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="test" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aZA-qq-qfr">
-                                <rect key="frame" x="189" y="64" width="365" height="61"/>
-                                <animations/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="391" id="1uF-uj-Bbl"/>
-                                    <constraint firstAttribute="height" constant="61" id="cEl-Lg-4wQ"/>
-                                </constraints>
-                                <color key="textColor" red="0.50196078430000002" green="0.80000000000000004" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="1uF-uj-Bbl"/>
-                                    </mask>
-                                </variation>
-                            </textField>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="E9v-vA-3ou" secondAttribute="trailing" constant="-20" id="11a-TT-C1P"/>
                             <constraint firstItem="aZA-qq-qfr" firstAttribute="trailing" secondItem="v7z-Cn-0ym" secondAttribute="trailingMargin" id="4KL-vO-Whm"/>
-                            <constraint firstItem="ZNT-Yf-s7t" firstAttribute="leading" secondItem="v7z-Cn-0ym" secondAttribute="leadingMargin" id="6o5-Ju-1pl"/>
-                            <constraint firstItem="w8d-3a-hVh" firstAttribute="leading" secondItem="ZNT-Yf-s7t" secondAttribute="trailing" constant="3" id="CLT-KA-Yg2"/>
-                            <constraint firstItem="9QN-2k-T1H" firstAttribute="top" secondItem="DlO-hl-LXM" secondAttribute="bottom" constant="44" id="Fvf-hJ-lTb"/>
-                            <constraint firstItem="ZNT-Yf-s7t" firstAttribute="top" secondItem="9QN-2k-T1H" secondAttribute="bottom" constant="19" id="GWo-mW-NqB"/>
+                            <constraint firstItem="w8d-3a-hVh" firstAttribute="trailing" secondItem="v7z-Cn-0ym" secondAttribute="trailingMargin" id="4OY-cW-0wg"/>
+                            <constraint firstItem="E9v-vA-3ou" firstAttribute="leading" secondItem="v7z-Cn-0ym" secondAttribute="leadingMargin" constant="-20" id="7IJ-RB-5nu"/>
+                            <constraint firstItem="vOe-84-jLz" firstAttribute="top" secondItem="E9v-vA-3ou" secondAttribute="bottom" id="AxB-cX-Hkj"/>
+                            <constraint firstItem="w8d-3a-hVh" firstAttribute="top" secondItem="aZA-qq-qfr" secondAttribute="bottom" constant="8" id="EpY-in-Oo9"/>
                             <constraint firstItem="Ec5-aq-o9H" firstAttribute="trailing" secondItem="v7z-Cn-0ym" secondAttribute="trailingMargin" id="KlW-Pi-ceB"/>
-                            <constraint firstItem="aZA-qq-qfr" firstAttribute="leading" secondItem="9QN-2k-T1H" secondAttribute="trailing" constant="3" id="MoG-LC-6L1"/>
                             <constraint firstAttribute="trailingMargin" secondItem="w8d-3a-hVh" secondAttribute="trailing" constant="26" id="ORc-dk-AJ7"/>
-                            <constraint firstItem="9QN-2k-T1H" firstAttribute="leading" secondItem="v7z-Cn-0ym" secondAttribute="leadingMargin" id="QMp-fX-KCt"/>
-                            <constraint firstItem="aZA-qq-qfr" firstAttribute="leading" secondItem="9QN-2k-T1H" secondAttribute="trailing" constant="3" id="TQk-6b-5pl"/>
+                            <constraint firstItem="Ec5-aq-o9H" firstAttribute="top" secondItem="vOe-84-jLz" secondAttribute="bottom" constant="8" id="Puk-4e-3na"/>
                             <constraint firstItem="xdZ-ij-LIu" firstAttribute="top" secondItem="Ec5-aq-o9H" secondAttribute="bottom" constant="20" id="YKX-ua-nKW"/>
                             <constraint firstAttribute="trailingMargin" secondItem="aZA-qq-qfr" secondAttribute="trailing" constant="26" id="eYU-M8-a7a"/>
+                            <constraint firstItem="w8d-3a-hVh" firstAttribute="height" secondItem="aZA-qq-qfr" secondAttribute="height" id="f30-Vr-Sta"/>
                             <constraint firstItem="w8d-3a-hVh" firstAttribute="top" secondItem="aZA-qq-qfr" secondAttribute="bottom" constant="19" id="gep-Qi-INu"/>
+                            <constraint firstItem="aZA-qq-qfr" firstAttribute="leading" secondItem="v7z-Cn-0ym" secondAttribute="leadingMargin" id="hEs-rP-qvX"/>
                             <constraint firstItem="w8d-3a-hVh" firstAttribute="trailing" secondItem="v7z-Cn-0ym" secondAttribute="trailingMargin" constant="26" id="hHL-3a-fVX"/>
+                            <constraint firstItem="w8d-3a-hVh" firstAttribute="width" secondItem="aZA-qq-qfr" secondAttribute="width" id="jbF-TJ-BGC"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="vOe-84-jLz" secondAttribute="trailing" constant="-20" id="k98-gs-TRY"/>
+                            <constraint firstItem="E9v-vA-3ou" firstAttribute="top" secondItem="w8d-3a-hVh" secondAttribute="bottom" constant="26" id="kLk-fb-hB8"/>
+                            <constraint firstItem="vOe-84-jLz" firstAttribute="leading" secondItem="v7z-Cn-0ym" secondAttribute="leadingMargin" constant="-20" id="lcF-jW-JM4"/>
                             <constraint firstItem="Ec5-aq-o9H" firstAttribute="leading" secondItem="v7z-Cn-0ym" secondAttribute="leadingMargin" id="lgt-RI-i1H"/>
-                            <constraint firstItem="w8d-3a-hVh" firstAttribute="leading" secondItem="ZNT-Yf-s7t" secondAttribute="trailing" constant="3" id="saX-Sv-AO9"/>
+                            <constraint firstItem="w8d-3a-hVh" firstAttribute="leading" secondItem="v7z-Cn-0ym" secondAttribute="leadingMargin" id="nmn-Y2-7pv"/>
+                            <constraint firstItem="aZA-qq-qfr" firstAttribute="trailing" secondItem="v7z-Cn-0ym" secondAttribute="trailingMargin" id="rTy-os-CaE"/>
+                            <constraint firstItem="aZA-qq-qfr" firstAttribute="top" secondItem="DlO-hl-LXM" secondAttribute="bottom" constant="8" id="tCn-qH-fsr"/>
                             <constraint firstItem="aZA-qq-qfr" firstAttribute="top" secondItem="DlO-hl-LXM" secondAttribute="bottom" constant="44" id="zul-QU-Yn0"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="4KL-vO-Whm"/>
+                                <exclude reference="eYU-M8-a7a"/>
+                                <exclude reference="zul-QU-Yn0"/>
+                                <exclude reference="ORc-dk-AJ7"/>
+                                <exclude reference="gep-Qi-INu"/>
                                 <exclude reference="hHL-3a-fVX"/>
                             </mask>
                         </variation>
                     </view>
-                    <navigationItem key="navigationItem" title="会場設定" id="Rv6-Qp-xj9"/>
                     <connections>
                         <outlet property="EventNameTextField" destination="aZA-qq-qfr" id="RYp-Xx-dtK"/>
+                        <outlet property="MakeAirMeetButton" destination="Ec5-aq-o9H" id="Bf4-pd-49F"/>
                         <outlet property="RoomNameTextField" destination="w8d-3a-hVh" id="KaH-vC-7It"/>
                         <segue destination="cPN-Po-HNe" kind="showDetail" identifier="startSegue" id="ILD-H8-d9z"/>
                     </connections>
@@ -145,51 +192,80 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="5iK-QH-VMU"/>
                                 </constraints>
-                                <state key="normal" title="Air Meet を終了する">
+                                <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="20"/>
+                                <state key="normal" title="End AirMeet">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="3"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="ParentStopButton:" destination="cPN-Po-HNe" eventType="touchUpInside" id="eJJ-iB-tNb"/>
                                     <segue destination="PnN-mO-SOg" kind="unwind" unwindAction="unwindToTop:" id="4E1-5F-cz6"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="この端末は AirMeet 中操作できません" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d6h-KV-lrv">
-                                <rect key="frame" x="20" y="20" width="560" height="92"/>
+                                <rect key="frame" x="20" y="95" width="560" height="40"/>
                                 <animations/>
                                 <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="3Ec-OK-KW6"/>
+                                    <constraint firstAttribute="height" constant="60" id="6oU-Hh-wPz"/>
                                     <constraint firstAttribute="height" constant="60" id="BxM-za-wcU"/>
+                                    <constraint firstAttribute="height" constant="40" id="cMj-Ko-zCS"/>
                                     <constraint firstAttribute="height" constant="92" id="nbg-VK-Wa9"/>
                                     <constraint firstAttribute="height" constant="92" id="qPN-hH-v36"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="20"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="default">
                                     <mask key="constraints">
+                                        <exclude reference="6oU-Hh-wPz"/>
                                         <exclude reference="BxM-za-wcU"/>
+                                        <exclude reference="cMj-Ko-zCS"/>
+                                        <exclude reference="nbg-VK-Wa9"/>
                                         <exclude reference="qPN-hH-v36"/>
                                     </mask>
                                 </variation>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img-A-415.png" translatesAutoresizingMaskIntoConstraints="NO" id="yuZ-Qd-5Yb">
-                                <rect key="frame" x="20" y="158" width="560" height="364"/>
+                                <rect key="frame" x="20" y="173" width="560" height="349"/>
                                 <animations/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="操作をするためには、AirMeetを終了させてください" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1kL-I1-uzT">
-                                <rect key="frame" x="20" y="110" width="560" height="40"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AirMeet-color_heart.png" translatesAutoresizingMaskIntoConstraints="NO" id="Ba2-JX-4Bx">
+                                <rect key="frame" x="20" y="20" width="560" height="50"/>
                                 <animations/>
                                 <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="Ia4-bj-cUm"/>
+                                    <constraint firstAttribute="height" constant="71" id="mNW-3J-5jh"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="mNW-3J-5jh"/>
+                                    </mask>
+                                </variation>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="操作をするためには、AirMeetを終了させてください" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1kL-I1-uzT">
+                                <rect key="frame" x="20" y="135" width="560" height="30"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="41" id="8y8-cZ-rMJ"/>
                                     <constraint firstAttribute="height" constant="30" id="Mkw-td-Yz7"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="hlY-04-BRs"/>
+                                    <constraint firstAttribute="height" constant="30" id="vo6-tX-u2f"/>
                                     <constraint firstAttribute="height" constant="40" id="wL8-Gv-1ZR"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="11"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="default">
                                     <mask key="constraints">
+                                        <exclude reference="8y8-cZ-rMJ"/>
                                         <exclude reference="Mkw-td-Yz7"/>
                                         <exclude reference="hlY-04-BRs"/>
+                                        <exclude reference="wL8-Gv-1ZR"/>
                                     </mask>
                                 </variation>
                             </label>
@@ -198,44 +274,89 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="yuZ-Qd-5Yb" firstAttribute="trailing" secondItem="OCh-hY-UbV" secondAttribute="trailingMargin" id="1pC-d6-iyN"/>
+                            <constraint firstItem="1kL-I1-uzT" firstAttribute="top" secondItem="d6h-KV-lrv" secondAttribute="bottom" id="3BC-1i-6YL"/>
+                            <constraint firstItem="1kL-I1-uzT" firstAttribute="top" secondItem="d6h-KV-lrv" secondAttribute="bottom" constant="8" id="7jC-cd-Ki5"/>
+                            <constraint firstItem="Ba2-JX-4Bx" firstAttribute="top" secondItem="6Yj-tH-LUf" secondAttribute="bottom" id="8qz-wb-hN9"/>
                             <constraint firstItem="d6h-KV-lrv" firstAttribute="top" secondItem="6Yj-tH-LUf" secondAttribute="bottom" id="BVC-IY-ICZ"/>
+                            <constraint firstItem="yuZ-Qd-5Yb" firstAttribute="top" secondItem="1kL-I1-uzT" secondAttribute="bottom" constant="8" id="CTb-qk-C1h"/>
                             <constraint firstItem="d6h-KV-lrv" firstAttribute="top" secondItem="6Yj-tH-LUf" secondAttribute="bottom" constant="8" id="DUV-yq-B51"/>
                             <constraint firstItem="1kL-I1-uzT" firstAttribute="trailing" secondItem="OCh-hY-UbV" secondAttribute="trailingMargin" id="EPq-wc-JBp"/>
                             <constraint firstItem="OEo-UN-piU" firstAttribute="top" secondItem="yuZ-Qd-5Yb" secondAttribute="bottom" constant="8" id="EYJ-JQ-ns8"/>
                             <constraint firstItem="d6h-KV-lrv" firstAttribute="trailing" secondItem="OCh-hY-UbV" secondAttribute="trailingMargin" id="GqY-Sm-O2v"/>
                             <constraint firstItem="d6h-KV-lrv" firstAttribute="leading" secondItem="OCh-hY-UbV" secondAttribute="leadingMargin" id="Gyp-TP-P3D"/>
+                            <constraint firstItem="1kL-I1-uzT" firstAttribute="trailing" secondItem="OCh-hY-UbV" secondAttribute="trailingMargin" id="IIl-Fq-mDb"/>
+                            <constraint firstItem="1kL-I1-uzT" firstAttribute="trailing" secondItem="OCh-hY-UbV" secondAttribute="trailingMargin" id="LX4-x3-kNK"/>
                             <constraint firstItem="OEo-UN-piU" firstAttribute="trailing" secondItem="OCh-hY-UbV" secondAttribute="trailingMargin" id="Ldo-N2-oVy"/>
                             <constraint firstItem="yuZ-Qd-5Yb" firstAttribute="leading" secondItem="OCh-hY-UbV" secondAttribute="leadingMargin" id="M9v-EK-5Ui"/>
+                            <constraint firstItem="d6h-KV-lrv" firstAttribute="leading" secondItem="OCh-hY-UbV" secondAttribute="leadingMargin" id="Nbo-Rb-iPL"/>
                             <constraint firstItem="yuZ-Qd-5Yb" firstAttribute="top" secondItem="1kL-I1-uzT" secondAttribute="bottom" constant="8" id="PVG-ZA-mmx"/>
+                            <constraint firstItem="Ba2-JX-4Bx" firstAttribute="trailing" secondItem="OCh-hY-UbV" secondAttribute="trailingMargin" id="Qkx-Gg-TOc"/>
+                            <constraint firstItem="d6h-KV-lrv" firstAttribute="leading" secondItem="OCh-hY-UbV" secondAttribute="leadingMargin" id="Ru4-Kn-10Y"/>
                             <constraint firstItem="OEo-UN-piU" firstAttribute="top" secondItem="yuZ-Qd-5Yb" secondAttribute="bottom" constant="8" id="SMc-ZF-GDE"/>
+                            <constraint firstItem="d6h-KV-lrv" firstAttribute="trailing" secondItem="OCh-hY-UbV" secondAttribute="trailingMargin" id="SuV-Th-Eus"/>
+                            <constraint firstItem="d6h-KV-lrv" firstAttribute="trailing" secondItem="OCh-hY-UbV" secondAttribute="trailingMargin" id="UVi-5w-T21"/>
                             <constraint firstItem="1kL-I1-uzT" firstAttribute="leading" secondItem="OCh-hY-UbV" secondAttribute="leadingMargin" id="Xdy-Xj-dGt"/>
+                            <constraint firstItem="d6h-KV-lrv" firstAttribute="leading" secondItem="OCh-hY-UbV" secondAttribute="leadingMargin" id="bup-A6-vKs"/>
                             <constraint firstItem="1kL-I1-uzT" firstAttribute="top" secondItem="d6h-KV-lrv" secondAttribute="bottom" id="cSa-5G-zbz"/>
                             <constraint firstItem="d6h-KV-lrv" firstAttribute="trailing" secondItem="OCh-hY-UbV" secondAttribute="trailingMargin" id="cyg-AR-bia"/>
+                            <constraint firstItem="Ba2-JX-4Bx" firstAttribute="top" secondItem="6Yj-tH-LUf" secondAttribute="bottom" id="d8Q-rz-eCM"/>
                             <constraint firstItem="d6h-KV-lrv" firstAttribute="trailing" secondItem="OCh-hY-UbV" secondAttribute="trailingMargin" id="e0z-2R-7Qb"/>
+                            <constraint firstItem="d6h-KV-lrv" firstAttribute="top" secondItem="Ba2-JX-4Bx" secondAttribute="bottom" constant="25" id="eTA-PF-hXD"/>
                             <constraint firstItem="Tdf-a2-5VG" firstAttribute="top" secondItem="OEo-UN-piU" secondAttribute="bottom" constant="20" id="fdn-jJ-bZQ"/>
+                            <constraint firstItem="1kL-I1-uzT" firstAttribute="leading" secondItem="OCh-hY-UbV" secondAttribute="leadingMargin" id="gTv-iG-hgJ"/>
                             <constraint firstItem="d6h-KV-lrv" firstAttribute="leading" secondItem="OCh-hY-UbV" secondAttribute="leadingMargin" id="gYR-ZZ-QEH"/>
                             <constraint firstItem="OEo-UN-piU" firstAttribute="leading" secondItem="OCh-hY-UbV" secondAttribute="leadingMargin" id="hfW-cd-dtj"/>
                             <constraint firstItem="1kL-I1-uzT" firstAttribute="top" secondItem="6Yj-tH-LUf" secondAttribute="bottom" constant="90" id="hjK-4f-jvJ"/>
+                            <constraint firstItem="Ba2-JX-4Bx" firstAttribute="leading" secondItem="OCh-hY-UbV" secondAttribute="leadingMargin" id="ihi-IC-GNf"/>
+                            <constraint firstItem="d6h-KV-lrv" firstAttribute="trailing" secondItem="OCh-hY-UbV" secondAttribute="trailingMargin" id="jQY-dC-Pso"/>
+                            <constraint firstItem="1kL-I1-uzT" firstAttribute="top" secondItem="d6h-KV-lrv" secondAttribute="bottom" constant="8" id="jWe-Z5-Xbk"/>
+                            <constraint firstItem="1kL-I1-uzT" firstAttribute="leading" secondItem="OCh-hY-UbV" secondAttribute="leadingMargin" id="jcf-cm-Fy5"/>
                             <constraint firstItem="1kL-I1-uzT" firstAttribute="trailing" secondItem="OCh-hY-UbV" secondAttribute="trailingMargin" id="jsX-tl-2pn"/>
+                            <constraint firstItem="d6h-KV-lrv" firstAttribute="top" secondItem="6Yj-tH-LUf" secondAttribute="bottom" constant="21" id="k2w-fl-O34"/>
+                            <constraint firstItem="Ba2-JX-4Bx" firstAttribute="leading" secondItem="OCh-hY-UbV" secondAttribute="leadingMargin" id="lMb-1u-38t"/>
                             <constraint firstItem="yuZ-Qd-5Yb" firstAttribute="top" secondItem="1kL-I1-uzT" secondAttribute="bottom" constant="8" id="p1Q-sv-Kfg"/>
                             <constraint firstItem="1kL-I1-uzT" firstAttribute="leading" secondItem="OCh-hY-UbV" secondAttribute="leadingMargin" id="qFj-Lt-sVH"/>
+                            <constraint firstItem="d6h-KV-lrv" firstAttribute="top" secondItem="Ba2-JX-4Bx" secondAttribute="bottom" constant="8" id="rSA-Rq-GZh"/>
                             <constraint firstItem="yuZ-Qd-5Yb" firstAttribute="trailing" secondItem="OCh-hY-UbV" secondAttribute="trailingMargin" id="sPr-1f-0nP"/>
+                            <constraint firstItem="Ba2-JX-4Bx" firstAttribute="trailing" secondItem="OCh-hY-UbV" secondAttribute="trailingMargin" id="sne-Cj-WBl"/>
+                            <constraint firstItem="yuZ-Qd-5Yb" firstAttribute="top" secondItem="1kL-I1-uzT" secondAttribute="bottom" constant="8" id="tBz-Df-9FM"/>
                             <constraint firstItem="d6h-KV-lrv" firstAttribute="top" secondItem="6Yj-tH-LUf" secondAttribute="bottom" constant="40" id="vMs-Dc-wiH"/>
                             <constraint firstItem="d6h-KV-lrv" firstAttribute="leading" secondItem="OCh-hY-UbV" secondAttribute="leadingMargin" id="wIt-em-sjz"/>
                             <constraint firstItem="yuZ-Qd-5Yb" firstAttribute="leading" secondItem="OCh-hY-UbV" secondAttribute="leadingMargin" id="y02-6a-DTf"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="Qkx-Gg-TOc"/>
+                                <exclude reference="d8Q-rz-eCM"/>
+                                <exclude reference="lMb-1u-38t"/>
+                                <exclude reference="BVC-IY-ICZ"/>
                                 <exclude reference="DUV-yq-B51"/>
                                 <exclude reference="GqY-Sm-O2v"/>
+                                <exclude reference="Gyp-TP-P3D"/>
+                                <exclude reference="Nbo-Rb-iPL"/>
+                                <exclude reference="SuV-Th-Eus"/>
+                                <exclude reference="UVi-5w-T21"/>
+                                <exclude reference="bup-A6-vKs"/>
+                                <exclude reference="cyg-AR-bia"/>
                                 <exclude reference="e0z-2R-7Qb"/>
                                 <exclude reference="gYR-ZZ-QEH"/>
+                                <exclude reference="k2w-fl-O34"/>
+                                <exclude reference="rSA-Rq-GZh"/>
                                 <exclude reference="vMs-Dc-wiH"/>
                                 <exclude reference="wIt-em-sjz"/>
+                                <exclude reference="7jC-cd-Ki5"/>
                                 <exclude reference="EPq-wc-JBp"/>
+                                <exclude reference="IIl-Fq-mDb"/>
                                 <exclude reference="Xdy-Xj-dGt"/>
                                 <exclude reference="cSa-5G-zbz"/>
+                                <exclude reference="hjK-4f-jvJ"/>
+                                <exclude reference="jWe-Z5-Xbk"/>
+                                <exclude reference="jcf-cm-Fy5"/>
+                                <exclude reference="jsX-tl-2pn"/>
+                                <exclude reference="qFj-Lt-sVH"/>
+                                <exclude reference="CTb-qk-C1h"/>
                                 <exclude reference="PVG-ZA-mmx"/>
+                                <exclude reference="p1Q-sv-Kfg"/>
                                 <exclude reference="sPr-1f-0nP"/>
                                 <exclude reference="y02-6a-DTf"/>
                                 <exclude reference="EYJ-JQ-ns8"/>
@@ -250,6 +371,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="AirMeet-color_heart.png" width="391" height="135"/>
         <image name="img-A-415.png" width="415" height="415"/>
     </resources>
+    <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
 </document>

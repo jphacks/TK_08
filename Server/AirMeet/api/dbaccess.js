@@ -45,16 +45,15 @@ exports.remove = function(id, callback) {
   db.remove(id, callback);
 };
 
-// (2)メモの取得
-exports.get = function(id, callback) {
-  db.get(id, callback);
-};
 
 // Majorの値と一致するイベントを取得
-exports.get_event = function(callback) {
-  db.view('events/get', callback);
+exports.get_event = function(major,callback) {
+  //db.view('events/get_info', callback);
+  console.log("1 "+major);
+  db.get('あいう', callback);
 };
 
+// 現在登録されているイベントのMajorとは異なる乱数を生成
 exports.gen_rand = function(){
   var flag = 1;
   while(flag == 1){
@@ -62,13 +61,16 @@ exports.gen_rand = function(){
     var rand = Math.floor( Math.random() * 65535 );
     db.view('events/major',function(err, res) {
       res.forEach(function(row) {
-        console.log("2 "+row);
         if(row.major == rand){
-          console.log("3 "+row.major);
           flag = 1;
         }
       });
     });
   }
   return rand;
+};
+
+// Majorの値と一致するイベントの参加者を取得
+exports.get_participants = function(callback) {
+  db.view('users/get_participants', callback);
 };

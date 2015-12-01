@@ -1,0 +1,23 @@
+_design/events
+major
+function (doc) {
+  if(doc.type == 'event'){
+    emit(1, doc.major);
+  }
+}
+
+
+_design/events
+get_info
+function (doc) {
+  if(doc.type == 'event'){
+    var row = {
+      event_name : doc.event_name,
+      room_name : doc.room_name,
+      description : doc.description,
+      major : doc.major,
+      items : doc.items
+    };
+    emit(doc.regist_date, row);
+  }
+}

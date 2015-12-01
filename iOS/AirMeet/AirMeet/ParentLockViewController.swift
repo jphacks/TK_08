@@ -19,9 +19,6 @@ class ParentLockSettingViewController: UIViewController , CBPeripheralManagerDel
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("send")
-        
-        //magerがかえってきた前提
         // PeripheralManagerを定義.
         myPheripheralManager = CBPeripheralManager(delegate: self, queue: nil)
     }
@@ -29,16 +26,13 @@ class ParentLockSettingViewController: UIViewController , CBPeripheralManagerDel
     func peripheralManagerDidUpdateState(peripheral: CBPeripheralManager) {
         
         // iBeaconのUUID.
-        //アプリであらかじめ決められたもの
         let myProximityUUID = NSUUID(UUIDString: "B9407F30-F5F8-466E-AFF9-33333B57FE6D")
         
         // iBeaconのIdentifier.
         let myIdentifier = "AirMeer"
         
-        // Major.
-        //サーバーから値を受け取ったと仮定
-        
-        print("サーバーからきたお:\(appDelegate.parentID)")
+        //サーバーからMajorを受けとり
+        print("Make AirMeet Sucsess [ \(appDelegate.parentID!) ]")
         
         let myMajor : CLBeaconMajorValue = UInt16(appDelegate.parentID!)!
         
@@ -55,9 +49,7 @@ class ParentLockSettingViewController: UIViewController , CBPeripheralManagerDel
     
     //終了
     @IBAction func ParentStopButton(sender: AnyObject) {
-        
         self.navigationController?.popToRootViewControllerAnimated(true)
-        
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

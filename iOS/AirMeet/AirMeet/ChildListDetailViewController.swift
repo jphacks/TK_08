@@ -11,7 +11,8 @@ import UIKit
 class ChildListDetailViewController: UIViewController,UITableViewDelegate, UITableViewDataSource {
     
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-    
+    let testTag = [["name": "age", "detail" :"22"],["name": "趣味は", "detail" :"デレステだよん"],["name": "キャラクター", "detail" :"ジバニャン"],["name": "趣味は1", "detail" :"デレステだよん1"],["name": "キャラクター2", "detail" :"ジバニャン2"]]
+
     
     @IBOutlet weak var TagTableView: UITableView!
     
@@ -19,6 +20,8 @@ class ChildListDetailViewController: UIViewController,UITableViewDelegate, UITab
     @IBOutlet weak var imageImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var tagLabel: UILabel!
+    
+    @IBOutlet weak var detail: UILabel!
     
     var tags:Dictionary<String,String>!
     
@@ -35,6 +38,8 @@ class ChildListDetailViewController: UIViewController,UITableViewDelegate, UITab
         nameLabel.text = appDelegate.selectChild?.name
         
         tags = appDelegate.selectChild?.tag
+        
+        detail.text = appDelegate.selectChild?.detail
         
         TagTableView.delegate = self
         TagTableView.dataSource = self
@@ -69,18 +74,11 @@ class ChildListDetailViewController: UIViewController,UITableViewDelegate, UITab
        // print("aaa:\(tag)")
        
         
-        for (names, details) in (appDelegate.selectChild?.tag)!{
-            
-            if tagCount-1 == indexPath.row{
-            
-                cell.setCell(names,detail:details)
-                print("\(names):\(details)")
-                
-               
-            }
-            tagCount++
-            
-        }
+        // testTagの一行分の内容を入れる
+        let object = testTag[indexPath.row]
+        
+        cell.TagNameLabel?.text = object["name"]!
+        cell.TagDetailLabel?.text = object["detail"]!
         
         return cell
     }

@@ -8,19 +8,18 @@
 
 import UIKit
 
-class ParentSettingViewController: UIViewController,UITextFieldDelegate {
+class ParentSettingViewController: UIViewController,UITextFieldDelegate,NSURLSessionDelegate,NSURLSessionDataDelegate {
     
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
     @IBOutlet weak var EventNameTextField: UITextField!
     @IBOutlet weak var RoomNameTextField: UITextField!
     
-    //ここに最初からつっこむとoptionalエラー
-    //var event:EventModel?
-    
     var eventName:String?
     var roomName:String?
     var eventDescription:String?
+
+    @IBOutlet weak var MakeAirMeetButton: UIButton!
     
     
     override func viewDidLoad() {
@@ -29,15 +28,14 @@ class ParentSettingViewController: UIViewController,UITextFieldDelegate {
         self.navigationController?.navigationBar.barTintColor=UIColor(red: 128.0/255.0, green: 204.0/255.0, blue: 223.0/255.0, alpha: 1)//水色
         self.navigationController?.navigationBar.tintColor=UIColor.whiteColor()
         
-        
         self.EventNameTextField.delegate = self
         self.RoomNameTextField.delegate = self
         
         self.EventNameTextField.tag = 0
         self.RoomNameTextField.tag = 1
         
-        eventName = "test"
-        roomName = "test"
+        MakeAirMeetButton.enabled = false
+        MakeAirMeetButton.alpha = 0.5
     }
     
     
@@ -60,11 +58,11 @@ class ParentSettingViewController: UIViewController,UITextFieldDelegate {
         switch textField.tag{
         case 0:
             eventName = textField.text!
-            print("EventName:\(textField.text!)")
+            //print("EventName:\(textField.text!)")
             
         case 1:
             roomName = textField.text!
-            print("RoomName:\(textField.text!)")
+            //print("RoomName:\(textField.text!)")
             
         case 2:
             eventDescription = textField.text!
@@ -73,7 +71,6 @@ class ParentSettingViewController: UIViewController,UITextFieldDelegate {
         default:
             break
         }
-
         
         return true
     }
@@ -82,41 +79,103 @@ class ParentSettingViewController: UIViewController,UITextFieldDelegate {
     //改行ボタンが押された際に呼ばれるデリゲートメソッド.
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
+        
+        if eventName == nil || eventName == ""{
+           
+            MakeAirMeetButton.enabled = false
+            MakeAirMeetButton.alpha = 0.5
+        }else{
+           
+            MakeAirMeetButton.enabled = true
+            MakeAirMeetButton.alpha = 1.0
+        }
+        
         return true
     }
 
     
     //親モード開始！
     @IBAction func ParentStartButton(sender: AnyObject) {
-        //通信するお
-        appDelegate.isParent = true
         
-       // let URL = NSURL(string: "http://airmeet.mybluemix.net/event_regist")
+        //文字コード
+        let event:String = eventName!.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
         
-       // let jsonData :NSData = NSData(contentsOfURL: URL)!
-       // let json :Dictionary = NSJSONSerialization.JSONObjectWithData(jsonData, options: nil, error: nil) as NSDictionary
+        let room:String
+        if roomName != nil {
         
-        let eve: String = eventName!.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
-        let room: String = roomName!.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
+            room = roomName!.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
+        }else{
+            room = ""
+        }
         
-        //サーバーと通信ーーー
-        let json = JSON(url: "http://airmeet.mybluemix.net/register_event?event_name=\(eve)&room_name=\(room)&items=belong,hobby,presentation")
+        // 通信用のConfigを生成.
+        let myConfig:NSURLSessionConfiguration = NSURLSessionConfiguration.backgroundSessionConfigurationWithIdentifier("backgroundTask")
+        // Sessionを生成.
+        let mySession:NSURLSession = NSURLSession(configuration: myConfig, delegate: self, delegateQueue: nil)
         
-        let line = json["major"]
-        appDelegate.parentID = "\(line)"
+        let post = "event_name=\(event)&room_name=\(room)&items=belong,hobby,presentation"
+        let postData = post.dataUsingEncoding(NSUTF8StringEncoding)
         
-        //画面遷移
-        performSegueWithIdentifier("startSegue",sender: nil)
+        let url = NSURL(string: "http://airmeet.mybluemix.net/register_event")
         
-        /*let post="event_name=aaa&room_name=sss"
-        let postData=post.dataUsingEncoding(NSUTF8StringEncoding)
-        let url = NSURL(string:"http://airmeet.mybluemix.net/event_regist")!
-        let request = NSMutableURLRequest(URL: url)
-        request.HTTPMethod="POST"
-        request.HTTPBody=postData*/
+        let request:NSMutableURLRequest = NSMutableURLRequest(URL: url!)
+        request.HTTPMethod = "POST"
+        request.HTTPBody = postData
         
+        let task:NSURLSessionDataTask = mySession.dataTaskWithRequest(request)
+        task.resume()
+        
+        MakeAirMeetButton.enabled = false
+        MakeAirMeetButton.alpha = 0.5
         
     }
+    
+    //通信終了
+    func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveData data: NSData) {
+        
+        // 帰ってきたデータを文字列に変換.
+        //var jsonData:NSString = NSString(data: data, encoding: NSUTF8StringEncoding)!
+        
+        //Json解析
+        let json = JSON(data:data)
+        
+        let code:String = "\(json["code"])"
+        let major = json["major"]
+        let message = json["message"]
+        
+        print(json["code"])
+        //成功
+        if code == "200"{
+            
+            appDelegate.parentID = "\(major)"
+            appDelegate.isParent = true
+            //画面遷移
+            performSegueWithIdentifier("startSegue",sender: nil)
+            
+            //失敗
+        }else{
+            print(message)
+            
+            let alert = UIAlertController(title:"False Make AirMeet",message:"\(message)",preferredStyle:UIAlertControllerStyle.Alert)
+            let okAction = UIAlertAction(title: "OK", style: .Default) {
+                action in
+            }
+            alert.addAction(okAction)
+            presentViewController(alert, animated: true, completion: nil)
+            
+            appDelegate.isParent = false
+        }
+        
+        
+        // バックグラウンドだとUIの処理が出来ないので、メインスレッドでUIの処理を行わせる.
+        dispatch_async(dispatch_get_main_queue(), {
+            
+            self.MakeAirMeetButton.enabled = true
+            self.MakeAirMeetButton.alpha = 1.0
+        })
+        
+    }
+    
     @IBAction func unwindToTop(segue: UIStoryboardSegue) {
     }
     

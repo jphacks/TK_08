@@ -5,10 +5,10 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
     </dependencies>
     <scenes>
-        <!--MeetList-->
+        <!--Meeted Book-->
         <scene sceneID="Rds-TC-5SR">
             <objects>
-                <viewController storyboardIdentifier="MeetListViewController" title="MeetList" id="2kO-J4-a1R" customClass="MeetListViewController" customModule="AirMeet" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MeetListViewController" title="Meeted Book" id="2kO-J4-a1R" customClass="MeetListViewController" customModule="AirMeet" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="gbl-bk-l2i"/>
                         <viewControllerLayoutGuide type="bottom" id="c22-XY-HVR"/>

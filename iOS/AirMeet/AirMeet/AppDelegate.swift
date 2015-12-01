@@ -14,6 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var navigationController: UINavigationController?
     
+
     var test: UIApplication?
     var notification = UILocalNotification()
 
@@ -44,13 +45,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
         
-        print("in")
+        print("notification")
+        //let alert = UIAlertController(title:"\(notification.alertBody!)",message:nil,preferredStyle:UIAlertControllerStyle.Alert)
+        //let okAction = UIAlertAction(title: "OK", style: .Default) {
+        //    action in
+        //}
+        //alert.addAction(okAction)
         
-        var alert = UIAlertView()
-        alert.title = "Message"
-        alert.message = notification.alertBody
-        alert.addButtonWithTitle(notification.alertAction)
-        alert.show()
+        //self.window?.rootViewController!.presentViewController(alert, animated: true, completion: nil)
+
     }
     
     func applicationWillResignActive(application: UIApplication) {
@@ -61,6 +64,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidEnterBackground(application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        
+        notification.alertAction = "AirMeet"
+        notification.alertBody = "iBeacon範囲に入りました"
+        notification.soundName = UILocalNotificationDefaultSoundName
+        // あとのためにIdを割り振っておく
+        notification.userInfo = ["notifyId": "AirMeet"]
+        UIApplication.sharedApplication().presentLocalNotificationNow(notification)
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
@@ -87,7 +97,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         notification.soundName = UILocalNotificationDefaultSoundName
         // あとのためにIdを割り振っておく
         notification.userInfo = ["notifyId": "AirMeet"]
-        UIApplication.sharedApplication().scheduleLocalNotification(notification)
+        UIApplication.sharedApplication().presentLocalNotificationNow(notification)
         
     }
 

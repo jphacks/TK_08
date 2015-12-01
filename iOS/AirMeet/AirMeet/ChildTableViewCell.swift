@@ -17,6 +17,8 @@ class ChildTableViewCell: UITableViewCell {
     @IBOutlet weak var backImageView: SABlurImageView!
     @IBOutlet weak var nameLabel: UILabel!
     
+    @IBOutlet weak var detailLabel: UILabel!
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -39,6 +41,9 @@ class ChildTableViewCell: UITableViewCell {
         self.imageImageView.image = childModel.image
         
         self.nameLabel.text = childModel.name
+        
+        self.detailLabel.text = childModel.detail
+        
     
     }
 }

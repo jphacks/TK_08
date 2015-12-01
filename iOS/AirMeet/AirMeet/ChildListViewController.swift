@@ -14,6 +14,8 @@ class ChildListViewController: UIViewController,UITableViewDelegate, UITableView
     
     @IBOutlet weak var ChildTableView: UITableView!
     
+    @IBOutlet weak var roomLabels: UILabel!
+    @IBOutlet weak var eventLabel: UILabel!
     var childs:[ChildModel] = [ChildModel]()
     
     override func viewDidLoad() {
@@ -31,13 +33,16 @@ class ChildListViewController: UIViewController,UITableViewDelegate, UITableView
         
 
         //子追加
-        let child1:ChildModel = ChildModel(image: UIImage(named: "go_face.png")!, backgroundImage:  UIImage(named: "go_back.png")!, name: "さとうごう", tag: tag1)
-        let child2:ChildModel = ChildModel(image: UIImage(named: "IMG_9004.JPG")!, backgroundImage:  UIImage(named: "IMG_9003.JPG")!, name: "いい子", tag: tag2)
-        let child3:ChildModel = ChildModel(image: UIImage(named: "IMG_8996.JPG")!, backgroundImage:  UIImage(named: "IMG_9002.JPG")!, name: "うぉるこふ", tag: tag3)
+        let child1:ChildModel = ChildModel(image: UIImage(named: "go_face.png")!, backgroundImage:  UIImage(named: "go_back.png")!, name: "さとうごう", tag: tag1,detail:"がんばるぞいぞい！！！！今日も可愛い女の子ゲットするぞい！！！！！！らいんもってる？？？？")
+        let child2:ChildModel = ChildModel(image: UIImage(named: "IMG_9004.JPG")!, backgroundImage:  UIImage(named: "IMG_9003.JPG")!, name: "いい子", tag: tag2,detail:"がんばるぞいぞい！！！！今日も可愛い女の子ゲットするぞい！！！！！！らいんもってる？？？？")
+        let child3:ChildModel = ChildModel(image: UIImage(named: "IMG_8996.JPG")!, backgroundImage:  UIImage(named: "IMG_9002.JPG")!, name: "うぉるこふ", tag: tag3,detail:"がんばるぞいぞい！！！！今日も可愛い女の子ゲットするぞい！！！！！！らいんもってる？？？？")
         
         childs.append(child1)
         childs.append(child2)
         childs.append(child3)
+        
+        eventLabel.text = appDelegate.selectEvent?.eventName
+        roomLabels.text = appDelegate.selectEvent?.roomName
         
     }
     
@@ -73,10 +78,15 @@ class ChildListViewController: UIViewController,UITableViewDelegate, UITableView
             print("stay in")
         }else{
             print("left")
-            let alert = UIAlertController(title:"会場を抜けました",message:"",preferredStyle:UIAlertControllerStyle.Alert)
-            let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+            let alert = UIAlertController(title:"Air Meetを抜けました",message:"",preferredStyle:UIAlertControllerStyle.Alert)
+            let okAction = UIAlertAction(title: "OK", style: .Default) {
+                
+                action in self.navigationController?.popViewControllerAnimated(true)
+                
+            }
             alert.addAction(okAction)
-            //presentViewController(alert, animated: true, completion: nil);
+            
+            presentViewController(alert, animated: true, completion: nil);
         }
         
         

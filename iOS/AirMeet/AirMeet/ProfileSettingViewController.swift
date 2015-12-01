@@ -8,23 +8,92 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController,UITableViewDelegate, UITableViewDataSource {
+class ProfileViewController: UIViewController,UITableViewDelegate, UITableViewDataSource,UITextFieldDelegate,UIScrollViewDelegate  {
     
     @IBOutlet weak var SettingTableView: UITableView!
     
+    @IBOutlet weak var backImageView: UIImageView!
+    @IBOutlet weak var imageImageView: UIImageView!
+    @IBOutlet weak var settingImageButton: UIButton!
+
+    var tags:[TagModel] = [TagModel]()
+
+    @IBAction func settingImageButton(sender: AnyObject) {
+        let index:NSIndexPath = NSIndexPath(forRow: 2, inSection: 0)
+        
+        SettingTableView.scrollToRowAtIndexPath(index, atScrollPosition:UITableViewScrollPosition.Bottom , animated:true)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         //ナビゲーションバーの色
         self.navigationController?.navigationBar.barTintColor=UIColor(red: 128.0/255.0, green: 204.0/255.0, blue: 223.0/255.0, alpha: 1)//水色
         self.navigationController?.navigationBar.tintColor=UIColor.whiteColor()
+        
+        //アイコンまる
+        imageImageView.layer.cornerRadius = imageImageView.frame.size.width/2.0
+        imageImageView.layer.masksToBounds = true
+        imageImageView.layer.borderColor = UIColor.whiteColor().CGColor
+        imageImageView.layer.borderWidth = 3.0
+        
+        settingImageButton.layer.cornerRadius = settingImageButton.frame.size.width/2.0
+        settingImageButton.layer.masksToBounds = true
+        
+        SettingTableView.delegate = self
+        SettingTableView.dataSource = self
+        SettingTableView.scrollEnabled = true
+        
+        
+        let tag1:TagModel = TagModel(name:"アカウント名",detail: "ごー")
+        let tag2:TagModel = TagModel(name:"自己紹介",detail: "うひょおおお")
+        let tag3:TagModel = TagModel(name:"FaceBook",detail: "砂糖ごう")
+        let tag4:TagModel = TagModel(name:"Twitter", detail: "@gooo")
+        
+        tags.append(tag1)
+        tags.append(tag2)
+        tags.append(tag3)
+        tags.append(tag4)
+        
+    }
+    
+    func tableViewScrollToBottom(animated: Bool) {
+        
+        let delay = 0.1 * Double(NSEC_PER_SEC)
+        let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+        
+        dispatch_after(time, dispatch_get_main_queue(), {
+            
+            let numberOfSections = self.SettingTableView.numberOfSections
+            let numberOfRows = self.SettingTableView.numberOfRowsInSection(numberOfSections-1)
+            
+            if numberOfRows > 0 {
+                let indexPath = NSIndexPath(forRow: numberOfRows-1, inSection: (numberOfSections-1))
+                self.SettingTableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+            }
+            
+        })
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath:NSIndexPath) -> UITableViewCell {
         
-        let cell: EventTableViewCell = tableView.dequeueReusableCellWithIdentifier("EventTableViewCell", forIndexPath: indexPath) as! EventTableViewCell
-       // cell.setCell(events[indexPath.row])
+        let cell: SettingTagTableViewCell = tableView.dequeueReusableCellWithIdentifier("SettingTagTableViewCell", forIndexPath: indexPath) as! SettingTagTableViewCell
+        
+        cell.setCell(tags[indexPath.row])
+        cell.TagDetailTextField.delegate = self
+        cell.TagDetailTextField.tag = indexPath.row
         
         return cell
+    }
+    
+    //cellが選択されたとき
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        print(indexPath.row)
+        //SettingTableView.scrollToRowAtIndexPath(indexPath, atScrollPosition:UITableViewScrollPosition.Bottom , animated: true)
+        
+        tableViewScrollToBottom(true)
+        
     }
     
     // セクション数
@@ -34,8 +103,55 @@ class ProfileViewController: UIViewController,UITableViewDelegate, UITableViewDa
     
     // セクションの行数
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return tags.count
+    }
+    
+    
+    //UITextFieldが編集された直後に呼ばれるデリゲートメソッド.
+    func textFieldDidBeginEditing(textField: UITextField) {
         
-        return 3
+        
+        print("index : \(textField.tag)")
+        
+        let delay = 0.1 * Double(NSEC_PER_SEC)
+        let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+        
+        dispatch_after(time, dispatch_get_main_queue(), {
+        
+            let indexPath = NSIndexPath(forRow: textField.tag, inSection: 0)
+            self.SettingTableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+        })
+        
+    }
+    
+    //UITextFieldが編集終了する直前に呼ばれるデリゲートメソッド.
+    func textFieldShouldEndEditing(textField: UITextField) -> Bool {
+        
+        tags[textField.tag].detail = textField.text!
+        
+        return true
+    }
+    
+    
+    //改行ボタンが押された際に呼ばれるデリゲートメソッド.
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        let defaults = NSUserDefaults.standardUserDefaults()
+        
+        defaults.setObject(tags[0].detail, forKey: "name")
+        defaults.setObject(tags[1].detail, forKey: "detail")
+        defaults.setObject(tags[2].detail, forKey: "facebook")
+        defaults.setObject(tags[3].detail, forKey: "twitter")
+        
+        defaults.synchronize()
+        
+        print("Save")
     }
     
     override func didReceiveMemoryWarning() {
