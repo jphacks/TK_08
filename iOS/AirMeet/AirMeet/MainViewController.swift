@@ -79,6 +79,10 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         profileChangeButton.layer.borderColor = UIColor.lightGrayColor().CGColor
         profileChangeButton.layer.borderWidth = 1.0
         
+        //戻るボタン
+        let backButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem = backButtonItem
+        
         //let ud = NSUserDefaults.standardUserDefaults()
         
         //ud.setObject(tags[0].detail, forKey: "name")
@@ -119,16 +123,28 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         }
         
         //---------------
+        
+        
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         print("Profile Reload")
         
+       // if self.manager.requestStateForRegion(self.region){
+            
+            
+        //}
+        
         //プロフィール更新
         let defaults = NSUserDefaults.standardUserDefaults()
         if defaults.stringForKey("name") == nil || defaults.stringForKey("facebook") == nil || defaults.objectForKey("image") == nil{
             print("First Launch")
+            
+            defaults.setObject("空気 出会い", forKey: "name")
+            defaults.setObject("よろしくおねがいします", forKey: "detail")
+            defaults.setObject("空気出会い", forKey: "facebook")
+            defaults.setObject("@AirMeet", forKey: "twitter")
             
             defaults.setObject(UIImagePNGRepresentation(imageImageView.image!), forKey: "image")
             defaults.setObject(UIImagePNGRepresentation(backImageView.image!), forKey: "back")
@@ -166,114 +182,122 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
     //iBecon
     func locationManager(manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], inRegion region:CLBeaconRegion) {
         
-        majorIDList = []
-        
-        
-        
-        if(beacons.count == 0) {
-            //受信していない
-            print("\(NSDate()) : No AirMeet")
-            appDelegate.majorID = []
-            //変更があったとき
-            if(majorIDList.count != majorIDListOld.count){
-                print("\(NSDate()) : Change AirMeet")
-                events = []
-               // let event = EventModel(eventName: "nil", roomName: "nil", childNumber: 0, eventDescription: "nil",eventID:0)
-               // events.append(event)
-               // EventTableView.deleteRowsAtIndexPaths([NSIndexPath(index: 0)], withRowAnimation: .Automatic)
-                
-                EventTableView.reloadData()
-                
-            }
-            
-            majorIDListOld = majorIDList
-            
-            return
-        }
-        
-        //複数あった場合は一番先頭のものを処理する
-        let beacon = beacons[0]
-        
-        for i in 0..<beacons.count{
-            majorIDList.append(beacons[i].major)
-        }
-    
-        //重複捨て
-        if(beacons.count != 0){
-            let set = NSOrderedSet(array: majorIDList)
-            majorIDList = set.array as! [NSNumber]
-        }
-        
-        majorIDList = majorIDList.reverse()
-        
-        //変更があったときの処理
-        if(majorIDList.count != majorIDListOld.count){
-            print("\(NSDate()) : Change AirMeet")
-            print(majorIDList)
-            
-            AppDelegate().pushControll()
-            events = []
-            
-            //サーバーに接続
-            for majorID in majorIDList{
-
-                let json = JSON(url: "http://airmeet.mybluemix.net/event_info?major=\(majorID)")
-
-                print("Server Reserve Code = \(json["code"])")
-                
-                //失敗
-                if String(json["code"]) == "400"{
-                    
-                    //event = EventModel(eventName: "nil", roomName: "nil", childNumber: 0, eventDescription: "nil",eventID: majorID)
-                    print("Server Connection Error[\(majorID)]：\(json["event_name"])")
-                
-                //成功
-                }else{
-                    
-                    let event = EventModel(eventName: "\(json["event_name"])", roomName: "\(json["room_name"])", childNumber: 0, eventDescription: "\(json["description"])",eventID: majorID)
-                    events.append(event)
-                    
-                    print("Server Connection Sucsess[\(majorID)]：\(json["event_name"]) - \(json["room_name"])")
-                
-                }
-            }
-
-            EventTableView.reloadData()
-            
-            appDelegate.majorID = majorIDList
-            majorIDListOld = majorIDList
-            
+        if (appDelegate.isParent == true){
+            print("Parent Made")
+            //self.manager.stopRangingBeaconsInRegion(self.region)
             
         }else{
-            print("same")
-        }
+            print("Child Made")
         
-        /*
-        beaconから取得できるデータ
-        proximityUUID   :   regionの識別子
-        major           :   識別子１
-        minor           :   識別子２
-        proximity       :   相対距離
-        accuracy        :   精度
-        rssi            :   電波強度
-        */
-        if (beacon.proximity == CLProximity.Unknown) {
-            //self.distance.text = "Unknown Proximity"
-            reset()
-            return
-        } else if (beacon.proximity == CLProximity.Immediate) {
-            //self.distance.text = "Immediate"
-        } else if (beacon.proximity == CLProximity.Near) {
-            //self.distance.text = "Near"
-        } else if (beacon.proximity == CLProximity.Far) {
-            //self.distance.text = "Far"
+            majorIDList = []
+            
+            
+            if(beacons.count == 0) {
+                //受信していない
+                print("\(NSDate()) : No AirMeet")
+                appDelegate.majorID = []
+                //変更があったとき
+                if(majorIDList.count != majorIDListOld.count){
+                    print("\(NSDate()) : Change AirMeet")
+                    events = []
+                   // let event = EventModel(eventName: "nil", roomName: "nil", childNumber: 0, eventDescription: "nil",eventID:0)
+                   // events.append(event)
+                   // EventTableView.deleteRowsAtIndexPaths([NSIndexPath(index: 0)], withRowAnimation: .Automatic)
+                    
+                    EventTableView.reloadData()
+                    
+                }
+                
+                majorIDListOld = majorIDList
+                
+                return
+            }
+            
+            //複数あった場合は一番先頭のものを処理する
+            let beacon = beacons[0]
+            
+            for i in 0..<beacons.count{
+                majorIDList.append(beacons[i].major)
+            }
+        
+            //重複捨て
+            if(beacons.count != 0){
+                let set = NSOrderedSet(array: majorIDList)
+                majorIDList = set.array as! [NSNumber]
+            }
+            
+            majorIDList = majorIDList.reverse()
+            
+            //変更があったときの処理
+            if(majorIDList.count != majorIDListOld.count){
+                print("\(NSDate()) : Change AirMeet")
+                print(majorIDList)
+                
+                AppDelegate().pushControll()
+                events = []
+                
+                //サーバーに接続
+                for majorID in majorIDList{
+
+                    let json = JSON(url: "http://airmeet.mybluemix.net/event_info?major=\(majorID)")
+
+                    print("Server Reserve Code = \(json["code"])")
+                    
+                    //失敗
+                    if String(json["code"]) == "400"{
+                        
+                        //event = EventModel(eventName: "nil", roomName: "nil", childNumber: 0, eventDescription: "nil",eventID: majorID)
+                        print("Server Connection Error[\(majorID)]：\(json["event_name"])")
+                    
+                    //成功
+                    }else{
+                        
+                        let event = EventModel(eventName: "\(json["event_name"])", roomName: "\(json["room_name"])", childNumber: 0, eventDescription: "\(json["description"])",eventID: majorID)
+                        events.append(event)
+                        
+                        print("Server Connection Sucsess[\(majorID)]：\(json["event_name"]) - \(json["room_name"])")
+                    
+                    }
+                }
+
+                EventTableView.reloadData()
+                
+                appDelegate.majorID = majorIDList
+                majorIDListOld = majorIDList
+                
+                
+            }else{
+                print("same")
+            }
+            
+            /*
+            beaconから取得できるデータ
+            proximityUUID   :   regionの識別子
+            major           :   識別子１
+            minor           :   識別子２
+            proximity       :   相対距離
+            accuracy        :   精度
+            rssi            :   電波強度
+            */
+            if (beacon.proximity == CLProximity.Unknown) {
+                //self.distance.text = "Unknown Proximity"
+                reset()
+                return
+            } else if (beacon.proximity == CLProximity.Immediate) {
+                //self.distance.text = "Immediate"
+            } else if (beacon.proximity == CLProximity.Near) {
+                //self.distance.text = "Near"
+            } else if (beacon.proximity == CLProximity.Far) {
+                //self.distance.text = "Far"
+            }
+            //self.status.text   = "OK"
+            //self.uuid.text     = beacon.proximityUUID.UUIDString
+            //self.major.text    = "\(beacon.major)"
+            //self.minor.text    = "\(beacon.minor)"
+            //self.accuracy.text = "\(beacon.accuracy)"
+            //self.rssi.text     = "\(beacon.rssi)"
+            
         }
-        //self.status.text   = "OK"
-        //self.uuid.text     = beacon.proximityUUID.UUIDString
-        //self.major.text    = "\(beacon.major)"
-        //self.minor.text    = "\(beacon.minor)"
-        //self.accuracy.text = "\(beacon.accuracy)"
-        //self.rssi.text     = "\(beacon.rssi)"
     }
     
     func reset(){

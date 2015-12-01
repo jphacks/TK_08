@@ -39,6 +39,7 @@ class ProfileViewController: UIViewController,UITableViewDelegate, UITableViewDa
         SettingTableView.dataSource = self
         SettingTableView.scrollEnabled = true
         
+        
         let defaults = NSUserDefaults.standardUserDefaults()
         
         //設定
@@ -163,6 +164,11 @@ class ProfileViewController: UIViewController,UITableViewDelegate, UITableViewDa
         pickerController.delegate = self
         pickerController.view.tag = 0
         pickerController.allowsEditing = true
+        pickerController.navigationBar.translucent = false
+        pickerController.navigationBar.backgroundColor = UIColor(red: 128.0/255.0, green: 204.0/255.0, blue: 223.0/255.0, alpha: 1)//水色
+        pickerController.navigationBar.barTintColor = UIColor(red: 128.0/255.0, green: 204.0/255.0, blue: 223.0/255.0, alpha: 1)//水色
+        pickerController.navigationBar.tintColor = UIColor.whiteColor()
+
         UIImagePickerControllerSourceType.PhotoLibrary
         self.presentViewController(pickerController, animated: true, completion: nil)
         
@@ -174,6 +180,11 @@ class ProfileViewController: UIViewController,UITableViewDelegate, UITableViewDa
         pickerController.delegate = self
         pickerController.view.tag = 1
         pickerController.allowsEditing = true
+        pickerController.navigationBar.translucent = false
+        pickerController.navigationBar.backgroundColor = UIColor(red: 128.0/255.0, green: 204.0/255.0, blue: 223.0/255.0, alpha: 1)//水色
+        pickerController.navigationBar.barTintColor = UIColor(red: 128.0/255.0, green: 204.0/255.0, blue: 223.0/255.0, alpha: 1)//水色
+        pickerController.navigationBar.tintColor = UIColor.whiteColor()
+        
         UIImagePickerControllerSourceType.PhotoLibrary
         self.presentViewController(pickerController, animated: true, completion: nil)
     }

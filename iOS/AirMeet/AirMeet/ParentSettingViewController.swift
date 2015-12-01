@@ -149,6 +149,8 @@ class ParentSettingViewController: UIViewController,UITextFieldDelegate,NSURLSes
             
             appDelegate.parentID = "\(major)"
             appDelegate.isParent = true
+            
+            
             //画面遷移
             performSegueWithIdentifier("startSegue",sender: nil)
             
