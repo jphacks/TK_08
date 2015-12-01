@@ -45,14 +45,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
         
-        print("notification")
-        //let alert = UIAlertController(title:"\(notification.alertBody!)",message:nil,preferredStyle:UIAlertControllerStyle.Alert)
-        //let okAction = UIAlertAction(title: "OK", style: .Default) {
-        //    action in
-        //}
-        //alert.addAction(okAction)
-        
-        //self.window?.rootViewController!.presentViewController(alert, animated: true, completion: nil)
+//        print("notification")
+//        let alert = UIAlertController(title:"\(notification.alertBody!)",message:nil,preferredStyle:UIAlertControllerStyle.Alert)
+//        let okAction = UIAlertAction(title: "OK", style: .Default) {
+//            action in
+//        }
+//        alert.addAction(okAction)
+//        
+//        self.window?.rootViewController!.presentViewController(alert, animated: true, completion: nil)
 
     }
     
@@ -92,12 +92,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //application!.cancelAllLocalNotifications()
         
         
-        notification.alertAction = "AirMeet"
-        notification.alertBody = "iBeacon範囲に入りました"
-        notification.soundName = UILocalNotificationDefaultSoundName
-        // あとのためにIdを割り振っておく
-        notification.userInfo = ["notifyId": "AirMeet"]
-        UIApplication.sharedApplication().presentLocalNotificationNow(notification)
+//        notification.alertAction = "AirMeet"
+//        notification.alertBody = "iBeacon範囲に入りました"
+//        notification.soundName = UILocalNotificationDefaultSoundName
+//        // あとのためにIdを割り振っておく
+//        notification.userInfo = ["notifyId": "AirMeet"]
+//        UIApplication.sharedApplication().presentLocalNotificationNow(notification)
+        
+        notification.alertBody = "AirMeet圏内"
+        
+        let alert = UIAlertController(title:"\(notification.alertBody!)",message:nil,preferredStyle:UIAlertControllerStyle.Alert)
+        let okAction = UIAlertAction(title: "OK", style: .Default) {
+            action in
+        }
+        alert.addAction(okAction)
+        
+        //presentViewController(alert, animated: true, completion: nil)
         
     }
 

@@ -93,38 +93,36 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         //let event:EventModel = EventModel(eventName: "JPHacks-東京会場", roomName: "東京大学 本郷キャンパス215教室", childNumber: 50, eventDescription: "aaa",eventID:203)
         //events.append(event)
         
-        //------iBecon
-        //CLBeaconRegionを生成
+        //iBecon
+        //Beacon領域生成
         region = CLBeaconRegion(proximityUUID:proximityUUID!,identifier:"AirMeet")
-        //デリゲートの設定
         manager.delegate = self
         
         switch CLLocationManager.authorizationStatus() {
+        
         case .Authorized, .AuthorizedWhenInUse:
             //iBeaconによる領域観測を開始する
             print("iBecon Start")
-            self.manager.startRangingBeaconsInRegion(self.region)
+            //self.manager.startRangingBeaconsInRegion(self.region)
+            self.manager.startMonitoringForRegion(self.region)
+        
         case .NotDetermined:
             print("iBecon No Permit")
             //デバイスに許可を促す
             let deviceVer = UIDevice.currentDevice().systemVersion
             
             if(Int(deviceVer.substringToIndex(deviceVer.startIndex.advancedBy(1))) >= 8){
-                //iOS8以降は許可をリクエストする関数をCallする
                 self.manager.requestAlwaysAuthorization()
                 print("iBecon OK")
             }else{
-                self.manager.startRangingBeaconsInRegion(self.region)
+                //self.manager.startRangingBeaconsInRegion(self.region)
+                self.manager.startMonitoringForRegion(self.region)
             }
             
         case .Restricted, .Denied:
             //デバイスから拒否状態
             print("iBecon Restricted")
         }
-        
-        //---------------
-        
-        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -174,12 +172,67 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         
     }
     
-    
     @IBAction func MenuButton(sender: AnyObject) {
         toggleSideMenuView()
     }
     
-    //iBecon
+    //観測開始後に呼ばれる、領域内にいるかどうか判定する
+    func locationManager(manager: CLLocationManager, didDetermineState state: CLRegionState, forRegion region: CLRegion) {
+        
+        switch (state) {
+            
+        case .Inside: // すでに領域内にいる場合は（didEnterRegion）は呼ばれない
+            self.manager.startRangingBeaconsInRegion(self.region)
+            // →(didRangeBeacons)で測定をはじめる
+            break;
+            
+        case .Outside:
+            // 領域外→領域に入った場合はdidEnterRegionが呼ばれる
+            break;
+            
+        case .Unknown:
+            // 不明→領域に入った場合はdidEnterRegionが呼ばれる
+            break;
+        }
+    }
+    
+    //領域に入った時
+    func locationManager(manager: CLLocationManager, didEnterRegion region: CLRegion) {
+        print("Enter")
+        
+        // →(didRangeBeacons)で測定をはじめる
+        self.manager.startRangingBeaconsInRegion(self.region)
+        
+        //ローカル通知
+        //sendLocalNotificationWithMessage("領域に入りました")
+        //AppDelegate().pushControll()
+        sendPush("AirMeet領域に入りました")
+    }
+    
+    func locationManager(manager: CLLocationManager, didExitRegion region: CLRegion) {
+        print("Exit")
+        
+        //測定を停止する
+        self.manager.stopRangingBeaconsInRegion(self.region)
+        
+        //sendLocalNotificationWithMessage("領域から出ました")
+        //AppDelegate().pushControll()
+        sendPush("AirMeet領域から出ました")
+    }
+    
+    //観測失敗
+    func locationManager(manager: CLLocationManager, monitoringDidFailForRegion region: CLRegion?, withError error: NSError) {
+        
+        print("monitoringDidFailForRegion \(error)")
+    }
+    
+    //通信失敗
+    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+        
+        print("didFailWithError \(error)")
+    }
+    
+    //領域内にいるので測定をする
     func locationManager(manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], inRegion region:CLBeaconRegion) {
         
         if (appDelegate.isParent == true){
@@ -190,7 +243,6 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
             print("Child Made")
         
             majorIDList = []
-            
             
             if(beacons.count == 0) {
                 //受信していない
@@ -211,6 +263,8 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
                 majorIDListOld = majorIDList
                 
                 return
+            }else{
+                //sendPush("AirMeet領域にいます")
             }
             
             //複数あった場合は一番先頭のものを処理する
@@ -233,7 +287,7 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
                 print("\(NSDate()) : Change AirMeet")
                 print(majorIDList)
                 
-                AppDelegate().pushControll()
+                //AppDelegate().pushControll()
                 events = []
                 
                 //サーバーに接続
@@ -279,38 +333,29 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
             accuracy        :   精度
             rssi            :   電波強度
             */
-            if (beacon.proximity == CLProximity.Unknown) {
-                //self.distance.text = "Unknown Proximity"
-                reset()
-                return
-            } else if (beacon.proximity == CLProximity.Immediate) {
-                //self.distance.text = "Immediate"
-            } else if (beacon.proximity == CLProximity.Near) {
-                //self.distance.text = "Near"
-            } else if (beacon.proximity == CLProximity.Far) {
-                //self.distance.text = "Far"
-            }
-            //self.status.text   = "OK"
-            //self.uuid.text     = beacon.proximityUUID.UUIDString
-            //self.major.text    = "\(beacon.major)"
-            //self.minor.text    = "\(beacon.minor)"
-            //self.accuracy.text = "\(beacon.accuracy)"
-            //self.rssi.text     = "\(beacon.rssi)"
-            
         }
     }
     
-    func reset(){
-        //self.status.text   = "none"
-        //self.uuid.text     = "none"
-        //self.major.text    = "none"
-        //self.minor.text    = "none"
-        //self.accuracy.text = "none"
-        //self.rssi.text     = "none"
+    //プッシュ通知(forground)
+    func sendPush(message: String){
+        
+        let alert = UIAlertController(title:"\(message)",message:nil,preferredStyle:.Alert)
+        let okAction = UIAlertAction(title: "OK", style: .Default) {
+            action in
+        }
+        alert.addAction(okAction)
+        
+        presentViewController(alert, animated: true, completion: nil)
     }
-    ///-----
     
-    
+    //ローカル通知(現状機能してない)
+    func sendLocalNotificationWithMessage(message: String!) {
+        let notification:UILocalNotification = UILocalNotification()
+        notification.alertBody = message
+        
+        UIApplication.sharedApplication().presentLocalNotificationNow(notification)
+    }
+
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath:NSIndexPath) -> UITableViewCell {
         
         let cell: EventTableViewCell = tableView.dequeueReusableCellWithIdentifier("EventTableViewCell", forIndexPath: indexPath) as! EventTableViewCell
@@ -380,7 +425,6 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         
     }
     
- 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
