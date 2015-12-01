@@ -206,7 +206,7 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         //ローカル通知
         //sendLocalNotificationWithMessage("領域に入りました")
         //AppDelegate().pushControll()
-        sendPush("AirMeet領域に入りました")
+        //sendPush("AirMeet領域に入りました")
     }
     
     func locationManager(manager: CLLocationManager, didExitRegion region: CLRegion) {
@@ -217,7 +217,7 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         
         //sendLocalNotificationWithMessage("領域から出ました")
         //AppDelegate().pushControll()
-        sendPush("AirMeet領域から出ました")
+        //sendPush("AirMeet領域から出ました")
     }
     
     //観測失敗
@@ -251,6 +251,7 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
                 //変更があったとき
                 if(majorIDList.count != majorIDListOld.count){
                     print("\(NSDate()) : Change AirMeet")
+                    sendPush("AirMeet領域から出たよ")
                     events = []
                    // let event = EventModel(eventName: "nil", roomName: "nil", childNumber: 0, eventDescription: "nil",eventID:0)
                    // events.append(event)
@@ -285,6 +286,11 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
             //変更があったときの処理
             if(majorIDList.count != majorIDListOld.count){
                 print("\(NSDate()) : Change AirMeet")
+                if(majorIDList.count > majorIDListOld.count){
+                    sendPush("AirMeet領域に入ったよ")
+                }else{
+                    sendPush("AirMeet領域から出たよ")
+                }
                 print(majorIDList)
                 
                 //AppDelegate().pushControll()
