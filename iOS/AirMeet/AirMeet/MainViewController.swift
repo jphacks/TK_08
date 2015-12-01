@@ -23,6 +23,8 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
     var majorIDList:[NSNumber] = []
     var majorIDListOld:[NSNumber] = []
     
+    var tags:[TagModel] = [TagModel]()
+    
     @IBOutlet weak var backImageView: UIImageView!
     @IBOutlet weak var imageImageView: UIImageView!
     
@@ -37,6 +39,7 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
     @IBOutlet weak var twitterLinkLabel: UILabel!
     
     
+    @IBOutlet weak var MenuBarButtonItem: UIBarButtonItem!
     var events:[EventModel] = [EventModel]()
     
     class Event {
@@ -76,8 +79,12 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         profileChangeButton.layer.borderColor = UIColor.lightGrayColor().CGColor
         profileChangeButton.layer.borderWidth = 1.0
         
-        //自己紹介
-        detailLabel.text = "自己紹介をしますすううううううううううううううううううううううううううううううううううううううううううううううううううううううううううううううううううううううううううううううううううううううううううううううううううううううううう"
+      //  let ud = NSUserDefaults.standardUserDefaults()
+        
+      //  ud.setObject(tags[0].detail, forKey: "name")
+      //  ud.setObject(tags[1].detail, forKey: "detail")
+
+        
         //会場追加
         //let event:EventModel = EventModel(eventName: "JPHacks-東京会場", roomName: "東京大学 本郷キャンパス215教室", childNumber: 50, eventDescription: "aaa",eventID:203)
         //events.append(event)
@@ -114,6 +121,32 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         //---------------
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        print("Profile Reload")
+        
+        //プロフィール更新
+        let defaults = NSUserDefaults.standardUserDefaults()
+        if defaults.stringForKey("name") == nil || defaults.stringForKey("facebook") == nil{
+            print("First Launch")
+            let storyboard: UIStoryboard = UIStoryboard(name: "Profile", bundle: NSBundle.mainBundle())
+            let profileViewController: ProfileViewController = storyboard.instantiateInitialViewController() as! ProfileViewController
+            
+            self.navigationController?.pushViewController(profileViewController, animated: true)
+            
+        }else{
+            //名前
+            nameLabel.text = "\(defaults.stringForKey("name")!)"
+            //自己紹介
+            detailLabel.text = "\(defaults.stringForKey("detail")!)"
+            //facebook
+            faceLinkLabel.text = "\(defaults.stringForKey("facebook")!)"
+            //twitter
+            twitterLinkLabel.text = "\(defaults.stringForKey("twitter")!)"
+        }
+        
+    }
+    
     
     @IBAction func MenuButton(sender: AnyObject) {
         toggleSideMenuView()
@@ -128,11 +161,11 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         
         if(beacons.count == 0) {
             //受信していない
-            print("No iBecon")
+            print("\(NSDate()) : No AirMeet")
             appDelegate.majorID = []
             //変更があったとき
             if(majorIDList.count != majorIDListOld.count){
-                print("iBecon change")
+                print("\(NSDate()) : Change AirMeet")
                 events = []
                // let event = EventModel(eventName: "nil", roomName: "nil", childNumber: 0, eventDescription: "nil",eventID:0)
                // events.append(event)
@@ -164,7 +197,7 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         
         //変更があったときの処理
         if(majorIDList.count != majorIDListOld.count){
-            print("iBecon change")
+            print("\(NSDate()) : Change AirMeet")
             print(majorIDList)
             
             AppDelegate().pushControll()
@@ -172,8 +205,8 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
             
             //サーバーに接続
             for majorID in majorIDList{
-                
-                let json = JSON(url: "http://airmeet.mybluemix.net/get_event_info?major=\(majorID)")
+
+                let json = JSON(url: "http://airmeet.mybluemix.net/event_info?major=\(majorID)")
 
                 print("Server Reserve Code = \(json["code"])")
                 

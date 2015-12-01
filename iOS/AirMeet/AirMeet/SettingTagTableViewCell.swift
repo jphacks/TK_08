@@ -12,26 +12,23 @@ class SettingTagTableViewCell: UITableViewCell {
     
     
     @IBOutlet weak var TagNameLabel: UILabel!
-    @IBOutlet weak var tagDetailTextField: UITextField!
+    @IBOutlet weak var TagDetailTextField: UITextField!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        
-        //backView.layer.borderWidth = 3.0
-        
     }
     
     override func setSelected(selected: Bool, animated: Bool) {
-        // super.setSelected(selected, animated: animated)
+         //super.setSelected(selected, animated: animated)
         
         // Configure the view for the selected state
     }
     
-    func setCell(name:String,detail:String){
+    func setCell(tagModel:TagModel){
         
-        TagNameLabel.text = "\(name)"
-        tagDetailTextField.text = "\(detail)"
+        TagNameLabel.text = "\(tagModel.name)"
+        TagDetailTextField.text = "\(tagModel.detail)"
    
         
         

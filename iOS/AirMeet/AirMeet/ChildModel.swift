@@ -11,13 +11,11 @@ import UIKit
 
 class ChildModel : NSObject {
     
-    
     var image:UIImage
     var backgroundImage:UIImage
     var name:String
     var tag:Dictionary<String,String>
     var detail:String
-    
     
     init(image:UIImage,backgroundImage:UIImage,name:String,tag:Dictionary<String,String>,detail:String) {
         

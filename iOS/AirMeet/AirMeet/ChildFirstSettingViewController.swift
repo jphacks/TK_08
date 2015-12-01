@@ -47,13 +47,13 @@ class ChildFirstSettingViewController: UIViewController,UITableViewDelegate, UIT
         
         let cell:SettingTagTableViewCell = tableView.dequeueReusableCellWithIdentifier("SettingTagTableViewCell", forIndexPath: indexPath) as! SettingTagTableViewCell
         
-        cell.tagDetailTextField.delegate = self
+        cell.TagDetailTextField.delegate = self
         
         // testTagの一行分の内容を入れる
         let object = testTag[indexPath.row]
 
         cell.TagNameLabel?.text = object["name"]!
-        cell.tagDetailTextField?.text = object["detail"]!
+        cell.TagDetailTextField?.text = object["detail"]!
         
         return cell
     }

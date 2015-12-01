@@ -390,13 +390,7 @@
                             </mask>
                         </variation>
                     </view>
-                    <navigationItem key="navigationItem" title="Main" id="cK8-mR-h7z">
-                        <barButtonItem key="leftBarButtonItem" systemItem="play" id="Rsz-88-Z2F">
-                            <connections>
-                                <action selector="MenuButton:" destination="BYZ-38-t0r" id="Q5s-Dj-pav"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Main" id="cK8-mR-h7z"/>
                     <connections>
                         <outlet property="EventTableView" destination="cYS-hX-xwA" id="2aR-aQ-I6r"/>
                         <outlet property="backImageView" destination="ki0-iQ-sOa" id="vfy-j5-2LY"/>

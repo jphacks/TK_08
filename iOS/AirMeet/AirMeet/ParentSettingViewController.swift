@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ParentSettingViewController: UIViewController,UITextFieldDelegate {
+class ParentSettingViewController: UIViewController,UITextFieldDelegate,NSURLSessionDelegate,NSURLSessionDataDelegate {
     
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
@@ -80,10 +80,12 @@ class ParentSettingViewController: UIViewController,UITextFieldDelegate {
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         
-        if eventName == nil{
+        if eventName == nil || eventName == ""{
+           
             MakeAirMeetButton.enabled = false
             MakeAirMeetButton.alpha = 0.5
         }else{
+           
             MakeAirMeetButton.enabled = true
             MakeAirMeetButton.alpha = 1.0
         }
@@ -99,34 +101,62 @@ class ParentSettingViewController: UIViewController,UITextFieldDelegate {
         let event:String = eventName!.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
         
         let room:String
-        if roomName != nil{
+        if roomName != nil {
         
             room = roomName!.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
         }else{
             room = ""
         }
         
-        //サーバーと通信
-        let json = JSON(url: "http://airmeet.mybluemix.net/register_event?event_name=\(event)&room_name=\(room)&items=belong,hobby,presentation")
+        // 通信用のConfigを生成.
+        let myConfig:NSURLSessionConfiguration = NSURLSessionConfiguration.backgroundSessionConfigurationWithIdentifier("backgroundTask")
+        // Sessionを生成.
+        let mySession:NSURLSession = NSURLSession(configuration: myConfig, delegate: self, delegateQueue: nil)
+        
+        let post = "event_name=\(event)&room_name=\(room)&items=belong,hobby,presentation"
+        let postData = post.dataUsingEncoding(NSUTF8StringEncoding)
+        
+        let url = NSURL(string: "http://airmeet.mybluemix.net/register_event")
+        
+        let request:NSMutableURLRequest = NSMutableURLRequest(URL: url!)
+        request.HTTPMethod = "POST"
+        request.HTTPBody = postData
+        
+        let task:NSURLSessionDataTask = mySession.dataTaskWithRequest(request)
+        task.resume()
+        
+        MakeAirMeetButton.enabled = false
+        MakeAirMeetButton.alpha = 0.5
+        
+    }
+    
+    //通信終了
+    func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveData data: NSData) {
+        
+        // 帰ってきたデータを文字列に変換.
+        //var jsonData:NSString = NSString(data: data, encoding: NSUTF8StringEncoding)!
+        
+        //Json解析
+        let json = JSON(data:data)
         
         let code:String = "\(json["code"])"
         let major = json["major"]
         let message = json["message"]
         
         print(json["code"])
-        
+        //成功
         if code == "200"{
-       
-        
+            
             appDelegate.parentID = "\(major)"
             appDelegate.isParent = true
             //画面遷移
             performSegueWithIdentifier("startSegue",sender: nil)
             
+            //失敗
         }else{
             print(message)
             
-            let alert = UIAlertController(title:"False Make AirMeet",message:nil,preferredStyle:UIAlertControllerStyle.Alert)
+            let alert = UIAlertController(title:"False Make AirMeet",message:"\(message)",preferredStyle:UIAlertControllerStyle.Alert)
             let okAction = UIAlertAction(title: "OK", style: .Default) {
                 action in
             }
@@ -136,13 +166,13 @@ class ParentSettingViewController: UIViewController,UITextFieldDelegate {
             appDelegate.isParent = false
         }
         
-        /*let post="event_name=aaa&room_name=sss"
-        let postData=post.dataUsingEncoding(NSUTF8StringEncoding)
-        let url = NSURL(string:"http://airmeet.mybluemix.net/event_regist")!
-        let request = NSMutableURLRequest(URL: url)
-        request.HTTPMethod="POST"
-        request.HTTPBody=postData*/
         
+        // バックグラウンドだとUIの処理が出来ないので、メインスレッドでUIの処理を行わせる.
+        dispatch_async(dispatch_get_main_queue(), {
+            
+            self.MakeAirMeetButton.enabled = true
+            self.MakeAirMeetButton.alpha = 1.0
+        })
         
     }
     
