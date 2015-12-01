@@ -16,8 +16,9 @@ router.get('/', function(req, res) {
     res.send('Hello World');
 });
 
-
+//-----------------------------------------------------------//
 // イベント登録
+//-----------------------------------------------------------//
 router.post('/register_event', function(req, res) {
 //router.get('/register_event', function(req, res) {
   var success = {
@@ -37,7 +38,7 @@ router.post('/register_event', function(req, res) {
     error.message = "Error: event_name is missing";
     error.code = 400;
   }
-  
+
   if(!items){
     error.message = "Error: items is missing";
     error.code = 400;
@@ -52,24 +53,22 @@ router.post('/register_event', function(req, res) {
       room_name : rn,
       description : desc,
       major : major,
-      items : items,
+      items : items.split(","),
       regist_date : moment().zone('+0900').format('YYYY/MM/DD HH:mm:ss')
     };
     dba.save(id, doc, function(err) {
       if(err){
         error.message = "Error: Event registration failed";
         error.code = 500;
-        var str = JSON.stringify(error);
+        res.send(error)
       }else{
         success.major = major;
         success.message = "Event registration success";
-        var str = JSON.stringify(success);
+        res.send(success);
       }
-      res.send(str);
     });
   }else{
-    var str = JSON.stringify(error);
-    res.send(str);
+    res.send(error);
   }
 });
 
@@ -77,74 +76,51 @@ router.post('/register_event', function(req, res) {
 //register_eventがGETならエラー
 router.get('/register_event', function(req, res) {
   var error = {};
-  error.message = "Error: Cannot GET";
+  error.message = "Error: Cannot 'GET' method";
   error.code = 400;
   var str = JSON.stringify(error);
   res.send(str);
 });
 
 
-//-------------------------------------------------//
+//-----------------------------------------------------------//
 // イベント情報を取得
-//-------------------------------------------------//
+//-----------------------------------------------------------//
 router.get('/event_info', function(req, res) {
-  var success = {
-    message : null,
-    code : 200
-  };
+  var sccess = {};
   var error = {};
-  var major = req.param('major');
+  var major = Number(req.query.major);
+  console.log(major);
   if(!major){
     error.message = "Error: major is missing";
     error.code = 400;
+    res.send(error);
+    return;
   }
 
-  dba.get_event(major, function(err, event) {
-    console.log("2 "+err);
-    console.log("2 "+event);
-    if(event){
-      console.log(event);
-      //row.code = 200;
-      //row.items = row.items.split(',');
-      //res.send(row);
+  dba.get_event(major, function(err, events) {
+    if(events.length == 1){
+      success = events[0].value;
+      success.code = 200;
+    }else if(events.length > 1){
+      error.message = "Error: Database is not valid";
+      error.code = 500;
     }else{
       error.message = "Error: Event does not exist";
       error.code = 500;
     }
     if(Object.keys(error).length){
-      var str = JSON.stringify(error);
-      res.send(str);
-    }
-  });
-  /*
-  dba.get_event(function(err, events) {
-    if(events.length){
-      var flag = 0;
-      events.forEach(function(row) {
-        if(row.major == major){
-          row.code = 200;
-          row.items = row.items.split(',');
-          res.send(row);
-          flag = 1;
-        }
-      });
-      if(flag == 0){
-        error.message = "Error: Major does not match";
-        error.code = 400;
-      }
+      res.send(error);
     }else{
-      error.message = "Error: Event does not exist";
-      error.code = 500;
-    }
-    if(Object.keys(error).length){
-      var str = JSON.stringify(error);
-      res.send(str);
+      res.send(success);
     }
   });
-  */
 });
 
+
+//-----------------------------------------------------------//
 //イベントへのユーザ登録
+//-----------------------------------------------------------//
 router.post('/register_user', function(req, res) {
   var success = {
     id : null,
@@ -203,7 +179,9 @@ router.post('/register_user', function(req, res) {
 });
 
 
+//-----------------------------------------------------------//
 // 参加者を取得
+//-----------------------------------------------------------//
 router.get('/participants', function(req, res) {
   var success = {
     major : null,

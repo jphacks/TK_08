@@ -47,10 +47,8 @@ exports.remove = function(id, callback) {
 
 
 // Majorの値と一致するイベントを取得
-exports.get_event = function(major,callback) {
-  //db.view('events/get_info', callback);
-  console.log("1 "+major);
-  db.get('あいう', callback);
+exports.get_event = function(major, callback) {
+  db.view('events/event_info', {key: major}, callback);
 };
 
 // 現在登録されているイベントのMajorとは異なる乱数を生成
