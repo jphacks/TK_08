@@ -206,6 +206,9 @@ http://airmeet.mybluemix.net/participants
 #### 成功時
 ```json
 {
+    "major" : "イベントのmajor値",
+    "id" : "自分のID",
+    "count" : "イベントの参加者数（自分除く）",
     "users": [  
         {
             "id": "参加している他のユーザのid",
