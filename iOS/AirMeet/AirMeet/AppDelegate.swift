@@ -29,12 +29,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var majorIDOld:[NSNumber] = []
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        
+         //self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        
         //Navigationbar色
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         
         application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes:
             [UIUserNotificationType.Sound,
                 UIUserNotificationType.Alert], categories: nil))
+        
+        //let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main",bundle: nil)
+        //let mainViewController : UIViewController = mainStoryboard.instantiateViewControllerWithIdentifier("Main")
+        //self.window!.rootViewController = mainViewController
+        //self.window?.makeKeyAndVisible()
         
         // アプリに登録されている全ての通知を削除
         UIApplication.sharedApplication().cancelAllLocalNotifications()

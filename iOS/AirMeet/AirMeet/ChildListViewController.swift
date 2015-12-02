@@ -46,12 +46,15 @@ class ChildListViewController: UIViewController,UITableViewDelegate, UITableView
         childs.append(child2)
         childs.append(child3)
         
+        
+
+        
        // eventLabel.text = appDelegate.selectEvent?.eventName
        // roomLabels.text = appDelegate.selectEvent?.roomName
         
     }
     
-    //ここで再読み込み
+    //再読み込み
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         print("Reload")
@@ -60,19 +63,19 @@ class ChildListViewController: UIViewController,UITableViewDelegate, UITableView
         var majorID = appDelegate.majorID
         var isInEvent:Bool = true
         
-        //ここで、truefalseチェック
-        print("eventID : \(eventID)")
-        print("majorID : \(majorID)")
+        //truefalseチェック
+        //print("eventID : \(eventID)")
+        //print("majorID : \(majorID)")
         
         //処理
         if(majorID.count != 0){
             for i in 0..<majorID.count{
                 if(majorID[i] == eventID){
                     isInEvent = true
-                    print("match")
+                    //print("match")
                     break
                 }else{
-                    print("not macth")
+                    //print("not macth")
                     isInEvent = false
                 }
             }
@@ -84,17 +87,17 @@ class ChildListViewController: UIViewController,UITableViewDelegate, UITableView
             print("stay in")
         }else{
             print("left")
-            /*
-            let alert = UIAlertController(title:"AirMeetを抜けました",message:"",preferredStyle:UIAlertControllerStyle.Alert)
-            //離脱処理かきたい
+            
+            let alert = UIAlertController(title:"AirMeetを抜けました",message:"EventName : \(appDelegate.selectEvent!.eventName)\nRoomName : \(appDelegate.selectEvent!.roomName)",preferredStyle:.Alert)
             let okAction = UIAlertAction(title: "OK", style: .Default) {
-                
-                action in self.navigationController?.popViewControllerAnimated(true)
-                
+                action in
+                    //Exitからsegueを呼び出し
+                    self.performSegueWithIdentifier("BackToMain", sender: nil)
             }
             alert.addAction(okAction)
             
-            //presentViewController(alert, animated: true, completion: nil);*/
+            self.presentViewController(alert, animated: true, completion: nil)
+            
         }
         
         

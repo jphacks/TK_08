@@ -47,7 +47,7 @@ class ChildSettingViewController: UIViewController {
     //離脱
     @IBAction func ChildStopButton(sender: AnyObject) {
         
-        self.navigationController?.popViewControllerAnimated(true)
+        //self.navigationController?.popViewControllerAnimated(true)
 
     
     }

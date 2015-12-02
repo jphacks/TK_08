@@ -108,7 +108,8 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
             
             if(Int(deviceVer.substringToIndex(deviceVer.startIndex.advancedBy(1))) >= 8){
                 self.manager.requestAlwaysAuthorization()
-                print("iBecon OK")
+                //print("iBecon OK?")
+               // self.manager.startMonitoringForRegion(self.region)
             }else{
                 //self.manager.startRangingBeaconsInRegion(self.region)
                 self.manager.startMonitoringForRegion(self.region)
@@ -229,17 +230,17 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         
         //親モード
         if (appDelegate.isParent == true){
-            print("Parent Made")
+            print("\(NSDate()) : Parent Made")
             //self.manager.stopRangingBeaconsInRegion(self.region)
             
         }else{
-            print("Child Made")
+            print("\(NSDate()) : Child Made")
         
             majorIDList = []
             
             if(beacons.count == 0) {
                 //受信していない
-                print("\(NSDate()) : No AirMeet")
+                print("No AirMeet")
                 appDelegate.majorID = []
                 //変更があったとき
                 if(majorIDList.count != majorIDListOld.count){
@@ -285,7 +286,6 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
                 for majorID in majorIDList{
 
                     let json = JSON(url: "http://airmeet.mybluemix.net/event_info?major=\(majorID)")
-
                     print("Server Reserve Code = \(json["code"])")
                     
                     //失敗
@@ -311,7 +311,7 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
                 
                 
             }else{
-                print("same")
+                //print("same")
             }
             
             /*
