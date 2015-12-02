@@ -88,15 +88,15 @@ class ChildListViewController: UIViewController,UITableViewDelegate, UITableView
         }else{
             print("left")
             
-            let alert = UIAlertController(title:"AirMeetを抜けました",message:"EventName : \(appDelegate.selectEvent!.eventName)\nRoomName : \(appDelegate.selectEvent!.roomName)",preferredStyle:.Alert)
-            let okAction = UIAlertAction(title: "OK", style: .Default) {
-                action in
-                    //Exitからsegueを呼び出し
-                    self.performSegueWithIdentifier("BackToMain", sender: nil)
-            }
-            alert.addAction(okAction)
-            
-            self.presentViewController(alert, animated: true, completion: nil)
+//            let alert = UIAlertController(title:"AirMeetを抜けました",message:"EventName : \(appDelegate.selectEvent!.eventName)\nRoomName : \(appDelegate.selectEvent!.roomName)",preferredStyle:.Alert)
+//            let okAction = UIAlertAction(title: "OK", style: .Default) {
+//                action in
+//                    //Exitからsegueを呼び出し
+//                    self.performSegueWithIdentifier("BackToMain", sender: nil)
+//            }
+//            alert.addAction(okAction)
+//            
+//            self.presentViewController(alert, animated: true, completion: nil)
             
         }
         
