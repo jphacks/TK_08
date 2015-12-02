@@ -2,7 +2,7 @@ _design/events
 major
 function (doc) {
   if(doc.type == 'event'){
-    emit(1, doc.major);
+    emit(doc.major, null);
   }
 }
 
