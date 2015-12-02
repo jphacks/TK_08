@@ -142,6 +142,30 @@
                                     </mask>
                                 </variation>
                             </tableView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-camera.png" translatesAutoresizingMaskIntoConstraints="NO" id="99r-5I-VwF">
+                                <rect key="frame" x="268" y="65" width="65" height="30"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="65" id="59K-kJ-fQY"/>
+                                    <constraint firstAttribute="height" constant="30" id="mTS-zg-Pqb"/>
+                                </constraints>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-camera.png" translatesAutoresizingMaskIntoConstraints="NO" id="N9p-vA-8J7">
+                                <rect key="frame" x="58" y="127" width="25" height="30"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="25" id="7lR-Bx-A1w"/>
+                                    <constraint firstAttribute="height" constant="30" id="OgQ-8J-HUd"/>
+                                    <constraint firstAttribute="width" constant="65" id="eXa-LH-Vz4"/>
+                                    <constraint firstAttribute="height" constant="30" id="tHe-40-d9j"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="OgQ-8J-HUd"/>
+                                        <exclude reference="eXa-LH-Vz4"/>
+                                    </mask>
+                                </variation>
+                            </imageView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -153,13 +177,17 @@
                             <constraint firstItem="xzh-2X-W1a" firstAttribute="leading" secondItem="WAW-cf-qHl" secondAttribute="leadingMargin" constant="-20" id="Ee4-GM-MKT"/>
                             <constraint firstAttribute="trailingMargin" secondItem="HEi-B7-7hi" secondAttribute="trailing" constant="-20" id="F2g-Ok-b7V"/>
                             <constraint firstItem="71e-jI-XEs" firstAttribute="top" secondItem="VZh-qI-qek" secondAttribute="bottom" constant="72" id="HTG-Fl-pcC"/>
+                            <constraint firstItem="N9p-vA-8J7" firstAttribute="centerY" secondItem="Vry-TD-O9p" secondAttribute="centerY" id="IHa-iV-k4U"/>
+                            <constraint firstItem="99r-5I-VwF" firstAttribute="centerX" secondItem="SBH-by-qU5" secondAttribute="centerX" id="PZj-BG-cyS"/>
                             <constraint firstItem="SBH-by-qU5" firstAttribute="top" secondItem="VZh-qI-qek" secondAttribute="bottom" id="QC8-Qk-atD"/>
                             <constraint firstAttribute="trailingMargin" secondItem="xzh-2X-W1a" secondAttribute="trailing" constant="-20" id="QTe-6s-ehy"/>
                             <constraint firstItem="Vry-TD-O9p" firstAttribute="top" secondItem="VZh-qI-qek" secondAttribute="bottom" constant="72" id="W8x-Tb-kWz"/>
                             <constraint firstItem="71e-jI-XEs" firstAttribute="leading" secondItem="WAW-cf-qHl" secondAttribute="leadingMargin" id="dum-UJ-NsN"/>
+                            <constraint firstItem="99r-5I-VwF" firstAttribute="centerY" secondItem="SBH-by-qU5" secondAttribute="centerY" id="gkD-CX-RUY"/>
                             <constraint firstItem="SBH-by-qU5" firstAttribute="leading" secondItem="WAW-cf-qHl" secondAttribute="leadingMargin" constant="-20" id="gsj-uU-G4L"/>
                             <constraint firstItem="HEi-B7-7hi" firstAttribute="leading" secondItem="WAW-cf-qHl" secondAttribute="leadingMargin" constant="-20" id="hfa-bb-CDJ"/>
                             <constraint firstItem="Vry-TD-O9p" firstAttribute="leading" secondItem="WAW-cf-qHl" secondAttribute="leadingMargin" id="jvY-Gq-z1g"/>
+                            <constraint firstItem="N9p-vA-8J7" firstAttribute="centerX" secondItem="Vry-TD-O9p" secondAttribute="centerX" id="v4o-LV-USK"/>
                         </constraints>
                     </view>
                     <connections>
@@ -177,5 +205,6 @@
     <resources>
         <image name="go_back.png" width="600" height="120"/>
         <image name="go_face.png" width="2448" height="2448"/>
+        <image name="icon-camera.png" width="75" height="60"/>
     </resources>
 </document>

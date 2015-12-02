@@ -44,6 +44,11 @@ class ChildListDetailViewController: UIViewController,UITableViewDelegate, UITab
         TagTableView.delegate = self
         TagTableView.dataSource = self
         
+        //アイコンまる
+        imageImageView.layer.cornerRadius = imageImageView.frame.size.width/2.0
+        imageImageView.layer.masksToBounds = true
+        imageImageView.layer.borderColor = UIColor.whiteColor().CGColor
+        imageImageView.layer.borderWidth = 3.0
         
         //タグ表示
         /*var count:Int = 0
@@ -90,7 +95,6 @@ class ChildListDetailViewController: UIViewController,UITableViewDelegate, UITab
     
     // セクションの行数
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("tags.count:\(appDelegate.selectChild?.tag.count)")
         return (appDelegate.selectChild?.tag.count)!
     }
     

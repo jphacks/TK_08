@@ -15,6 +15,10 @@ class ChildSettingViewController: UIViewController {
     @IBOutlet weak var eventLabel: UILabel!
     @IBOutlet weak var roomLabel: UILabel!
     
+    
+    @IBOutlet weak var imageImageView: UIImageView!
+    @IBOutlet weak var backImageView: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //ナビゲーションバーの色
@@ -23,6 +27,21 @@ class ChildSettingViewController: UIViewController {
         
         eventLabel.text = appDelegate.selectEvent?.eventName
         roomLabel.text = appDelegate.selectEvent?.roomName
+        
+        //アイコンまる
+        imageImageView.layer.cornerRadius = imageImageView.frame.size.width/2.0
+        imageImageView.layer.masksToBounds = true
+        imageImageView.layer.borderColor = UIColor.whiteColor().CGColor
+        imageImageView.layer.borderWidth = 3.0
+        
+        //ここはあとで、サーバーにおくった一時的なものに変更
+        let defaults = NSUserDefaults.standardUserDefaults()
+        //画像
+        let imageData:NSData = defaults.objectForKey("image") as! NSData
+        imageImageView.image = UIImage(data:imageData)
+        
+        let backData:NSData = defaults.objectForKey("back") as! NSData
+        backImageView.image = UIImage(data: backData)
     }
     
     //離脱

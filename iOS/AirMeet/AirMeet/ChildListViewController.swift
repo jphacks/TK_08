@@ -14,8 +14,8 @@ class ChildListViewController: UIViewController,UITableViewDelegate, UITableView
     
     @IBOutlet weak var ChildTableView: UITableView!
     
-    @IBOutlet weak var roomLabels: UILabel!
-    @IBOutlet weak var eventLabel: UILabel!
+    //@IBOutlet weak var roomLabels: UILabel!
+    //@IBOutlet weak var eventLabel: UILabel!
     var childs:[ChildModel] = [ChildModel]()
     
     override func viewDidLoad() {
@@ -23,6 +23,11 @@ class ChildListViewController: UIViewController,UITableViewDelegate, UITableView
         //ナビゲーションバーの色
         self.navigationController?.navigationBar.barTintColor=UIColor(red: 128.0/255.0, green: 204.0/255.0, blue: 223.0/255.0, alpha: 1)//水色
         self.navigationController?.navigationBar.tintColor=UIColor.whiteColor()
+        
+        //戻るボタン
+        let backButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem = backButtonItem
+
         
         ChildTableView.delegate = self
         ChildTableView.dataSource = self
@@ -41,22 +46,23 @@ class ChildListViewController: UIViewController,UITableViewDelegate, UITableView
         childs.append(child2)
         childs.append(child3)
         
-        eventLabel.text = appDelegate.selectEvent?.eventName
-        roomLabels.text = appDelegate.selectEvent?.roomName
+       // eventLabel.text = appDelegate.selectEvent?.eventName
+       // roomLabels.text = appDelegate.selectEvent?.roomName
         
     }
     
     //ここで再読み込み
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        print("Reload")
         
         let eventID = appDelegate.selectEvent!.eventID
         var majorID = appDelegate.majorID
         var isInEvent:Bool = true
         
         //ここで、truefalseチェック
-        print("eventID：\(eventID)")
-        print("majorID:\(majorID)")
+        print("eventID : \(eventID)")
+        print("majorID : \(majorID)")
         
         //処理
         if(majorID.count != 0){
@@ -78,7 +84,9 @@ class ChildListViewController: UIViewController,UITableViewDelegate, UITableView
             print("stay in")
         }else{
             print("left")
-            let alert = UIAlertController(title:"Air Meetを抜けました",message:"",preferredStyle:UIAlertControllerStyle.Alert)
+            /*
+            let alert = UIAlertController(title:"AirMeetを抜けました",message:"",preferredStyle:UIAlertControllerStyle.Alert)
+            //離脱処理かきたい
             let okAction = UIAlertAction(title: "OK", style: .Default) {
                 
                 action in self.navigationController?.popViewControllerAnimated(true)
@@ -86,7 +94,7 @@ class ChildListViewController: UIViewController,UITableViewDelegate, UITableView
             }
             alert.addAction(okAction)
             
-            presentViewController(alert, animated: true, completion: nil);
+            //presentViewController(alert, animated: true, completion: nil);*/
         }
         
         
@@ -107,13 +115,12 @@ class ChildListViewController: UIViewController,UITableViewDelegate, UITableView
     
     // セクションの行数
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("events.count:\(childs.count)")
         return childs.count
     }
     
     //cellが選択されたとき
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        print(indexPath.row)
+        print("Select User : \(indexPath.row)")
         
        // appDelegate.selectEvent = events[indexPath.row]
         

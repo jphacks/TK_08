@@ -16,6 +16,9 @@ class ChildFirstSettingViewController: UIViewController,UITableViewDelegate, UIT
     @IBOutlet weak var eventLabel: UILabel!
     @IBOutlet weak var roomLabel: UILabel!
     
+    @IBOutlet weak var imageImageView: UIImageView!
+    @IBOutlet weak var backImageView: UIImageView!
+    
     let testTag = [["name": "age", "detail" :"22"],["name": "趣味は", "detail" :"デレステだよん"],["name": "キャラクター", "detail" :"ジバニャン"],["name": "趣味は1", "detail" :"デレステだよん1"],["name": "キャラクター2", "detail" :"ジバニャン2"]]
     var tagCount:Int = 0
     
@@ -30,6 +33,20 @@ class ChildFirstSettingViewController: UIViewController,UITableViewDelegate, UIT
         
         eventLabel.text = "\(appDelegate.selectEvent!.eventName)"
         roomLabel.text = "\(appDelegate.selectEvent!.roomName)"
+        
+        //アイコンまる
+        imageImageView.layer.cornerRadius = imageImageView.frame.size.width/2.0
+        imageImageView.layer.masksToBounds = true
+        imageImageView.layer.borderColor = UIColor.whiteColor().CGColor
+        imageImageView.layer.borderWidth = 3.0
+        
+        let defaults = NSUserDefaults.standardUserDefaults()
+        //画像
+        let imageData:NSData = defaults.objectForKey("image") as! NSData
+        imageImageView.image = UIImage(data:imageData)
+        
+        let backData:NSData = defaults.objectForKey("back") as! NSData
+        backImageView.image = UIImage(data: backData)
         
         
     }
@@ -65,7 +82,6 @@ class ChildFirstSettingViewController: UIViewController,UITableViewDelegate, UIT
     
     // セクションの行数
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("tags.count:\(testTag.count)")
         return testTag.count
     }
     

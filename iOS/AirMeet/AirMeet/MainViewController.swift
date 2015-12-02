@@ -83,15 +83,10 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         let backButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         navigationItem.backBarButtonItem = backButtonItem
         
-        //let ud = NSUserDefaults.standardUserDefaults()
-        
-        //ud.setObject(tags[0].detail, forKey: "name")
-        //ud.setObject(tags[1].detail, forKey: "detail")
-
-        
-        //会場追加
-        //let event:EventModel = EventModel(eventName: "JPHacks-東京会場", roomName: "東京大学 本郷キャンパス215教室", childNumber: 50, eventDescription: "aaa",eventID:203)
-        //events.append(event)
+        //テストデータ
+        let event = EventModel(eventName: "testEvent", roomName: "testRoom", childNumber: 0, eventDescription: "testDescription",eventID: 100)
+        events.append(event)
+    
         
         //iBecon
         //Beacon領域生成
@@ -129,16 +124,13 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         super.viewWillAppear(animated)
         print("Profile Reload")
         
-       // if self.manager.requestStateForRegion(self.region){
-            
-            
-        //}
         
         //プロフィール更新
         let defaults = NSUserDefaults.standardUserDefaults()
         if defaults.stringForKey("name") == nil || defaults.stringForKey("facebook") == nil || defaults.objectForKey("image") == nil{
             print("First Launch")
             
+            //デフォルト
             defaults.setObject("空気 出会い", forKey: "name")
             defaults.setObject("よろしくおねがいします", forKey: "detail")
             defaults.setObject("空気出会い", forKey: "facebook")
@@ -235,6 +227,7 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
     //領域内にいるので測定をする
     func locationManager(manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], inRegion region:CLBeaconRegion) {
         
+        //親モード
         if (appDelegate.isParent == true){
             print("Parent Made")
             //self.manager.stopRangingBeaconsInRegion(self.region)
@@ -253,12 +246,7 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
                     print("\(NSDate()) : Change AirMeet")
                     sendPush("AirMeet領域から出たよ")
                     events = []
-                   // let event = EventModel(eventName: "nil", roomName: "nil", childNumber: 0, eventDescription: "nil",eventID:0)
-                   // events.append(event)
-                   // EventTableView.deleteRowsAtIndexPaths([NSIndexPath(index: 0)], withRowAnimation: .Automatic)
-                    
                     EventTableView.reloadData()
-                    
                 }
                 
                 majorIDListOld = majorIDList
@@ -267,9 +255,6 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
             }else{
                 //sendPush("AirMeet領域にいます")
             }
-            
-            //複数あった場合は一番先頭のものを処理する
-            let beacon = beacons[0]
             
             for i in 0..<beacons.count{
                 majorIDList.append(beacons[i].major)
@@ -306,8 +291,7 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
                     //失敗
                     if String(json["code"]) == "400"{
                         
-                        //event = EventModel(eventName: "nil", roomName: "nil", childNumber: 0, eventDescription: "nil",eventID: majorID)
-                        print("Server Connection Error[\(majorID)]：\(json["event_name"])")
+                        print("Server Connection Error[\(majorID)]：\(json["message"])")
                     
                     //成功
                     }else{
@@ -383,7 +367,7 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
     //cellが選択されたとき
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        print(indexPath.row)
+        print("Select Event : \(indexPath.row)")
         
         appDelegate.selectEvent = events[indexPath.row]
         
