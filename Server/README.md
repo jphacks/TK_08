@@ -110,6 +110,7 @@ http://airmeet.mybluemix.net/event_info
         "親機側が設定した必須項目（配列形式）",
         "親機側が設定した必須項目（配列形式）"
     ],
+    "count": 現在の参加者数,
     "code": 200
 }
 ```

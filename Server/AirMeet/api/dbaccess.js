@@ -41,7 +41,6 @@ exports.event_info = function(major, callback) {
 };
 
 
-
 // 現在登録されているイベントのMajorとは異なる乱数を生成
 exports.gen_major = function(callback){
   db.view('events/major', function(err, res){

@@ -102,10 +102,10 @@ router.get('/event_info', function(req, res) {
   dba.event_info(major, function(err, events) {
     if(events.length == 1){
       success = events[0].value;
-      success.code = 200;
       dba.get_participants(major, function(err, users){
         var count = users.length;
         success.count = count;
+        success.code = 200;
         res.send(success);
       });
     }else if(events.length > 1){
