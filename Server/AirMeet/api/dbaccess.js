@@ -1,9 +1,9 @@
-// AirMeet – api/dbacess.js
+// AirMeet – api/dbaccess.js
 
-// (a)使用モジュールの読み込み
+// 使用モジュールの読み込み
 var cradle = require('cradle');
 
-// (b)Cloudant接続情報の取得
+// Cloudant接続情報の取得
 if (typeof process.env.VCAP_SERVICES === 'undefined') {
     var services = require('../config/VCAP_SERVICES.json');
 } else {
@@ -22,55 +22,48 @@ var options = {
   }
 };
 
-// (c)データを保持するデータベース
+// データベースとの接続
 var db = new (cradle.Connection)(host, port, options).database('airmeet_test');
-
-// (1)メモ一覧の取得
-exports.list = function(callback) {
-  db.view('memos/list', { descending : true }, callback);
-};
-
-// (2)メモの取得
-exports.get = function(id, callback) {
-  db.get(id, callback);
-};
 
 // ドキュメントの登録
 exports.save = function(id, doc, callback) {
   db.save(id, doc, callback);
 };
 
-// (4)メモの削除
+// ドキュメントの削除
 exports.remove = function(id, callback) {
   db.remove(id, callback);
 };
 
-
 // Majorの値と一致するイベントを取得
-exports.get_event = function(major,callback) {
-  //db.view('events/get_info', callback);
-  console.log("1 "+major);
-  db.get('あいう', callback);
+exports.event_info = function(major, callback) {
+  db.view('events/event_info', {key: major}, callback);
 };
 
+
 // 現在登録されているイベントのMajorとは異なる乱数を生成
-exports.gen_rand = function(){
-  var flag = 1;
-  while(flag == 1){
-    flag = 0;
-    var rand = Math.floor( Math.random() * 65535 );
-    db.view('events/major',function(err, res) {
+exports.gen_major = function(callback){
+  db.view('events/major', function(err, res){
+    var flag = 1;
+    while(flag != 0){
+      flag = 0;
+      var rand = Math.floor( Math.random() * 65535 );
       res.forEach(function(row) {
-        if(row.major == rand){
+        if(rand == row.key){
           flag = 1;
         }
       });
-    });
-  }
-  return rand;
+    }
+    callback(rand);
+  });
 };
 
+
 // Majorの値と一致するイベントの参加者を取得
-exports.get_participants = function(callback) {
-  db.view('users/get_participants', callback);
+exports.get_participants = function(major, callback) {
+  db.view('users/participants', {key: major}, callback);
+};
+
+exports.confirm_id = function(id, major, callback) {
+  db.view('users/id', {key: id, value: major}, callback);
 };

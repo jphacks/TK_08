@@ -23,8 +23,6 @@ http://airmeet.mybluemix.net/register_event
 |description||説明文|
 |items|○|ユーザに入力させる必須項目<br>","区切り|
 
-例  
-http://airmeet.mybluemix.net/register_event?event_name=event1&room_name=room1&items=hobby,presentation
 
 ### レスポンスボディ(JSON形式)
 #### 成功時
@@ -89,7 +87,7 @@ http://airmeet.mybluemix.net/remove_event
 ```
 
 
-## <a id ="register_info">イベントの情報取得
+## <a id ="event_info">イベントの情報取得
 ### リクエストURL
 http://airmeet.mybluemix.net/event_info
 
@@ -112,6 +110,7 @@ http://airmeet.mybluemix.net/event_info
         "親機側が設定した必須項目（配列形式）",
         "親機側が設定した必須項目（配列形式）"
     ],
+    "count": 現在の参加者数,
     "code": 200
 }
 ```
@@ -208,6 +207,9 @@ http://airmeet.mybluemix.net/participants
 #### 成功時
 ```json
 {
+    "major" : "イベントのmajor値",
+    "id" : "自分のID",
+    "count" : "イベントの参加者数（自分除く）",
     "users": [  
         {
             "id": "参加している他のユーザのid",
