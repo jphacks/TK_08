@@ -108,10 +108,7 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
             
             if(Int(deviceVer.substringToIndex(deviceVer.startIndex.advancedBy(1))) >= 8){
                 self.manager.requestAlwaysAuthorization()
-                //print("iBecon OK?")
-               // self.manager.startMonitoringForRegion(self.region)
             }else{
-                //self.manager.startRangingBeaconsInRegion(self.region)
                 self.manager.startMonitoringForRegion(self.region)
             }
             
@@ -132,9 +129,9 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
             print("First Launch")
             
             //デフォルト
-            defaults.setObject("空気 出会い", forKey: "name")
+            defaults.setObject("空気 会太郎", forKey: "name")
             defaults.setObject("よろしくおねがいします", forKey: "detail")
-            defaults.setObject("空気出会い", forKey: "facebook")
+            defaults.setObject("空気会太郎", forKey: "facebook")
             defaults.setObject("@AirMeet", forKey: "twitter")
             
             defaults.setObject(UIImagePNGRepresentation(imageImageView.image!), forKey: "image")
@@ -231,7 +228,10 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         //親モード
         if (appDelegate.isParent == true){
             print("\(NSDate()) : Parent Made")
-            //self.manager.stopRangingBeaconsInRegion(self.region)
+            
+            //リージョン監視、レンジング停止
+            self.manager.stopMonitoringForRegion(self.region)
+            self.manager.stopRangingBeaconsInRegion(self.region)
             
         }else{
             print("\(NSDate()) : Child Made")

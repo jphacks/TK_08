@@ -11,8 +11,8 @@ import UIKit
 class ChildListDetailViewController: UIViewController,UITableViewDelegate, UITableViewDataSource {
     
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-    let testTag = [["name": "age", "detail" :"22"],["name": "趣味は", "detail" :"デレステだよん"],["name": "キャラクター", "detail" :"ジバニャン"],["name": "趣味は1", "detail" :"デレステだよん1"],["name": "キャラクター2", "detail" :"ジバニャン2"]]
-
+    let testTag = [["name": "age", "detail" :"22"],["name": "趣味", "detail" :"デレステ♪"],["name": "好きなキャラ", "detail" :"ジバニャン"],["name": "得意分野", "detail" :"アプリ開発"],["name": "好きな言語", "detail" :"Swift"]]
+    
     
     @IBOutlet weak var TagTableView: UITableView!
     

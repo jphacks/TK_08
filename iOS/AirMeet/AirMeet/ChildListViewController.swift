@@ -32,15 +32,15 @@ class ChildListViewController: UIViewController,UITableViewDelegate, UITableView
         ChildTableView.delegate = self
         ChildTableView.dataSource = self
         
-        let tag1:Dictionary<String,String> = ["年齢":"22","所属":"筑波大学","趣味":"スクフェス"]
-        let tag2:Dictionary<String,String> = ["年齢":"40","所属":"東京大学","趣味":"スクフェス"]
-        let tag3:Dictionary<String,String> = ["年齢":"22","所属":"筑波大学","趣味":"デレステ"]
+        let tag1:Dictionary<String,String> = ["年齢":"22","所属":"筑波大学","趣味":"モンハン"]
+        let tag2:Dictionary<String,String> = ["年齢":"21","所属":"東京大学","趣味":"スクフェス"]
+        let tag3:Dictionary<String,String> = ["年齢":"24","所属":"早稲田大学","趣味":"デレステ"]
         
 
         //子追加
-        let child1:ChildModel = ChildModel(image: UIImage(named: "go_face.png")!, backgroundImage:  UIImage(named: "go_back.png")!, name: "さとうごう", tag: tag1,detail:"がんばるぞいぞい！！！！今日も可愛い女の子ゲットするぞい！！！！！！らいんもってる？？？？")
-        let child2:ChildModel = ChildModel(image: UIImage(named: "IMG_9004.JPG")!, backgroundImage:  UIImage(named: "IMG_9003.JPG")!, name: "いい子", tag: tag2,detail:"がんばるぞいぞい！！！！今日も可愛い女の子ゲットするぞい！！！！！！らいんもってる？？？？")
-        let child3:ChildModel = ChildModel(image: UIImage(named: "IMG_8996.JPG")!, backgroundImage:  UIImage(named: "IMG_9002.JPG")!, name: "うぉるこふ", tag: tag3,detail:"がんばるぞいぞい！！！！今日も可愛い女の子ゲットするぞい！！！！！！らいんもってる？？？？")
+        let child1:ChildModel = ChildModel(image: UIImage(named: "go_face.png")!, backgroundImage:  UIImage(named: "go_back.png")!, name: "さとうごう", tag: tag1,detail:"がんばるぞ〜！！今日も可愛い女の子ゲットするぞ〜！！LINEもってる〜？？")
+        let child2:ChildModel = ChildModel(image: UIImage(named: "IMG_9004.JPG")!, backgroundImage:  UIImage(named: "IMG_9003.JPG")!, name: "こーたけ", tag: tag2,detail:"今日はよろしくお願いします！ピカチュウが大好きです♪")
+        let child3:ChildModel = ChildModel(image: UIImage(named: "IMG_8996.JPG")!, backgroundImage:  UIImage(named: "IMG_9002.JPG")!, name: "うぉるこふ", tag: tag3,detail:"Unity使ってます。筑波大学の3年生です。")
         
         childs.append(child1)
         childs.append(child2)
@@ -87,17 +87,6 @@ class ChildListViewController: UIViewController,UITableViewDelegate, UITableView
             print("stay in")
         }else{
             print("left")
-            
-//            let alert = UIAlertController(title:"AirMeetを抜けました",message:"EventName : \(appDelegate.selectEvent!.eventName)\nRoomName : \(appDelegate.selectEvent!.roomName)",preferredStyle:.Alert)
-//            let okAction = UIAlertAction(title: "OK", style: .Default) {
-//                action in
-//                    //Exitからsegueを呼び出し
-//                    self.performSegueWithIdentifier("BackToMain", sender: nil)
-//            }
-//            alert.addAction(okAction)
-//            
-//            self.presentViewController(alert, animated: true, completion: nil)
-            
         }
         
         

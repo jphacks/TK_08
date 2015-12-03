@@ -29,7 +29,7 @@ class ParentLockSettingViewController: UIViewController , CBPeripheralManagerDel
         let myProximityUUID = NSUUID(UUIDString: "B9407F30-F5F8-466E-AFF9-33333B57FE6D")
         
         // iBeaconのIdentifier.
-        let myIdentifier = "AirMeer"
+        let myIdentifier = "AirMeet"
         
         //サーバーからMajorを受けとり
         print("Make AirMeet Sucsess [ \(appDelegate.parentID!) ]")
