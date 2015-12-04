@@ -87,6 +87,17 @@ class ChildListViewController: UIViewController,UITableViewDelegate, UITableView
             print("stay in")
         }else{
             print("left")
+            
+            //goがだしてるalertとぶつかる、セグエをswich caseで呼び出してくか、こっちで書くかなやましい
+            let alert = UIAlertController(title:"AirMeetを抜けました",message:"EventName : \(appDelegate.selectEvent!.eventName)\nRoomName : \(appDelegate.selectEvent!.roomName)",preferredStyle:.Alert)
+            let okAction = UIAlertAction(title: "OK", style: .Default) {
+                action in
+                //Exitからsegueを呼び出し
+                self.performSegueWithIdentifier("BackToMain", sender: nil)
+            }
+                        alert.addAction(okAction)
+            
+            self.presentViewController(alert, animated: true, completion: nil)
         }
         
         

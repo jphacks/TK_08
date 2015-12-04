@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ParentSettingViewController: UIViewController,UITextFieldDelegate,NSURLSessionDelegate,NSURLSessionDataDelegate {
+class ParentSettingViewController: UIViewController,UITextFieldDelegate,NSURLSessionDelegate,NSURLSessionDataDelegate,UITableViewDelegate,UITableViewDataSource {
     
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
@@ -21,6 +21,13 @@ class ParentSettingViewController: UIViewController,UITextFieldDelegate,NSURLSes
 
     @IBOutlet weak var MakeAirMeetButton: UIButton!
     
+    
+    @IBOutlet weak var selectTagTableView: UITableView!
+    
+    let cellLabels = ["所属名","住んでいる都道府県","趣味","専門分野","特技","発表内容","性別","年齢"]
+    var checkMarks = [false, false, false, false, false, false, false, false]
+    //  チェックされたセルの位置を保存しておく辞書をプロパティに宣言
+    var selectedCells:[String:Bool]=[String:Bool]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,6 +43,13 @@ class ParentSettingViewController: UIViewController,UITextFieldDelegate,NSURLSes
         
         MakeAirMeetButton.enabled = false
         MakeAirMeetButton.alpha = 0.5
+        
+        //テーブルビューの設定
+        selectTagTableView.allowsMultipleSelection = true
+        selectTagTableView.delegate = self
+        selectTagTableView.dataSource = self
+
+        
     }
     
     
@@ -45,6 +59,75 @@ class ParentSettingViewController: UIViewController,UITextFieldDelegate,NSURLSes
             self.navigationController?.popToRootViewControllerAnimated(true)
             appDelegate.isParent = false
         }
+    }
+    
+    //cellに値を設定
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath:NSIndexPath) -> UITableViewCell {
+        
+        
+        let cell = tableView.dequeueReusableCellWithIdentifier("SelectTagTableViewCell", forIndexPath: indexPath)
+        
+        cell.textLabel?.text = cellLabels[indexPath.row]
+        cell.textLabel?.textColor = UIColor.darkGrayColor()
+        cell.textLabel?.font = UIFont(name: "HiraKakuProN-W3", size: 15)
+        
+        //選択時一瞬を灰色になるのを防ぐ
+        let backgroundView = UIView()
+        backgroundView.backgroundColor = UIColor(red: 128.0/255.0, green: 204.0/255.0, blue: 223.0/255.0, alpha: 0.5)//水色
+        cell.selectedBackgroundView = backgroundView
+        
+        //再利用のとき困らないように
+        if (checkMarks[indexPath.row] == true){
+            cell.accessoryType=UITableViewCellAccessoryType.Checkmark
+        }else{
+            cell.accessoryType=UITableViewCellAccessoryType.None
+        }
+        
+        return cell
+    }
+    
+    // セクション数
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    // セクションの行数
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return cellLabels.count
+    }
+    
+    //cellが選択されたとき
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        if let cell = tableView.cellForRowAtIndexPath(indexPath){
+            
+            
+            //チェックしてないとき
+            if checkMarks[indexPath.row] == false{
+                cell.accessoryType = .Checkmark
+                checkMarks[indexPath.row] = true
+                
+                selectedCells["\(indexPath.row)"]=true
+                
+            //チェックしてるとき
+            }else if  checkMarks[indexPath.row] == true{
+                cell.accessoryType = .None
+                checkMarks[indexPath.row] = false
+                selectedCells.removeValueForKey("\(indexPath.row)")
+
+            }
+
+        }
+        print("map : \(checkMarks)")
+        print("dic : \(selectedCells)")
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
+        
+    }
+    
+    //cellの選択がはずれたとき
+    func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+       
     }
     
     //UITextFieldが編集された直後に呼ばれるデリゲートメソッド.
@@ -114,7 +197,7 @@ class ParentSettingViewController: UIViewController,UITextFieldDelegate,NSURLSes
             //backgroundSessionConfigurationWithIdentifier("defaultTask")
         // Sessionを生成.
         let mySession:NSURLSession = NSURLSession(configuration: myConfig, delegate: self, delegateQueue: nil)
-        
+        //ここでitemsをおくる
         let post = "event_name=\(event)&room_name=\(room)&items=belong,hobby,presentation"
         let postData = post.dataUsingEncoding(NSUTF8StringEncoding)
         
@@ -123,6 +206,8 @@ class ParentSettingViewController: UIViewController,UITextFieldDelegate,NSURLSes
         let request:NSMutableURLRequest = NSMutableURLRequest(URL: url!)
         request.HTTPMethod = "POST"
         request.HTTPBody = postData
+        
+        //request.addValue("a", forHTTPHeaderField: "X-AccessToken")
         
         let task:NSURLSessionDataTask = mySession.dataTaskWithRequest(request)
         print("Start Session")

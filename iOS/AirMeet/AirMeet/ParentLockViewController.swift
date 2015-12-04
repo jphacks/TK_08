@@ -50,6 +50,8 @@ class ParentLockSettingViewController: UIViewController , CBPeripheralManagerDel
     //終了
     @IBAction func ParentStopButton(sender: AnyObject) {
         self.navigationController?.popToRootViewControllerAnimated(true)
+        
+        
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

@@ -37,7 +37,7 @@ class ProfileViewController: UIViewController,UITableViewDelegate, UITableViewDa
         
         SettingTableView.delegate = self
         SettingTableView.dataSource = self
-        SettingTableView.scrollEnabled = true
+        //SettingTableView.scrollEnabled = true
         
         
         let defaults = NSUserDefaults.standardUserDefaults()

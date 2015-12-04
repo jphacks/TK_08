@@ -86,11 +86,6 @@
                                     </mask>
                                 </variation>
                             </textField>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="vOe-84-jLz">
-                                <rect key="frame" x="0.0" y="187" width="600" height="335"/>
-                                <animations/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="　　参加者に公開を求める情報" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E9v-vA-3ou">
                                 <rect key="frame" x="0.0" y="162" width="600" height="25"/>
                                 <animations/>
@@ -122,6 +117,23 @@
                                     <action selector="ParentStartButton:" destination="dl5-lv-6jl" eventType="touchUpInside" id="60l-cn-23j"/>
                                 </connections>
                             </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="vOe-84-jLz">
+                                <rect key="frame" x="0.0" y="187" width="600" height="335"/>
+                                <animations/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="SelectTagTableViewCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="SelectTagTableViewCell" id="fBh-ja-1bq">
+                                        <rect key="frame" x="0.0" y="28" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fBh-ja-1bq" id="SP4-7U-npU">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <animations/>
+                                        </tableViewCellContentView>
+                                        <animations/>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -166,6 +178,7 @@
                         <outlet property="EventNameTextField" destination="aZA-qq-qfr" id="RYp-Xx-dtK"/>
                         <outlet property="MakeAirMeetButton" destination="Ec5-aq-o9H" id="Bf4-pd-49F"/>
                         <outlet property="RoomNameTextField" destination="w8d-3a-hVh" id="KaH-vC-7It"/>
+                        <outlet property="selectTagTableView" destination="vOe-84-jLz" id="Afw-YZ-Ejw"/>
                         <segue destination="cPN-Po-HNe" kind="showDetail" identifier="startSegue" id="ILD-H8-d9z"/>
                     </connections>
                 </viewController>
