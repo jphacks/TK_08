@@ -54,7 +54,7 @@ http://airmeet.mybluemix.net/register_event
 ### リクエストURL
 http://airmeet.mybluemix.net/remove_event
 
-メソッド:DELETE
+メソッド:POST
 
 ### リクエストボディ
 |キー|必須|説明|
@@ -254,7 +254,7 @@ http://airmeet.mybluemix.net/participants
 ### リクエストURL
 http://airmeet.mybluemix.net/remove_user
 
-メソッド:DELETE
+メソッド:POST
 
 ### リクエストボディ
 |キー|必須|説明|
