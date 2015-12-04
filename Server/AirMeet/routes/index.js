@@ -4,13 +4,31 @@
 var express = require('express');
 var uuid = require('node-uuid');
 var moment = require('moment');
+var fs = require('fs');
 var dba = require('../api/dbaccess.js');
 var package = require('../package.json');
 
-
+var buf = fs.readFileSync('Authorized_Token');
+var token_list = buf.toString().split("\n");
 
 // ルーターの作成
 var router = express.Router();
+
+//認証
+router.use(function(req, res, next) {
+  var AccessToken = req.header("X-AccessToken");
+  console.log(AccessToken);
+  if(token_list.indexOf(AccessToken) >= 0){
+    next();
+  }else{
+    var error ={
+      message : "AccessToken is invalid",
+      code : 400
+    };
+    res.send(error);
+  }
+})
+
 // ルート
 router.get('/', function(req, res) {
     res.send('Hello World');
@@ -101,10 +119,10 @@ router.get('/event_info', function(req, res) {
     return;
   }
 
-  dba.event_info(major, function(err, events) {
+  dba.event_info(major, function(err1, events) {
     if(events.length == 1){
       success = events[0].value;
-      dba.get_participants(major, function(err, users){
+      dba.get_participants(major, function(err2, users){
         var count = users.length;
         success.count = count;
         success.code = 200;
@@ -141,7 +159,7 @@ router.post('/register_user', function(req, res) {
   var name = req.body.name;
   var image = req.body.image;
   var image_header = req.body.image_header;
-  var items = (new Function("return " + req.body.items))();
+  var items = req.body.items;
 
   if(!major){
     error.message = "Error: major is missing";
@@ -151,9 +169,18 @@ router.post('/register_user', function(req, res) {
     error.message = "Error: name is missing";
     error.code = 400;
   }
+
   if(!items){
     error.message = "Error: items is missing";
     error.code = 400;
+  }else{
+    try{
+      items = (new Function("return " + items))();
+    } catch(err){
+      console.log('catch: ' + err.message);
+      error.message = "Error: items is not JSON format";
+      error.code = 400;
+    }
   }
 
   if(!Object.keys(error).length){
@@ -210,7 +237,7 @@ router.get('/participants', function(req, res) {
   }
 
   if(!Object.keys(error).length){
-    dba.confirm_id(id, major, function(err, users) {
+    dba.confirm_userid(id, major, function(err, users) {
       if(users.length == 1){
         dba.get_participants(major, function(err, users) {
           if(users.length){
@@ -268,27 +295,28 @@ router.delete('/remove_event', function(req, res) {
     return;
   }
 
-  dba.event_info(major, function(err, events) {
+  dba.event_info(major, function(err1, events) {
     if(events.length == 1){
       var id = events[0].id
-      dba.remove(id, function(err) { //イベントを削除
-        if(!err){ //エラーが出なければ
-          dba.get_participants(major, function(err, users) { //削除したいイベントの参加者を取得
+      dba.remove(id, function(err2) { //イベントを削除
+        if(!err2){ //エラーが出なければ
+          dba.get_participants(major, function(err3, users) { //削除したいイベントの参加者を取得
             if(users.length){ //参加者がいれば
               users.forEach(function(row) { //全ての参加者を
-                dba.remove(row.id, function(err) { //DBから削除
-                  if(!err){ //エラーが出なければ成功
-                    success.id = id;
-                    success.message = "Event & participants remove success";
-                    res.send(success);
-                    return;
-                  }else{ //エラーが出れば失敗
+                dba.remove(row.id, function(err4) { //DBから削除
+                  if(err4){ //エラーが出れば失敗
                     error.message = "Error: Participants remove failed";
                     error.code = 500;
-                    res.send(error);
                   }
                 });
               });
+              if(!Object.keys(error).length){ //エラーが出ていなければ成功
+                success.id = id;
+                success.message = "Event & participants remove success";
+                res.send(success);
+              }else{
+                res.send(error);
+              }
             }else{ //参加者がいなければ
               success.message = "Event remove success";
               res.send(success);
