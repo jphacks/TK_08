@@ -40,7 +40,6 @@ router.get('/', function(req, res) {
 router.post('/register_event', function(req, res) {
 //router.get('/register_event', function(req, res) {
   var success = {
-    id : null,
     major : null,
     message : null,
     code : 200
@@ -64,7 +63,6 @@ router.post('/register_event', function(req, res) {
   }
 
   if(!Object.keys(error).length){
-    console.log("1");
     dba.gen_major(function(major) {
       console.log("major:"+major);
       var doc = {
@@ -82,7 +80,6 @@ router.post('/register_event', function(req, res) {
           error.code = 500;
           res.send(error)
         }else{
-          success.id = id;
           success.major = major;
           success.message = "Event registration success";
           res.send(success);
