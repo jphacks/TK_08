@@ -54,7 +54,7 @@ http://airmeet.mybluemix.net/register_event
 ### リクエストURL
 http://airmeet.mybluemix.net/remove_event
 
-メソッド:POST
+メソッド:DELETE
 
 ### リクエストボディ
 |キー|必須|説明|
@@ -254,7 +254,7 @@ http://airmeet.mybluemix.net/participants
 ### リクエストURL
 http://airmeet.mybluemix.net/remove_user
 
-メソッド:POST
+メソッド:DELETE
 
 ### リクエストボディ
 |キー|必須|説明|
@@ -265,6 +265,7 @@ http://airmeet.mybluemix.net/remove_user
 #### 成功時
 ```json
 {
+    "id": "削除したユーザのID",
     "message": "なんか成功って感じのメッセージ",
     "code": 200
 }

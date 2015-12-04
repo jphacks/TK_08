@@ -335,5 +335,38 @@ router.delete('/remove_event', function(req, res) {
   });
 });
 
+//-----------------------------------------------------------//
+//ユーザの削除
+//-----------------------------------------------------------//
+router.delete('/remove_user', function(req, res) {
+  var success = {
+    id : null,
+    message : null,
+    code : 200
+  };
+  var error = {};
+
+  var id = req.body.id;
+
+  if(!id){
+    error.message = "Error: id is missing";
+    error.code = 400;
+    res.send(error);
+    return;
+  }
+
+  dba.remove(id, function(err) { //イベントを削除
+    if(!err){ //エラーが出なければ
+      success.id = id;
+      success.message = "Event & participants remove success";
+      res.send(success);
+    }else{ //エラーが出れば
+      error.message = "Error: Event remove failed";
+      error.code = 500;
+      res.send(error);
+    }
+  });
+});
+
 
 module.exports = router;
