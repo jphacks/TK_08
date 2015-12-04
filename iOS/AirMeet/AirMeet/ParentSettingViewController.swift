@@ -20,12 +20,12 @@ class ParentSettingViewController: UIViewController,UITextFieldDelegate,NSURLSes
     var eventDescription:String?
 
     @IBOutlet weak var MakeAirMeetButton: UIButton!
-    
-    
     @IBOutlet weak var selectTagTableView: UITableView!
     
+    //くるくる
+    let indicator:SpringIndicator = SpringIndicator()
+    
     let cellLabels = ["所属名","住んでいる都道府県","趣味","専門分野","特技","発表内容","性別","年齢"]
-    var checkMarks = [false, false, false, false, false, false, false, false]
     //  チェックされたセルの位置を保存しておく辞書をプロパティに宣言
     var selectedCells:[String:Bool]=[String:Bool]()
     
@@ -48,7 +48,10 @@ class ParentSettingViewController: UIViewController,UITextFieldDelegate,NSURLSes
         selectTagTableView.allowsMultipleSelection = true
         selectTagTableView.delegate = self
         selectTagTableView.dataSource = self
-
+        
+        //ぐるぐる
+        indicator.frame = CGRectMake(self.view.frame.width/2-self.view.frame.width/8,self.view.frame.height/2-self.view.frame.width/8,self.view.frame.width/4,self.view.frame.width/4)
+        indicator.lineWidth = 3
         
     }
     
@@ -77,10 +80,10 @@ class ParentSettingViewController: UIViewController,UITextFieldDelegate,NSURLSes
         cell.selectedBackgroundView = backgroundView
         
         //再利用のとき困らないように
-        if (checkMarks[indexPath.row] == true){
-            cell.accessoryType=UITableViewCellAccessoryType.Checkmark
-        }else{
+        if (selectedCells["\(indexPath.row)"] == nil){
             cell.accessoryType=UITableViewCellAccessoryType.None
+        }else{
+            cell.accessoryType=UITableViewCellAccessoryType.Checkmark
         }
         
         return cell
@@ -103,23 +106,19 @@ class ParentSettingViewController: UIViewController,UITextFieldDelegate,NSURLSes
             
             
             //チェックしてないとき
-            if checkMarks[indexPath.row] == false{
+            if (selectedCells["\(indexPath.row)"] == nil){
                 cell.accessoryType = .Checkmark
-                checkMarks[indexPath.row] = true
-                
                 selectedCells["\(indexPath.row)"]=true
                 
             //チェックしてるとき
-            }else if  checkMarks[indexPath.row] == true{
+            }else{
                 cell.accessoryType = .None
-                checkMarks[indexPath.row] = false
                 selectedCells.removeValueForKey("\(indexPath.row)")
 
             }
 
         }
-        print("map : \(checkMarks)")
-        print("dic : \(selectedCells)")
+
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
         
@@ -197,8 +196,21 @@ class ParentSettingViewController: UIViewController,UITextFieldDelegate,NSURLSes
             //backgroundSessionConfigurationWithIdentifier("defaultTask")
         // Sessionを生成.
         let mySession:NSURLSession = NSURLSession(configuration: myConfig, delegate: self, delegateQueue: nil)
+        
         //ここでitemsをおくる
-        let post = "event_name=\(event)&room_name=\(room)&items=belong,hobby,presentation"
+        var tagArray:[String] = []
+        
+        for selectedCell in selectedCells{
+            
+            tagArray.append(cellLabels[Int(selectedCell.0)!])
+
+        }
+        
+        let tagArrayString = (tagArray as NSArray).componentsJoinedByString(",")
+        
+        print("Selected Tag : \(tagArrayString)")
+        
+        let post = "event_name=\(event)&room_name=\(room)&items=\(tagArrayString)"
         let postData = post.dataUsingEncoding(NSUTF8StringEncoding)
         
         let url = NSURL(string: "http://airmeet.mybluemix.net/register_event")
@@ -207,11 +219,16 @@ class ParentSettingViewController: UIViewController,UITextFieldDelegate,NSURLSes
         request.HTTPMethod = "POST"
         request.HTTPBody = postData
         
-        //request.addValue("a", forHTTPHeaderField: "X-AccessToken")
+        request.addValue("a", forHTTPHeaderField: "X-AccessToken")
         
         let task:NSURLSessionDataTask = mySession.dataTaskWithRequest(request)
         print("Start Session")
+        //くるくるスタート
+        self.view.addSubview(indicator)
+        self.indicator.startAnimation()
+        
         task.resume()
+        
         
         MakeAirMeetButton.enabled = false
         MakeAirMeetButton.alpha = 0.5
@@ -221,6 +238,7 @@ class ParentSettingViewController: UIViewController,UITextFieldDelegate,NSURLSes
     //通信終了
     func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveData data: NSData) {
         
+        
         //Json解析
         let json = JSON(data:data)
         
@@ -228,14 +246,22 @@ class ParentSettingViewController: UIViewController,UITextFieldDelegate,NSURLSes
         let major = json["major"]
         let message = json["message"]
         
-        print("code : \(json["code"])")
+        //print("code : \(json["code"])")
         //成功
         if code == "200"{
             
             appDelegate.parentID = "\(major)"
             appDelegate.isParent = true
             
-            
+            //メインスレッドで表示
+            dispatch_async(dispatch_get_main_queue(), {
+
+                //くるくるストップ
+                self.indicator.stopAnimation(true, completion: nil)
+                self.indicator.removeFromSuperview()
+                
+                 })
+
             //画面遷移
             performSegueWithIdentifier("startSegue",sender: nil)
             
@@ -248,14 +274,25 @@ class ParentSettingViewController: UIViewController,UITextFieldDelegate,NSURLSes
                 action in
             }
             alert.addAction(okAction)
-            presentViewController(alert, animated: true, completion: nil)
+            //メインスレッドで表示
+            dispatch_async(dispatch_get_main_queue(), {
+                //くるくるストップ
+                self.indicator.stopAnimation(true, completion: nil)
+                self.indicator.removeFromSuperview()
+                
+                self.presentViewController(alert, animated: true, completion: nil)
+            })
             
             appDelegate.isParent = false
         }
         
-        //self.MakeAirMeetButton.enabled = true
-        //self.MakeAirMeetButton.alpha = 1.0
  
+    }
+    
+    func URLSessionDidFinishEventsForBackgroundURLSession(session: NSURLSession) {
+        print("URLSessionDidFinishEventsForBackgroundURLSession")
+        
+        // バックグラウンドからフォアグラウンドの復帰時に呼び出されるデリゲート.
     }
     
     @IBAction func unwindToTop(segue: UIStoryboardSegue) {

@@ -42,6 +42,8 @@
 		46858F2F1C0A77D4003190CB /* tab-search_w.png in Resources */ = {isa = PBXBuildFile; fileRef = 46858F2B1C0A77D4003190CB /* tab-search_w.png */; };
 		46858F311C0A77E9003190CB /* AirMeet-color_heart.png in Resources */ = {isa = PBXBuildFile; fileRef = 46858F301C0A77E9003190CB /* AirMeet-color_heart.png */; };
 		4693CEA41C11DDCD0034328D /* SelectTagTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4693CEA31C11DDCD0034328D /* SelectTagTableViewCell.swift */; };
+		4693CEA91C120B400034328D /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4693CEA61C120B400034328D /* Info.plist */; };
+		4693CEAA1C120B400034328D /* SpringIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4693CEA81C120B400034328D /* SpringIndicator.swift */; };
 		469AB7C41C0D614A000C6393 /* header-menu.png in Resources */ = {isa = PBXBuildFile; fileRef = 469AB7C31C0D614A000C6393 /* header-menu.png */; };
 		469AB7C61C0D67E9000C6393 /* icon-camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 469AB7C51C0D67E9000C6393 /* icon-camera.png */; };
 		469AB7C81C0D871C000C6393 /* TagModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469AB7C71C0D871C000C6393 /* TagModel.swift */; };
@@ -136,6 +138,9 @@
 		46858F2B1C0A77D4003190CB /* tab-search_w.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab-search_w.png"; sourceTree = "<group>"; };
 		46858F301C0A77E9003190CB /* AirMeet-color_heart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AirMeet-color_heart.png"; sourceTree = "<group>"; };
 		4693CEA31C11DDCD0034328D /* SelectTagTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelectTagTableViewCell.swift; path = ../SelectTagTableViewCell.swift; sourceTree = "<group>"; };
+		4693CEA61C120B400034328D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4693CEA71C120B400034328D /* SpringIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpringIndicator.h; sourceTree = "<group>"; };
+		4693CEA81C120B400034328D /* SpringIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpringIndicator.swift; sourceTree = "<group>"; };
 		469AB7C31C0D614A000C6393 /* header-menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "header-menu.png"; sourceTree = "<group>"; };
 		469AB7C51C0D67E9000C6393 /* icon-camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-camera.png"; sourceTree = "<group>"; };
 		469AB7C71C0D871C000C6393 /* TagModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagModel.swift; sourceTree = "<group>"; };
@@ -259,6 +264,16 @@
 			path = TextFieldEffects;
 			sourceTree = "<group>";
 		};
+		4693CEA51C120B400034328D /* SpringIndicator */ = {
+			isa = PBXGroup;
+			children = (
+				4693CEA61C120B400034328D /* Info.plist */,
+				4693CEA71C120B400034328D /* SpringIndicator.h */,
+				4693CEA81C120B400034328D /* SpringIndicator.swift */,
+			);
+			path = SpringIndicator;
+			sourceTree = "<group>";
+		};
 		46B218A71C0C3AD100997E3B /* JSON */ = {
 			isa = PBXGroup;
 			children = (
@@ -302,6 +317,7 @@
 				46B611591C09510600102AC0 /* Parent */,
 				46B6115A1C09511000102AC0 /* Child */,
 				46B218A71C0C3AD100997E3B /* JSON */,
+				4693CEA51C120B400034328D /* SpringIndicator */,
 				465F306A1C0E7243008842B8 /* SABlurImageView */,
 				465F306B1C0E7243008842B8 /* TextFieldEffects */,
 				46B611751C096ED000102AC0 /* Image */,
@@ -586,6 +602,7 @@
 				46B6116F1C0966F300102AC0 /* Profile.storyboard in Resources */,
 				46435BE71C0AB6E900361ABA /* IMG_8996.JPG in Resources */,
 				46B611251C09447D00102AC0 /* Main.storyboard in Resources */,
+				4693CEA91C120B400034328D /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -638,6 +655,7 @@
 				46B611741C096BE100102AC0 /* ChildRoomViewController.swift in Sources */,
 				46858F1D1C0A260E003190CB /* SettingTagTableViewCell.swift in Sources */,
 				46B611621C0955F000102AC0 /* ChildListDetailViewController.swift in Sources */,
+				4693CEAA1C120B400034328D /* SpringIndicator.swift in Sources */,
 				465F30851C0E72CF008842B8 /* YokoTextField.swift in Sources */,
 				465F30821C0E72CF008842B8 /* MadokaTextField.swift in Sources */,
 				4693CEA41C11DDCD0034328D /* SelectTagTableViewCell.swift in Sources */,
@@ -796,7 +814,7 @@
 				INFOPLIST_FILE = AirMeet/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.osatou.AirMeet;
+				PRODUCT_BUNDLE_IDENTIFIER = koooootake.AirMeet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -812,7 +830,7 @@
 				INFOPLIST_FILE = AirMeet/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.osatou.AirMeet;
+				PRODUCT_BUNDLE_IDENTIFIER = koooootake.AirMeet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
