@@ -64,6 +64,6 @@ exports.get_participants = function(major, callback) {
   db.view('users/participants', {key: major}, callback);
 };
 
-exports.confirm_id = function(id, major, callback) {
+exports.confirm_userid = function(id, major, callback) {
   db.view('users/id', {key: id, value: major}, callback);
 };

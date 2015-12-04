@@ -22,6 +22,7 @@ router.get('/', function(req, res) {
 router.post('/register_event', function(req, res) {
 //router.get('/register_event', function(req, res) {
   var success = {
+    id : null,
     major : null,
     message : null,
     code : 200
@@ -63,6 +64,7 @@ router.post('/register_event', function(req, res) {
           error.code = 500;
           res.send(error)
         }else{
+          success.id = id;
           success.major = major;
           success.message = "Event registration success";
           res.send(success);
@@ -169,17 +171,15 @@ router.post('/register_user', function(req, res) {
       if(err){
         error.message = "Error: User registration failed";
         error.code = 500;
-        var str = JSON.stringify(error);
+        res.send(error);
       }else{
         success.id = id;
         success.message = "User registration success";
-        var str = JSON.stringify(success);
+        res.send(success);
       }
-      res.send(str);
     });
   }else{
-    var str = JSON.stringify(error);
-    res.send(str);
+    res.send(error);
   }
 });
 
@@ -245,6 +245,69 @@ router.get('/participants', function(req, res) {
   }else{
     res.send(error);
   }
+});
+
+
+//-----------------------------------------------------------//
+//イベントの削除
+//-----------------------------------------------------------//
+router.delete('/remove_event', function(req, res) {
+  var success = {
+    id : null,
+    message : null,
+    code : 200
+  };
+  var error = {};
+
+  var major = Number(req.body.major);
+
+  if(!major){
+    error.message = "Error: major is missing";
+    error.code = 400;
+    res.send(error);
+    return;
+  }
+
+  dba.event_info(major, function(err, events) {
+    if(events.length == 1){
+      var id = events[0].id
+      dba.remove(id, function(err) { //イベントを削除
+        if(!err){ //エラーが出なければ
+          dba.get_participants(major, function(err, users) { //削除したいイベントの参加者を取得
+            if(users.length){ //参加者がいれば
+              users.forEach(function(row) { //全ての参加者を
+                dba.remove(row.id, function(err) { //DBから削除
+                  if(!err){ //エラーが出なければ成功
+                    success.id = id;
+                    success.message = "Event & participants remove success";
+                    res.send(success);
+                    return;
+                  }else{ //エラーが出れば失敗
+                    error.message = "Error: Participants remove failed";
+                    error.code = 500;
+                    res.send(error);
+                  }
+                });
+              });
+            }else{ //参加者がいなければ
+              success.message = "Event remove success";
+              res.send(success);
+            }
+          });
+        }else{ //エラーが出れば
+          error.message = "Error: Event remove failed";
+          error.code = 500;
+          res.send(error);
+        }
+      });
+    }else if(events.length > 1){
+      error.message = "Error: Database is not valid";
+      error.code = 500;
+    }else{
+      error.message = "Error: Event does not exist";
+      error.code = 500;
+    }
+  });
 });
 
 
