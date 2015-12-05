@@ -116,6 +116,7 @@ router.get('/event_info', function(req, res) {
     return;
   }
 
+
   dba.event_info(major, function(err1, events) {
     if(events.length == 1){
       success = events[0].value;
@@ -154,6 +155,7 @@ router.post('/register_user', function(req, res) {
 
   var major = Number(req.body.major);
   var name = req.body.name;
+  var profile = req.body.profile;
   var image = req.body.image;
   var image_header = req.body.image_header;
   var items = req.body.items;
@@ -186,6 +188,7 @@ router.post('/register_user', function(req, res) {
       type : "user",
       major : major,
       name : name,
+      profile : profile,
       image : image,
       image_header : image_header,
       items : items,
@@ -217,6 +220,7 @@ router.get('/participants', function(req, res) {
     id : null,
     count : null,
     users : [],
+    message : null,
     code : 200
   };
   var error = {};
@@ -246,6 +250,7 @@ router.get('/participants', function(req, res) {
             success.major = major;
             success.id = id;
             success.count = users.length-1;
+            success.message = "Participants got successfully"
           }else{
             error.message = "Error: Participant does not exist";
             error.code = 200;
