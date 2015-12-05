@@ -120,11 +120,14 @@ class ParentLockSettingViewController: UIViewController, CBPeripheralManagerDele
                 self.indicator.stopAnimation(true, completion: nil)
                 self.indicator.removeFromSuperview()
                 
+                self.myPheripheralManager.stopAdvertising()
+                //画面遷移
+                self.performSegueWithIdentifier("BackToMain", sender: nil)
+                
             })
 
             
-            //画面遷移
-            self.performSegueWithIdentifier("BackToMain", sender: nil)
+            
             //self.navigationController?.popToRootViewControllerAnimated(true)
             
             //失敗

@@ -192,8 +192,7 @@ class ParentSettingViewController: UIViewController,UITextFieldDelegate,NSURLSes
         
         // 通信用のConfigを生成.
         let myConfig:NSURLSessionConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()
-            
-            //backgroundSessionConfigurationWithIdentifier("defaultTask")
+
         // Sessionを生成.
         let mySession:NSURLSession = NSURLSession(configuration: myConfig, delegate: self, delegateQueue: nil)
         

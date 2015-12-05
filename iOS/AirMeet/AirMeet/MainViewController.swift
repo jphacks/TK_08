@@ -10,7 +10,7 @@ import UIKit
 import CoreLocation
 //
 
-class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataSource ,CLLocationManagerDelegate,ENSideMenuDelegate{
+class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataSource ,CLLocationManagerDelegate,ENSideMenuDelegate,NSURLSessionDelegate,NSURLSessionDataDelegate{
     
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
@@ -37,6 +37,9 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
     
     @IBOutlet weak var faceLinkLabel: UILabel!
     @IBOutlet weak var twitterLinkLabel: UILabel!
+    
+    //くるくる
+    let indicator:SpringIndicator = SpringIndicator()
     
     
     @IBOutlet weak var MenuBarButtonItem: UIBarButtonItem!
@@ -82,6 +85,10 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         //戻るボタン
         let backButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         navigationItem.backBarButtonItem = backButtonItem
+        
+        //ぐるぐる
+        indicator.frame = CGRectMake(self.view.frame.width/2-self.view.frame.width/8,self.view.frame.height/2-self.view.frame.width/8,self.view.frame.width/4,self.view.frame.width/4)
+        indicator.lineWidth = 3
         
         //テストデータ
         let event = EventModel(eventName: "testEvent", roomName: "testRoom", childNumber: 0, eventDescription: "testDescription",eventID: 100)
@@ -240,7 +247,7 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
             
             if(beacons.count == 0) {
                 //受信していない
-                print("No AirMeet")
+                //print("No AirMeet")
                 appDelegate.majorID = []
                 //変更があったとき
                 if(majorIDList.count != majorIDListOld.count){
@@ -262,53 +269,79 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
             }
         
             //重複捨て
-            if(beacons.count != 0){
-                let set = NSOrderedSet(array: majorIDList)
-                majorIDList = set.array as! [NSNumber]
-            }
+            // if(beacons.count != 0){
+            //     let set = NSOrderedSet(array: majorIDList)
+            //     majorIDList = set.array as! [NSNumber]
+            // }
             
-            majorIDList = majorIDList.reverse()
+            //majorIDList = majorIDList.reverse()
             
             //変更があったときの処理
             if(majorIDList.count != majorIDListOld.count){
                 print("\(NSDate()) : Change AirMeet")
+
                 if(majorIDList.count > majorIDListOld.count){
                     sendPush("AirMeet領域に入ったよ")
+                    //新しく入ったやつを抽出
+                    for newMajor in majorIDList.except(majorIDListOld){
+                        print("new : \(newMajor)")
+                        
+                        
+                        // 通信用のConfigを生成.
+                        let myConfig:NSURLSessionConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()
+                        
+                        // Sessionを生成.
+                        let mySession:NSURLSession = NSURLSession(configuration: myConfig, delegate: self, delegateQueue: nil)
+                        
+                        let url = NSURL(string: "http://airmeet.mybluemix.net/event_info?major=\(newMajor)")
+                        
+                        let request:NSMutableURLRequest = NSMutableURLRequest(URL: url!)
+                        request.HTTPMethod = "GET"
+                        
+                        request.addValue("a", forHTTPHeaderField: "X-AccessToken")
+                        
+                        let task:NSURLSessionDataTask = mySession.dataTaskWithRequest(request)
+                        
+                        //くるくるスタート
+                        self.view.addSubview(self.indicator)
+                        self.indicator.startAnimation()
+                        
+                        print("Start Session")
+                        //リージョン監視、レンジング停止
+                        self.manager.stopMonitoringForRegion(self.region)
+                        self.manager.stopRangingBeaconsInRegion(self.region)
+                        
+                        task.resume()
+ 
+                    }
+                
                 }else{
                     sendPush("AirMeet領域から出たよ")
-                }
-                print(majorIDList)
-                
-                //AppDelegate().pushControll()
-                events = []
-                
-                //サーバーに接続
-                for majorID in majorIDList{
-
-                    let json = JSON(url: "http://airmeet.mybluemix.net/event_info?major=\(majorID)")
-                    print("Server Reserve Code = \(json["code"])")
-                    
-                    //失敗
-                    if String(json["code"]) == "400"{
+                    //抜けたやつ（まだ他にもAirMeetがあるとき）を抽出
+                    for leftMajor in majorIDListOld.except(majorIDList){
+    
+                        for (index,event) in  events.enumerate(){
+                            
+                            if event.eventID == leftMajor{
+                                 print("left : \(leftMajor),\(index)")
+                                 events.removeAtIndex(index)
+                                 EventTableView.reloadData()
+                                
+                            }
+                        }
                         
-                        print("Server Connection Error[\(majorID)]：\(json["message"])")
-                    
-                    //成功
-                    }else{
-                        
-                        let event = EventModel(eventName: "\(json["event_name"])", roomName: "\(json["room_name"])", childNumber: 0, eventDescription: "\(json["description"])",eventID: majorID)
-                        events.append(event)
-                        
-                        print("Server Connection Sucsess[\(majorID)]：\(json["event_name"]) - \(json["room_name"])")
-                    
                     }
-                }
 
-                EventTableView.reloadData()
+                    
+                }
+                print("MajorIDList : \(majorIDList)")
                 
+                //これをからにせんで、1つ指定してけそう
+                //events = []
+                
+
                 appDelegate.majorID = majorIDList
                 majorIDListOld = majorIDList
-                
                 
             }else{
                 //print("same")
@@ -324,6 +357,62 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
             rssi            :   電波強度
             */
         }
+    }
+    
+    //通信終了
+    func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveData data: NSData) {
+        
+       // print(data)
+        let json = JSON(data:data)
+        
+        //失敗
+        if String(json["code"]) == "400" || String(json["code"]) == "500"{
+            
+            print("Server Connection Error : \(json["message"])")
+            session.invalidateAndCancel()
+            self.manager.startRangingBeaconsInRegion(self.region)
+            //非同期
+            dispatch_async(dispatch_get_main_queue(), {
+                
+                //くるくるストップ
+                self.indicator.stopAnimation(true, completion: nil)
+                self.indicator.removeFromSuperview()
+                
+            })
+            
+            //成功
+        }else{
+            
+            //同期
+            //dispatch_sync(dispatch_get_main_queue(), {
+                
+                let majorString:String = "\(json["major"])"
+                let majorInt:Int = Int(majorString)!
+                let majorNumber:NSNumber = majorInt as NSNumber
+                
+                let event = EventModel(eventName: "\(json["event_name"])", roomName: "\(json["room_name"])", childNumber: 0, eventDescription: "\(json["description"])",eventID: majorNumber)
+                self.events.append(event)
+                
+                print("Server Connection Sucsess :\n EventName[ \(json["event_name"]) ]\n RoomName[ \(json["room_name"]) ]")
+            
+                session.invalidateAndCancel()
+                self.manager.startRangingBeaconsInRegion(self.region)
+
+            //})
+            
+            //非同期
+            dispatch_async(dispatch_get_main_queue(), {
+                
+                //くるくるストップ
+                self.indicator.stopAnimation(true, completion: nil)
+                self.indicator.removeFromSuperview()
+                self.EventTableView.reloadData()
+
+            })
+            
+            
+        }
+
     }
     
     //プッシュ通知(forground)
@@ -418,6 +507,31 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    
+}
+
+//arrayを拡張、要素の比較
+extension Array {
+    mutating func remove<T : Equatable>(obj : T) -> Array {
+        self = self.filter({$0 as? T != obj})
+        return self;
+    }
+    
+    func contains<T : Equatable>(obj : T) -> Bool {
+        return self.filter({$0 as? T == obj}).count > 0
+    }
+    
+    func except<T : Equatable>(obj: [T]) -> [T] {
+        var ret = [T]()
+        
+        for x in self {
+            if !obj.contains(x as! T) {
+                ret.append(x as! T)
+            }
+        }
+        return ret
     }
     
     
