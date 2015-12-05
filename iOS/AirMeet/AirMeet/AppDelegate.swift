@@ -23,6 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var selectEvent: EventModel?
     var selectChild: ChildModel?
     
+    var childID: String?
     var parentID: String?
     
     var majorID:[NSNumber] = []

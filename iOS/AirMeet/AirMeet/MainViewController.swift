@@ -91,7 +91,7 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         indicator.lineWidth = 3
         
         //テストデータ
-        let event = EventModel(eventName: "testEvent", roomName: "testRoom", childNumber: 0, eventDescription: "testDescription",eventID: 100)
+        let event = EventModel(eventName: "testEvent", roomName: "testRoom", childNumber: 0, eventDescription: "testDescription",eventTag:["趣味","特技"], eventID: 100)
         events.append(event)
     
         
@@ -335,10 +335,6 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
                     
                 }
                 print("MajorIDList : \(majorIDList)")
-                
-                //これをからにせんで、1つ指定してけそう
-                //events = []
-                
 
                 appDelegate.majorID = majorIDList
                 majorIDListOld = majorIDList
@@ -383,14 +379,25 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
             //成功
         }else{
             
-            //同期
-            //dispatch_sync(dispatch_get_main_queue(), {
+            
+            let majorString:String = "\(json["major"])"
+            let majorInt:Int = Int(majorString)!
+            let majorNumber:NSNumber = majorInt as NSNumber
+            let countInt:Int = Int("\(json["count"])")!
+        
+            var itemArray:[String] = []// = json["items"] as Array
+            
+            for item in json["items"]{
+                //0:index 1:中身
+                itemArray.append("\(item.1)")
                 
-                let majorString:String = "\(json["major"])"
-                let majorInt:Int = Int(majorString)!
-                let majorNumber:NSNumber = majorInt as NSNumber
-                
-                let event = EventModel(eventName: "\(json["event_name"])", roomName: "\(json["room_name"])", childNumber: 0, eventDescription: "\(json["description"])",eventID: majorNumber)
+            }
+
+            print("items : \(itemArray)")
+            
+            //let itemaArray:Array =
+            
+            let event = EventModel(eventName: "\(json["event_name"])", roomName: "\(json["room_name"])", childNumber: countInt, eventDescription: "\(json["description"])",eventTag:itemArray, eventID: majorNumber)
                 self.events.append(event)
                 
                 print("Server Connection Sucsess :\n EventName[ \(json["event_name"]) ]\n RoomName[ \(json["room_name"]) ]")
@@ -398,7 +405,6 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
                 session.invalidateAndCancel()
                 self.manager.startRangingBeaconsInRegion(self.region)
 
-            //})
             
             //非同期
             dispatch_async(dispatch_get_main_queue(), {

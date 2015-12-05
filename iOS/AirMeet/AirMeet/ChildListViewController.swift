@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ChildListViewController: UIViewController,UITableViewDelegate, UITableViewDataSource{
+class ChildListViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,NSURLSessionDelegate,NSURLSessionDataDelegate{
     
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
@@ -17,6 +17,9 @@ class ChildListViewController: UIViewController,UITableViewDelegate, UITableView
     //@IBOutlet weak var roomLabels: UILabel!
     //@IBOutlet weak var eventLabel: UILabel!
     var childs:[ChildModel] = [ChildModel]()
+    
+    //くるくる
+    let indicator:SpringIndicator = SpringIndicator()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,8 +49,9 @@ class ChildListViewController: UIViewController,UITableViewDelegate, UITableView
         childs.append(child2)
         childs.append(child3)
         
-        
-
+        //ぐるぐる
+        indicator.frame = CGRectMake(self.view.frame.width/2-self.view.frame.width/8,self.view.frame.height/2-self.view.frame.width/8,self.view.frame.width/4,self.view.frame.width/4)
+        indicator.lineWidth = 3
         
        // eventLabel.text = appDelegate.selectEvent?.eventName
        // roomLabels.text = appDelegate.selectEvent?.roomName
@@ -85,8 +89,33 @@ class ChildListViewController: UIViewController,UITableViewDelegate, UITableView
         
         if isInEvent{
             print("stay in")
+            
+            // 通信用のConfigを生成.
+            let myConfig:NSURLSessionConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()
+            
+            // Sessionを生成.
+            let mySession:NSURLSession = NSURLSession(configuration: myConfig, delegate: self, delegateQueue: nil)
+            
+            let url = NSURL(string: "http://airmeet.mybluemix.net/participants?major=\(eventID)&id=\(appDelegate.childID!)")
+            
+            let request:NSMutableURLRequest = NSMutableURLRequest(URL: url!)
+            
+            request.HTTPMethod = "GET"
+            
+            request.addValue("a", forHTTPHeaderField: "X-AccessToken")
+            
+            let task:NSURLSessionDataTask = mySession.dataTaskWithRequest(request)
+            
+            //くるくるスタート
+            self.view.addSubview(self.indicator)
+            self.indicator.startAnimation()
+            
+            print("Start Session")
+            task.resume()
+            
         }else{
             print("left")
+            
             
             //goがだしてるalertとぶつかる、セグエをswich caseで呼び出してくか、こっちで書くかなやましい
             let alert = UIAlertController(title:"AirMeetを抜けました",message:"EventName : \(appDelegate.selectEvent!.eventName)\nRoomName : \(appDelegate.selectEvent!.roomName)",preferredStyle:.Alert)
@@ -95,10 +124,58 @@ class ChildListViewController: UIViewController,UITableViewDelegate, UITableView
                 //Exitからsegueを呼び出し
                 self.performSegueWithIdentifier("BackToMain", sender: nil)
             }
-                        alert.addAction(okAction)
+            alert.addAction(okAction)
             
             self.presentViewController(alert, animated: true, completion: nil)
         }
+        
+    }
+    
+    
+    //通信終了
+    func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveData data: NSData) {
+        
+        //Json解析
+        let json = JSON(data:data)
+        
+        let code:String = "\(json["code"])"
+        let message = json["message"]
+
+        //成功
+        if code == "200"{
+            
+            print("User Get Sucsess : \(message)")
+            
+            //非同期
+            dispatch_async(dispatch_get_main_queue(), {
+                
+                //くるくるストップ
+                self.indicator.stopAnimation(true, completion: nil)
+                self.indicator.removeFromSuperview()
+                
+            })
+            
+            
+            //失敗
+        }else{
+            
+            print("User Get False : \(message)")
+            
+            let alert = UIAlertController(title:"False Make AirMeet",message:"\(message)",preferredStyle:UIAlertControllerStyle.Alert)
+            let okAction = UIAlertAction(title: "OK", style: .Default) {
+                action in
+            }
+            alert.addAction(okAction)
+            //非同期
+            dispatch_async(dispatch_get_main_queue(), {
+                //くるくるストップ
+                self.indicator.stopAnimation(true, completion: nil)
+                self.indicator.removeFromSuperview()
+                
+                self.presentViewController(alert, animated: true, completion: nil)
+            })
+            
+                   }
         
         
     }

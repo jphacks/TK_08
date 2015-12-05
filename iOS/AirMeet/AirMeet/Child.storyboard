@@ -35,7 +35,6 @@
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="ChildStartButton:" destination="FAh-JI-MxM" eventType="touchUpInside" id="VNs-3C-1Yc"/>
-                                    <segue destination="i84-XN-oyg" kind="showDetail" id="oxd-ge-25G"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RoomName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6ej-4P-ANp">
@@ -282,11 +281,12 @@
                         <outlet property="eventLabel" destination="n0K-L9-qsi" id="09y-zP-IH3"/>
                         <outlet property="imageImageView" destination="HQL-ZB-Q9W" id="87x-qP-caY"/>
                         <outlet property="roomLabel" destination="6ej-4P-ANp" id="DAk-F7-PBY"/>
+                        <segue destination="i84-XN-oyg" kind="showDetail" identifier="ShowDetailChild" id="x9q-Zb-R5w"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aZk-3A-A3I" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-118" y="376"/>
+            <point key="canvasLocation" x="-69" y="334"/>
         </scene>
         <!--will Meet-->
         <scene sceneID="cvd-B3-qrs">
@@ -794,7 +794,6 @@
                                 </state>
                                 <connections>
                                     <action selector="ChildStopButton:" destination="oJG-xN-1H6" eventType="touchUpInside" id="zmI-f0-dc5"/>
-                                    <segue destination="9bg-QI-95u" kind="unwind" unwindAction="unwindToTop:" id="2ar-iA-eyW"/>
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="go_back.png" translatesAutoresizingMaskIntoConstraints="NO" id="2ee-5V-dF3">
@@ -946,6 +945,7 @@
                         <outlet property="eventLabel" destination="wRY-cK-Hmo" id="atf-Vv-WUa"/>
                         <outlet property="imageImageView" destination="kv5-1c-fUN" id="R4f-bY-h6y"/>
                         <outlet property="roomLabel" destination="lAy-SO-Uto" id="Xpu-4q-xas"/>
+                        <segue destination="9bg-QI-95u" kind="unwind" identifier="BackSettingToMain" unwindAction="unwindToTop:" id="32m-Bj-GCh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5e1-dP-Dcm" userLabel="First Responder" sceneMemberID="firstResponder"/>

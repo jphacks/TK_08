@@ -360,8 +360,8 @@
 			isa = PBXGroup;
 			children = (
 				46435BEA1C0AB9D800361ABA /* Child.storyboard */,
-				46B611731C096BE100102AC0 /* ChildRoomViewController.swift */,
 				46435BEC1C0AB9FE00361ABA /* ChildFirstSettingViewController.swift */,
+				46B611731C096BE100102AC0 /* ChildRoomViewController.swift */,
 				465F30681C0E7172008842B8 /* OriginalTabBarController.swift */,
 				46B611651C09562000102AC0 /* Tag */,
 				46B611641C09561600102AC0 /* Meet */,
