@@ -61,6 +61,7 @@ class ParentSettingViewController: UIViewController,UITextFieldDelegate,NSURLSes
         if appDelegate.isParent == true {
             self.navigationController?.popToRootViewControllerAnimated(true)
             appDelegate.isParent = false
+            appDelegate.isBeacon = true
         }
     }
     

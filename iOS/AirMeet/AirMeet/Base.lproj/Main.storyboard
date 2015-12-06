@@ -394,11 +394,11 @@
                         <outlet property="EventTableView" destination="cYS-hX-xwA" id="2aR-aQ-I6r"/>
                         <outlet property="backImageView" destination="ki0-iQ-sOa" id="vfy-j5-2LY"/>
                         <outlet property="detailLabel" destination="3Vk-RB-DVY" id="hR3-lx-2nb"/>
-                        <outlet property="faceLinkLabel" destination="x6n-UT-1BW" id="G3y-Cq-5yO"/>
-                        <outlet property="imageImageView" destination="cjP-jM-Dsa" id="Ybr-pJ-2lY"/>
+                        <outlet property="facebookLinkLabel" destination="x6n-UT-1BW" id="0co-Gc-T4N"/>
                         <outlet property="nameLabel" destination="30v-6p-Qzl" id="b2J-tc-L4Y"/>
                         <outlet property="profileChangeButton" destination="cN1-DT-uAk" id="xkx-nf-7Ra"/>
                         <outlet property="twitterLinkLabel" destination="sgi-DM-55b" id="vcV-NN-Vs7"/>
+                        <outlet property="userImageView" destination="cjP-jM-Dsa" id="jch-9Y-JKT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

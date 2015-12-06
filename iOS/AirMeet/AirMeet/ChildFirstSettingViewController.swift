@@ -20,8 +20,8 @@ class ChildFirstSettingViewController: UIViewController,UITableViewDelegate, UIT
     @IBOutlet weak var backImageView: UIImageView!
     
     let testTag = [["name": "age", "detail" :"22"],["name": "趣味", "detail" :"デレステ♪"],["name": "好きなキャラ", "detail" :"ジバニャン"],["name": "得意分野", "detail" :"アプリ開発"],["name": "好きな言語", "detail" :"Swift"]]
-    var tagCount:Int = 0
     
+    var tagCount:Int = 0
     var sessionTag:Int = 0
     
     //くるくる
@@ -66,6 +66,7 @@ class ChildFirstSettingViewController: UIViewController,UITableViewDelegate, UIT
             
             appDelegate.isChild = false
             appDelegate.childID = nil
+            appDelegate.isBeacon = true
             //画面遷移
             self.navigationController?.popToRootViewControllerAnimated(true)
             

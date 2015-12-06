@@ -8,53 +8,44 @@
 
 import UIKit
 import CoreLocation
-//
 
 class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataSource ,CLLocationManagerDelegate,ENSideMenuDelegate,NSURLSessionDelegate,NSURLSessionDataDelegate{
     
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
-    //UUIDは送信機側とフォーマットも合わせる
+    //送信機側と合わせるUUID
     let proximityUUID = NSUUID(UUIDString:"B9407F30-F5F8-466E-AFF9-33333B57FE6D")
-    var region  = CLBeaconRegion()
-    var manager = CLLocationManager()
+    var region  = CLBeaconRegion()//UUIDの設定
+    var manager = CLLocationManager()//iBeconを操作
     
-    //majorIDリスト用のグローバル変数
+    //majorIDリスト
     var majorIDList:[NSNumber] = []
     var majorIDListOld:[NSNumber] = []
     
-    var tags:[TagModel] = [TagModel]()
+    @IBOutlet weak var backImageView: UIImageView!//背景画像
+    @IBOutlet weak var userImageView: UIImageView!//ユーザ画像
     
-    @IBOutlet weak var backImageView: UIImageView!
-    @IBOutlet weak var imageImageView: UIImageView!
-    
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var detailLabel: UILabel!
-    
-    @IBOutlet weak var EventTableView: UITableView!
+    @IBOutlet weak var nameLabel: UILabel!//ユーザ名
+    @IBOutlet weak var detailLabel: UILabel!//自己紹介
     
     @IBOutlet weak var profileChangeButton: UIButton!
     
-    @IBOutlet weak var faceLinkLabel: UILabel!
+    @IBOutlet weak var facebookLinkLabel: UILabel!
     @IBOutlet weak var twitterLinkLabel: UILabel!
+    
+    @IBOutlet weak var MenuBarButtonItem: UIBarButtonItem!//保留
+    
+    @IBOutlet weak var EventTableView: UITableView!
+    var events:[EventModel] = [EventModel]()
     
     //くるくる
     let indicator:SpringIndicator = SpringIndicator()
     
-    
-    @IBOutlet weak var MenuBarButtonItem: UIBarButtonItem!
-    var events:[EventModel] = [EventModel]()
-    
-    class Event {
-        var eventName:String!
-        var roomName:String!
-        var childNumber:Int!
-        var eventDescription:String!
-    }
-    
+    //Viewの初回読み込み
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //よこからメニューのdelegate
         self.sideMenuController()?.sideMenu?.delegate = self
         
         //Navigationbar色
@@ -67,68 +58,70 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         titleImageView.frame = CGRectMake(0, 0, self.view.frame.width, self.navigationController!.navigationBar.frame.height*0.8)
         self.navigationItem.titleView = titleImageView
         
+        //子供モード、親モードか否か
         appDelegate.isChild = false
         appDelegate.isParent = false
+        appDelegate.isBeacon = true
         
         EventTableView.delegate = self
         EventTableView.dataSource = self
         
-        //アイコンまる
-        imageImageView.layer.cornerRadius = imageImageView.frame.size.width/2.0
-        imageImageView.layer.masksToBounds = true
-        imageImageView.layer.borderColor = UIColor.whiteColor().CGColor
-        imageImageView.layer.borderWidth = 3.0
+        //アイコンまるく
+        userImageView.layer.cornerRadius = userImageView.frame.size.width/2.0
+        userImageView.layer.masksToBounds = true
+        userImageView.layer.borderColor = UIColor.whiteColor().CGColor
+        userImageView.layer.borderWidth = 3.0
         
+        //プロフィール変更ボタン
         profileChangeButton.layer.borderColor = UIColor.lightGrayColor().CGColor
         profileChangeButton.layer.borderWidth = 1.0
         
-        //戻るボタン
+        //戻るボタン設定
         let backButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         navigationItem.backBarButtonItem = backButtonItem
         
-        //ぐるぐる
+        //ぐるぐる設定
         indicator.frame = CGRectMake(self.view.frame.width/2-self.view.frame.width/8,self.view.frame.height/2-self.view.frame.width/8,self.view.frame.width/4,self.view.frame.width/4)
         indicator.lineWidth = 3
         
-        //テストデータ
+        //テストデータ（仮）
         let event = EventModel(eventName: "testEvent", roomName: "testRoom", childNumber: 0, eventDescription: "testDescription",eventTag:["趣味","特技"], eventID: 100)
         events.append(event)
     
-        //iBecon
-        //Beacon領域生成
+        //iBeacon領域生成
         region = CLBeaconRegion(proximityUUID:proximityUUID!,identifier:"AirMeet")
         manager.delegate = self
         
+        //iBeacon初期設定
         switch CLLocationManager.authorizationStatus() {
         
-        case .Authorized, .AuthorizedWhenInUse:
-            //iBeaconによる領域観測を開始する
-            print("iBecon Start")
-            //self.manager.startRangingBeaconsInRegion(self.region)
-            self.manager.startMonitoringForRegion(self.region)
-        
-        case .NotDetermined:
-            print("iBecon No Permit")
-            //デバイスに許可を促す
-            let deviceVer = UIDevice.currentDevice().systemVersion
+            case .Authorized, .AuthorizedWhenInUse:
+                print("iBeacon Permit")
             
-            if(Int(deviceVer.substringToIndex(deviceVer.startIndex.advancedBy(1))) >= 8){
-                self.manager.requestAlwaysAuthorization()
-            }else{
-                self.manager.startMonitoringForRegion(self.region)
-            }
-            
-        case .Restricted, .Denied:
-            //デバイスから拒否状態
-            print("iBecon Restricted")
+            case .NotDetermined:
+                print("iBeacon No Permit")
+                //デバイスに許可を促す
+                let deviceVer = UIDevice.currentDevice().systemVersion
+                
+                if(Int(deviceVer.substringToIndex(deviceVer.startIndex.advancedBy(1))) >= 8){
+                    self.manager.requestAlwaysAuthorization()
+                }else{
+                    self.manager.startMonitoringForRegion(self.region)
+                }
+                
+            case .Restricted, .Denied:
+                //デバイスから拒否状態
+                print("iBeacon Restricted")
         }
+        
     }
     
+    //main画面が呼ばれるたびに呼ばれるよ
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         print("Profile Reload")
         
-        //プロフィール更新
+        //初期の初期設定
         let defaults = NSUserDefaults.standardUserDefaults()
         if defaults.stringForKey("name") == nil || defaults.stringForKey("facebook") == nil || defaults.objectForKey("image") == nil{
             print("First Launch")
@@ -139,41 +132,45 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
             defaults.setObject("空気会太郎", forKey: "facebook")
             defaults.setObject("@AirMeet", forKey: "twitter")
             
-            defaults.setObject(UIImagePNGRepresentation(imageImageView.image!), forKey: "image")
+            defaults.setObject(UIImagePNGRepresentation(userImageView.image!), forKey: "image")
             defaults.setObject(UIImagePNGRepresentation(backImageView.image!), forKey: "back")
             
+            //iBeaconによる領域観測を開始する
+            print("iBeacon Start\n　|\n　∨")
+            self.manager.startMonitoringForRegion(self.region)
+            
+            //プロフィール設定画面に遷移
             let storyboard: UIStoryboard = UIStoryboard(name: "Profile", bundle: NSBundle.mainBundle())
             let profileViewController: ProfileViewController = storyboard.instantiateInitialViewController() as! ProfileViewController
-            
-            //スタート
-            self.manager.startMonitoringForRegion(self.region)
-            
             self.navigationController?.pushViewController(profileViewController, animated: true)
-            
+        
+        //プロフィール更新
         }else{
-            //ibecon監視開始（おやもどってきたとき）、ibecon端末があるかを開始
-            self.manager.startMonitoringForRegion(self.region)
+            
+            if (appDelegate.isBeacon == true){
+                
+                //iBeaconによる領域観測を開始する
+                print("iBeacon Start\n　|\n　∨")
+                self.manager.startMonitoringForRegion(self.region)
+                //appDelegate.isBeacon = false
+                
+            }
             //名前
             nameLabel.text = "\(defaults.stringForKey("name")!)"
             //自己紹介
             detailLabel.text = "\(defaults.stringForKey("detail")!)"
             //facebook
-            faceLinkLabel.text = "\(defaults.stringForKey("facebook")!)"
+            facebookLinkLabel.text = "\(defaults.stringForKey("facebook")!)"
             //twitter
             twitterLinkLabel.text = "\(defaults.stringForKey("twitter")!)"
             
             //画像
             let imageData:NSData = defaults.objectForKey("image") as! NSData
-            imageImageView.image = UIImage(data:imageData)
-            
+            userImageView.image = UIImage(data:imageData)
             let backData:NSData = defaults.objectForKey("back") as! NSData
             backImageView.image = UIImage(data: backData)
         }
         
-    }
-    
-    @IBAction func MenuButton(sender: AnyObject) {
-        toggleSideMenuView()
     }
     
     //観測開始後に呼ばれる、領域内にいるかどうか判定する
@@ -182,6 +179,8 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         switch (state) {
             
         case .Inside: // すでに領域内にいる場合は（didEnterRegion）は呼ばれない
+            print("Enter　↓")
+            //測定を開始する
             self.manager.startRangingBeaconsInRegion(self.region)
             // →(didRangeBeacons)で測定をはじめる
             break;
@@ -198,9 +197,9 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
     
     //領域に入った時
     func locationManager(manager: CLLocationManager, didEnterRegion region: CLRegion) {
-        print("Enter")
+        print("Enter　↓")
         
-        // →(didRangeBeacons)で測定をはじめる
+        //測定を開始する
         self.manager.startRangingBeaconsInRegion(self.region)
         
         //ローカル通知
@@ -209,8 +208,9 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         //sendPush("AirMeet領域に入りました")
     }
     
+    //領域から抜けた時
     func locationManager(manager: CLLocationManager, didExitRegion region: CLRegion) {
-        print("Exit")
+        print("Exit　↑")
         
         //測定を停止する
         self.manager.stopRangingBeaconsInRegion(self.region)
@@ -235,98 +235,95 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
     //領域内にいるので測定をする
     func locationManager(manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], inRegion region:CLBeaconRegion) {
         
-        //親モード
-        if (appDelegate.isParent == true){
-            print("\(NSDate()) : Parent Made")
+        //現在時刻取得
+        let now = NSDate()
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
+        
+        //Beaconを計測しない範囲のとき、停止
+        if (appDelegate.isBeacon == false){
+            print("\(dateFormatter.stringFromDate(now)) : Parent Made\n")
             
-            //リージョン監視、レンジング停止
-            self.manager.stopMonitoringForRegion(self.region)//監視自体を停止
-            //self.manager.stopRangingBeaconsInRegion(self.region)
+            //iBecon停止
+            print("　∧\n　|\niBeacon Stop\n")
+            self.manager.stopMonitoringForRegion(self.region)
             
         }else{
-            print("\(NSDate()) : Child Made")
+            print("\(dateFormatter.stringFromDate(now)) : Child Mode \(majorIDList)")
         
             majorIDList = []
             
+            //ibeconがないとき
             if(beacons.count == 0) {
-                //受信していない
-                //print("No AirMeet")
-                appDelegate.majorID = []
-                //変更があったとき
+                
+                //最後の1つだったとき
                 if(majorIDList.count != majorIDListOld.count){
-                    print("\(NSDate()) : Change AirMeet")
+                    print("\n\(dateFormatter.stringFromDate(now))  : Left AirMeet")
+                    print("left major -> [\(majorIDListOld[0])]\n")
                     sendPush("AirMeet領域から出たよ")
                     events = []
                     EventTableView.reloadData()
                 }
                 
+                appDelegate.majorID = []
                 majorIDListOld = majorIDList
                 
                 return
-            }else{
-                //sendPush("AirMeet領域にいます")
             }
             
+            //ibeconがあるとき、配列にする
             for i in 0..<beacons.count{
                 majorIDList.append(beacons[i].major)
             }
-        
-            //重複捨て
-            // if(beacons.count != 0){
-            //     let set = NSOrderedSet(array: majorIDList)
-            //     majorIDList = set.array as! [NSNumber]
-            // }
             
-            //majorIDList = majorIDList.reverse()
-            
-            //変更があったときの処理
+            //1つ前の観測から変更があったとき
             if(majorIDList.count != majorIDListOld.count){
-                print("\(NSDate()) : Change AirMeet")
-
+                
+                //増えたとき
                 if(majorIDList.count > majorIDListOld.count){
+                    print("\n\(dateFormatter.stringFromDate(now))  : Add AirMeet")
                     sendPush("AirMeet領域に入ったよ")
+                    
+                    // 通信用のConfigを生成.
+                    let myConfig:NSURLSessionConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()
+                    
+                    // Sessionを生成.
+                    let mySession:NSURLSession = NSURLSession(configuration: myConfig, delegate: self, delegateQueue: NSOperationQueue.mainQueue())
+                    
+                    var task:NSURLSessionDataTask!
+                    
                     //新しく入ったやつを抽出
                     for newMajor in majorIDList.except(majorIDListOld){
-                        print("new : \(newMajor)")
-                        
-                        
-                        // 通信用のConfigを生成.
-                        let myConfig:NSURLSessionConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()
-                        
-                        // Sessionを生成.
-                        let mySession:NSURLSession = NSURLSession(configuration: myConfig, delegate: self, delegateQueue: nil)
+                        print("new major -> [\(newMajor)]\n")
                         
                         let url = NSURL(string: "http://airmeet.mybluemix.net/event_info?major=\(newMajor)")
                         
                         let request:NSMutableURLRequest = NSMutableURLRequest(URL: url!)
                         request.HTTPMethod = "GET"
-                        
                         request.addValue("a", forHTTPHeaderField: "X-AccessToken")
                         
-                        let task:NSURLSessionDataTask = mySession.dataTaskWithRequest(request)
+                        task = mySession.dataTaskWithRequest(request)
                         
+                        //iBecon停止
+                        print("　∧\n　|\niBeacon Stop\n")
+                        self.manager.stopMonitoringForRegion(self.region)
+                        
+                        print("Resume Task ↓")
                         //くるくるスタート
                         self.view.addSubview(self.indicator)
                         self.indicator.startAnimation()
                         
-                        print("Start Session")
-                        //リージョン監視、レンジング停止
-                        self.manager.stopMonitoringForRegion(self.region)
-                        self.manager.stopRangingBeaconsInRegion(self.region)
-                        
                         task.resume()
- 
                     }
-                
+                    
+                //減った時（まだ他にもAirMeetがあるとき）
                 }else{
+                    print("\n\(dateFormatter.stringFromDate(now))  : Left AirMeet")
                     sendPush("AirMeet領域から出たよ")
-                    //抜けたやつ（まだ他にもAirMeetがあるとき）を抽出
                     for leftMajor in majorIDListOld.except(majorIDList){
-    
+                        print("left major -> [\(leftMajor)]\n")
                         for (index,event) in  events.enumerate(){
-                            
                             if event.eventID == leftMajor{
-                                 print("left : \(leftMajor),\(index)")
                                  events.removeAtIndex(index)
                                  EventTableView.reloadData()
                                 
@@ -335,15 +332,11 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
                         
                     }
 
-                    
                 }
-                print("MajorIDList : \(majorIDList)")
+                
 
                 appDelegate.majorID = majorIDList
                 majorIDListOld = majorIDList
-                
-            }else{
-                //print("same")
             }
             
             /*
@@ -358,10 +351,23 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         }
     }
     
-    //通信終了
+    //データ転送中の状況
+    //func URLSession(session: NSURLSession, task: NSURLSessionTask, didSendBodyData bytesSent: Int64, totalBytesSent: Int64, totalBytesExpectedToSend: Int64) {
+        
+        //print( bytesSent/totalBytesSent * 100 )
+        
+    //}
+    
+    //転送が完了したとき
+    //func URLSession(session: NSURLSession, task: NSURLSessionTask, didCompleteWithError error: NSError?) {
+        
+    //}
+    
+    //データを取得したとき
     func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveData data: NSData) {
         
-       // print(data)
+        print("\nDidReceiveData Task ↑\n")
+        // print(data)
         let json = JSON(data:data)
         
         //失敗
@@ -369,7 +375,9 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
             
             print("Server Connection Error : \(json["message"])")
             session.invalidateAndCancel()
-            self.manager.startRangingBeaconsInRegion(self.region)
+            
+            //iBeconStart
+            self.manager.startMonitoringForRegion(self.region)
             //非同期
             dispatch_async(dispatch_get_main_queue(), {
                 
@@ -379,13 +387,15 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
                 
             })
             
-            //成功
+        //成功
         }else{
             
+            print("\nServer Connection Sucsess\n EventName -> \(json["event_name"]) \n RoomName  -> \(json["room_name"])")
             
             let majorString:String = "\(json["major"])"
             let majorInt:Int = Int(majorString)!
             let majorNumber:NSNumber = majorInt as NSNumber
+            
             let countInt:Int = Int("\(json["count"])")!
         
             var itemArray:[String] = []// = json["items"] as Array
@@ -396,19 +406,18 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
                 
             }
 
-            print("items : \(itemArray)")
+            print(" items     -> \(itemArray)\n")
             
-            //let itemaArray:Array =
-            
+            //eventもでるを生成してtableviewに追加
             let event = EventModel(eventName: "\(json["event_name"])", roomName: "\(json["room_name"])", childNumber: countInt, eventDescription: "\(json["description"])",eventTag:itemArray, eventID: majorNumber)
-                self.events.append(event)
-                
-                print("Server Connection Sucsess :\n EventName[ \(json["event_name"]) ]\n RoomName[ \(json["room_name"]) ]")
+            self.events.append(event)
             
-                session.invalidateAndCancel()
-                self.manager.startRangingBeaconsInRegion(self.region)
+            //セッションを終える
+            session.invalidateAndCancel()
+            //iBeconをStartする
+            print("iBeacon Start\n　|\n　∨")
+            self.manager.startMonitoringForRegion(self.region)
 
-            
             //非同期
             dispatch_async(dispatch_get_main_queue(), {
                 
@@ -418,7 +427,6 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
                 self.EventTableView.reloadData()
 
             })
-            
             
         }
 
@@ -444,6 +452,7 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         UIApplication.sharedApplication().presentLocalNotificationNow(notification)
     }
 
+    //会場情報を入れるtableViewのcellセット
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath:NSIndexPath) -> UITableViewCell {
         
         let cell: EventTableViewCell = tableView.dequeueReusableCellWithIdentifier("EventTableViewCell", forIndexPath: indexPath) as! EventTableViewCell
@@ -452,37 +461,56 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         return cell
     }
     
-    // セクション数
+    //tableViewセクション数
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
     
-    // セクションの行数
+    //tableViewセクションの行数
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return events.count
     }
     
-    //cellが選択されたとき
+    //tableViewのcellが選択されたとき
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         print("Select Event : \(indexPath.row)")
         
+        //選択したEvent情報を保持して
         appDelegate.selectEvent = events[indexPath.row]
         
         let storyboard: UIStoryboard = UIStoryboard(name: "Child", bundle: NSBundle.mainBundle())
         let childViewController: ChildFirstSettingViewController = storyboard.instantiateInitialViewController() as! ChildFirstSettingViewController
         
+        //子モードに遷移
         self.navigationController?.pushViewController(childViewController, animated: true)
         
     }
     
-    //親
+    //[親]AirMeet設定画面に遷移
     @IBAction func ParentButton(sender: AnyObject) {
+        
+        //appDelegate.isBeacon = false
+        print("Parent Made\n")
+        
+        //測定を停止する
+        print("Exit　↑")
+        self.manager.stopRangingBeaconsInRegion(self.region)
+        //iBecon停止
+        print("　∧\n　|\niBeacon Stop\n")
+        self.manager.stopMonitoringForRegion(self.region)
+        
+        //空にする
+        events = []
+        EventTableView.reloadData()
+        majorIDList = []
+        majorIDListOld = []
+        appDelegate.majorID = []
         
         let storyboard: UIStoryboard = UIStoryboard(name: "Parent", bundle: NSBundle.mainBundle())
         let parentViewController: ParentSettingViewController = storyboard.instantiateInitialViewController() as! ParentSettingViewController
-        
         self.navigationController?.pushViewController(parentViewController, animated: true)
+        
     }
     
     //子
@@ -513,16 +541,19 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         
     }
     
+    @IBAction func MenuButton(sender: AnyObject) {
+        toggleSideMenuView()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    
 }
 
 //arrayを拡張、要素の比較
 extension Array {
+    
     mutating func remove<T : Equatable>(obj : T) -> Array {
         self = self.filter({$0 as? T != obj})
         return self;
@@ -542,7 +573,6 @@ extension Array {
         }
         return ret
     }
-    
     
 }
 

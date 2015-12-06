@@ -115,7 +115,6 @@ class ChildListViewController: UIViewController,UITableViewDelegate,UITableViewD
         }else{
             print("left")
             
-            
             //goがだしてるalertとぶつかる、セグエをswich caseで呼び出してくか、こっちで書くかなやましい
             let alert = UIAlertController(title:"AirMeetを抜けました",message:"EventName : \(appDelegate.selectEvent!.eventName)\nRoomName : \(appDelegate.selectEvent!.roomName)",preferredStyle:.Alert)
             let okAction = UIAlertAction(title: "OK", style: .Default) {
@@ -148,6 +147,12 @@ class ChildListViewController: UIViewController,UITableViewDelegate,UITableViewD
             
             let users = json["users"]
             print("Users : \(users)")
+            
+            for user in json["users"]{
+                print(user)
+            }
+            
+            print("UsersName : \(json["users"]["name"])")
             
             //非同期
             dispatch_async(dispatch_get_main_queue(), {
@@ -186,7 +191,7 @@ class ChildListViewController: UIViewController,UITableViewDelegate,UITableViewD
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath:NSIndexPath) -> UITableViewCell {
         
         let cell:ChildTableViewCell = tableView.dequeueReusableCellWithIdentifier("ChildTableViewCell", forIndexPath: indexPath) as! ChildTableViewCell
-       cell.setCell(childs[indexPath.row])
+        cell.setCell(childs[indexPath.row])
         
         return cell
     }

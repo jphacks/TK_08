@@ -363,29 +363,29 @@
 				46435BEC1C0AB9FE00361ABA /* ChildFirstSettingViewController.swift */,
 				46B611731C096BE100102AC0 /* ChildRoomViewController.swift */,
 				465F30681C0E7172008842B8 /* OriginalTabBarController.swift */,
+				46B611631C09560C00102AC0 /* Will Meet */,
 				46B611651C09562000102AC0 /* Tag */,
-				46B611641C09561600102AC0 /* Meet */,
-				46B611631C09560C00102AC0 /* List */,
+				46B611641C09561600102AC0 /* Meeted */,
 				46B611661C09562E00102AC0 /* Setting */,
 			);
 			name = Child;
 			sourceTree = "<group>";
 		};
-		46B611631C09560C00102AC0 /* List */ = {
+		46B611631C09560C00102AC0 /* Will Meet */ = {
 			isa = PBXGroup;
 			children = (
 				46B611571C09510100102AC0 /* ChildListViewController.swift */,
 				46B611611C0955F000102AC0 /* ChildListDetailViewController.swift */,
 			);
-			name = List;
+			name = "Will Meet";
 			sourceTree = "<group>";
 		};
-		46B611641C09561600102AC0 /* Meet */ = {
+		46B611641C09561600102AC0 /* Meeted */ = {
 			isa = PBXGroup;
 			children = (
 				46B6115F1C09527F00102AC0 /* ChildMeetViewController.swift */,
 			);
-			name = Meet;
+			name = Meeted;
 			sourceTree = "<group>";
 		};
 		46B611651C09562000102AC0 /* Tag */ = {
