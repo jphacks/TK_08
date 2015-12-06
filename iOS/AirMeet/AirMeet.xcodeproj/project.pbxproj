@@ -41,9 +41,9 @@
 		46858F2E1C0A77D4003190CB /* tab-meet_w.png in Resources */ = {isa = PBXBuildFile; fileRef = 46858F2A1C0A77D4003190CB /* tab-meet_w.png */; };
 		46858F2F1C0A77D4003190CB /* tab-search_w.png in Resources */ = {isa = PBXBuildFile; fileRef = 46858F2B1C0A77D4003190CB /* tab-search_w.png */; };
 		46858F311C0A77E9003190CB /* AirMeet-color_heart.png in Resources */ = {isa = PBXBuildFile; fileRef = 46858F301C0A77E9003190CB /* AirMeet-color_heart.png */; };
-		4693CEA41C11DDCD0034328D /* SelectTagTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4693CEA31C11DDCD0034328D /* SelectTagTableViewCell.swift */; };
 		4693CEA91C120B400034328D /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4693CEA61C120B400034328D /* Info.plist */; };
 		4693CEAA1C120B400034328D /* SpringIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4693CEA81C120B400034328D /* SpringIndicator.swift */; };
+		4693CEF21C1434B10034328D /* SelectTagTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4693CEF11C1434B10034328D /* SelectTagTableViewCell.swift */; };
 		469AB7C41C0D614A000C6393 /* header-menu.png in Resources */ = {isa = PBXBuildFile; fileRef = 469AB7C31C0D614A000C6393 /* header-menu.png */; };
 		469AB7C61C0D67E9000C6393 /* icon-camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 469AB7C51C0D67E9000C6393 /* icon-camera.png */; };
 		469AB7C81C0D871C000C6393 /* TagModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469AB7C71C0D871C000C6393 /* TagModel.swift */; };
@@ -137,10 +137,10 @@
 		46858F2A1C0A77D4003190CB /* tab-meet_w.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab-meet_w.png"; sourceTree = "<group>"; };
 		46858F2B1C0A77D4003190CB /* tab-search_w.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab-search_w.png"; sourceTree = "<group>"; };
 		46858F301C0A77E9003190CB /* AirMeet-color_heart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AirMeet-color_heart.png"; sourceTree = "<group>"; };
-		4693CEA31C11DDCD0034328D /* SelectTagTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelectTagTableViewCell.swift; path = ../SelectTagTableViewCell.swift; sourceTree = "<group>"; };
 		4693CEA61C120B400034328D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4693CEA71C120B400034328D /* SpringIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpringIndicator.h; sourceTree = "<group>"; };
 		4693CEA81C120B400034328D /* SpringIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpringIndicator.swift; sourceTree = "<group>"; };
+		4693CEF11C1434B10034328D /* SelectTagTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectTagTableViewCell.swift; sourceTree = "<group>"; };
 		469AB7C31C0D614A000C6393 /* header-menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "header-menu.png"; sourceTree = "<group>"; };
 		469AB7C51C0D67E9000C6393 /* icon-camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-camera.png"; sourceTree = "<group>"; };
 		469AB7C71C0D871C000C6393 /* TagModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagModel.swift; sourceTree = "<group>"; };
@@ -220,7 +220,7 @@
 				46B611821C0977E200102AC0 /* EventTableViewCell.swift */,
 				46B6118B1C09A44D00102AC0 /* TagTableView.swift */,
 				46858F1C1C0A260E003190CB /* SettingTagTableViewCell.swift */,
-				4693CEA31C11DDCD0034328D /* SelectTagTableViewCell.swift */,
+				4693CEF11C1434B10034328D /* SelectTagTableViewCell.swift */,
 			);
 			name = TableView;
 			sourceTree = "<group>";
@@ -641,6 +641,7 @@
 				46B6118C1C09A44D00102AC0 /* TagTableView.swift in Sources */,
 				465F30831C0E72CF008842B8 /* MinoruTextField.swift in Sources */,
 				465F306F1C0E72A7008842B8 /* UIImage+BlurEffect.swift in Sources */,
+				4693CEF21C1434B10034328D /* SelectTagTableViewCell.swift in Sources */,
 				46B611201C09447D00102AC0 /* AppDelegate.swift in Sources */,
 				46B611811C09773B00102AC0 /* EventModel.swift in Sources */,
 				465F30861C0E72CF008842B8 /* YoshikoTextField.swift in Sources */,
@@ -658,7 +659,6 @@
 				4693CEAA1C120B400034328D /* SpringIndicator.swift in Sources */,
 				465F30851C0E72CF008842B8 /* YokoTextField.swift in Sources */,
 				465F30821C0E72CF008842B8 /* MadokaTextField.swift in Sources */,
-				4693CEA41C11DDCD0034328D /* SelectTagTableViewCell.swift in Sources */,
 				465F307D1C0E72CF008842B8 /* HoshiTextField.swift in Sources */,
 				463524C51C0CB0B3003BF381 /* MyNavigationController.swift in Sources */,
 				465F30661C0E6FE7008842B8 /* ENSideMenu.swift in Sources */,

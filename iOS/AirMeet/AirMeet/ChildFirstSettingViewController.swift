@@ -99,9 +99,6 @@ class ChildFirstSettingViewController: UIViewController,UITableViewDelegate, UIT
             self.indicator.startAnimation()
             
             task.resume()*/
-            
-            
-            
            
         }
     }

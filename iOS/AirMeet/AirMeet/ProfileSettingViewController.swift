@@ -17,7 +17,6 @@ class ProfileViewController: UIViewController,UITableViewDelegate, UITableViewDa
     @IBOutlet weak var settingImageButton: UIButton!
 
     var tags:[TagModel] = [TagModel]()
-
    
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -174,12 +173,14 @@ class ProfileViewController: UIViewController,UITableViewDelegate, UITableViewDa
         self.presentViewController(pickerController, animated: true, completion: nil)
         
     }
-    //背景画像
+    //背景画像読み込み
     @IBAction func settingBackButton(sender: AnyObject) {
         
         let pickerController = UIImagePickerController()
         pickerController.delegate = self
         pickerController.view.tag = 1
+        
+        //正方形トリミング
         pickerController.allowsEditing = true
         pickerController.navigationBar.translucent = false
         pickerController.navigationBar.backgroundColor = UIColor(red: 128.0/255.0, green: 204.0/255.0, blue: 223.0/255.0, alpha: 1)//水色
@@ -197,9 +198,7 @@ class ProfileViewController: UIViewController,UITableViewDelegate, UITableViewDa
         // アルバム画面を閉じる
         picker.dismissViewControllerAnimated(true, completion: nil);
         
-       
-        
-        // 画像をリサイズしたい
+        // 画像をリサイズを呼び出したい
         switch picker.view.tag{
         case 0:
             imageImageView.image = image

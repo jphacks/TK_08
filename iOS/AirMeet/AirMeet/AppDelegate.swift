@@ -17,8 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var test: UIApplication?
     var notification = UILocalNotification()
 
-    var isChild: Bool!
-    var isParent:Bool!
+    var isChild: Bool!//これがtrueはeventにはいってるとき
+    var isParent:Bool!//これがtrueはeventをたててるとき
     
     var selectEvent: EventModel?
     var selectChild: ChildModel?
@@ -28,6 +28,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var majorID:[NSNumber] = []
     var majorIDOld:[NSNumber] = []
+    
+    var parentPass: String?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         

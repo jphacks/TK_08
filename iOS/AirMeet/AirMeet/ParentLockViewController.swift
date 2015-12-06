@@ -67,6 +67,11 @@ class ParentLockSettingViewController: UIViewController, CBPeripheralManagerDele
     //終了
     @IBAction func ParentStopButton(sender: AnyObject) {
         
+        //こんなかんじのことをalertで
+        if "0000" == appDelegate.parentPass{
+            
+        }
+        
         // 通信用のConfigを生成.
         let myConfig:NSURLSessionConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()
         

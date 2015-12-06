@@ -260,6 +260,9 @@ class ParentSettingViewController: UIViewController,UITextFieldDelegate,NSURLSes
                 self.indicator.removeFromSuperview()
                 
                  })
+            
+            //アラートだして値を 
+            appDelegate.parentPass = "0000"
 
             //画面遷移
             performSegueWithIdentifier("startSegue",sender: nil)

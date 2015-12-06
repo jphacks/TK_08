@@ -8,6 +8,7 @@
 
 import UIKit
 
+//タブバー設定
 class OriginalTabBarController: UITabBarController {
     
     override func viewDidLoad() {
