@@ -108,7 +108,7 @@ class MyMenuTableViewController: UITableViewController {
             break
         case 2:
             let storyboard: UIStoryboard = UIStoryboard(name: "Parent", bundle: NSBundle.mainBundle())
-            destViewController = storyboard.instantiateInitialViewController() as! ParentSettingViewController
+            destViewController = storyboard.instantiateInitialViewController() as! MakeAirMeetViewController
             break
             
         case 3:

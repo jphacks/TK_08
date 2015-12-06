@@ -1,5 +1,5 @@
 //
-//  ParentLockViewController.swift
+//  AirMeetingViewController.swift
 //  AirMeet
 //
 //  Created by koooootake on 2015/11/28.
@@ -10,7 +10,7 @@ import UIKit
 import CoreLocation
 import CoreBluetooth
 
-class ParentLockSettingViewController: UIViewController, CBPeripheralManagerDelegate, NSURLSessionDelegate, NSURLSessionDataDelegate{
+class AirMeetingViewController: UIViewController, CBPeripheralManagerDelegate, NSURLSessionDelegate, NSURLSessionDataDelegate{
     
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     // LocationManager.
@@ -47,9 +47,6 @@ class ParentLockSettingViewController: UIViewController, CBPeripheralManagerDele
         
         // iBeaconのIdentifier.
         let myIdentifier = "AirMeet"
-        
-        //サーバーからMajorを受けとり
-        print("Make AirMeet Sucsess [ \(appDelegate.parentID!) ]")
         
         let myMajor : CLBeaconMajorValue = UInt16(appDelegate.parentID!)!
         
@@ -93,7 +90,8 @@ class ParentLockSettingViewController: UIViewController, CBPeripheralManagerDele
         //request.addValue(appDelegate.parentID!, forHTTPHeaderField: "major")
         
         let task:NSURLSessionDataTask = mySession.dataTaskWithRequest(request)
-        print("Start Session")
+        
+        print("Resume Task ↓")
         //くるくるスタート
         self.view.addSubview(indicator)
         self.indicator.startAnimation()
@@ -106,51 +104,51 @@ class ParentLockSettingViewController: UIViewController, CBPeripheralManagerDele
     //通信終了
     func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveData data: NSData) {
         
+        print("\nDidReceiveData Task ↑\n")
+        //セッションを終える
+        session.invalidateAndCancel()
+        
         //Json解析
         let json = JSON(data:data)
         
         let code:String = "\(json["code"])"
-        let message = json["message"]
         
         //成功
         if code == "200"{
             
-            print("DELETE AirMeet Sucsess [ \(message) ]")
-            //appDelegate.isParent = false
+            print("Sucsess Delete AirMeet : majorID -> [\(appDelegate.parentID!)]")
+            appDelegate.parentID = nil
+            self.myPheripheralManager.stopAdvertising()
             
-            //メインスレッドで表示
+            //非同期
             dispatch_async(dispatch_get_main_queue(), {
                 
                 //くるくるストップ
                 self.indicator.stopAnimation(true, completion: nil)
                 self.indicator.removeFromSuperview()
-                
-                self.myPheripheralManager.stopAdvertising()
                 //画面遷移
                 self.performSegueWithIdentifier("BackToMain", sender: nil)
                 
             })
 
             
-            
-            //self.navigationController?.popToRootViewControllerAnimated(true)
-            
-            //失敗
+        //失敗
         }else{
-            print("DELETE AirMeet False [ \(message) ]")
+            print("False Delete AirMeet : \(json["message"])")
             
-            let alert = UIAlertController(title:"False Dlete AirMeet",message:"\(message)",preferredStyle:UIAlertControllerStyle.Alert)
+            let alert = UIAlertController(title:"False Dlete AirMeet",message:"\(json["message"])",preferredStyle:UIAlertControllerStyle.Alert)
             let okAction = UIAlertAction(title: "OK", style: .Default) {
                 action in
             }
             alert.addAction(okAction)
+            self.presentViewController(alert, animated: true, completion: nil)
             
-            //メインスレッドで表示
+            //非同期
             dispatch_async(dispatch_get_main_queue(), {
                 //くるくるストップ
                 self.indicator.stopAnimation(true, completion: nil)
                 self.indicator.removeFromSuperview()
-                self.presentViewController(alert, animated: true, completion: nil)
+                
             })
            
         }

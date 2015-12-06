@@ -85,8 +85,8 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         indicator.lineWidth = 3
         
         //テストデータ（仮）
-        let event = EventModel(eventName: "testEvent", roomName: "testRoom", childNumber: 0, eventDescription: "testDescription",eventTag:["趣味","特技"], eventID: 100)
-        events.append(event)
+        //let event = EventModel(eventName: "testEvent", roomName: "testRoom", childNumber: 0, eventDescription: "testDescription",eventTag:["趣味","特技"], eventID: 100)
+        //events.append(event)
     
         //iBeacon領域生成
         region = CLBeaconRegion(proximityUUID:proximityUUID!,identifier:"AirMeet")
@@ -147,7 +147,8 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         //プロフィール更新
         }else{
             
-            if (appDelegate.isBeacon == true){
+            //Event登録画面からの帰還時はうごきっぱなし
+            if (appDelegate.isBeacon == true && appDelegate.selectEvent == nil){
                 
                 //iBeaconによる領域観測を開始する
                 print("iBeacon Start\n　|\n　∨")
@@ -155,6 +156,9 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
                 //appDelegate.isBeacon = false
                 
             }
+            //Eventのselectを空にする
+            appDelegate.selectEvent = nil
+            
             //名前
             nameLabel.text = "\(defaults.stringForKey("name")!)"
             //自己紹介
@@ -240,115 +244,106 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
         
-        //Beaconを計測しない範囲のとき、停止
-        if (appDelegate.isBeacon == false){
-            print("\(dateFormatter.stringFromDate(now)) : Parent Made\n")
-            
-            //iBecon停止
-            print("　∧\n　|\niBeacon Stop\n")
-            self.manager.stopMonitoringForRegion(self.region)
-            
-        }else{
-            print("\(dateFormatter.stringFromDate(now)) : Child Mode \(majorIDList)")
+        print("\(dateFormatter.stringFromDate(now)) : Child Mode \(majorIDList)")
+    
+        majorIDList = []
         
-            majorIDList = []
+        //ibeconがないとき
+        if(beacons.count == 0) {
             
-            //ibeconがないとき
-            if(beacons.count == 0) {
-                
-                //最後の1つだったとき
-                if(majorIDList.count != majorIDListOld.count){
-                    print("\n\(dateFormatter.stringFromDate(now))  : Left AirMeet")
-                    print("left major -> [\(majorIDListOld[0])]\n")
-                    sendPush("AirMeet領域から出たよ")
-                    events = []
-                    EventTableView.reloadData()
-                }
-                
-                appDelegate.majorID = []
-                majorIDListOld = majorIDList
-                
-                return
-            }
-            
-            //ibeconがあるとき、配列にする
-            for i in 0..<beacons.count{
-                majorIDList.append(beacons[i].major)
-            }
-            
-            //1つ前の観測から変更があったとき
+            //最後の1つだったとき
             if(majorIDList.count != majorIDListOld.count){
-                
-                //増えたとき
-                if(majorIDList.count > majorIDListOld.count){
-                    print("\n\(dateFormatter.stringFromDate(now))  : Add AirMeet")
-                    sendPush("AirMeet領域に入ったよ")
-                    
-                    // 通信用のConfigを生成.
-                    let myConfig:NSURLSessionConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()
-                    
-                    // Sessionを生成.
-                    let mySession:NSURLSession = NSURLSession(configuration: myConfig, delegate: self, delegateQueue: NSOperationQueue.mainQueue())
-                    
-                    var task:NSURLSessionDataTask!
-                    
-                    //新しく入ったやつを抽出
-                    for newMajor in majorIDList.except(majorIDListOld){
-                        print("new major -> [\(newMajor)]\n")
-                        
-                        let url = NSURL(string: "http://airmeet.mybluemix.net/event_info?major=\(newMajor)")
-                        
-                        let request:NSMutableURLRequest = NSMutableURLRequest(URL: url!)
-                        request.HTTPMethod = "GET"
-                        request.addValue("a", forHTTPHeaderField: "X-AccessToken")
-                        
-                        task = mySession.dataTaskWithRequest(request)
-                        
-                        //iBecon停止
-                        print("　∧\n　|\niBeacon Stop\n")
-                        self.manager.stopMonitoringForRegion(self.region)
-                        
-                        print("Resume Task ↓")
-                        //くるくるスタート
-                        self.view.addSubview(self.indicator)
-                        self.indicator.startAnimation()
-                        
-                        task.resume()
-                    }
-                    
-                //減った時（まだ他にもAirMeetがあるとき）
-                }else{
-                    print("\n\(dateFormatter.stringFromDate(now))  : Left AirMeet")
-                    sendPush("AirMeet領域から出たよ")
-                    for leftMajor in majorIDListOld.except(majorIDList){
-                        print("left major -> [\(leftMajor)]\n")
-                        for (index,event) in  events.enumerate(){
-                            if event.eventID == leftMajor{
-                                 events.removeAtIndex(index)
-                                 EventTableView.reloadData()
-                                
-                            }
-                        }
-                        
-                    }
-
-                }
-                
-
-                appDelegate.majorID = majorIDList
-                majorIDListOld = majorIDList
+                print("\n\(dateFormatter.stringFromDate(now))  : Left AirMeet")
+                print("left major -> [\(majorIDListOld[0])]\n")
+                sendPush("AirMeet領域から出たよ")
+                events = []
+                EventTableView.reloadData()
             }
             
-            /*
-            beaconから取得できるデータ
-            proximityUUID   :   regionの識別子
-            major           :   識別子１
-            minor           :   識別子２
-            proximity       :   相対距離
-            accuracy        :   精度
-            rssi            :   電波強度
-            */
+            appDelegate.majorID = []
+            majorIDListOld = majorIDList
+            
+            return
         }
+        
+        //ibeconがあるとき、配列にする
+        for i in 0..<beacons.count{
+            majorIDList.append(beacons[i].major)
+        }
+        
+        //1つ前の観測から変更があったとき
+        if(majorIDList.count != majorIDListOld.count){
+            
+            //増えたとき
+            if(majorIDList.count > majorIDListOld.count){
+                print("\n\(dateFormatter.stringFromDate(now))  : Add AirMeet")
+                sendPush("AirMeet領域に入ったよ")
+                
+                // 通信用のConfigを生成.
+                let myConfig:NSURLSessionConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()
+                
+                // Sessionを生成.
+                let mySession:NSURLSession = NSURLSession(configuration: myConfig, delegate: self, delegateQueue: NSOperationQueue.mainQueue())
+                
+                var task:NSURLSessionDataTask!
+                
+                //新しく入ったやつを抽出
+                for newMajor in majorIDList.except(majorIDListOld){
+                    print("new major -> [\(newMajor)]\n")
+                    
+                    let url = NSURL(string: "http://airmeet.mybluemix.net/event_info?major=\(newMajor)")
+                    
+                    let request:NSMutableURLRequest = NSMutableURLRequest(URL: url!)
+                    request.HTTPMethod = "GET"
+                    request.addValue("a", forHTTPHeaderField: "X-AccessToken")
+                    
+                    task = mySession.dataTaskWithRequest(request)
+                    
+                    //iBecon停止
+                    print("　∧\n　|\niBeacon Stop\n")
+                    self.manager.stopMonitoringForRegion(self.region)
+                    
+                    print("Resume Task ↓")
+                    //くるくるスタート
+                    self.view.addSubview(self.indicator)
+                    self.indicator.startAnimation()
+                    
+                    task.resume()
+                }
+                
+            //減った時（まだ他にもAirMeetがあるとき）
+            }else{
+                print("\n\(dateFormatter.stringFromDate(now))  : Left AirMeet")
+                sendPush("AirMeet領域から出たよ")
+                for leftMajor in majorIDListOld.except(majorIDList){
+                    print("left major -> [\(leftMajor)]\n")
+                    for (index,event) in  events.enumerate(){
+                        if event.eventID == leftMajor{
+                             events.removeAtIndex(index)
+                             EventTableView.reloadData()
+                            
+                        }
+                    }
+                    
+                }
+
+            }
+            
+
+            appDelegate.majorID = majorIDList
+            majorIDListOld = majorIDList
+        }
+        
+        /*
+        beaconから取得できるデータ
+        proximityUUID   :   regionの識別子
+        major           :   識別子１
+        minor           :   識別子２
+        proximity       :   相対距離
+        accuracy        :   精度
+        rssi            :   電波強度
+        */
+        
     }
     
     //データ転送中の状況
@@ -367,13 +362,16 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
     func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveData data: NSData) {
         
         print("\nDidReceiveData Task ↑\n")
+        //セッションを終える
+        session.invalidateAndCancel()
+
         // print(data)
         let json = JSON(data:data)
         
         //失敗
         if String(json["code"]) == "400" || String(json["code"]) == "500"{
             
-            print("Server Connection Error : \(json["message"])")
+            print("\nFalse Server Connection : \(json["message"])\n")
             session.invalidateAndCancel()
             
             //iBeconStart
@@ -390,8 +388,6 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         //成功
         }else{
             
-            print("\nServer Connection Sucsess\n EventName -> \(json["event_name"]) \n RoomName  -> \(json["room_name"])")
-            
             let majorString:String = "\(json["major"])"
             let majorInt:Int = Int(majorString)!
             let majorNumber:NSNumber = majorInt as NSNumber
@@ -403,17 +399,15 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
             for item in json["items"]{
                 //0:index 1:中身
                 itemArray.append("\(item.1)")
-                
             }
-
+            
+            print("\nSucsess Server Connection\n EventName -> \(json["event_name"]) \n RoomName  -> \(json["room_name"])")
             print(" items     -> \(itemArray)\n")
             
-            //eventもでるを生成してtableviewに追加
+            //eventモデルを生成してtableviewに追加
             let event = EventModel(eventName: "\(json["event_name"])", roomName: "\(json["room_name"])", childNumber: countInt, eventDescription: "\(json["description"])",eventTag:itemArray, eventID: majorNumber)
             self.events.append(event)
             
-            //セッションを終える
-            session.invalidateAndCancel()
             //iBeconをStartする
             print("iBeacon Start\n　|\n　∨")
             self.manager.startMonitoringForRegion(self.region)
@@ -471,11 +465,13 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         return events.count
     }
     
-    //tableViewのcellが選択されたとき
+    //[子]tableViewのcell（event）が選択されたとき
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        print("Select Event : \(indexPath.row)")
+        //eventが選択されたとき、それ以外の観測をやめたい
+        print("\nSelect Event : \(events[indexPath.row].eventName)\n")
         
+        print(appDelegate.selectEvent)
         //選択したEvent情報を保持して
         appDelegate.selectEvent = events[indexPath.row]
         
@@ -508,7 +504,7 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         appDelegate.majorID = []
         
         let storyboard: UIStoryboard = UIStoryboard(name: "Parent", bundle: NSBundle.mainBundle())
-        let parentViewController: ParentSettingViewController = storyboard.instantiateInitialViewController() as! ParentSettingViewController
+        let parentViewController: MakeAirMeetViewController = storyboard.instantiateInitialViewController() as! MakeAirMeetViewController
         self.navigationController?.pushViewController(parentViewController, animated: true)
         
     }

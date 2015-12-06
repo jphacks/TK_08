@@ -59,9 +59,9 @@
 		46B611351C09447D00102AC0 /* AirMeetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B611341C09447D00102AC0 /* AirMeetTests.swift */; };
 		46B611401C09447D00102AC0 /* AirMeetUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B6113F1C09447D00102AC0 /* AirMeetUITests.swift */; };
 		46B6114E1C09477D00102AC0 /* Parent.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46B6114D1C09477D00102AC0 /* Parent.storyboard */; };
-		46B611521C09487600102AC0 /* ParentSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B611511C09487600102AC0 /* ParentSettingViewController.swift */; };
+		46B611521C09487600102AC0 /* MakeAirMeetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B611511C09487600102AC0 /* MakeAirMeetViewController.swift */; };
 		46B611541C09488600102AC0 /* ChildSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B611531C09488600102AC0 /* ChildSettingViewController.swift */; };
-		46B611561C094BA700102AC0 /* ParentLockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B611551C094BA700102AC0 /* ParentLockViewController.swift */; };
+		46B611561C094BA700102AC0 /* AirMeetingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B611551C094BA700102AC0 /* AirMeetingViewController.swift */; };
 		46B611581C09510100102AC0 /* ChildListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B611571C09510100102AC0 /* ChildListViewController.swift */; };
 		46B6115C1C09519100102AC0 /* ChildTagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B6115B1C09519100102AC0 /* ChildTagViewController.swift */; };
 		46B611601C09527F00102AC0 /* ChildMeetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B6115F1C09527F00102AC0 /* ChildMeetViewController.swift */; };
@@ -162,9 +162,9 @@
 		46B6113F1C09447D00102AC0 /* AirMeetUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirMeetUITests.swift; sourceTree = "<group>"; };
 		46B611411C09447D00102AC0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		46B6114D1C09477D00102AC0 /* Parent.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Parent.storyboard; sourceTree = "<group>"; };
-		46B611511C09487600102AC0 /* ParentSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParentSettingViewController.swift; sourceTree = "<group>"; };
+		46B611511C09487600102AC0 /* MakeAirMeetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MakeAirMeetViewController.swift; sourceTree = "<group>"; };
 		46B611531C09488600102AC0 /* ChildSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChildSettingViewController.swift; sourceTree = "<group>"; };
-		46B611551C094BA700102AC0 /* ParentLockViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParentLockViewController.swift; sourceTree = "<group>"; };
+		46B611551C094BA700102AC0 /* AirMeetingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AirMeetingViewController.swift; sourceTree = "<group>"; };
 		46B611571C09510100102AC0 /* ChildListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChildListViewController.swift; sourceTree = "<group>"; };
 		46B6115B1C09519100102AC0 /* ChildTagViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChildTagViewController.swift; sourceTree = "<group>"; };
 		46B6115F1C09527F00102AC0 /* ChildMeetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChildMeetViewController.swift; sourceTree = "<group>"; };
@@ -309,12 +309,12 @@
 				46B6111F1C09447D00102AC0 /* AppDelegate.swift */,
 				46B611231C09447D00102AC0 /* Main.storyboard */,
 				46B611211C09447D00102AC0 /* MainViewController.swift */,
+				46B611591C09510600102AC0 /* Parent */,
 				465841551C0E6F2A00D977AF /* Menu */,
 				46435BEE1C0ABD8800361ABA /* TableView */,
 				46B6118A1C09A40B00102AC0 /* Model */,
 				46B611701C0966FE00102AC0 /* Profile */,
 				46B611691C095C4400102AC0 /* Meet */,
-				46B611591C09510600102AC0 /* Parent */,
 				46B6115A1C09511000102AC0 /* Child */,
 				46B218A71C0C3AD100997E3B /* JSON */,
 				4693CEA51C120B400034328D /* SpringIndicator */,
@@ -350,8 +350,8 @@
 			isa = PBXGroup;
 			children = (
 				46B6114D1C09477D00102AC0 /* Parent.storyboard */,
-				46B611511C09487600102AC0 /* ParentSettingViewController.swift */,
-				46B611551C094BA700102AC0 /* ParentLockViewController.swift */,
+				46B611511C09487600102AC0 /* MakeAirMeetViewController.swift */,
+				46B611551C094BA700102AC0 /* AirMeetingViewController.swift */,
 			);
 			name = Parent;
 			sourceTree = "<group>";
@@ -645,8 +645,8 @@
 				46B611201C09447D00102AC0 /* AppDelegate.swift in Sources */,
 				46B611811C09773B00102AC0 /* EventModel.swift in Sources */,
 				465F30861C0E72CF008842B8 /* YoshikoTextField.swift in Sources */,
-				46B611521C09487600102AC0 /* ParentSettingViewController.swift in Sources */,
-				46B611561C094BA700102AC0 /* ParentLockViewController.swift in Sources */,
+				46B611521C09487600102AC0 /* MakeAirMeetViewController.swift in Sources */,
+				46B611561C094BA700102AC0 /* AirMeetingViewController.swift in Sources */,
 				46B611721C09676E00102AC0 /* ProfileSettingViewController.swift in Sources */,
 				46B611541C09488600102AC0 /* ChildSettingViewController.swift in Sources */,
 				46435BED1C0AB9FE00361ABA /* ChildFirstSettingViewController.swift in Sources */,

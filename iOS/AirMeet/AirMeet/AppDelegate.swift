@@ -17,8 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var test: UIApplication?
     var notification = UILocalNotification()
 
-    var isChild: Bool!//trueは子がeventにはいってるとき
-    var isParent: Bool!//trueは親がeventをたててるとき
+    var isChild: Bool!//trueは子がeventからかえってきたとき
+    var isParent: Bool!//trueは親がeventをたててるところからかえってきたとき
     var isBeacon: Bool!//trueはiBeconの監視をしたいとき
     
     var selectEvent: EventModel?

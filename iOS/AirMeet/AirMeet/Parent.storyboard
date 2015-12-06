@@ -8,7 +8,7 @@
         <!--Make AirMeet-->
         <scene sceneID="SId-m5-KXl">
             <objects>
-                <viewController storyboardIdentifier="ParentSettingViewController" title="Make AirMeet" id="dl5-lv-6jl" customClass="ParentSettingViewController" customModule="AirMeet" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MakeAirMeetViewController" title="Make AirMeet" id="dl5-lv-6jl" customClass="MakeAirMeetViewController" customModule="AirMeet" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="DlO-hl-LXM"/>
                         <viewControllerLayoutGuide type="bottom" id="xdZ-ij-LIu"/>
@@ -188,7 +188,7 @@
         <!--Lock-->
         <scene sceneID="9T5-2O-90O">
             <objects>
-                <viewController storyboardIdentifier="ParentLockViewController" title="Lock" id="cPN-Po-HNe" customClass="ParentLockSettingViewController" customModule="AirMeet" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AirMeetingViewController" title="Lock" id="cPN-Po-HNe" customClass="AirMeetingViewController" customModule="AirMeet" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="6Yj-tH-LUf"/>
                         <viewControllerLayoutGuide type="bottom" id="Tdf-a2-5VG"/>

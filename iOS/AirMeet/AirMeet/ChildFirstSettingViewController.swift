@@ -67,6 +67,7 @@ class ChildFirstSettingViewController: UIViewController,UITableViewDelegate, UIT
             appDelegate.isChild = false
             appDelegate.childID = nil
             appDelegate.isBeacon = true
+            
             //画面遷移
             self.navigationController?.popToRootViewControllerAnimated(true)
             

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ParentSettingViewController: UIViewController,UITextFieldDelegate,NSURLSessionDelegate,NSURLSessionDataDelegate,UITableViewDelegate,UITableViewDataSource {
+class MakeAirMeetViewController: UIViewController,UITextFieldDelegate,NSURLSessionDelegate,NSURLSessionDataDelegate,UITableViewDelegate,UITableViewDataSource {
     
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
@@ -59,15 +59,16 @@ class ParentSettingViewController: UIViewController,UITextFieldDelegate,NSURLSes
     override func viewWillAppear(animated: Bool) {
         //mainに戻る
         if appDelegate.isParent == true {
-            self.navigationController?.popToRootViewControllerAnimated(true)
+            
             appDelegate.isParent = false
             appDelegate.isBeacon = true
+            
+            self.navigationController?.popToRootViewControllerAnimated(true)
         }
     }
     
     //cellに値を設定
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath:NSIndexPath) -> UITableViewCell {
-        
         
         let cell = tableView.dequeueReusableCellWithIdentifier("SelectTagTableViewCell", forIndexPath: indexPath)
         
@@ -104,7 +105,6 @@ class ParentSettingViewController: UIViewController,UITextFieldDelegate,NSURLSes
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         if let cell = tableView.cellForRowAtIndexPath(indexPath){
-            
             
             //チェックしてないとき
             if (selectedCells["\(indexPath.row)"] == nil){
@@ -149,7 +149,7 @@ class ParentSettingViewController: UIViewController,UITextFieldDelegate,NSURLSes
             
         case 2:
             eventDescription = textField.text!
-            print("EventDescription:\(textField.text!)")
+            //print("EventDescription:\(textField.text!)")
             
         default:
             break
@@ -197,7 +197,7 @@ class ParentSettingViewController: UIViewController,UITextFieldDelegate,NSURLSes
         // Sessionを生成.
         let mySession:NSURLSession = NSURLSession(configuration: myConfig, delegate: self, delegateQueue: nil)
         
-        //ここでitemsをおくる
+        // itemsをいい感じの文字列にして送る
         var tagArray:[String] = []
         
         for selectedCell in selectedCells{
@@ -208,7 +208,6 @@ class ParentSettingViewController: UIViewController,UITextFieldDelegate,NSURLSes
         
         let tagArrayString = (tagArray as NSArray).componentsJoinedByString(",")
         
-        print("Selected Tag : \(tagArrayString)")
         
         let post = "event_name=\(event)&room_name=\(room)&items=\(tagArrayString)"
         let postData = post.dataUsingEncoding(NSUTF8StringEncoding)
@@ -222,13 +221,13 @@ class ParentSettingViewController: UIViewController,UITextFieldDelegate,NSURLSes
         request.addValue("a", forHTTPHeaderField: "X-AccessToken")
         
         let task:NSURLSessionDataTask = mySession.dataTaskWithRequest(request)
-        print("Start Session")
+        
+        print("Resume Task ↓")
         //くるくるスタート
         self.view.addSubview(indicator)
         self.indicator.startAnimation()
         
         task.resume()
-        
         
         MakeAirMeetButton.enabled = false
         MakeAirMeetButton.alpha = 0.5
@@ -238,66 +237,71 @@ class ParentSettingViewController: UIViewController,UITextFieldDelegate,NSURLSes
     //通信終了
     func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveData data: NSData) {
         
+        print("\nDidReceiveData Task ↑\n")
+        //セッションを終える
+        session.invalidateAndCancel()
         
         //Json解析
         let json = JSON(data:data)
-        
         let code:String = "\(json["code"])"
-        let major = json["major"]
-        let message = json["message"]
-        
-        //print("code : \(json["code"])")
+       
+
         //成功
         if code == "200"{
+            
+            let major = json["major"]
+
+            print("Sucsess Make AirMeet : majorID -> [\(major)]")
             
             appDelegate.parentID = "\(major)"
             appDelegate.isParent = true
             
-            //メインスレッドで表示
+            ///（kmdr,momoka）
+            //アラートだしてパスを入力してokを押したら画面遷移
+            //パスはここに保存
+            appDelegate.parentPass = "0000"
+            //画面遷移
+            self.performSegueWithIdentifier("startSegue",sender: nil)
+            
+            //非同期
             dispatch_async(dispatch_get_main_queue(), {
-
                 //くるくるストップ
                 self.indicator.stopAnimation(true, completion: nil)
                 self.indicator.removeFromSuperview()
                 
-                 })
-            
-            //アラートだして値を 
-            appDelegate.parentPass = "0000"
-
-            //画面遷移
-            performSegueWithIdentifier("startSegue",sender: nil)
+            })
             
         //失敗
         }else{
-            print(message)
             
-            let alert = UIAlertController(title:"False Make AirMeet",message:"\(message)",preferredStyle:UIAlertControllerStyle.Alert)
+            print("\nFalse Make AirMeet : \(json["message"])")
+            
+            appDelegate.parentID = nil
+            appDelegate.isParent = false
+            
+            let alert = UIAlertController(title:"False Make AirMeet",message:"\(json["message"])",preferredStyle:UIAlertControllerStyle.Alert)
             let okAction = UIAlertAction(title: "OK", style: .Default) {
                 action in
             }
             alert.addAction(okAction)
-            //メインスレッドで表示
+            self.presentViewController(alert, animated: true, completion: nil)
+            
+            MakeAirMeetButton.enabled = true
+            MakeAirMeetButton.alpha = 1.0
+            
+            //非同期
             dispatch_async(dispatch_get_main_queue(), {
                 //くるくるストップ
                 self.indicator.stopAnimation(true, completion: nil)
                 self.indicator.removeFromSuperview()
                 
-                self.presentViewController(alert, animated: true, completion: nil)
             })
             
-            appDelegate.isParent = false
         }
         
- 
     }
     
-    func URLSessionDidFinishEventsForBackgroundURLSession(session: NSURLSession) {
-        print("URLSessionDidFinishEventsForBackgroundURLSession")
-        
-        // バックグラウンドからフォアグラウンドの復帰時に呼び出されるデリゲート.
-    }
-    
+
     @IBAction func unwindToTop(segue: UIStoryboardSegue) {
     }
     
