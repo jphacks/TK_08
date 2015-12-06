@@ -94,7 +94,6 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         let event = EventModel(eventName: "testEvent", roomName: "testRoom", childNumber: 0, eventDescription: "testDescription",eventTag:["趣味","特技"], eventID: 100)
         events.append(event)
     
-        
         //iBecon
         //Beacon領域生成
         region = CLBeaconRegion(proximityUUID:proximityUUID!,identifier:"AirMeet")
@@ -129,7 +128,6 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         super.viewWillAppear(animated)
         print("Profile Reload")
         
-        
         //プロフィール更新
         let defaults = NSUserDefaults.standardUserDefaults()
         if defaults.stringForKey("name") == nil || defaults.stringForKey("facebook") == nil || defaults.objectForKey("image") == nil{
@@ -147,9 +145,14 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
             let storyboard: UIStoryboard = UIStoryboard(name: "Profile", bundle: NSBundle.mainBundle())
             let profileViewController: ProfileViewController = storyboard.instantiateInitialViewController() as! ProfileViewController
             
+            //スタート
+            self.manager.startMonitoringForRegion(self.region)
+            
             self.navigationController?.pushViewController(profileViewController, animated: true)
             
         }else{
+            //ibecon監視開始（おやもどってきたとき）、ibecon端末があるかを開始
+            self.manager.startMonitoringForRegion(self.region)
             //名前
             nameLabel.text = "\(defaults.stringForKey("name")!)"
             //自己紹介
@@ -237,8 +240,8 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
             print("\(NSDate()) : Parent Made")
             
             //リージョン監視、レンジング停止
-            self.manager.stopMonitoringForRegion(self.region)
-            self.manager.stopRangingBeaconsInRegion(self.region)
+            self.manager.stopMonitoringForRegion(self.region)//監視自体を停止
+            //self.manager.stopRangingBeaconsInRegion(self.region)
             
         }else{
             print("\(NSDate()) : Child Made")

@@ -39,7 +39,6 @@ class ChildListViewController: UIViewController,UITableViewDelegate,UITableViewD
         let tag2:Dictionary<String,String> = ["年齢":"21","所属":"東京大学","趣味":"スクフェス"]
         let tag3:Dictionary<String,String> = ["年齢":"24","所属":"早稲田大学","趣味":"デレステ"]
         
-
         //子追加
         let child1:ChildModel = ChildModel(image: UIImage(named: "go_face.png")!, backgroundImage:  UIImage(named: "go_back.png")!, name: "さとうごう", tag: tag1,detail:"がんばるぞ〜！！今日も可愛い女の子ゲットするぞ〜！！LINEもってる〜？？")
         let child2:ChildModel = ChildModel(image: UIImage(named: "IMG_9004.JPG")!, backgroundImage:  UIImage(named: "IMG_9003.JPG")!, name: "こーたけ", tag: tag2,detail:"今日はよろしくお願いします！ピカチュウが大好きです♪")
@@ -140,11 +139,15 @@ class ChildListViewController: UIViewController,UITableViewDelegate,UITableViewD
         
         let code:String = "\(json["code"])"
         let message = json["message"]
+       
 
         //成功
         if code == "200"{
             
             print("User Get Sucsess : \(message)")
+            
+            let users = json["users"]
+            print("Users : \(users)")
             
             //非同期
             dispatch_async(dispatch_get_main_queue(), {
