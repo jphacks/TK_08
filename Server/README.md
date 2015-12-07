@@ -1,26 +1,32 @@
 # AirMeet WebAPI
 
-## イベントの登録
+API一覧
+- [イベントの登録](#register_event)
+- [イベントの削除](#remove_event)
+- [イベントの情報取得](#event_info)
+- [イベントへのユーザの登録](#register_user)
+- [イベント参加者の取得](#participants)
+- [ユーザ登録の削除](#remove_user)
+
+## <a id ="register_event">イベントの登録</a>
 親機はイベント名、会場名、説明文、子機に入力させる必須項目などを設定し、サーバに送る
 ### リクエストURL
 http://airmeet.mybluemix.net/register_event
 
-メソッド:GET
+メソッド:POST
 
-### リクエストクエリパラメータ
+### リクエストボディ
 |キー|必須|説明|
 |:--|:--:|:--|
 |event_name|○|イベント名|
-|room_name|○|会場名|
+|room_name||会場名|
 |description||説明文|
 |items|○|ユーザに入力させる必須項目<br>","区切り|
 
-例  
-http://airmeet.mybluemix.net/register_event?event_name=event1&room_name=room1&items=hobby,presentation
 
 ### レスポンスボディ(JSON形式)
 #### 成功時
-```
+```json
 {
     "major": 数字,
     "message": "なんかメッセージ",
@@ -29,7 +35,7 @@ http://airmeet.mybluemix.net/register_event?event_name=event1&room_name=room1&it
 ```
 
 #### 失敗時(クライアントエラー)
-```
+```json
 {
     "message": "なんかメッセージ",
     "code": 400
@@ -37,27 +43,27 @@ http://airmeet.mybluemix.net/register_event?event_name=event1&room_name=room1&it
 ```
 
 #### 失敗時(サーバエラー)
-```
+```json
 {
     "message": "なんかメッセージ",
     "code": 500
 }
 ```
 
-## イベントの削除
+## <a id ="remove_event">イベントの削除</a>
 ### リクエストURL
 http://airmeet.mybluemix.net/remove_event
 
-メソッド:GET
+メソッド:POST
 
-### リクエストクエリパラメータ
+### リクエストボディ
 |キー|必須|説明|
 |:--|:--:|:--|
 |major|○|親機のmajorの値|
 
 ### レスポンスボディ(JSON形式)
 #### 成功時
-```
+```json
 {
     "message": "なんか成功って感じのメッセージ",
     "code": 200
@@ -65,7 +71,7 @@ http://airmeet.mybluemix.net/remove_event
 ```
 
 #### 失敗時(クライアントエラー)
-```
+```json
 {
     "message": "なんかメッセージ",
     "code": 400
@@ -73,7 +79,7 @@ http://airmeet.mybluemix.net/remove_event
 ```
 
 #### 失敗時(サーバエラー)
-```
+```json
 {
     "message": "なんかメッセージ",
     "code": 500
@@ -81,9 +87,9 @@ http://airmeet.mybluemix.net/remove_event
 ```
 
 
-## 会場の情報取得
+## <a id ="event_info">イベントの情報取得
 ### リクエストURL
-http://airmeet.mybluemix.net/get_event_info
+http://airmeet.mybluemix.net/event_info
 
 メソッド:GET
 
@@ -94,7 +100,7 @@ http://airmeet.mybluemix.net/get_event_info
 
 ### レスポンスボディ(JSON形式)
 #### 成功時
-```
+```json
 {
     "event_name": "イベント名",
     "room_name": "ルーム名",
@@ -104,12 +110,13 @@ http://airmeet.mybluemix.net/get_event_info
         "親機側が設定した必須項目（配列形式）",
         "親機側が設定した必須項目（配列形式）"
     ],
+    "count": 現在の参加者数,
     "code": 200
 }
 ```
 
 例  
-```
+```json
 {
     "event_name": "JPHACKS",
     "room_name": "東京大学 本郷キャンパス 工学部2号館 213教室",
@@ -124,7 +131,7 @@ http://airmeet.mybluemix.net/get_event_info
 }
 ```
 #### 失敗時(クライアントエラー)
-```
+```json
 {
     "message": "なんかメッセージ",
     "code": 400
@@ -132,7 +139,7 @@ http://airmeet.mybluemix.net/get_event_info
 ```
 
 #### 失敗時(サーバエラー)
-```
+```json
 {
     "message": "なんかメッセージ",
     "code": 500
@@ -140,18 +147,19 @@ http://airmeet.mybluemix.net/get_event_info
 ```
 
 
-## 会場へのユーザの登録
+## <a id ="register_user">イベントへのユーザの登録</a>
 
 ### リクエストURL
 http://airmeet.mybluemix.net/register_user
 
-メソッド:GET
+メソッド:POST
 
-### リクエストクエリパラメータ
+### リクエストボディ
 |キー|必須|説明|
 |:--|:--:|:--|
 |major|○|親機からiBeaconで取得したmajorの値|
 |name|○|名前|
+|profile|○|プロフィール|
 |image|○|画像|
 |image_header||ヘッダ画像|
 |items|○|項目|
@@ -159,7 +167,7 @@ http://airmeet.mybluemix.net/register_user
 
 ### レスポンスボディ(JSON形式)
 #### 成功時
-```
+```json
 {
     "id": "自分のid",
     "message": "なんか成功って感じのメッセージ",
@@ -168,7 +176,7 @@ http://airmeet.mybluemix.net/register_user
 ```
 
 #### 失敗時(クライアントエラー)
-```
+```json
 {
     "message":"なんかメッセージ",
     "code":400
@@ -176,16 +184,16 @@ http://airmeet.mybluemix.net/register_user
 ```
 
 #### 失敗時(サーバエラー)
-```
+```json
 {
     "message":"なんかメッセージ",
     "code":500
 }
 ```
 
-## 現在の参加者の取得
+## <a id ="participants">イベント参加者の取得</a>
 ### リクエストURL
-http://airmeet.mybluemix.net/get_participants
+http://airmeet.mybluemix.net/participants
 
 メソッド:GET
 
@@ -198,33 +206,40 @@ http://airmeet.mybluemix.net/get_participants
 
 ### レスポンスボディ(JSON形式)
 #### 成功時
-```
+```json
 {
+    "major" : "イベントのmajor値",
+    "id" : "自分のID",
+    "count" : "イベントの参加者数（自分除く）",
     "users": [  
         {
-            "id": "参加している他のユーザのid"
+            "id": "参加している他のユーザのid",
             "name": "参加している他のユーザの名前",
+            "profile": "プロフィール",
             "image": "画像のURL",
             "items": {
-                "",
-                ""
+                "": "",
+                "": "",
             }
         },
         {
+            "id": "参加している他のユーザのid",
             "name": "参加している他のユーザ",
+            "profile": "プロフィール",
             "image": "画像のURL",
             "items": {
-                "",
-                ""
+                "": "",
+                "": "",
             }
         }
     ],
+    "message": "成功メッセージ",
     "code": 200
 }
 ```
 
 #### 失敗時(クライアントエラー)
-```
+```json
 {
     "message":"なんかメッセージ",
     "code":400
@@ -232,7 +247,7 @@ http://airmeet.mybluemix.net/get_participants
 ```
 
 #### 失敗時(サーバエラー)
-```
+```json
 {
     "message":"なんかメッセージ",
     "code":500
@@ -240,28 +255,29 @@ http://airmeet.mybluemix.net/get_participants
 ```
 
 
-## ユーザ登録の削除
+## <a id ="remove_user">ユーザ登録の削除</a>
 ### リクエストURL
 http://airmeet.mybluemix.net/remove_user
 
-メソッド:GET
+メソッド:POST
 
-### リクエストクエリパラメータ
+### リクエストボディ
 |キー|必須|説明|
 |:--|:--:|:--|
 |id|○|削除したいユーザのID|
 
 ### レスポンスボディ(JSON形式)
 #### 成功時
-```
+```json
 {
+    "id": "削除したユーザのID",
     "message": "なんか成功って感じのメッセージ",
     "code": 200
 }
 ```
 
 #### 失敗時(クライアントエラー)
-```
+```json
 {
     "message": "なんかメッセージ",
     "code": 400
@@ -269,7 +285,7 @@ http://airmeet.mybluemix.net/remove_user
 ```
 
 #### 失敗時(サーバエラー)
-```
+```json
 {
     "message": "なんかメッセージ",
     "code": 500
