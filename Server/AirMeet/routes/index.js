@@ -151,7 +151,8 @@ router.get('/event_info', function(req, res) {
 //-----------------------------------------------------------//
 //イベントへのユーザ登録
 //-----------------------------------------------------------//
-router.post('/register_user', upload.single('image'), function(req, res) {
+var cpUpload = upload.fields([{ name: 'image', maxCount: 1 }, { name: 'image_header', maxCount: 1 }])
+router.post('/register_user', cpUpload, function(req, res) {
   console.log(req.body);
 
   var success = {
@@ -165,7 +166,15 @@ router.post('/register_user', upload.single('image'), function(req, res) {
   var name = req.body.name;
   var profile = req.body.profile;
   var items = req.body.items;
-  console.log(req.file);
+  //console.log(req.files);
+  //console.log(req.files.image[0].filename);
+  if(Object.keys(req.files).length){
+    var image = "http://airmeet.mybluemix.net/image/"+req.files.image[0].filename;
+    var image_header = req.files.image_header[0].filename;
+  }else {
+    var image;
+    var image_header;
+  }
 
   if(!major){
     error.message = "Error: major is missing";
@@ -198,6 +207,8 @@ router.post('/register_user', upload.single('image'), function(req, res) {
       name : name,
       profile : profile,
       items : items,
+      image : image,
+      image_header : image_header,
       date : moment().zone('+0900').format('YYYY/MM/DD HH:mm:ss')
     };
     dba.save(id, doc, function(err) {
