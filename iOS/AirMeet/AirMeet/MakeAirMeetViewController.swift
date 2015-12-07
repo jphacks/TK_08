@@ -25,7 +25,9 @@ class MakeAirMeetViewController: UIViewController,UITextFieldDelegate,NSURLSessi
     //くるくる
     let indicator:SpringIndicator = SpringIndicator()
     
-    let cellLabels = ["所属名","住んでいる都道府県","趣味","専門分野","特技","発表内容","性別","年齢"]
+    var tagDics = [String:String]()
+    var tagArray = [String]()
+    
     //  チェックされたセルの位置を保存しておく辞書をプロパティに宣言
     var selectedCells:[String:Bool]=[String:Bool]()
     
@@ -53,6 +55,13 @@ class MakeAirMeetViewController: UIViewController,UITextFieldDelegate,NSURLSessi
         indicator.frame = CGRectMake(self.view.frame.width/2-self.view.frame.width/8,self.view.frame.height/2-self.view.frame.width/8,self.view.frame.width/4,self.view.frame.width/4)
         indicator.lineWidth = 3
         
+        let defaults = NSUserDefaults.standardUserDefaults()
+        
+        tagDics = defaults.objectForKey("tag") as! [String:String]
+        for (name,_) in tagDics{
+            tagArray.append(name)
+        }
+        
     }
     
     
@@ -72,7 +81,7 @@ class MakeAirMeetViewController: UIViewController,UITextFieldDelegate,NSURLSessi
         
         let cell = tableView.dequeueReusableCellWithIdentifier("SelectTagTableViewCell", forIndexPath: indexPath)
         
-        cell.textLabel?.text = cellLabels[indexPath.row]
+        cell.textLabel?.text = tagArray[indexPath.row]
         cell.textLabel?.textColor = UIColor.darkGrayColor()
         cell.textLabel?.font = UIFont(name: "HiraKakuProN-W3", size: 15)
         
@@ -98,7 +107,7 @@ class MakeAirMeetViewController: UIViewController,UITextFieldDelegate,NSURLSessi
     
     // セクションの行数
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return cellLabels.count
+        return tagArray.count
     }
     
     //cellが選択されたとき
@@ -198,15 +207,15 @@ class MakeAirMeetViewController: UIViewController,UITextFieldDelegate,NSURLSessi
         let mySession:NSURLSession = NSURLSession(configuration: myConfig, delegate: self, delegateQueue: nil)
         
         // itemsをいい感じの文字列にして送る
-        var tagArray:[String] = []
+        var tagArraytmp:[String] = []
         
         for selectedCell in selectedCells{
             
-            tagArray.append(cellLabels[Int(selectedCell.0)!])
+            tagArraytmp.append(tagArray[Int(selectedCell.0)!])
 
         }
         
-        let tagArrayString = (tagArray as NSArray).componentsJoinedByString(",")
+        let tagArrayString = (tagArraytmp as NSArray).componentsJoinedByString(",")
         
         
         let post = "event_name=\(event)&room_name=\(room)&items=\(tagArrayString)"
@@ -237,15 +246,14 @@ class MakeAirMeetViewController: UIViewController,UITextFieldDelegate,NSURLSessi
     //通信終了
     func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveData data: NSData) {
         
-        print("\nDidReceiveData Task ↑\n")
+        print("\nDidReceiveData Task ↑")
         //セッションを終える
         session.invalidateAndCancel()
         
         //Json解析
         let json = JSON(data:data)
         let code:String = "\(json["code"])"
-       
-
+        print("JSON:\(json)\n")
         //成功
         if code == "200"{
             
