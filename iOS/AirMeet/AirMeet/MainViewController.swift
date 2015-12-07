@@ -102,8 +102,8 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         indicator.lineWidth = 3
         
         //テストデータ（仮）
-        //let event = EventModel(eventName: "testEvent", roomName: "testRoom", childNumber: 0, eventDescription: "testDescription",eventTag:["趣味","特技"], eventID: 100)
-        //events.append(event)
+        let event = EventModel(eventName: "testEvent", roomName: "testRoom", childNumber: 0, eventDescription: "testDescription",eventTag:["趣味","特技"], eventID: 100)
+        events.append(event)
     
         //iBeacon領域生成
         region = CLBeaconRegion(proximityUUID:proximityUUID!,identifier:"AirMeet")
@@ -285,6 +285,12 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
             majorIDList.append(beacons[i].major)
         }
         
+        //重複捨て
+        if(beacons.count != 0){
+            let set = NSOrderedSet(array: majorIDList)
+            majorIDList = set.array as! [NSNumber]
+        }
+        
         //1つ前の観測から変更があったとき
         if(majorIDList.count != majorIDListOld.count){
             
@@ -375,12 +381,13 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
     //データを取得したとき
     func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveData data: NSData) {
         
-        print("\nDidReceiveData Task ↑\n")
+        print("\nDidReceiveData Task ↑")
         //セッションを終える
         session.invalidateAndCancel()
 
         // print(data)
         let json = JSON(data:data)
+        print("JSON:\(json)\n")
         
         //失敗
         if String(json["code"]) == "400" || String(json["code"]) == "500"{

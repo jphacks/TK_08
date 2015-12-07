@@ -179,6 +179,7 @@ class ProfileSettingViewController: UIViewController,UITextFieldDelegate,UITextV
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         selectTextFiled.resignFirstResponder()
+        selectTextView.resignFirstResponder()
         
         let defaults = NSUserDefaults.standardUserDefaults()
         

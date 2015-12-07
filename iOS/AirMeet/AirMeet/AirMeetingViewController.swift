@@ -107,12 +107,13 @@ class AirMeetingViewController: UIViewController, CBPeripheralManagerDelegate, N
     //通信終了
     func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveData data: NSData) {
         
-        print("\nDidReceiveData Task ↑\n")
+        print("\nDidReceiveData Task ↑")
         //セッションを終える
         session.invalidateAndCancel()
         
         //Json解析
         let json = JSON(data:data)
+        print("JSON:\(json)\n")
         
         let code:String = "\(json["code"])"
         
