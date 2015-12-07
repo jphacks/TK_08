@@ -113,7 +113,7 @@ class MyMenuTableViewController: UITableViewController {
             
         case 3:
             let storyboard: UIStoryboard = UIStoryboard(name: "Profile", bundle: NSBundle.mainBundle())
-            destViewController = storyboard.instantiateInitialViewController() as! ProfileViewController
+            destViewController = storyboard.instantiateInitialViewController() as! ProfileSettingViewController
             
             break
         default:

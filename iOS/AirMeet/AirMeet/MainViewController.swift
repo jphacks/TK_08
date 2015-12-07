@@ -35,8 +35,8 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
     
     @IBOutlet weak var profileChangeButton: UIButton!
     
-    @IBOutlet weak var facebookLinkLabel: UILabel!
-    @IBOutlet weak var twitterLinkLabel: UILabel!
+    //@IBOutlet weak var facebookLinkLabel: UILabel!
+    //@IBOutlet weak var twitterLinkLabel: UILabel!
     
     @IBOutlet weak var MenuBarButtonItem: UIBarButtonItem!//保留
     
@@ -81,11 +81,11 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         facebookImageView.layer.cornerRadius = facebookImageView.frame.size.width/2.0
         facebookImageView.layer.masksToBounds = true
         facebookImageView.layer.borderColor = defaultColor.CGColor
-        facebookImageView.layer.borderWidth = 1.0
+        facebookImageView.layer.borderWidth = 2.0
         twitterImageView.layer.cornerRadius = twitterImageView.frame.size.width/2.0
         twitterImageView.layer.masksToBounds = true
         twitterImageView.layer.borderColor = defaultColor.CGColor
-        twitterImageView.layer.borderWidth = 1.0
+        twitterImageView.layer.borderWidth = 2.0
         
         //プロフィール変更ボタン
         profileChangeButton.layer.borderColor = UIColor.lightGrayColor().CGColor
@@ -140,14 +140,14 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         
         //初期の初期設定
         let defaults = NSUserDefaults.standardUserDefaults()
-        if defaults.stringForKey("name") == nil || defaults.stringForKey("facebook") == nil || defaults.objectForKey("image") == nil{
+        if defaults.stringForKey("name") == nil ||  defaults.objectForKey("image") == nil{
             print("First Launch")
             
             //デフォルト
             defaults.setObject("空気 会太郎", forKey: "name")
             defaults.setObject("よろしくおねがいします", forKey: "detail")
-            defaults.setObject("空気会太郎", forKey: "facebook")
-            defaults.setObject("@AirMeet", forKey: "twitter")
+            //defaults.setObject("空気会太郎", forKey: "facebook")
+            //defaults.setObject("@AirMeet", forKey: "twitter")
             
             defaults.setObject(UIImagePNGRepresentation(userImageView.image!), forKey: "image")
             defaults.setObject(UIImagePNGRepresentation(backImageView.image!), forKey: "back")
@@ -158,7 +158,7 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
             
             //プロフィール設定画面に遷移
             let storyboard: UIStoryboard = UIStoryboard(name: "Profile", bundle: NSBundle.mainBundle())
-            let profileViewController: ProfileViewController = storyboard.instantiateInitialViewController() as! ProfileViewController
+            let profileViewController: ProfileSettingViewController = storyboard.instantiateInitialViewController() as! ProfileSettingViewController
             self.navigationController?.pushViewController(profileViewController, animated: true)
         
         //プロフィール更新
@@ -180,10 +180,6 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
             nameLabel.text = "\(defaults.stringForKey("name")!)"
             //自己紹介
             detailLabel.text = "\(defaults.stringForKey("detail")!)"
-            //facebook
-            facebookLinkLabel.text = "\(defaults.stringForKey("facebook")!)"
-            //twitter
-            twitterLinkLabel.text = "\(defaults.stringForKey("twitter")!)"
             
             //画像
             let imageData:NSData = defaults.objectForKey("image") as! NSData
@@ -548,7 +544,7 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
     //プロフィール
     @IBAction func ProfileButton(sender: AnyObject) {
         let storyboard: UIStoryboard = UIStoryboard(name: "Profile", bundle: NSBundle.mainBundle())
-        let profileViewController: ProfileViewController = storyboard.instantiateInitialViewController() as! ProfileViewController
+        let profileViewController: ProfileSettingViewController = storyboard.instantiateInitialViewController() as! ProfileSettingViewController
         
         self.navigationController?.pushViewController(profileViewController, animated: true)
         

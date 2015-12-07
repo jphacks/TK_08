@@ -109,13 +109,13 @@ class JoinAirMeetViewController: UIViewController,UITableViewDelegate, UITableVi
         
         let cell:SettingTagTableViewCell = tableView.dequeueReusableCellWithIdentifier("SettingTagTableViewCell", forIndexPath: indexPath) as! SettingTagTableViewCell
         
-        cell.TagDetailTextField.delegate = self
+       // cell.TagDetailTextField.delegate = self
         
         // testTagの一行分の内容を入れる
         //let object = testTag[indexPath.row]
 
-        cell.TagNameLabel?.text = appDelegate.selectEvent!.eventTag[indexPath.row]//object["name"]!
-        cell.TagDetailTextField?.tag = indexPath.row
+        //cell.TagNameLabel?.text = appDelegate.selectEvent!.eventTag[indexPath.row]//object["name"]!
+        //cell.TagDetailTextField?.tag = indexPath.row
         //cell.TagDetailTextField?.text = object["detail"]!
         
         return cell

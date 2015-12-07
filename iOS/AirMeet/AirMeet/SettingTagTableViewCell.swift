@@ -9,10 +9,9 @@
 import UIKit
 
 class SettingTagTableViewCell: UITableViewCell {
+
     
-    
-    @IBOutlet weak var TagNameLabel: UILabel!
-    @IBOutlet weak var TagDetailTextField: UITextField!
+    @IBOutlet weak var TagTextField: HoshiTextField!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -27,8 +26,10 @@ class SettingTagTableViewCell: UITableViewCell {
     
     func setCell(tagModel:TagModel){
         
-        TagNameLabel.text = "\(tagModel.name)"
-        TagDetailTextField.text = "\(tagModel.detail)"
+        //TagNameLabel.text = "\(tagModel.name)"
+        //TagDetailTextField.text = "\(tagModel.detail)"
+        TagTextField.placeholder = "\(tagModel.name)"
+        TagTextField.text = "\(tagModel.detail)"
    
         
         

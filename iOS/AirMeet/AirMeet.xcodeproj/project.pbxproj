@@ -44,6 +44,8 @@
 		4693CEA91C120B400034328D /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4693CEA61C120B400034328D /* Info.plist */; };
 		4693CEAA1C120B400034328D /* SpringIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4693CEA81C120B400034328D /* SpringIndicator.swift */; };
 		4693CEF21C1434B10034328D /* SelectTagTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4693CEF11C1434B10034328D /* SelectTagTableViewCell.swift */; };
+		4693CEF51C15706F0034328D /* TagSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4693CEF41C15706F0034328D /* TagSettingViewController.swift */; };
+		4693CEF71C157ED50034328D /* header-next.png in Resources */ = {isa = PBXBuildFile; fileRef = 4693CEF61C157ED50034328D /* header-next.png */; };
 		469AB7C41C0D614A000C6393 /* header-menu.png in Resources */ = {isa = PBXBuildFile; fileRef = 469AB7C31C0D614A000C6393 /* header-menu.png */; };
 		469AB7C61C0D67E9000C6393 /* icon-camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 469AB7C51C0D67E9000C6393 /* icon-camera.png */; };
 		469AB7C81C0D871C000C6393 /* TagModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469AB7C71C0D871C000C6393 /* TagModel.swift */; };
@@ -141,6 +143,8 @@
 		4693CEA71C120B400034328D /* SpringIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpringIndicator.h; sourceTree = "<group>"; };
 		4693CEA81C120B400034328D /* SpringIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpringIndicator.swift; sourceTree = "<group>"; };
 		4693CEF11C1434B10034328D /* SelectTagTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectTagTableViewCell.swift; sourceTree = "<group>"; };
+		4693CEF41C15706F0034328D /* TagSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagSettingViewController.swift; sourceTree = "<group>"; };
+		4693CEF61C157ED50034328D /* header-next.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "header-next.png"; sourceTree = "<group>"; };
 		469AB7C31C0D614A000C6393 /* header-menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "header-menu.png"; sourceTree = "<group>"; };
 		469AB7C51C0D67E9000C6393 /* icon-camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-camera.png"; sourceTree = "<group>"; };
 		469AB7C71C0D871C000C6393 /* TagModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagModel.swift; sourceTree = "<group>"; };
@@ -319,7 +323,7 @@
 				4693CEF31C149FFA0034328D /* Main */,
 				46B611591C09510600102AC0 /* Parent */,
 				46B6115A1C09511000102AC0 /* Child */,
-				46B611701C0966FE00102AC0 /* Profile */,
+				46B611701C0966FE00102AC0 /* ProfileSetting */,
 				465841551C0E6F2A00D977AF /* Menu */,
 				46435BEE1C0ABD8800361ABA /* TableView */,
 				46B6118A1C09A40B00102AC0 /* Model */,
@@ -422,18 +426,20 @@
 			name = Meet;
 			sourceTree = "<group>";
 		};
-		46B611701C0966FE00102AC0 /* Profile */ = {
+		46B611701C0966FE00102AC0 /* ProfileSetting */ = {
 			isa = PBXGroup;
 			children = (
 				46B6116E1C0966F300102AC0 /* Profile.storyboard */,
 				46B611711C09676E00102AC0 /* ProfileSettingViewController.swift */,
+				4693CEF41C15706F0034328D /* TagSettingViewController.swift */,
 			);
-			name = Profile;
+			name = ProfileSetting;
 			sourceTree = "<group>";
 		};
 		46B611751C096ED000102AC0 /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				4693CEF61C157ED50034328D /* header-next.png */,
 				469AB7C91C0E1386000C6393 /* background.png */,
 				469AB7CA1C0E1386000C6393 /* avatar.png */,
 				469AB7C51C0D67E9000C6393 /* icon-camera.png */,
@@ -603,6 +609,7 @@
 				46858F2C1C0A77D4003190CB /* tab-account_w.png in Resources */,
 				46B611901C09F85900102AC0 /* go_back.png in Resources */,
 				46B218AB1C0C424100997E3B /* snsicon-twitter.png in Resources */,
+				4693CEF71C157ED50034328D /* header-next.png in Resources */,
 				46858F2E1C0A77D4003190CB /* tab-meet_w.png in Resources */,
 				46435BEB1C0AB9D800361ABA /* Child.storyboard in Resources */,
 				46B218AA1C0C424100997E3B /* snsicon-facebook.png in Resources */,
@@ -647,6 +654,7 @@
 				465F30671C0E6FE7008842B8 /* ENSideMenuNavigationController.swift in Sources */,
 				465F30841C0E72CF008842B8 /* TextFieldsEffects.swift in Sources */,
 				46B6118C1C09A44D00102AC0 /* TagTableView.swift in Sources */,
+				4693CEF51C15706F0034328D /* TagSettingViewController.swift in Sources */,
 				465F30831C0E72CF008842B8 /* MinoruTextField.swift in Sources */,
 				465F306F1C0E72A7008842B8 /* UIImage+BlurEffect.swift in Sources */,
 				4693CEF21C1434B10034328D /* SelectTagTableViewCell.swift in Sources */,

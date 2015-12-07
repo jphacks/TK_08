@@ -8,20 +8,20 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController,UITableViewDelegate, UITableViewDataSource,UITextFieldDelegate,UITextViewDelegate, UIScrollViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate  {
+class ProfileSettingViewController: UIViewController,UITextFieldDelegate,UITextViewDelegate,UIScrollViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate  {
     
-    //プロフィール項目の設定テーブル
-    @IBOutlet weak var SettingTableView: UITableView!
+    let defaultColor:UIColor = UIColor(red: 128.0/255.0, green: 204.0/255.0, blue: 223.0/255.0, alpha: 1)//水色
     
     @IBOutlet weak var backImageView: UIImageView!
     @IBOutlet weak var userImageView: UIImageView!
     
     @IBOutlet weak var settingImageButton: UIButton!
     
-    @IBOutlet weak var userNameTextField: UITextField!
     @IBOutlet weak var userDetailTextView: UITextView!
-
-    var tags:[TagModel] = [TagModel]()
+    @IBOutlet weak var userNameTextField: HoshiTextField!
+    
+    var userNameString:String?
+    var userDetailString:String?
    
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,29 +39,25 @@ class ProfileViewController: UIViewController,UITableViewDelegate, UITableViewDa
         settingImageButton.layer.cornerRadius = settingImageButton.frame.size.width/2.0
         settingImageButton.layer.masksToBounds = true
         
-        SettingTableView.delegate = self
-        SettingTableView.dataSource = self
-        SettingTableView.scrollEnabled = true
-        
         userNameTextField.delegate = self
+        
+        userDetailTextView.layer.borderColor = defaultColor.CGColor
+        userDetailTextView.layer.borderWidth = 2.0
+        userDetailTextView.layer.cornerRadius = 3.0
         userDetailTextView.delegate = self
         
         let defaults = NSUserDefaults.standardUserDefaults()
         
         userNameTextField.text = "\(defaults.stringForKey("name")!)"
+        userNameTextField.tag = 0
+        userNameString = "\(defaults.stringForKey("name")!)"
+        
         userDetailTextView.text = "\(defaults.stringForKey("detail")!)"
+        userDetailString = "\(defaults.stringForKey("detail")!)"
         
-        
-        //設定
-        let tag1:TagModel = TagModel(name:"アカウント名",detail: "\(defaults.stringForKey("name")!)")
-        let tag2:TagModel = TagModel(name:"自己紹介",detail: "\(defaults.stringForKey("detail")!)")
-        let tag3:TagModel = TagModel(name:"FaceBook",detail: "\(defaults.stringForKey("facebook")!)")
-        let tag4:TagModel = TagModel(name:"Twitter", detail: "\(defaults.stringForKey("twitter")!)")
-        
-        tags.append(tag1)
-        tags.append(tag2)
-        tags.append(tag3)
-        tags.append(tag4)
+        //戻るボタン設定
+        let backButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem = backButtonItem
         
         let imageData:NSData = defaults.objectForKey("image") as! NSData
         userImageView.image = UIImage(data:imageData)
@@ -71,100 +67,42 @@ class ProfileViewController: UIViewController,UITableViewDelegate, UITableViewDa
         
     }
     
-    func tableViewScrollToBottom(animated: Bool) {
-        
-        let delay = 0.1 * Double(NSEC_PER_SEC)
-        let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
-        
-        dispatch_after(time, dispatch_get_main_queue(), {
-            
-            let numberOfSections = self.SettingTableView.numberOfSections
-            let numberOfRows = self.SettingTableView.numberOfRowsInSection(numberOfSections-1)
-            
-            if numberOfRows > 0 {
-                let indexPath = NSIndexPath(forRow: numberOfRows-1, inSection: (numberOfSections-1))
-                self.SettingTableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
-            }
-            
-        })
-    }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath:NSIndexPath) -> UITableViewCell {
-        
-        let cell: SettingTagTableViewCell = tableView.dequeueReusableCellWithIdentifier("SettingTagTableViewCell", forIndexPath: indexPath) as! SettingTagTableViewCell
-        
-        cell.setCell(tags[indexPath.row])
-        cell.TagDetailTextField.delegate = self
-        cell.TagDetailTextField.tag = indexPath.row
-        
-        return cell
-    }
-    
-    //cellが選択されたとき
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
-        print(indexPath.row)
-        //SettingTableView.scrollToRowAtIndexPath(indexPath, atScrollPosition:UITableViewScrollPosition.Bottom , animated: true)
-        
-        tableViewScrollToBottom(true)
-        
-    }
-    
-    // セクション数
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    // セクションの行数
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tags.count
-    }
-    
-    
-    //UITextFieldが編集された直後に呼ばれるデリゲートメソッド.
-    func textFieldDidBeginEditing(textField: UITextField) {
-        
-        print("index : \(textField.tag)")
-        
-        let delay = 0.1 * Double(NSEC_PER_SEC)
-        let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
-        
-        dispatch_after(time, dispatch_get_main_queue(), {
-        
-            let indexPath = NSIndexPath(forRow: textField.tag, inSection: 0)
-            self.SettingTableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
-        })
-        
-    }
-    
-    //UITextFieldが編集終了する直前に呼ばれるデリゲートメソッド.
-    func textFieldShouldEndEditing(textField: UITextField) -> Bool {
-        
-        tags[textField.tag].detail = textField.text!
+    //UITextViewが終了する直前に呼ばれる
+    func textViewShouldEndEditing(textView: UITextView) -> Bool {
+        //自己紹介保存
+        print("Save UserDetail : \(textView.text!)")
+        userDetailString = textView.text
         
         return true
     }
     
+    //UITextFieldが編集終了する直前に呼ばれる
+    func textFieldShouldEndEditing(textField: UITextField) -> Bool {
+        //ユーザ名保存
+        print("Save UserName : \(textField.text!)")
+        userNameString = textField.text!
+        
+        return true
+    }
     
-    //改行ボタンが押された際に呼ばれるデリゲートメソッド.
+    //改行ボタンが押された際に呼ばれる
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
     
+    //画面が消える前に呼び出し（保存するタイミングあとでチェック）
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         
         let defaults = NSUserDefaults.standardUserDefaults()
         
-        defaults.setObject(tags[0].detail, forKey: "name")
-        defaults.setObject(tags[1].detail, forKey: "detail")
-        defaults.setObject(tags[2].detail, forKey: "facebook")
-        defaults.setObject(tags[3].detail, forKey: "twitter")
+        defaults.setObject(userNameString, forKey: "name")
+        defaults.setObject(userDetailString, forKey: "detail")
         
         defaults.synchronize()
         
-        print("Save")
+        print("\nSave Profile\n")
     }
     
     //顔画像
