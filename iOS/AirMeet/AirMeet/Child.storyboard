@@ -299,11 +299,11 @@
                                                             </userDefinedRuntimeAttributes>
                                                             <variation key="default">
                                                                 <mask key="constraints">
-                                                                    <exclude reference="wKD-yJ-Ca7"/>
-                                                                    <exclude reference="imq-2u-l6t"/>
                                                                     <exclude reference="CDZ-wY-NL0"/>
-                                                                    <exclude reference="i5Q-dg-Ht1"/>
                                                                     <exclude reference="bmr-e9-LqY"/>
+                                                                    <exclude reference="i5Q-dg-Ht1"/>
+                                                                    <exclude reference="imq-2u-l6t"/>
+                                                                    <exclude reference="wKD-yJ-Ca7"/>
                                                                 </mask>
                                                             </variation>
                                                         </textField>
@@ -321,10 +321,10 @@
                                                     </constraints>
                                                     <variation key="default">
                                                         <mask key="constraints">
-                                                            <exclude reference="T7d-Xo-jg5"/>
-                                                            <exclude reference="Aa6-WP-fvl"/>
                                                             <exclude reference="28I-UR-gT4"/>
                                                             <exclude reference="AN7-lG-enk"/>
+                                                            <exclude reference="Aa6-WP-fvl"/>
+                                                            <exclude reference="T7d-Xo-jg5"/>
                                                         </mask>
                                                     </variation>
                                                 </tableViewCellContentView>
@@ -443,7 +443,7 @@
                             <rect key="frame" x="0.0" y="28" width="600" height="50"/>
                             <autoresizingMask key="autoresizingMask"/>
                             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="PlD-gY-aat" id="fT2-5N-x1Z">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="49.5"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="49"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TagName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SLN-E1-AN8">
@@ -693,7 +693,7 @@
                                         <rect key="frame" x="0.0" y="28" width="600" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3EQ-El-BtQ" id="D3u-Hn-fuL">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="49.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="49"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TagName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZlQ-Az-JVW">
@@ -841,7 +841,7 @@
                                         <rect key="frame" x="0.0" y="92" width="600" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="k3T-c3-cAx" id="IIT-LB-JOo">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="49.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="49"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TagName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZWo-Fr-g9Z">
@@ -1133,7 +1133,7 @@
         <scene sceneID="u2a-Wg-beZ">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="7Ih-MF-wjk" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="List" image="tab-list_w.png" id="BJR-UG-EFs"/>
+                    <tabBarItem key="tabBarItem" title="List" image="TabBarListImage" id="BJR-UG-EFs"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="qj7-Ab-EZO">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1153,7 +1153,7 @@
         <scene sceneID="jtA-ko-oe9">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="G2r-Ka-SqO" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Tag" image="tab-search_w.png" id="Dk6-rR-I7J"/>
+                    <tabBarItem key="tabBarItem" title="Tag" image="TabBarSearchImage" id="Dk6-rR-I7J"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="s0d-s1-lLw">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1173,7 +1173,7 @@
         <scene sceneID="jHP-rw-0WH">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Nsh-qi-A4q" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Setting" image="tab-account_w.png" id="f7p-d6-ZfF"/>
+                    <tabBarItem key="tabBarItem" title="Setting" image="TabBarAccountImage" id="f7p-d6-ZfF"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="wxt-55-38K">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1191,11 +1191,11 @@
         </scene>
     </scenes>
     <resources>
+        <image name="TabBarAccountImage" width="53" height="53"/>
+        <image name="TabBarListImage" width="53" height="53"/>
+        <image name="TabBarSearchImage" width="53" height="53"/>
         <image name="go_back.png" width="600" height="120"/>
         <image name="go_face.png" width="2448" height="2448"/>
         <image name="icon-A-95.png" width="95" height="95"/>
-        <image name="tab-account_w.png" width="80" height="40"/>
-        <image name="tab-list_w.png" width="80" height="40"/>
-        <image name="tab-search_w.png" width="80" height="40"/>
     </resources>
 </document>
