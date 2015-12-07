@@ -2,22 +2,29 @@
 
 // 使用モジュールの読み込み
 var express = require('express');
+var multer = require('multer');
 var uuid = require('node-uuid');
 var moment = require('moment');
 var fs = require('fs');
 var dba = require('../api/dbaccess.js');
 var package = require('../package.json');
 
+// Authorize Token読み込み
 var buf = fs.readFileSync('Authorized_Token');
 var token_list = buf.toString().split("\n");
 
+/*
+var app = express();
+// multer
+//app.use(multer({ dest: '../image/',}));
+app.use(multer({dest:'./image/'}).array('multiInputFileName'));
+*/
 // ルーターの作成
 var router = express.Router();
 
 //認証
 router.use(function(req, res, next) {
   var AccessToken = req.header("X-AccessToken");
-  console.log(AccessToken);
   if(token_list.indexOf(AccessToken) >= 0){
     next();
   }else{
@@ -27,7 +34,7 @@ router.use(function(req, res, next) {
     };
     res.send(error);
   }
-})
+});
 
 // ルート
 router.get('/', function(req, res) {
@@ -152,13 +159,13 @@ router.post('/register_user', function(req, res) {
   };
   var error = {};
   var id = uuid.v4();
-
+  console.log(req.body);
   var major = Number(req.body.major);
   var name = req.body.name;
   var profile = req.body.profile;
-  var image = req.body.image;
-  var image_header = req.body.image_header;
   var items = req.body.items;
+  console.log("items:"+name);
+  console.log(req.files);
 
   if(!major){
     error.message = "Error: major is missing";
@@ -172,6 +179,7 @@ router.post('/register_user', function(req, res) {
   if(!items){
     error.message = "Error: items is missing";
     error.code = 400;
+    console.log(items);
   }else{
     try{
       items = (new Function("return " + items))();
@@ -372,10 +380,10 @@ router.post('/remove_user', function(req, res) {
   dba.remove(id, function(err) { //イベントを削除
     if(!err){ //エラーが出なければ
       success.id = id;
-      success.message = "Event & participants remove success";
+      success.message = "User remove success";
       res.send(success);
     }else{ //エラーが出れば
-      error.message = "Error: Event remove failed";
+      error.message = "Error: User remove failed";
       error.code = 500;
       res.send(error);
     }
