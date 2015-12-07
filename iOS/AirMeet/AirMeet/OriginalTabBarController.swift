@@ -13,7 +13,8 @@ class OriginalTabBarController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        ///（kmdr,momoka）
+        ///ボタンをいいかんじに
         let fontFamily: UIFont! = UIFont(name: "Hiragino Kaku Gothic ProN",size:10)
         
         // 文字色とフォント変えたい

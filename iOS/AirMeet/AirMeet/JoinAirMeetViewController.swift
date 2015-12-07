@@ -12,7 +12,7 @@ class JoinAirMeetViewController: UIViewController,UITableViewDelegate, UITableVi
     
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
-    @IBOutlet weak var SettingTableView: UITableView!
+    //@IBOutlet weak var SettingTableView: UITableView!
     @IBOutlet weak var eventLabel: UILabel!
     @IBOutlet weak var roomLabel: UILabel!
     
@@ -33,8 +33,8 @@ class JoinAirMeetViewController: UIViewController,UITableViewDelegate, UITableVi
         self.navigationController?.navigationBar.barTintColor=UIColor(red: 128.0/255.0, green: 204.0/255.0, blue: 223.0/255.0, alpha: 1)//水色
         self.navigationController?.navigationBar.tintColor=UIColor.whiteColor()
         
-        SettingTableView.delegate = self
-        SettingTableView.dataSource = self
+        //SettingTableView.delegate = self
+        //SettingTableView.dataSource = self
         
         eventLabel.text = "\(appDelegate.selectEvent!.eventName)"
         roomLabel.text = "\(appDelegate.selectEvent!.roomName)"

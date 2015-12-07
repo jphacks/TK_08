@@ -80,10 +80,10 @@ class ChildListDetailViewController: UIViewController,UITableViewDelegate, UITab
        
         
         // testTagの一行分の内容を入れる
-        let object = testTag[indexPath.row]
+        //let object = testTag[indexPath.row]
         
-        cell.TagNameLabel?.text = object["name"]!
-        cell.TagDetailLabel?.text = object["detail"]!
+        //cell.TagNameLabel?.text = object["name"]!
+        //cell.TagDetailLabel?.text = object["detail"]!
         
         return cell
     }

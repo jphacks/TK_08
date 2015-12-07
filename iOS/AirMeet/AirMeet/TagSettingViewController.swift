@@ -16,7 +16,11 @@ class TagSettingViewController: UIViewController,UITableViewDelegate, UITableVie
     
     @IBOutlet weak var TagSettingTableView: UITableView!
     
-    let tagNames = ["所属名","住んでいる都道府県","趣味","専門分野","特技","発表内容","性別","年齢"]
+    var tagDics = [String:String]()
+    
+    var selectIndex:NSIndexPath = NSIndexPath()
+    
+    var selectTextFiled:UITextField = UITextField()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,36 +28,67 @@ class TagSettingViewController: UIViewController,UITableViewDelegate, UITableVie
         TagSettingTableView.delegate = self
         TagSettingTableView.dataSource = self
         
+        let defaults = NSUserDefaults.standardUserDefaults()
+        
+        tagDics = defaults.objectForKey("tag") as! [String:String]
+        
         //cellに設定する値の設定
-        for tag in tagNames{
-            let tagModel:TagModel = TagModel(name: tag, detail: "")
+        for (name,detail) in tagDics{
+            let tagModel:TagModel = TagModel(name: name, detail: detail)
             tags.append(tagModel)
         }
         
     }
     
-    
-    
-    /*
-    func tableViewScrollToBottom(animated: Bool) {
-    
-    let delay = 0.1 * Double(NSEC_PER_SEC)
-    let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
-    
-    dispatch_after(time, dispatch_get_main_queue(), {
-    
-    let numberOfSections = self.SettingTableView.numberOfSections
-    let numberOfRows = self.SettingTableView.numberOfRowsInSection(numberOfSections-1)
-    
-    if numberOfRows > 0 {
-    let indexPath = NSIndexPath(forRow: numberOfRows-1, inSection: (numberOfSections-1))
-    self.SettingTableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        //キーボード
+        let notificationCenter = NSNotificationCenter.defaultCenter()
+        notificationCenter.addObserver(self, selector: "handleKeyboardWillShowNotification:", name: UIKeyboardWillShowNotification, object: nil)
+        notificationCenter.addObserver(self, selector: "handleKeyboardWillHideNotification:", name: UIKeyboardWillHideNotification, object: nil)
+        
     }
     
-    })
+    override func viewDidDisappear(animated: Bool) {
+        
+        super.viewDidDisappear(animated)
+        //キーボード
+        let notificationCenter = NSNotificationCenter.defaultCenter()
+        notificationCenter.removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+        notificationCenter.removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
     }
-    */
+    
+   
+    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        //print("scroll")
+        //スクロールをはじめたらキーボードを閉じる
+        selectTextFiled.resignFirstResponder()
+        //selectTextView.resignFirstResponder()
+        
+    }
 
+
+    //自動スクロール
+    func handleKeyboardWillShowNotification(notification: NSNotification) {
+        
+        let cell: SettingTagTableViewCell = TagSettingTableView.dequeueReusableCellWithIdentifier("TagSettingTableViewCell", forIndexPath: selectIndex) as! SettingTagTableViewCell
+        
+        let userInfo = notification.userInfo!
+        let keyboardScreenEndFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
+        let myBoundSize: CGSize = UIScreen.mainScreen().bounds.size
+        
+        let txtLimit = cell.frame.origin.y + cell.frame.height + 8.0
+        let kbdLimit = myBoundSize.height - keyboardScreenEndFrame.size.height
+        
+        if txtLimit >= kbdLimit {
+            TagSettingTableView.contentOffset.y = txtLimit - kbdLimit
+        }
+    }
+    
+    func handleKeyboardWillHideNotification(notification: NSNotification) {
+        TagSettingTableView.contentOffset.y = 0
+    }
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath:NSIndexPath) -> UITableViewCell {
         
         let cell: SettingTagTableViewCell = tableView.dequeueReusableCellWithIdentifier("TagSettingTableViewCell", forIndexPath: indexPath) as! SettingTagTableViewCell
@@ -65,18 +100,6 @@ class TagSettingViewController: UIViewController,UITableViewDelegate, UITableVie
         
         return cell
     }
-
-    /*
-    //cellが選択されたとき
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    
-    //print(indexPath.row)
-    //SettingTableView.scrollToRowAtIndexPath(indexPath, atScrollPosition:UITableViewScrollPosition.Bottom , animated: true)
-    
-    tableViewScrollToBottom(true)
-    
-    }
-    */
     
     // セクション数
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -88,35 +111,24 @@ class TagSettingViewController: UIViewController,UITableViewDelegate, UITableVie
         return tags.count
     }
     
-    /*
-    //UITextFieldが編集された直後に呼ばれるデリゲートメソッド.
-    func textFieldDidBeginEditing(textField: UITextField) {
     
-    let delay = 0.1 * Double(NSEC_PER_SEC)
-    let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
     
-    dispatch_after(time, dispatch_get_main_queue(), {
-    
-    let indexPath = NSIndexPath(forRow: textField.tag, inSection: 0)
-    self.SettingTableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
-    })
-    }
-    */
-    
-    //UITextViewが終了する直前に呼ばれる
-    func textViewShouldEndEditing(textView: UITextView) -> Bool {
-        //自己紹介保存
-        //print("Save UserDetail : \(textView.text!)")
-        //userDetailString = textView.text
+    //UITextFieldが編集開始する直前に呼ばれる
+    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
         
+        //選択されたindexを保存
+        selectIndex = NSIndexPath(forRow: textField.tag, inSection: 0)
+        //スクロールしたらキーボードが消える用
+        selectTextFiled = textField
         return true
     }
     
     //UITextFieldが編集終了する直前に呼ばれる
     func textFieldShouldEndEditing(textField: UITextField) -> Bool {
-        //ユーザ名保存
-        //print("Save UserName : \(textField.text!)")
-        //userNameString = textField.text!
+    
+        //tag保存
+        print("Save Tag Detail : \(textField.placeholder!) -> \(textField.text!)")
+        tagDics.updateValue("\(textField.text!)", forKey: "\(textField.placeholder!)")
         
         return true
     }
@@ -130,12 +142,13 @@ class TagSettingViewController: UIViewController,UITableViewDelegate, UITableVie
     //画面が消去するときに呼ばれる
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
+        selectTextFiled.resignFirstResponder()
         
         let defaults = NSUserDefaults.standardUserDefaults()
-        
+        defaults.setObject(tagDics, forKey: "tag")
         defaults.synchronize()
         
-        print("\nSave Profile\n")
+        //print("Save Tag\n")
     }
      
     override func didReceiveMemoryWarning() {
@@ -145,4 +158,8 @@ class TagSettingViewController: UIViewController,UITableViewDelegate, UITableVie
     
     
 }
+
+
+
+
 

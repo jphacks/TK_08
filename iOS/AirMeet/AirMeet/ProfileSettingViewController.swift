@@ -20,8 +20,15 @@ class ProfileSettingViewController: UIViewController,UITextFieldDelegate,UITextV
     @IBOutlet weak var userDetailTextView: UITextView!
     @IBOutlet weak var userNameTextField: HoshiTextField!
     
+    @IBOutlet var scrollView: UIScrollView!
     var userNameString:String?
     var userDetailString:String?
+    
+    var selectTextFiled:UITextField = UITextField()
+    var selectTextView:UITextView = UITextView()
+    
+    @IBOutlet weak var userDetailLabel: UILabel!
+    
    
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,6 +61,8 @@ class ProfileSettingViewController: UIViewController,UITextFieldDelegate,UITextV
         
         userDetailTextView.text = "\(defaults.stringForKey("detail")!)"
         userDetailString = "\(defaults.stringForKey("detail")!)"
+        //文字数表示
+        userDetailLabel.text = "自己紹介　\(80 - userDetailString!.utf16.count)"
         
         //戻るボタン設定
         let backButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
@@ -65,6 +74,48 @@ class ProfileSettingViewController: UIViewController,UITextFieldDelegate,UITextV
         let backData:NSData = defaults.objectForKey("back") as! NSData
         backImageView.image = UIImage(data: backData)
         
+        scrollView.delegate = self
+        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        //キーボード
+        let notificationCenter = NSNotificationCenter.defaultCenter()
+        notificationCenter.addObserver(self, selector: "handleKeyboardWillShowNotification:", name: UIKeyboardWillShowNotification, object: nil)
+        notificationCenter.addObserver(self, selector: "handleKeyboardWillHideNotification:", name: UIKeyboardWillHideNotification, object: nil)
+        
+    }
+    
+    //テキストの文字数が変更されるたびに呼ばれる
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+
+        //改行禁止
+        if text == "\n" {
+            textView.resignFirstResponder() //キーボードを閉じる
+            return false
+        }
+        
+        let textLength = ( textView.text.utf16.count - range.length ) + text.utf16.count
+        
+         //文字数表示
+        if textLength > 80{
+            userDetailLabel.text = "自己紹介　\(0)"
+            print("String Over")
+            textView.resignFirstResponder() //キーボードを閉じる
+            return false
+            
+        }else{
+            userDetailLabel.text = "自己紹介　\(80-textLength)"
+        }
+      
+        return true
+    }
+    
+    func textViewShouldBeginEditing(textView: UITextView) -> Bool {
+        //スクロールしたらキーボードが消える用
+        selectTextView = textView
+        return true
     }
     
     //UITextViewが終了する直前に呼ばれる
@@ -73,6 +124,12 @@ class ProfileSettingViewController: UIViewController,UITextFieldDelegate,UITextV
         print("Save UserDetail : \(textView.text!)")
         userDetailString = textView.text
         
+        return true
+    }
+    
+    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+        //スクロールしたらキーボードが消える用
+        selectTextFiled = textField
         return true
     }
     
@@ -91,9 +148,37 @@ class ProfileSettingViewController: UIViewController,UITextFieldDelegate,UITextV
         return true
     }
     
-    //画面が消える前に呼び出し（保存するタイミングあとでチェック）
+    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        //print("scroll")
+        //スクロールをはじめたらキーボードを閉じる
+        selectTextFiled.resignFirstResponder()
+        selectTextView.resignFirstResponder()
+
+    }
+    
+    //自動スクロール
+    func handleKeyboardWillShowNotification(notification: NSNotification) {
+        
+        let userInfo = notification.userInfo!
+        let keyboardScreenEndFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
+        let myBoundSize: CGSize = UIScreen.mainScreen().bounds.size
+        
+        let txtLimit = userDetailTextView.frame.origin.y + userDetailTextView.frame.height + 8.0
+        let kbdLimit = myBoundSize.height - keyboardScreenEndFrame.size.height
+        
+        if txtLimit >= kbdLimit {
+            scrollView.contentOffset.y = txtLimit - kbdLimit
+        }
+    }
+    
+    func handleKeyboardWillHideNotification(notification: NSNotification) {
+        scrollView.contentOffset.y = 0
+    }
+    
+    //画面が消える前に呼び出し
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
+        selectTextFiled.resignFirstResponder()
         
         let defaults = NSUserDefaults.standardUserDefaults()
         
@@ -102,7 +187,16 @@ class ProfileSettingViewController: UIViewController,UITextFieldDelegate,UITextV
         
         defaults.synchronize()
         
-        print("\nSave Profile\n")
+        //print("Save Profile\n")
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        
+        super.viewDidDisappear(animated)
+        //キーボード
+        let notificationCenter = NSNotificationCenter.defaultCenter()
+        notificationCenter.removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+        notificationCenter.removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
     }
     
     //顔画像

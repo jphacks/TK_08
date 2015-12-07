@@ -81,11 +81,11 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         facebookImageView.layer.cornerRadius = facebookImageView.frame.size.width/2.0
         facebookImageView.layer.masksToBounds = true
         facebookImageView.layer.borderColor = defaultColor.CGColor
-        facebookImageView.layer.borderWidth = 2.0
+        facebookImageView.layer.borderWidth = 1.0
         twitterImageView.layer.cornerRadius = twitterImageView.frame.size.width/2.0
         twitterImageView.layer.masksToBounds = true
         twitterImageView.layer.borderColor = defaultColor.CGColor
-        twitterImageView.layer.borderWidth = 2.0
+        twitterImageView.layer.borderWidth = 1.0
         
         //プロフィール変更ボタン
         profileChangeButton.layer.borderColor = UIColor.lightGrayColor().CGColor
@@ -146,8 +146,9 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
             //デフォルト
             defaults.setObject("空気 会太郎", forKey: "name")
             defaults.setObject("よろしくおねがいします", forKey: "detail")
-            //defaults.setObject("空気会太郎", forKey: "facebook")
-            //defaults.setObject("@AirMeet", forKey: "twitter")
+            
+            let tagDics = ["所属名":"","住んでいる都道府県":"","趣味":"","専門分野":"","特技":"","発表内容":"","性別":"","年齢":""]
+            defaults.setObject(tagDics, forKey: "tag")
             
             defaults.setObject(UIImagePNGRepresentation(userImageView.image!), forKey: "image")
             defaults.setObject(UIImagePNGRepresentation(backImageView.image!), forKey: "back")

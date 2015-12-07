@@ -83,7 +83,7 @@
                                         </constraints>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="15"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="color" keyPath="borderInactiveColor">
                                                 <color key="value" red="0.50196078430000002" green="0.80000000000000004" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -92,7 +92,7 @@
                                                 <color key="value" red="0.50196078430000002" green="0.80000000000000004" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
-                                                <color key="value" red="0.50196078430000002" green="0.80000000000000004" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="value" red="0.49321281909999998" green="0.67183786629999998" blue="0.90501433610000004" alpha="1" colorSpace="calibratedRGB"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                         <variation key="default">
@@ -105,24 +105,24 @@
                                         </variation>
                                     </textField>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" text="detail" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="NiN-1L-FWY">
-                                        <rect key="frame" x="18" y="256" width="564" height="100"/>
+                                        <rect key="frame" x="18" y="256" width="564" height="130"/>
                                         <animations/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="100" id="jdy-q5-DFR"/>
+                                            <constraint firstAttribute="height" constant="130" id="jdy-q5-DFR"/>
                                         </constraints>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
                                     </textView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="自己紹介" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bCl-89-6r0">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="自己紹介　80" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bCl-89-6r0">
                                         <rect key="frame" x="18" y="236" width="564" height="20"/>
                                         <animations/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="20" id="FbV-Ez-Q69"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="10"/>
-                                        <color key="textColor" red="0.50196078430000002" green="0.80000000000000004" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="9"/>
+                                        <color key="textColor" red="0.35167902708053589" green="0.51690858602523804" blue="0.85119509696960449" alpha="0.5" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-camera.png" translatesAutoresizingMaskIntoConstraints="NO" id="99r-5I-VwF">
@@ -149,25 +149,8 @@
                                             </mask>
                                         </variation>
                                     </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gq1-cN-HLr">
-                                        <rect key="frame" x="20" y="460" width="560" height="50"/>
-                                        <animations/>
-                                        <color key="backgroundColor" red="0.0" green="0.67450980392156867" blue="0.92941176470588238" alpha="1" colorSpace="calibratedRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="50" id="6I2-Ws-PuV"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="20"/>
-                                        <state key="normal" title="Twitter">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                <integer key="value" value="3"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HzZ-rc-VIJ">
-                                        <rect key="frame" x="20" y="518" width="560" height="50"/>
+                                        <rect key="frame" x="20" y="548" width="560" height="50"/>
                                         <animations/>
                                         <color key="backgroundColor" red="0.18823529411764706" green="0.31372549019607843" blue="0.59215686274509804" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -184,7 +167,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JIv-J6-gT9">
-                                        <rect key="frame" x="0.0" y="380" width="600" height="50"/>
+                                        <rect key="frame" x="0.0" y="410" width="600" height="50"/>
                                         <animations/>
                                         <color key="backgroundColor" red="0.50196078430000002" green="0.80000000000000004" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -199,13 +182,30 @@
                                         </connections>
                                     </button>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="header-next.png" translatesAutoresizingMaskIntoConstraints="NO" id="DdL-C6-igu">
-                                        <rect key="frame" x="550" y="390" width="50" height="30"/>
+                                        <rect key="frame" x="550" y="420" width="50" height="30"/>
                                         <animations/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="50" id="Axq-lx-a4j"/>
                                             <constraint firstAttribute="height" constant="30" id="k8T-Z3-SPU"/>
                                         </constraints>
                                     </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gq1-cN-HLr">
+                                        <rect key="frame" x="20" y="490" width="560" height="50"/>
+                                        <animations/>
+                                        <color key="backgroundColor" red="0.0" green="0.67450980392156867" blue="0.92941176470588238" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="6I2-Ws-PuV"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="20"/>
+                                        <state key="normal" title="Twitter">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="3"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </button>
                                 </subviews>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -248,12 +248,14 @@
                                     <constraint firstAttribute="trailing" secondItem="JIv-J6-gT9" secondAttribute="trailing" id="wXx-fH-V77"/>
                                     <constraint firstItem="Vry-TD-O9p" firstAttribute="leading" secondItem="BeF-J1-LVs" secondAttribute="leading" constant="18" id="yFe-8M-VaN"/>
                                     <constraint firstItem="JIv-J6-gT9" firstAttribute="leading" secondItem="BeF-J1-LVs" secondAttribute="leading" id="yW6-Pb-XG0"/>
+                                    <constraint firstItem="JIv-J6-gT9" firstAttribute="top" secondItem="NiN-1L-FWY" secondAttribute="bottom" constant="24" id="zv3-jf-vhm"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="FtW-8i-cVI"/>
                                         <exclude reference="HkF-42-z7L"/>
                                         <exclude reference="dCf-V1-qRM"/>
+                                        <exclude reference="mxT-C8-May"/>
                                     </mask>
                                 </variation>
                             </view>
@@ -272,7 +274,9 @@
                     <size key="freeformSize" width="600" height="800"/>
                     <connections>
                         <outlet property="backImageView" destination="xzh-2X-W1a" id="z64-FT-gtM"/>
+                        <outlet property="scrollView" destination="IuU-a1-aUr" id="DRV-2e-Pme"/>
                         <outlet property="settingImageButton" destination="Vry-TD-O9p" id="LUO-R3-Ezj"/>
+                        <outlet property="userDetailLabel" destination="bCl-89-6r0" id="0kd-PY-1QL"/>
                         <outlet property="userDetailTextView" destination="NiN-1L-FWY" id="lwe-qN-2ZQ"/>
                         <outlet property="userImageView" destination="71e-jI-XEs" id="mKm-61-Sni"/>
                         <outlet property="userNameTextField" destination="QIN-uk-ThB" id="ztc-zm-mJB"/>
@@ -318,7 +322,7 @@
                                                     </constraints>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" name="HiraginoSans-W3" family="Hiragino Sans" pointSize="15"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="color" keyPath="borderInactiveColor">
                                                             <color key="value" red="0.50196078430000002" green="0.80000000000000004" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -327,15 +331,15 @@
                                                             <color key="value" red="0.50196078430000002" green="0.80000000000000004" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
-                                                            <color key="value" red="0.50196078430000002" green="0.80000000000000004" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <color key="value" red="0.49321281909942627" green="0.67183786630630493" blue="0.90501433610916138" alpha="1" colorSpace="calibratedRGB"/>
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                     <variation key="default">
                                                         <mask key="constraints">
-                                                            <exclude reference="mXS-S2-lMW"/>
-                                                            <exclude reference="fdQ-2M-xfa"/>
-                                                            <exclude reference="SwT-7D-8rQ"/>
                                                             <exclude reference="Dgo-sv-aMP"/>
+                                                            <exclude reference="SwT-7D-8rQ"/>
+                                                            <exclude reference="fdQ-2M-xfa"/>
+                                                            <exclude reference="mXS-S2-lMW"/>
                                                             <exclude reference="wmB-vC-2Wo"/>
                                                         </mask>
                                                     </variation>
