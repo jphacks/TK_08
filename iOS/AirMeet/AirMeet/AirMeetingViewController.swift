@@ -38,6 +38,9 @@ class AirMeetingViewController: UIViewController, CBPeripheralManagerDelegate, N
         
         // PeripheralManagerを定義.
         myPheripheralManager = CBPeripheralManager(delegate: self, queue: nil)
+        
+        ///（kmdr,momoka）
+        ///ずっとつきっぱなしのコード追加
     }
     
     func peripheralManagerDidUpdateState(peripheral: CBPeripheralManager) {
@@ -64,39 +67,39 @@ class AirMeetingViewController: UIViewController, CBPeripheralManagerDelegate, N
     //終了
     @IBAction func ParentStopButton(sender: AnyObject) {
         
-        //こんなかんじのことをalertで
+        ///（kmdr,momoka）
+        ///保存されたpassとalertで入力した数値が一致したときに、以下の通信を実行するようにしてください
         if "0000" == appDelegate.parentPass{
             
-        }
-        
-        // 通信用のConfigを生成.
-        let myConfig:NSURLSessionConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()
-        
-        // Sessionを生成.
-        let mySession:NSURLSession = NSURLSession(configuration: myConfig, delegate: self, delegateQueue: nil)
-        
-        let post = "major=\(appDelegate.parentID!)"
-        let postData = post.dataUsingEncoding(NSUTF8StringEncoding)
-        
-        //print(postData!)
-        
-        let url = NSURL(string: "http://airmeet.mybluemix.net/remove_event")
-        
-        let request:NSMutableURLRequest = NSMutableURLRequest(URL: url!)
-        request.HTTPMethod = "POST"
-        request.HTTPBody = postData
-        
-        request.addValue("a", forHTTPHeaderField: "X-AccessToken")
-        //request.addValue(appDelegate.parentID!, forHTTPHeaderField: "major")
-        
-        let task:NSURLSessionDataTask = mySession.dataTaskWithRequest(request)
-        
-        print("Resume Task ↓")
-        //くるくるスタート
-        self.view.addSubview(indicator)
-        self.indicator.startAnimation()
+            // 通信用のConfigを生成.
+            let myConfig:NSURLSessionConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()
+            
+            // Sessionを生成.
+            let mySession:NSURLSession = NSURLSession(configuration: myConfig, delegate: self, delegateQueue: nil)
+            
+            let post = "major=\(appDelegate.parentID!)"
+            let postData = post.dataUsingEncoding(NSUTF8StringEncoding)
+            
+            //print(postData!)
+            
+            let url = NSURL(string: "http://airmeet.mybluemix.net/remove_event")
+            
+            let request:NSMutableURLRequest = NSMutableURLRequest(URL: url!)
+            request.HTTPMethod = "POST"
+            request.HTTPBody = postData
+            
+            request.addValue("a", forHTTPHeaderField: "X-AccessToken")
+            //request.addValue(appDelegate.parentID!, forHTTPHeaderField: "major")
+            
+            let task:NSURLSessionDataTask = mySession.dataTaskWithRequest(request)
+            
+            print("Resume Task ↓")
+            //くるくるスタート
+            self.view.addSubview(indicator)
+            self.indicator.startAnimation()
 
-        task.resume()
+            task.resume()
+        }
 
     }
     
@@ -141,13 +144,14 @@ class AirMeetingViewController: UIViewController, CBPeripheralManagerDelegate, N
                 action in
             }
             alert.addAction(okAction)
-            self.presentViewController(alert, animated: true, completion: nil)
+           
             
             //非同期
             dispatch_async(dispatch_get_main_queue(), {
                 //くるくるストップ
                 self.indicator.stopAnimation(true, completion: nil)
                 self.indicator.removeFromSuperview()
+                self.presentViewController(alert, animated: true, completion: nil)
                 
             })
            

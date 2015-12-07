@@ -13,6 +13,8 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
     
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
+    let defaultColor:UIColor = UIColor(red: 128.0/255.0, green: 204.0/255.0, blue: 223.0/255.0, alpha: 1)//水色
+    
     //送信機側と合わせるUUID
     let proximityUUID = NSUUID(UUIDString:"B9407F30-F5F8-466E-AFF9-33333B57FE6D")
     var region  = CLBeaconRegion()//UUIDの設定
@@ -24,6 +26,9 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
     
     @IBOutlet weak var backImageView: UIImageView!//背景画像
     @IBOutlet weak var userImageView: UIImageView!//ユーザ画像
+    
+    @IBOutlet weak var facebookImageView: UIImageView!
+    @IBOutlet weak var twitterImageView: UIImageView!
     
     @IBOutlet weak var nameLabel: UILabel!//ユーザ名
     @IBOutlet weak var detailLabel: UILabel!//自己紹介
@@ -49,7 +54,7 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         self.sideMenuController()?.sideMenu?.delegate = self
         
         //Navigationbar色
-        self.navigationController?.navigationBar.barTintColor=UIColor(red: 128.0/255.0, green: 204.0/255.0, blue: 223.0/255.0, alpha: 1)//水色
+        self.navigationController?.navigationBar.barTintColor = defaultColor
         self.navigationController?.navigationBar.tintColor=UIColor.whiteColor()
         
         //Navigationbar画像
@@ -72,6 +77,16 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         userImageView.layer.borderColor = UIColor.whiteColor().CGColor
         userImageView.layer.borderWidth = 3.0
         
+        //Facebook,Twitterアイコンまるく
+        facebookImageView.layer.cornerRadius = facebookImageView.frame.size.width/2.0
+        facebookImageView.layer.masksToBounds = true
+        facebookImageView.layer.borderColor = defaultColor.CGColor
+        facebookImageView.layer.borderWidth = 1.0
+        twitterImageView.layer.cornerRadius = twitterImageView.frame.size.width/2.0
+        twitterImageView.layer.masksToBounds = true
+        twitterImageView.layer.borderColor = defaultColor.CGColor
+        twitterImageView.layer.borderWidth = 1.0
+        
         //プロフィール変更ボタン
         profileChangeButton.layer.borderColor = UIColor.lightGrayColor().CGColor
         profileChangeButton.layer.borderWidth = 1.0
@@ -80,6 +95,8 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         let backButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         navigationItem.backBarButtonItem = backButtonItem
         
+        ///（kmdr,momoka）
+        ///おしゃれに（SpringIndicator）
         //ぐるぐる設定
         indicator.frame = CGRectMake(self.view.frame.width/2-self.view.frame.width/8,self.view.frame.height/2-self.view.frame.width/8,self.view.frame.width/4,self.view.frame.width/4)
         indicator.lineWidth = 3
@@ -476,7 +493,7 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         appDelegate.selectEvent = events[indexPath.row]
         
         let storyboard: UIStoryboard = UIStoryboard(name: "Child", bundle: NSBundle.mainBundle())
-        let childViewController: ChildFirstSettingViewController = storyboard.instantiateInitialViewController() as! ChildFirstSettingViewController
+        let childViewController: JoinAirMeetViewController = storyboard.instantiateInitialViewController() as! JoinAirMeetViewController
         
         //子モードに遷移
         self.navigationController?.pushViewController(childViewController, animated: true)
@@ -513,7 +530,7 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
     @IBAction func ChildButton(sender: AnyObject) {
         
         let storyboard: UIStoryboard = UIStoryboard(name: "Child", bundle: NSBundle.mainBundle())
-        let childViewController: ChildFirstSettingViewController = storyboard.instantiateInitialViewController() as! ChildFirstSettingViewController
+        let childViewController: JoinAirMeetViewController = storyboard.instantiateInitialViewController() as! JoinAirMeetViewController
         
         self.navigationController?.pushViewController(childViewController, animated: true)
         

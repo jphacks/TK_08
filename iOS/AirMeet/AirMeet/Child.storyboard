@@ -5,10 +5,10 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--ChildSetting-->
+        <!--JoinAirMeet-->
         <scene sceneID="2cT-g9-XJg">
             <objects>
-                <viewController storyboardIdentifier="ChildFirstSettingViewController" title="ChildSetting" id="FAh-JI-MxM" customClass="ChildFirstSettingViewController" customModule="AirMeet" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="JoinAirMeetViewController" title="JoinAirMeet" id="FAh-JI-MxM" customClass="JoinAirMeetViewController" customModule="AirMeet" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="U8T-gq-hGa"/>
                         <viewControllerLayoutGuide type="bottom" id="hlJ-jL-YhB"/>

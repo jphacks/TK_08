@@ -1,5 +1,5 @@
 //
-//  ChildFirstSettingViewController.swift
+//  JoinAirMeetViewController.swift
 //  AirMeet
 //
 //  Created by koooootake on 2015/11/28.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ChildFirstSettingViewController: UIViewController,UITableViewDelegate, UITableViewDataSource,UITextFieldDelegate,NSURLSessionDelegate,NSURLSessionDataDelegate {
+class JoinAirMeetViewController: UIViewController,UITableViewDelegate, UITableViewDataSource,UITextFieldDelegate,NSURLSessionDelegate,NSURLSessionDataDelegate {
     
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     

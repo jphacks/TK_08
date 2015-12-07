@@ -14,7 +14,7 @@
 		46435BE71C0AB6E900361ABA /* IMG_8996.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 46435BE61C0AB6E900361ABA /* IMG_8996.JPG */; };
 		46435BE91C0AB6F900361ABA /* IMG_9004.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 46435BE81C0AB6F900361ABA /* IMG_9004.JPG */; };
 		46435BEB1C0AB9D800361ABA /* Child.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46435BEA1C0AB9D800361ABA /* Child.storyboard */; };
-		46435BED1C0AB9FE00361ABA /* ChildFirstSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46435BEC1C0AB9FE00361ABA /* ChildFirstSettingViewController.swift */; };
+		46435BED1C0AB9FE00361ABA /* JoinAirMeetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46435BEC1C0AB9FE00361ABA /* JoinAirMeetViewController.swift */; };
 		465F30661C0E6FE7008842B8 /* ENSideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465F30641C0E6FE7008842B8 /* ENSideMenu.swift */; };
 		465F30671C0E6FE7008842B8 /* ENSideMenuNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465F30651C0E6FE7008842B8 /* ENSideMenuNavigationController.swift */; };
 		465F30691C0E7172008842B8 /* OriginalTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465F30681C0E7172008842B8 /* OriginalTabBarController.swift */; };
@@ -109,7 +109,7 @@
 		46435BE61C0AB6E900361ABA /* IMG_8996.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = IMG_8996.JPG; sourceTree = "<group>"; };
 		46435BE81C0AB6F900361ABA /* IMG_9004.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = IMG_9004.JPG; sourceTree = "<group>"; };
 		46435BEA1C0AB9D800361ABA /* Child.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Child.storyboard; sourceTree = "<group>"; };
-		46435BEC1C0AB9FE00361ABA /* ChildFirstSettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChildFirstSettingViewController.swift; sourceTree = "<group>"; };
+		46435BEC1C0AB9FE00361ABA /* JoinAirMeetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JoinAirMeetViewController.swift; sourceTree = "<group>"; };
 		465F30641C0E6FE7008842B8 /* ENSideMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ENSideMenu.swift; sourceTree = "<group>"; };
 		465F30651C0E6FE7008842B8 /* ENSideMenuNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ENSideMenuNavigationController.swift; sourceTree = "<group>"; };
 		465F30681C0E7172008842B8 /* OriginalTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OriginalTabBarController.swift; sourceTree = "<group>"; };
@@ -274,6 +274,15 @@
 			path = SpringIndicator;
 			sourceTree = "<group>";
 		};
+		4693CEF31C149FFA0034328D /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				46B611231C09447D00102AC0 /* Main.storyboard */,
+				46B611211C09447D00102AC0 /* MainViewController.swift */,
+			);
+			name = Main;
+			sourceTree = "<group>";
+		};
 		46B218A71C0C3AD100997E3B /* JSON */ = {
 			isa = PBXGroup;
 			children = (
@@ -307,15 +316,14 @@
 			isa = PBXGroup;
 			children = (
 				46B6111F1C09447D00102AC0 /* AppDelegate.swift */,
-				46B611231C09447D00102AC0 /* Main.storyboard */,
-				46B611211C09447D00102AC0 /* MainViewController.swift */,
+				4693CEF31C149FFA0034328D /* Main */,
 				46B611591C09510600102AC0 /* Parent */,
+				46B6115A1C09511000102AC0 /* Child */,
+				46B611701C0966FE00102AC0 /* Profile */,
 				465841551C0E6F2A00D977AF /* Menu */,
 				46435BEE1C0ABD8800361ABA /* TableView */,
 				46B6118A1C09A40B00102AC0 /* Model */,
-				46B611701C0966FE00102AC0 /* Profile */,
 				46B611691C095C4400102AC0 /* Meet */,
-				46B6115A1C09511000102AC0 /* Child */,
 				46B218A71C0C3AD100997E3B /* JSON */,
 				4693CEA51C120B400034328D /* SpringIndicator */,
 				465F306A1C0E7243008842B8 /* SABlurImageView */,
@@ -360,7 +368,7 @@
 			isa = PBXGroup;
 			children = (
 				46435BEA1C0AB9D800361ABA /* Child.storyboard */,
-				46435BEC1C0AB9FE00361ABA /* ChildFirstSettingViewController.swift */,
+				46435BEC1C0AB9FE00361ABA /* JoinAirMeetViewController.swift */,
 				46B611731C096BE100102AC0 /* ChildRoomViewController.swift */,
 				465F30681C0E7172008842B8 /* OriginalTabBarController.swift */,
 				46B611631C09560C00102AC0 /* Will Meet */,
@@ -649,7 +657,7 @@
 				46B611561C094BA700102AC0 /* AirMeetingViewController.swift in Sources */,
 				46B611721C09676E00102AC0 /* ProfileSettingViewController.swift in Sources */,
 				46B611541C09488600102AC0 /* ChildSettingViewController.swift in Sources */,
-				46435BED1C0AB9FE00361ABA /* ChildFirstSettingViewController.swift in Sources */,
+				46435BED1C0AB9FE00361ABA /* JoinAirMeetViewController.swift in Sources */,
 				46B6115C1C09519100102AC0 /* ChildTagViewController.swift in Sources */,
 				465F30811C0E72CF008842B8 /* KaedeTextField.swift in Sources */,
 				46B6116B1C095C6800102AC0 /* MeetListViewController.swift in Sources */,

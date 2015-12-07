@@ -257,8 +257,8 @@ class MakeAirMeetViewController: UIViewController,UITextFieldDelegate,NSURLSessi
             appDelegate.isParent = true
             
             ///（kmdr,momoka）
-            //アラートだしてパスを入力してokを押したら画面遷移
-            //パスはここに保存
+            ///アラート（デフォorオリジナル）だしてパスを入力してokを押したら画面遷移
+            ///パスはここに保存
             appDelegate.parentPass = "0000"
             //画面遷移
             self.performSegueWithIdentifier("startSegue",sender: nil)
@@ -284,16 +284,17 @@ class MakeAirMeetViewController: UIViewController,UITextFieldDelegate,NSURLSessi
                 action in
             }
             alert.addAction(okAction)
-            self.presentViewController(alert, animated: true, completion: nil)
-            
-            MakeAirMeetButton.enabled = true
-            MakeAirMeetButton.alpha = 1.0
             
             //非同期
             dispatch_async(dispatch_get_main_queue(), {
                 //くるくるストップ
                 self.indicator.stopAnimation(true, completion: nil)
                 self.indicator.removeFromSuperview()
+                
+                self.MakeAirMeetButton.enabled = true
+                self.MakeAirMeetButton.alpha = 1.0
+                
+                self.presentViewController(alert, animated: true, completion: nil)
                 
             })
             

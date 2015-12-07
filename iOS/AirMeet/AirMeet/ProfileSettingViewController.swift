@@ -8,13 +8,18 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController,UITableViewDelegate, UITableViewDataSource,UITextFieldDelegate,UIScrollViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate  {
+class ProfileViewController: UIViewController,UITableViewDelegate, UITableViewDataSource,UITextFieldDelegate,UITextViewDelegate, UIScrollViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate  {
     
+    //プロフィール項目の設定テーブル
     @IBOutlet weak var SettingTableView: UITableView!
     
     @IBOutlet weak var backImageView: UIImageView!
-    @IBOutlet weak var imageImageView: UIImageView!
+    @IBOutlet weak var userImageView: UIImageView!
+    
     @IBOutlet weak var settingImageButton: UIButton!
+    
+    @IBOutlet weak var userNameTextField: UITextField!
+    @IBOutlet weak var userDetailTextView: UITextView!
 
     var tags:[TagModel] = [TagModel]()
    
@@ -26,20 +31,26 @@ class ProfileViewController: UIViewController,UITableViewDelegate, UITableViewDa
         self.navigationController?.navigationBar.tintColor=UIColor.whiteColor()
         
         //アイコンまる
-        imageImageView.layer.cornerRadius = imageImageView.frame.size.width/2.0
-        imageImageView.layer.masksToBounds = true
-        imageImageView.layer.borderColor = UIColor.whiteColor().CGColor
-        imageImageView.layer.borderWidth = 3.0
+        userImageView.layer.cornerRadius = userImageView.frame.size.width/2.0
+        userImageView.layer.masksToBounds = true
+        userImageView.layer.borderColor = UIColor.whiteColor().CGColor
+        userImageView.layer.borderWidth = 3.0
         
         settingImageButton.layer.cornerRadius = settingImageButton.frame.size.width/2.0
         settingImageButton.layer.masksToBounds = true
         
         SettingTableView.delegate = self
         SettingTableView.dataSource = self
-        //SettingTableView.scrollEnabled = true
+        SettingTableView.scrollEnabled = true
         
+        userNameTextField.delegate = self
+        userDetailTextView.delegate = self
         
         let defaults = NSUserDefaults.standardUserDefaults()
+        
+        userNameTextField.text = "\(defaults.stringForKey("name")!)"
+        userDetailTextView.text = "\(defaults.stringForKey("detail")!)"
+        
         
         //設定
         let tag1:TagModel = TagModel(name:"アカウント名",detail: "\(defaults.stringForKey("name")!)")
@@ -53,7 +64,7 @@ class ProfileViewController: UIViewController,UITableViewDelegate, UITableViewDa
         tags.append(tag4)
         
         let imageData:NSData = defaults.objectForKey("image") as! NSData
-        imageImageView.image = UIImage(data:imageData)
+        userImageView.image = UIImage(data:imageData)
         
         let backData:NSData = defaults.objectForKey("back") as! NSData
         backImageView.image = UIImage(data: backData)
@@ -113,7 +124,6 @@ class ProfileViewController: UIViewController,UITableViewDelegate, UITableViewDa
     //UITextFieldが編集された直後に呼ばれるデリゲートメソッド.
     func textFieldDidBeginEditing(textField: UITextField) {
         
-        
         print("index : \(textField.tag)")
         
         let delay = 0.1 * Double(NSEC_PER_SEC)
@@ -156,6 +166,7 @@ class ProfileViewController: UIViewController,UITableViewDelegate, UITableViewDa
         
         print("Save")
     }
+    
     //顔画像
     @IBAction func settingImageButton(sender: AnyObject) {
         
@@ -173,6 +184,7 @@ class ProfileViewController: UIViewController,UITableViewDelegate, UITableViewDa
         self.presentViewController(pickerController, animated: true, completion: nil)
         
     }
+    
     //背景画像読み込み
     @IBAction func settingBackButton(sender: AnyObject) {
         
@@ -180,8 +192,10 @@ class ProfileViewController: UIViewController,UITableViewDelegate, UITableViewDa
         pickerController.delegate = self
         pickerController.view.tag = 1
         
-        //正方形トリミング
+        ///（kmdr,momoka）
+        ///正方形トリミングを指定した縦幅トリミングに(w:self.view.frame.width, h:120?)とか
         pickerController.allowsEditing = true
+        
         pickerController.navigationBar.translucent = false
         pickerController.navigationBar.backgroundColor = UIColor(red: 128.0/255.0, green: 204.0/255.0, blue: 223.0/255.0, alpha: 1)//水色
         
@@ -193,19 +207,22 @@ class ProfileViewController: UIViewController,UITableViewDelegate, UITableViewDa
     }
     
     
-    // 画像が選択されたとき
+    // 画像が選択されたとき呼び出される
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
         // アルバム画面を閉じる
         picker.dismissViewControllerAnimated(true, completion: nil);
         
-        // 画像をリサイズを呼び出したい
         switch picker.view.tag{
+        //ユーザ画像
         case 0:
-            imageImageView.image = image
+            userImageView.image = image
             let defaults = NSUserDefaults.standardUserDefaults()
             defaults.setObject(UIImagePNGRepresentation(image), forKey: "image")
             break
+        //背景画像
         case 1:
+            
+            ///トリミング終了した画像をここにSet
             backImageView.image = image
             let defaults = NSUserDefaults.standardUserDefaults()
             defaults.setObject(UIImagePNGRepresentation(image), forKey: "back")
@@ -216,7 +233,7 @@ class ProfileViewController: UIViewController,UITableViewDelegate, UITableViewDa
         
     }
     
-    // 画像をリサイズしたい
+    // 画像をリサイズしたい（つかってない）
     func resize(image: UIImage, width: Int, height: Int) -> UIImage {
         //let imageRef: CGImageRef = image.CGImage!
         //let sourceWidth: Int = CGImageGetWidth(imageRef)
