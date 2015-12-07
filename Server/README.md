@@ -159,11 +159,10 @@ http://airmeet.mybluemix.net/register_user
 |:--|:--:|:--|
 |major|○|親機からiBeaconで取得したmajorの値|
 |name|○|名前|
-|profile|○|プロフィール|
-|image|○|画像|
-|image_header||ヘッダ画像|
+|profile||プロフィール|
 |items|○|項目|
-
+|image||画像|
+|image_header||ヘッダ画像|
 
 ### レスポンスボディ(JSON形式)
 #### 成功時
