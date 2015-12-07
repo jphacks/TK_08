@@ -11,8 +11,8 @@ import UIKit
 class ChildListDetailViewController: UIViewController,UITableViewDelegate, UITableViewDataSource {
     
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-    let testTag = [["name": "age", "detail" :"22"],["name": "趣味は", "detail" :"デレステだよん"],["name": "キャラクター", "detail" :"ジバニャン"],["name": "趣味は1", "detail" :"デレステだよん1"],["name": "キャラクター2", "detail" :"ジバニャン2"]]
-
+    let testTag = [["name": "age", "detail" :"22"],["name": "趣味", "detail" :"デレステ♪"],["name": "好きなキャラ", "detail" :"ジバニャン"],["name": "得意分野", "detail" :"アプリ開発"],["name": "好きな言語", "detail" :"Swift"]]
+    
     
     @IBOutlet weak var TagTableView: UITableView!
     
@@ -44,6 +44,11 @@ class ChildListDetailViewController: UIViewController,UITableViewDelegate, UITab
         TagTableView.delegate = self
         TagTableView.dataSource = self
         
+        //アイコンまる
+        imageImageView.layer.cornerRadius = imageImageView.frame.size.width/2.0
+        imageImageView.layer.masksToBounds = true
+        imageImageView.layer.borderColor = UIColor.whiteColor().CGColor
+        imageImageView.layer.borderWidth = 3.0
         
         //タグ表示
         /*var count:Int = 0
@@ -75,10 +80,10 @@ class ChildListDetailViewController: UIViewController,UITableViewDelegate, UITab
        
         
         // testTagの一行分の内容を入れる
-        let object = testTag[indexPath.row]
+        //let object = testTag[indexPath.row]
         
-        cell.TagNameLabel?.text = object["name"]!
-        cell.TagDetailLabel?.text = object["detail"]!
+        //cell.TagNameLabel?.text = object["name"]!
+        //cell.TagDetailLabel?.text = object["detail"]!
         
         return cell
     }
@@ -90,7 +95,6 @@ class ChildListDetailViewController: UIViewController,UITableViewDelegate, UITab
     
     // セクションの行数
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("tags.count:\(appDelegate.selectChild?.tag.count)")
         return (appDelegate.selectChild?.tag.count)!
     }
     

@@ -36,9 +36,14 @@ class ChildTableViewCell: UITableViewCell {
     func setCell(childModel:ChildModel){
         
         self.backImageView.image = childModel.backgroundImage
-        self.backImageView.addBlurEffect(100)
+        self.backImageView.addBlurEffect(50)
         
         self.imageImageView.image = childModel.image
+        //アイコンまる
+        self.imageImageView.layer.cornerRadius = imageImageView.frame.size.width/2.0
+        self.imageImageView.layer.masksToBounds = true
+        self.imageImageView.layer.borderColor = UIColor.whiteColor().CGColor
+        self.imageImageView.layer.borderWidth = 3.0
         
         self.nameLabel.text = childModel.name
         

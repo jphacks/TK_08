@@ -8,22 +8,28 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController,UITableViewDelegate, UITableViewDataSource,UITextFieldDelegate,UIScrollViewDelegate  {
+class ProfileSettingViewController: UIViewController,UITextFieldDelegate,UITextViewDelegate,UIScrollViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate  {
     
-    @IBOutlet weak var SettingTableView: UITableView!
+    let defaultColor:UIColor = UIColor(red: 128.0/255.0, green: 204.0/255.0, blue: 223.0/255.0, alpha: 1)//水色
     
     @IBOutlet weak var backImageView: UIImageView!
-    @IBOutlet weak var imageImageView: UIImageView!
-    @IBOutlet weak var settingImageButton: UIButton!
-
-    var tags:[TagModel] = [TagModel]()
-
-    @IBAction func settingImageButton(sender: AnyObject) {
-        let index:NSIndexPath = NSIndexPath(forRow: 2, inSection: 0)
-        
-        SettingTableView.scrollToRowAtIndexPath(index, atScrollPosition:UITableViewScrollPosition.Bottom , animated:true)
-    }
+    @IBOutlet weak var userImageView: UIImageView!
     
+    @IBOutlet weak var settingImageButton: UIButton!
+    
+    @IBOutlet weak var userDetailTextView: UITextView!
+    @IBOutlet weak var userNameTextField: HoshiTextField!
+    
+    @IBOutlet var scrollView: UIScrollView!
+    var userNameString:String?
+    var userDetailString:String?
+    
+    var selectTextFiled:UITextField = UITextField()
+    var selectTextView:UITextView = UITextView()
+    
+    @IBOutlet weak var userDetailLabel: UILabel!
+    
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -32,127 +38,248 @@ class ProfileViewController: UIViewController,UITableViewDelegate, UITableViewDa
         self.navigationController?.navigationBar.tintColor=UIColor.whiteColor()
         
         //アイコンまる
-        imageImageView.layer.cornerRadius = imageImageView.frame.size.width/2.0
-        imageImageView.layer.masksToBounds = true
-        imageImageView.layer.borderColor = UIColor.whiteColor().CGColor
-        imageImageView.layer.borderWidth = 3.0
+        userImageView.layer.cornerRadius = userImageView.frame.size.width/2.0
+        userImageView.layer.masksToBounds = true
+        userImageView.layer.borderColor = UIColor.whiteColor().CGColor
+        userImageView.layer.borderWidth = 3.0
         
         settingImageButton.layer.cornerRadius = settingImageButton.frame.size.width/2.0
         settingImageButton.layer.masksToBounds = true
         
-        SettingTableView.delegate = self
-        SettingTableView.dataSource = self
-        SettingTableView.scrollEnabled = true
+        userNameTextField.delegate = self
         
+        userDetailTextView.layer.borderColor = defaultColor.CGColor
+        userDetailTextView.layer.borderWidth = 2.0
+        userDetailTextView.layer.cornerRadius = 3.0
+        userDetailTextView.delegate = self
         
-        let tag1:TagModel = TagModel(name:"アカウント名",detail: "ごー")
-        let tag2:TagModel = TagModel(name:"自己紹介",detail: "うひょおおお")
-        let tag3:TagModel = TagModel(name:"FaceBook",detail: "砂糖ごう")
-        let tag4:TagModel = TagModel(name:"Twitter", detail: "@gooo")
+        let defaults = NSUserDefaults.standardUserDefaults()
         
-        tags.append(tag1)
-        tags.append(tag2)
-        tags.append(tag3)
-        tags.append(tag4)
+        userNameTextField.text = "\(defaults.stringForKey("name")!)"
+        userNameTextField.tag = 0
+        userNameString = "\(defaults.stringForKey("name")!)"
+        
+        userDetailTextView.text = "\(defaults.stringForKey("detail")!)"
+        userDetailString = "\(defaults.stringForKey("detail")!)"
+        //文字数表示
+        userDetailLabel.text = "自己紹介　\(80 - userDetailString!.utf16.count)"
+        
+        //戻るボタン設定
+        let backButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem = backButtonItem
+        
+        let imageData:NSData = defaults.objectForKey("image") as! NSData
+        userImageView.image = UIImage(data:imageData)
+        
+        let backData:NSData = defaults.objectForKey("back") as! NSData
+        backImageView.image = UIImage(data: backData)
+        
+        scrollView.delegate = self
         
     }
     
-    func tableViewScrollToBottom(animated: Bool) {
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        //キーボード
+        let notificationCenter = NSNotificationCenter.defaultCenter()
+        notificationCenter.addObserver(self, selector: "handleKeyboardWillShowNotification:", name: UIKeyboardWillShowNotification, object: nil)
+        notificationCenter.addObserver(self, selector: "handleKeyboardWillHideNotification:", name: UIKeyboardWillHideNotification, object: nil)
         
-        let delay = 0.1 * Double(NSEC_PER_SEC)
-        let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+    }
+    
+    //テキストの文字数が変更されるたびに呼ばれる
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+
+        //改行禁止
+        if text == "\n" {
+            textView.resignFirstResponder() //キーボードを閉じる
+            return false
+        }
         
-        dispatch_after(time, dispatch_get_main_queue(), {
+        let textLength = ( textView.text.utf16.count - range.length ) + text.utf16.count
+        
+         //文字数表示
+        if textLength > 80{
+            userDetailLabel.text = "自己紹介　\(0)"
+            print("String Over")
+            textView.resignFirstResponder() //キーボードを閉じる
+            return false
             
-            let numberOfSections = self.SettingTableView.numberOfSections
-            let numberOfRows = self.SettingTableView.numberOfRowsInSection(numberOfSections-1)
-            
-            if numberOfRows > 0 {
-                let indexPath = NSIndexPath(forRow: numberOfRows-1, inSection: (numberOfSections-1))
-                self.SettingTableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
-            }
-            
-        })
+        }else{
+            userDetailLabel.text = "自己紹介　\(80-textLength)"
+        }
+      
+        return true
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath:NSIndexPath) -> UITableViewCell {
-        
-        let cell: SettingTagTableViewCell = tableView.dequeueReusableCellWithIdentifier("SettingTagTableViewCell", forIndexPath: indexPath) as! SettingTagTableViewCell
-        
-        cell.setCell(tags[indexPath.row])
-        cell.TagDetailTextField.delegate = self
-        cell.TagDetailTextField.tag = indexPath.row
-        
-        return cell
+    func textViewShouldBeginEditing(textView: UITextView) -> Bool {
+        //スクロールしたらキーボードが消える用
+        selectTextView = textView
+        return true
     }
     
-    //cellが選択されたとき
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
-        print(indexPath.row)
-        //SettingTableView.scrollToRowAtIndexPath(indexPath, atScrollPosition:UITableViewScrollPosition.Bottom , animated: true)
-        
-        tableViewScrollToBottom(true)
-        
-    }
-    
-    // セクション数
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    // セクションの行数
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tags.count
-    }
-    
-    
-    //UITextFieldが編集された直後に呼ばれるデリゲートメソッド.
-    func textFieldDidBeginEditing(textField: UITextField) {
-        
-        
-        print("index : \(textField.tag)")
-        
-        let delay = 0.1 * Double(NSEC_PER_SEC)
-        let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
-        
-        dispatch_after(time, dispatch_get_main_queue(), {
-        
-            let indexPath = NSIndexPath(forRow: textField.tag, inSection: 0)
-            self.SettingTableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
-        })
-        
-    }
-    
-    //UITextFieldが編集終了する直前に呼ばれるデリゲートメソッド.
-    func textFieldShouldEndEditing(textField: UITextField) -> Bool {
-        
-        tags[textField.tag].detail = textField.text!
+    //UITextViewが終了する直前に呼ばれる
+    func textViewShouldEndEditing(textView: UITextView) -> Bool {
+        //自己紹介保存
+        print("Save UserDetail : \(textView.text!)")
+        userDetailString = textView.text
         
         return true
     }
     
+    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+        //スクロールしたらキーボードが消える用
+        selectTextFiled = textField
+        return true
+    }
     
-    //改行ボタンが押された際に呼ばれるデリゲートメソッド.
+    //UITextFieldが編集終了する直前に呼ばれる
+    func textFieldShouldEndEditing(textField: UITextField) -> Bool {
+        //ユーザ名保存
+        print("Save UserName : \(textField.text!)")
+        userNameString = textField.text!
+        
+        return true
+    }
+    
+    //改行ボタンが押された際に呼ばれる
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
     
+    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        //print("scroll")
+        //スクロールをはじめたらキーボードを閉じる
+        selectTextFiled.resignFirstResponder()
+        selectTextView.resignFirstResponder()
+
+    }
+    
+    //自動スクロール
+    func handleKeyboardWillShowNotification(notification: NSNotification) {
+        
+        let userInfo = notification.userInfo!
+        let keyboardScreenEndFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
+        let myBoundSize: CGSize = UIScreen.mainScreen().bounds.size
+        
+        let txtLimit = userDetailTextView.frame.origin.y + userDetailTextView.frame.height + 8.0
+        let kbdLimit = myBoundSize.height - keyboardScreenEndFrame.size.height
+        
+        if txtLimit >= kbdLimit {
+            scrollView.contentOffset.y = txtLimit - kbdLimit
+        }
+    }
+    
+    func handleKeyboardWillHideNotification(notification: NSNotification) {
+        scrollView.contentOffset.y = 0
+    }
+    
+    //画面が消える前に呼び出し
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
+        selectTextFiled.resignFirstResponder()
         
         let defaults = NSUserDefaults.standardUserDefaults()
         
-        defaults.setObject(tags[0].detail, forKey: "name")
-        defaults.setObject(tags[1].detail, forKey: "detail")
-        defaults.setObject(tags[2].detail, forKey: "facebook")
-        defaults.setObject(tags[3].detail, forKey: "twitter")
+        defaults.setObject(userNameString, forKey: "name")
+        defaults.setObject(userDetailString, forKey: "detail")
         
         defaults.synchronize()
         
-        print("Save")
+        //print("Save Profile\n")
     }
+    
+    override func viewDidDisappear(animated: Bool) {
+        
+        super.viewDidDisappear(animated)
+        //キーボード
+        let notificationCenter = NSNotificationCenter.defaultCenter()
+        notificationCenter.removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+        notificationCenter.removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    //顔画像
+    @IBAction func settingImageButton(sender: AnyObject) {
+        
+        let pickerController = UIImagePickerController()
+        pickerController.delegate = self
+        pickerController.view.tag = 0
+        pickerController.allowsEditing = true
+        pickerController.navigationBar.translucent = false
+        pickerController.navigationBar.backgroundColor = UIColor(red: 128.0/255.0, green: 204.0/255.0, blue: 223.0/255.0, alpha: 1)//水色
+       
+        pickerController.navigationBar.barTintColor = UIColor(red: 128.0/255.0, green: 204.0/255.0, blue: 223.0/255.0, alpha: 1)//水色
+        pickerController.navigationBar.tintColor = UIColor.whiteColor()
+
+        UIImagePickerControllerSourceType.PhotoLibrary
+        self.presentViewController(pickerController, animated: true, completion: nil)
+        
+    }
+    
+    //背景画像読み込み
+    @IBAction func settingBackButton(sender: AnyObject) {
+        
+        let pickerController = UIImagePickerController()
+        pickerController.delegate = self
+        pickerController.view.tag = 1
+        
+        ///（kmdr,momoka）
+        ///正方形トリミングを指定した縦幅トリミングに(w:self.view.frame.width, h:120?)とか
+        pickerController.allowsEditing = true
+        
+        pickerController.navigationBar.translucent = false
+        pickerController.navigationBar.backgroundColor = UIColor(red: 128.0/255.0, green: 204.0/255.0, blue: 223.0/255.0, alpha: 1)//水色
+        
+        pickerController.navigationBar.barTintColor = UIColor(red: 128.0/255.0, green: 204.0/255.0, blue: 223.0/255.0, alpha: 1)//水色
+        pickerController.navigationBar.tintColor = UIColor.whiteColor()
+        
+        UIImagePickerControllerSourceType.PhotoLibrary
+        self.presentViewController(pickerController, animated: true, completion: nil)
+    }
+    
+    
+    // 画像が選択されたとき呼び出される
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
+        // アルバム画面を閉じる
+        picker.dismissViewControllerAnimated(true, completion: nil);
+        
+        switch picker.view.tag{
+        //ユーザ画像
+        case 0:
+            userImageView.image = image
+            let defaults = NSUserDefaults.standardUserDefaults()
+            defaults.setObject(UIImagePNGRepresentation(image), forKey: "image")
+            break
+        //背景画像
+        case 1:
+            
+            ///トリミング終了した画像をここにSet
+            backImageView.image = image
+            let defaults = NSUserDefaults.standardUserDefaults()
+            defaults.setObject(UIImagePNGRepresentation(image), forKey: "back")
+            break
+        default:
+            break
+        }
+        
+    }
+    
+    // 画像をリサイズしたい（つかってない）
+    func resize(image: UIImage, width: Int, height: Int) -> UIImage {
+        //let imageRef: CGImageRef = image.CGImage!
+        //let sourceWidth: Int = CGImageGetWidth(imageRef)
+        //let sourceHeight: Int = CGImageGetHeight(imageRef)
+        
+        let size: CGSize = CGSize(width: width, height: height)
+        UIGraphicsBeginImageContext(size)
+        image.drawInRect(CGRectMake(0, 0, size.width, size.height))
+        
+        let resizeImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return resizeImage
+    }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

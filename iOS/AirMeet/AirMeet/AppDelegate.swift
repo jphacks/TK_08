@@ -13,29 +13,40 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var navigationController: UINavigationController?
-    
 
     var test: UIApplication?
     var notification = UILocalNotification()
 
-    var isChild: Bool!
-    var isParent:Bool!
+    var isChild: Bool!//trueは子がeventからかえってきたとき
+    var isParent: Bool!//trueは親がeventをたててるところからかえってきたとき
+    var isBeacon: Bool!//trueはiBeconの監視をしたいとき
     
     var selectEvent: EventModel?
     var selectChild: ChildModel?
     
+    var childID: String?
     var parentID: String?
     
     var majorID:[NSNumber] = []
     var majorIDOld:[NSNumber] = []
+    
+    var parentPass: String?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        
+         //self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        
         //Navigationbar色
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         
         application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes:
             [UIUserNotificationType.Sound,
                 UIUserNotificationType.Alert], categories: nil))
+        
+        //let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main",bundle: nil)
+        //let mainViewController : UIViewController = mainStoryboard.instantiateViewControllerWithIdentifier("Main")
+        //self.window!.rootViewController = mainViewController
+        //self.window?.makeKeyAndVisible()
         
         // アプリに登録されている全ての通知を削除
         UIApplication.sharedApplication().cancelAllLocalNotifications()
@@ -45,14 +56,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
         
-        print("notification")
-        //let alert = UIAlertController(title:"\(notification.alertBody!)",message:nil,preferredStyle:UIAlertControllerStyle.Alert)
-        //let okAction = UIAlertAction(title: "OK", style: .Default) {
-        //    action in
-        //}
-        //alert.addAction(okAction)
-        
-        //self.window?.rootViewController!.presentViewController(alert, animated: true, completion: nil)
+//        print("notification")
+//        let alert = UIAlertController(title:"\(notification.alertBody!)",message:nil,preferredStyle:UIAlertControllerStyle.Alert)
+//        let okAction = UIAlertAction(title: "OK", style: .Default) {
+//            action in
+//        }
+//        alert.addAction(okAction)
+//        
+//        self.window?.rootViewController!.presentViewController(alert, animated: true, completion: nil)
 
     }
     
@@ -65,12 +76,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
         
-        notification.alertAction = "AirMeet"
-        notification.alertBody = "iBeacon範囲に入りました"
-        notification.soundName = UILocalNotificationDefaultSoundName
-        // あとのためにIdを割り振っておく
-        notification.userInfo = ["notifyId": "AirMeet"]
-        UIApplication.sharedApplication().presentLocalNotificationNow(notification)
+//        notification.alertAction = "AirMeet"
+//        notification.alertBody = "iBeacon範囲に入りました"
+//        notification.soundName = UILocalNotificationDefaultSoundName
+//        // あとのためにIdを割り振っておく
+//        notification.userInfo = ["notifyId": "AirMeet"]
+//        UIApplication.sharedApplication().presentLocalNotificationNow(notification)
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
@@ -92,12 +103,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //application!.cancelAllLocalNotifications()
         
         
-        notification.alertAction = "AirMeet"
-        notification.alertBody = "iBeacon範囲に入りました"
-        notification.soundName = UILocalNotificationDefaultSoundName
-        // あとのためにIdを割り振っておく
-        notification.userInfo = ["notifyId": "AirMeet"]
-        UIApplication.sharedApplication().presentLocalNotificationNow(notification)
+//        notification.alertAction = "AirMeet"
+//        notification.alertBody = "iBeacon範囲に入りました"
+//        notification.soundName = UILocalNotificationDefaultSoundName
+//        // あとのためにIdを割り振っておく
+//        notification.userInfo = ["notifyId": "AirMeet"]
+//        UIApplication.sharedApplication().presentLocalNotificationNow(notification)
+        
+        notification.alertBody = "AirMeet圏内"
+        
+        let alert = UIAlertController(title:"\(notification.alertBody!)",message:nil,preferredStyle:UIAlertControllerStyle.Alert)
+        let okAction = UIAlertAction(title: "OK", style: .Default) {
+            action in
+        }
+        alert.addAction(okAction)
+        
+        //presentViewController(alert, animated: true, completion: nil)
         
     }
 
