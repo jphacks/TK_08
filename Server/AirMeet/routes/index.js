@@ -13,12 +13,12 @@ var package = require('../package.json');
 var buf = fs.readFileSync('Authorized_Token');
 var token_list = buf.toString().split("\n");
 
-/*
-var app = express();
+
 // multer
-//app.use(multer({ dest: '../image/',}));
-app.use(multer({dest:'./image/'}).array('multiInputFileName'));
-*/
+//var app = express();
+//app.use(multer({dest:'./image/'}).array('multiInputFileName'));
+var upload = multer({ dest: './image/' })
+
 // ルーターの作成
 var router = express.Router();
 
@@ -112,7 +112,7 @@ router.get('/register_event', function(req, res) {
 // イベント情報を取得
 //-----------------------------------------------------------//
 router.get('/event_info', function(req, res) {
-  var sccess = {};
+  var success = {};
   var error = {};
   var major = Number(req.query.major);
   console.log(major);
@@ -151,7 +151,9 @@ router.get('/event_info', function(req, res) {
 //-----------------------------------------------------------//
 //イベントへのユーザ登録
 //-----------------------------------------------------------//
-router.post('/register_user', function(req, res) {
+router.post('/register_user', upload.single('image'), function(req, res) {
+  console.log(req.body);
+
   var success = {
     id : null,
     message : null,
@@ -159,13 +161,11 @@ router.post('/register_user', function(req, res) {
   };
   var error = {};
   var id = uuid.v4();
-  console.log(req.body);
   var major = Number(req.body.major);
   var name = req.body.name;
   var profile = req.body.profile;
   var items = req.body.items;
-  console.log("items:"+name);
-  console.log(req.files);
+  console.log(req.file);
 
   if(!major){
     error.message = "Error: major is missing";
@@ -197,10 +197,8 @@ router.post('/register_user', function(req, res) {
       major : major,
       name : name,
       profile : profile,
-      image : image,
-      image_header : image_header,
       items : items,
-      regist_date : moment().zone('+0900').format('YYYY/MM/DD HH:mm:ss')
+      date : moment().zone('+0900').format('YYYY/MM/DD HH:mm:ss')
     };
     dba.save(id, doc, function(err) {
       if(err){
@@ -330,6 +328,7 @@ router.post('/remove_event', function(req, res) {
                   res.send(error);
                 }
               }else{ //参加者がいなければ
+                success.id = id;
                 success.message = "Event remove success";
                 res.send(success);
               }
