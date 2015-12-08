@@ -39,6 +39,9 @@ class AirMeetingViewController: UIViewController, CBPeripheralManagerDelegate, N
         // PeripheralManagerを定義.
         myPheripheralManager = CBPeripheralManager(delegate: self, queue: nil)
         
+        ///ここでpassがうけとれていることを確認
+        print("PASS = \(appDelegate.parentPass!)")
+        
         ///（kmdr,momoka）
         ///ずっとつきっぱなしのコード追加
     }
@@ -69,38 +72,81 @@ class AirMeetingViewController: UIViewController, CBPeripheralManagerDelegate, N
         
         ///（kmdr,momoka）
         ///保存されたpassとalertで入力した数値が一致したときに、以下の通信を実行するようにしてください
-        if "0000" == appDelegate.parentPass{
-            
-            // 通信用のConfigを生成.
-            let myConfig:NSURLSessionConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()
-            
-            // Sessionを生成.
-            let mySession:NSURLSession = NSURLSession(configuration: myConfig, delegate: self, delegateQueue: nil)
-            
-            let post = "major=\(appDelegate.parentID!)"
-            let postData = post.dataUsingEncoding(NSUTF8StringEncoding)
-            
-            //print(postData!)
-            
-            let url = NSURL(string: "http://airmeet.mybluemix.net/remove_event")
-            
-            let request:NSMutableURLRequest = NSMutableURLRequest(URL: url!)
-            request.HTTPMethod = "POST"
-            request.HTTPBody = postData
-            
-            request.addValue("a", forHTTPHeaderField: "X-AccessToken")
-            //request.addValue(appDelegate.parentID!, forHTTPHeaderField: "major")
-            
-            let task:NSURLSessionDataTask = mySession.dataTaskWithRequest(request)
-            
-            print("Resume Task ↓")
-            //くるくるスタート
-            self.view.addSubview(indicator)
-            self.indicator.startAnimation()
-
-            task.resume()
+        let alert: UIAlertController = UIAlertController(title:"パスコード設定",
+            message: "パスコードを入力してください",
+            preferredStyle: UIAlertControllerStyle.Alert
+        )
+        
+        //パスを入力してOK押す場合
+        let okAction: UIAlertAction = UIAlertAction(title: "入力完了",
+            style: UIAlertActionStyle.Default,
+            handler:{
+                (action:UIAlertAction!) -> Void in
+                let textField = alert.textFields![0]
+                let input_text = textField.text
+                
+                if self.appDelegate.parentPass! == input_text{
+                    
+                    //成功をつたえるalert
+                    let sucsessAlert: UIAlertController = UIAlertController(title: "PASS Sucsess", message: "", preferredStyle: .Alert)
+                    self.presentViewController(sucsessAlert, animated: true) { () -> Void in
+                        let delay = 2.0 * Double(NSEC_PER_SEC)
+                        let time  = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+                        dispatch_after(time, dispatch_get_main_queue(), {
+                            self.dismissViewControllerAnimated(true, completion: nil)
+                        })
+                    }
+                    
+                    // 通信用のConfigを生成.
+                    let myConfig:NSURLSessionConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()
+                    
+                    // Sessionを生成.
+                    let mySession:NSURLSession = NSURLSession(configuration: myConfig, delegate: self, delegateQueue: nil)
+                    
+                    let post = "major=\(self.appDelegate.parentID!)"
+                    let postData = post.dataUsingEncoding(NSUTF8StringEncoding)
+                    
+                    //print(postData!)
+                    
+                    let url = NSURL(string: "http://airmeet.mybluemix.net/remove_event")
+                    
+                    let request:NSMutableURLRequest = NSMutableURLRequest(URL: url!)
+                    request.HTTPMethod = "POST"
+                    request.HTTPBody = postData
+                    
+                    request.addValue("a", forHTTPHeaderField: "X-AccessToken")
+                    //request.addValue(appDelegate.parentID!, forHTTPHeaderField: "major")
+                    
+                    let task:NSURLSessionDataTask = mySession.dataTaskWithRequest(request)
+                    
+                    print("Resume Task ↓")
+                    //くるくるスタート
+                    self.view.addSubview(self.indicator)
+                    self.indicator.startAnimation()
+                    
+                    task.resume()
+                }else{
+                    //失敗をつたえるalert
+                    let falseAlert: UIAlertController = UIAlertController(title: "PASS False", message: "", preferredStyle: .Alert)
+                    self.presentViewController(falseAlert, animated: true) { () -> Void in
+                        let delay = 2.0 * Double(NSEC_PER_SEC)
+                        let time  = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+                        dispatch_after(time, dispatch_get_main_queue(), {
+                            self.dismissViewControllerAnimated(true, completion: nil)
+                        })
+                    }
+                    print("false")
+                    
+                }
+                
+        })
+        alert.addAction(okAction)
+        //alert.addAction(cancelAction)
+        //UIAlertControllerにtextFieldを追加
+        alert.addTextFieldWithConfigurationHandler { (textField:UITextField!) -> Void in
         }
-
+        
+        self.presentViewController(alert, animated: true, completion: nil)
     }
     
     
