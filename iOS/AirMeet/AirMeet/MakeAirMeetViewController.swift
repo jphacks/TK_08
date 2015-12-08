@@ -266,10 +266,56 @@ class MakeAirMeetViewController: UIViewController,UITextFieldDelegate,NSURLSessi
             
             ///（kmdr,momoka）
             ///アラート（デフォorオリジナル）だしてパスを入力してokを押したら画面遷移
-            ///パスはここに保存
-            appDelegate.parentPass = "0000"
-            //画面遷移
-            self.performSegueWithIdentifier("startSegue",sender: nil)
+            
+            ////////こっから下だけいじった/////////////
+            
+            let alert: UIAlertController = UIAlertController(title:"パスコード設定",
+                message: "パスコードを入力してください",
+                preferredStyle: UIAlertControllerStyle.Alert
+            )
+            
+            //パスを入力してOK押す場合
+            let okAction: UIAlertAction = UIAlertAction(title: "入力完了",
+                style: UIAlertActionStyle.Default,
+                handler:{
+                    (action:UIAlertAction!) -> Void in
+                    let textField = alert.textFields![0]
+                    let input_text = textField.text
+
+                    // 入力したパスコード保存(すみません：できてないかも)
+                    self.appDelegate.parentPass = input_text
+                    print("PASS = \(self.appDelegate.parentPass)")
+                    //画面遷移
+                    self.performSegueWithIdentifier("startSegue",sender: nil)
+
+            })
+            
+            //キャンセルする場合(すみません：キャンセルしたあと、再度「Make AirMeet」ボタンが選択できない)
+            let cancelAction: UIAlertAction = UIAlertAction(title: "キャンセル",
+                style: UIAlertActionStyle.Cancel,
+                handler:{
+                    (action:UIAlertAction!) -> Void in
+                    //self.setDefaultName()
+            })
+            
+            alert.addAction(okAction)
+            alert.addAction(cancelAction)
+            // UIAlertControllerにtextFieldを追加
+            alert.addTextFieldWithConfigurationHandler { (textField:UITextField!) -> Void in
+            }
+            self.view?.window?.rootViewController?.presentViewController(alert, animated: true, completion: nil)
+            
+            //↓元からあったけどコメントアウトしたものたち
+            
+            ///パスはここに保存(書き換え：「okAction」内に移動)
+            //appDelegate.parentPass = "0000"
+            
+            
+            //画面遷移(書き換え：「okAction」の最後に移動)
+            //self.performSegueWithIdentifier("startSegue",sender: nil)
+            
+            
+            ////////こっから上だけいじった/////////////
             
             //非同期
             dispatch_async(dispatch_get_main_queue(), {
