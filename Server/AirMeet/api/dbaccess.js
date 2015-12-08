@@ -64,6 +64,11 @@ exports.get_participants = function(major, callback) {
   db.view('users/participants', {key: major}, callback);
 };
 
+// Majorの値と一致するイベントの参加者数を取得
+exports.participants_count = function(major, callback) {
+  db.view('users/participants_count', {group: true, key: major}, callback);
+};
+
 exports.confirm_userid = function(id, major, callback) {
   db.view('users/id', {key: id, value: major}, callback);
 };

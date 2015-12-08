@@ -9,7 +9,7 @@ var fs = require('fs');
 var dba = require('../api/dbaccess.js');
 var package = require('../package.json');
 
-// Authorize Token読み込み
+// Authorized Token読み込み
 var buf = fs.readFileSync('Authorized_Token');
 var token_list = buf.toString().split("\n");
 
@@ -127,14 +127,20 @@ router.get('/event_info', function(req, res) {
   dba.event_info(major, function(err1, events) {
     if(events.length == 1){
       success = events[0].value;
-      dba.get_participants(major, function(err2, users){
-        var count = users.length;
-        success.count = count;
+      dba.participants_count(major, function(err2, c){
+        if(err2){
+          success.message = "participants count gets failed";
+        }else if(!c.length){
+          success.count = 0;
+        }else{
+          success.count = c[0].value;
+        }
         success.code = 200;
         res.send(success);
+
       });
     }else if(events.length > 1){
-      error.message = "Error: Database is not valid";
+      error.message = "Error: Database is invalid";
       error.code = 500;
     }else{
       error.message = "Error: Event does not exist";
@@ -161,6 +167,12 @@ router.post('/register_user', cpUpload, function(req, res) {
     code : 200
   };
   var error = {};
+  if(!req.is("multipart/form-data")){
+    error.message = "Error: Cannot use "+req.header('Content-Type')+". Use multipart/form-data"
+    error.code = 400
+    res.send(error);
+    return;
+  }
   var id = uuid.v4();
   var major = Number(req.body.major);
   var name = req.body.name;
@@ -304,10 +316,8 @@ router.post('/remove_event', function(req, res) {
     code : 200
   };
   var error = {};
-  console.log("body------")
-  console.log(req.body);
   var major = Number(req.body.major);
-  console.log(major);
+  //console.log(major);
   if(!major){
     error.message = "Error: major is missing";
     error.code = 400;

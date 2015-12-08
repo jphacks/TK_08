@@ -154,7 +154,7 @@ http://airmeet.mybluemix.net/register_user
 
 メソッド:POST
 
-### リクエストボディ
+### リクエストボディ (multipart/form-data形式)
 |キー|必須|説明|
 |:--|:--:|:--|
 |major|○|親機からiBeaconで取得したmajorの値|
