@@ -284,37 +284,29 @@ class MakeAirMeetViewController: UIViewController,UITextFieldDelegate,NSURLSessi
 
                     // 入力したパスコード保存(すみません：できてないかも)
                     self.appDelegate.parentPass = input_text
-                    print("PASS = \(self.appDelegate.parentPass)")
+                    print("PASS = \(self.appDelegate.parentPass!)")
                     //画面遷移
                     self.performSegueWithIdentifier("startSegue",sender: nil)
 
             })
             
+            ///とりあえずキャンセルなしでいいかな、部屋つくった後なので部屋消去する通信が必要（by神武）
             //キャンセルする場合(すみません：キャンセルしたあと、再度「Make AirMeet」ボタンが選択できない)
+            /*
             let cancelAction: UIAlertAction = UIAlertAction(title: "キャンセル",
                 style: UIAlertActionStyle.Cancel,
                 handler:{
                     (action:UIAlertAction!) -> Void in
                     //self.setDefaultName()
             })
+            */
             
             alert.addAction(okAction)
-            alert.addAction(cancelAction)
-            // UIAlertControllerにtextFieldを追加
+            //alert.addAction(cancelAction)
+            //UIAlertControllerにtextFieldを追加
             alert.addTextFieldWithConfigurationHandler { (textField:UITextField!) -> Void in
             }
-            self.view?.window?.rootViewController?.presentViewController(alert, animated: true, completion: nil)
-            
-            //↓元からあったけどコメントアウトしたものたち
-            
-            ///パスはここに保存(書き換え：「okAction」内に移動)
-            //appDelegate.parentPass = "0000"
-            
-            
-            //画面遷移(書き換え：「okAction」の最後に移動)
-            //self.performSegueWithIdentifier("startSegue",sender: nil)
-            
-            
+           
             ////////こっから上だけいじった/////////////
             
             //非同期
@@ -322,6 +314,8 @@ class MakeAirMeetViewController: UIViewController,UITextFieldDelegate,NSURLSessi
                 //くるくるストップ
                 self.indicator.stopAnimation(true, completion: nil)
                 self.indicator.removeFromSuperview()
+                //alert非同期で表示させるね（by神武）
+                self.presentViewController(alert, animated: true, completion: nil)
                 
             })
             
