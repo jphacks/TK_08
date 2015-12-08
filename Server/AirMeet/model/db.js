@@ -1,4 +1,4 @@
-// AirMeet – api/dbaccess.js
+// AirMeet – model/db.js
 
 // 使用モジュールの読み込み
 var cradle = require('cradle');

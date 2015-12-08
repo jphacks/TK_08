@@ -6,7 +6,7 @@ var multer = require('multer');
 var uuid = require('node-uuid');
 var moment = require('moment');
 var fs = require('fs');
-var dba = require('../api/dbaccess.js');
+var dba = require('../model/db.js');
 var package = require('../package.json');
 
 // Authorized Token読み込み
