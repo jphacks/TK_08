@@ -1,4 +1,4 @@
-// AirMeet – api/dbaccess.js
+// AirMeet – model/db.js
 
 // 使用モジュールの読み込み
 var cradle = require('cradle');
@@ -62,6 +62,11 @@ exports.gen_major = function(callback){
 // Majorの値と一致するイベントの参加者を取得
 exports.get_participants = function(major, callback) {
   db.view('users/participants', {key: major}, callback);
+};
+
+// Majorの値と一致するイベントの参加者数を取得
+exports.participants_count = function(major, callback) {
+  db.view('users/participants_count', {group: true, key: major}, callback);
 };
 
 exports.confirm_userid = function(id, major, callback) {

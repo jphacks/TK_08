@@ -52,3 +52,11 @@ function (doc) {
     emit(doc._id, doc.major);
   }
 }
+//_design/users
+//participants_count
+function (doc) {
+  if(doc.type == 'user'){
+    emit(doc.major, 1);
+  }
+}
+reduce sum
