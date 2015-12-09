@@ -161,8 +161,8 @@ http://airmeet.mybluemix.net/register_user
 |name|○|名前|
 |profile||プロフィール|
 |items|○|項目|
-|image||画像|
-|image_header||ヘッダ画像|
+|image||プロフィール画像|
+|image_header||ヘッダー画像|
 
 ### レスポンスボディ(JSON形式)
 #### 成功時
@@ -215,21 +215,23 @@ http://airmeet.mybluemix.net/participants
             "id": "参加している他のユーザのid",
             "name": "参加している他のユーザの名前",
             "profile": "プロフィール",
-            "image": "画像のURL",
             "items": {
                 "": "",
                 "": "",
-            }
+            },
+            "image": "プロフィール画像のURL",
+            "image_header": "ヘッダー画像のURL"
         },
         {
             "id": "参加している他のユーザのid",
             "name": "参加している他のユーザ",
             "profile": "プロフィール",
-            "image": "画像のURL",
             "items": {
                 "": "",
                 "": "",
-            }
+            },
+            "image": "プロフィール画像のURL",
+            "image_header": "ヘッダー画像のURL"
         }
     ],
     "message": "成功メッセージ",
