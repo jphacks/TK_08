@@ -37,6 +37,7 @@ class MakeAirMeetViewController: UIViewController,UITextFieldDelegate,NSURLSessi
         self.navigationController?.navigationBar.barTintColor=UIColor(red: 128.0/255.0, green: 204.0/255.0, blue: 223.0/255.0, alpha: 1)//水色
         self.navigationController?.navigationBar.tintColor=UIColor.whiteColor()
         
+        
         self.EventNameTextField.delegate = self
         self.RoomNameTextField.delegate = self
         
@@ -140,7 +141,16 @@ class MakeAirMeetViewController: UIViewController,UITextFieldDelegate,NSURLSessi
     }
     
     //UITextFieldが編集された直後に呼ばれるデリゲートメソッド.
+    ///ここでキーボードをかえる
     func textFieldDidBeginEditing(textField: UITextField){
+        
+        ///textFiledのtagが3のやつをかえる
+        switch textField.tag{
+            case 3:
+                textField.keyboardType = UIKeyboardType.NumberPad
+            default:
+                break
+        }
  
     }
 
@@ -280,6 +290,9 @@ class MakeAirMeetViewController: UIViewController,UITextFieldDelegate,NSURLSessi
                 handler:{
                     (action:UIAlertAction!) -> Void in
                     let textField = alert.textFields![0]
+                    
+                    textField.keyboardType = UIKeyboardType.PhonePad
+                    
                     let input_text = textField.text
 
                     // 入力したパスコード保存(すみません：できてないかも)
@@ -300,6 +313,13 @@ class MakeAirMeetViewController: UIViewController,UITextFieldDelegate,NSURLSessi
                     //self.setDefaultName()
             })
             */
+            
+            ///ここでデリゲート設定
+            alert.addTextFieldWithConfigurationHandler {
+                (textField: UITextField!) -> Void in
+                textField.delegate = self
+                textField.tag = 3
+            }
             
             alert.addAction(okAction)
             //alert.addAction(cancelAction)
@@ -349,7 +369,6 @@ class MakeAirMeetViewController: UIViewController,UITextFieldDelegate,NSURLSessi
         }
         
     }
-    
 
     @IBAction func unwindToTop(segue: UIStoryboardSegue) {
     }

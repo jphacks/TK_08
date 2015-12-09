@@ -10,7 +10,7 @@ import UIKit
 import CoreLocation
 import CoreBluetooth
 
-class AirMeetingViewController: UIViewController, CBPeripheralManagerDelegate, NSURLSessionDelegate, NSURLSessionDataDelegate{
+class AirMeetingViewController: UIViewController, CBPeripheralManagerDelegate, NSURLSessionDelegate, NSURLSessionDataDelegate, UITextFieldDelegate{
     
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     // LocationManager.
@@ -25,6 +25,7 @@ class AirMeetingViewController: UIViewController, CBPeripheralManagerDelegate, N
         //Navigationbar色
         self.navigationController?.navigationBar.barTintColor=UIColor(red: 128.0/255.0, green: 204.0/255.0, blue: 223.0/255.0, alpha: 1)//水色
         self.navigationController?.navigationBar.tintColor=UIColor.whiteColor()
+        
         
         //Navigationbar画像
         let titleImageView = UIImageView( image: UIImage(named: "AirMeet-white.png"))
@@ -140,6 +141,14 @@ class AirMeetingViewController: UIViewController, CBPeripheralManagerDelegate, N
                 }
                 
         })
+        
+        ///デリゲート設定
+        alert.addTextFieldWithConfigurationHandler {
+            (textField: UITextField!) -> Void in
+            textField.delegate = self
+            textField.tag = 3
+        }
+        
         alert.addAction(okAction)
         //alert.addAction(cancelAction)
         //UIAlertControllerにtextFieldを追加
@@ -149,6 +158,19 @@ class AirMeetingViewController: UIViewController, CBPeripheralManagerDelegate, N
         self.presentViewController(alert, animated: true, completion: nil)
     }
     
+    //UITextFieldが編集された直後に呼ばれるデリゲートメソッド.
+    ///ここでキーボードをかえる
+    func textFieldDidBeginEditing(textField: UITextField){
+        
+        ///textFiledのtagが3のやつをかえる
+        switch textField.tag{
+        case 3:
+            textField.keyboardType = UIKeyboardType.NumberPad
+        default:
+            break
+        }
+        
+    }
     
     //通信終了
     func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveData data: NSData) {
