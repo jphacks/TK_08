@@ -179,6 +179,7 @@ router.post('/register_user', cpUpload, function(req, res) {
   }else{
     var image_header;
   }
+
   if(!major){
     error.message = 'Error: major is missing';
     error.code = 400;
