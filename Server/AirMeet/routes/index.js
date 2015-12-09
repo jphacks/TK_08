@@ -11,7 +11,7 @@ var package = require('../package.json');
 
 // Authorized Token読み込み
 var buf = fs.readFileSync('Authorized_Token');
-var token_list = buf.toString().split("\n");
+var token_list = buf.toString().split('\n');
 
 
 // multer
@@ -24,12 +24,12 @@ var router = express.Router();
 
 //認証
 router.use(function(req, res, next) {
-  var AccessToken = req.header("X-AccessToken");
+  var AccessToken = req.header('X-AccessToken');
   if(token_list.indexOf(AccessToken) >= 0){
     next();
   }else{
     var error ={
-      message : "AccessToken is invalid",
+      message : 'AccessToken is invalid',
       code : 400
     };
     res.send(error);
@@ -52,43 +52,43 @@ router.post('/register_event', function(req, res) {
     code : 200
   };
   var error = {};
-  var id = uuid.v4();
 
+  var id = uuid.v4();
   var en = req.body.event_name;
   var rn = req.body.room_name;
   var desc = req.body.description;
   var items = req.body.items;
 
   if(!en){
-    error.message = "Error: event_name is missing";
+    error.message = 'Error: event_name is missing';
     error.code = 400;
 
   }
   if(!items){
-    error.message = "Error: items is missing";
+    error.message = 'Error: items is missing';
     error.code = 400;
   }
 
   if(!Object.keys(error).length){
     dba.gen_major(function(major) {
-      console.log("major:"+major);
+      console.log('major:'+major);
       var doc = {
-        type : "event",
+        type : 'event',
         event_name : en,
         room_name : rn,
         description : desc,
         major : major,
-        items : items.split(","),
+        items : items.split(','),
         date : moment().zone('+0900').format('YYYY/MM/DD HH:mm:ss')
       };
       dba.save(id, doc, function(err) {
         if(err){
-          error.message = "Error: Event registration failed";
+          error.message = 'Error: Event registration failed';
           error.code = 500;
           res.send(error)
         }else{
           success.major = major;
-          success.message = "Event registration success";
+          success.message = 'Event registration success';
           res.send(success);
         }
       });
@@ -96,15 +96,6 @@ router.post('/register_event', function(req, res) {
   }else{
     res.send(error);
   }
-});
-
-
-//register_eventがGETならエラー
-router.get('/register_event', function(req, res) {
-  var error = {};
-  error.message = "Error: Cannot 'GET' method";
-  error.code = 400;
-  res.send(error);
 });
 
 
@@ -117,7 +108,7 @@ router.get('/event_info', function(req, res) {
   var major = Number(req.query.major);
   console.log(major);
   if(!major){
-    error.message = "Error: major is missing";
+    error.message = 'Error: major is missing';
     error.code = 400;
     res.send(error);
     return;
@@ -129,7 +120,7 @@ router.get('/event_info', function(req, res) {
       success = events[0].value;
       dba.participants_count(major, function(err2, c){
         if(err2){
-          success.message = "participants count gets failed";
+          success.message = 'participants count gets failed';
         }else if(!c.length){
           success.count = 0;
         }else{
@@ -140,11 +131,11 @@ router.get('/event_info', function(req, res) {
 
       });
     }else if(events.length > 1){
-      error.message = "Error: Database is invalid";
+      error.message = 'Error: Database is invalid';
       error.code = 500;
     }else{
-      error.message = "Error: Event does not exist";
-      error.code = 500;
+      error.message = 'Error: Event does not exist';
+      error.code = 400;
     }
 
     if(Object.keys(error).length){
@@ -159,54 +150,54 @@ router.get('/event_info', function(req, res) {
 //-----------------------------------------------------------//
 var cpUpload = upload.fields([{ name: 'image', maxCount: 1 }, { name: 'image_header', maxCount: 1 }])
 router.post('/register_user', cpUpload, function(req, res) {
-  console.log(req.body);
-
   var success = {
     id : null,
     message : null,
     code : 200
   };
   var error = {};
-  if(!req.is("multipart/form-data")){
-    error.message = "Error: Cannot use "+req.header('Content-Type')+". Use multipart/form-data"
+  if(!req.is('multipart/form-data')){
+    error.message = 'Error: Cannot use '+req.header('Content-Type')+'. Use multipart/form-data'
     error.code = 400
     res.send(error);
     return;
   }
+
   var id = uuid.v4();
   var major = Number(req.body.major);
   var name = req.body.name;
   var profile = req.body.profile;
   var items = req.body.items;
-  //console.log(req.files);
-  //console.log(req.files.image[0].filename);
-  if(Object.keys(req.files).length){
-    var image = "http://airmeet.mybluemix.net/image/"+req.files.image[0].filename;
-    var image_header = req.files.image_header[0].filename;
+
+  if(req.files.image){
+    var image = 'http://airmeet.mybluemix.net/image/'+req.files.image[0].filename;
   }else {
     var image;
+  }
+  if(req.files.image_header){
+    var image_header = 'http://airmeet.mybluemix.net/image/'+req.files.image_header[0].filename;
+  }else{
     var image_header;
   }
-
   if(!major){
-    error.message = "Error: major is missing";
+    error.message = 'Error: major is missing';
     error.code = 400;
   }
   if(!name){
-    error.message = "Error: name is missing";
+    error.message = 'Error: name is missing';
     error.code = 400;
   }
 
   if(!items){
-    error.message = "Error: items is missing";
+    error.message = 'Error: items is missing';
     error.code = 400;
     console.log(items);
   }else{
     try{
-      items = (new Function("return " + items))();
+      items = (new Function('return ' + items))();
     } catch(err){
       console.log('catch: ' + err.message);
-      error.message = "Error: items is not JSON format";
+      error.message = 'Error: items is not JSON format';
       error.code = 400;
     }
   }
@@ -214,7 +205,7 @@ router.post('/register_user', cpUpload, function(req, res) {
   if(!Object.keys(error).length){
     console.log(major);
     var doc = {
-      type : "user",
+      type : 'user',
       major : major,
       name : name,
       profile : profile,
@@ -225,12 +216,12 @@ router.post('/register_user', cpUpload, function(req, res) {
     };
     dba.save(id, doc, function(err) {
       if(err){
-        error.message = "Error: User registration failed";
+        error.message = 'Error: User registration failed';
         error.code = 500;
         res.send(error);
       }else{
         success.id = id;
-        success.message = "User registration success";
+        success.message = 'User registration success';
         res.send(success);
       }
     });
@@ -258,11 +249,11 @@ router.get('/participants', function(req, res) {
   var id = req.query.id;
 
   if(!major){
-    error.message = "Error: major is missing";
+    error.message = 'Error: major is missing';
     error.code = 400;
   }
   if(!id){
-    error.message = "Error: id is missing";
+    error.message = 'Error: id is missing';
     error.code = 400;
   }
 
@@ -270,6 +261,12 @@ router.get('/participants', function(req, res) {
     dba.confirm_userid(id, major, function(err, users) {
       if(users.length == 1){
         dba.get_participants(major, function(err, users) {
+          if(err){
+            error.message = 'Error: cannot get participants';
+            error.code = 500;
+            res.send(error);
+            return;
+          }
           if(users.length){
             users.forEach(function(row) {
               if(row.id != id){
@@ -279,10 +276,11 @@ router.get('/participants', function(req, res) {
             success.major = major;
             success.id = id;
             success.count = users.length-1;
-            success.message = "Participants got successfully"
-          }else{
-            error.message = "Error: Participant does not exist";
-            error.code = 200;
+            success.message = 'Participants got successfully';
+
+          }else if(users.length == 0){
+            success.message = 'Error: Participant does not exist';
+            success.code = 500;
           }
           if(Object.keys(error).length){
             res.send(error);
@@ -291,11 +289,11 @@ router.get('/participants', function(req, res) {
           }
         });
       }else if(users.length > 1){
-        error.message = "Error: Database is not valid"
+        error.message = 'Error: Database is invalid'
         error.code = 500;
         res.send(error);
       }else{
-        error.message = "Error: id does not exists"
+        error.message = 'Error: id does not exists'
         error.code = 400;
         res.send(error);
       }
@@ -319,58 +317,58 @@ router.post('/remove_event', function(req, res) {
   var major = Number(req.body.major);
   //console.log(major);
   if(!major){
-    error.message = "Error: major is missing";
+    error.message = 'Error: major is missing';
     error.code = 400;
     res.send(error);
     return;
   }
 
   dba.event_info(major, function(err1, events) {
-    if(!err1){
-      if(events.length == 1){
-        var id = events[0].id
-        dba.remove(id, function(err2) { //イベントを削除
-          if(!err2){ //エラーが出なければ
-            dba.get_participants(major, function(err3, users) { //削除したいイベントの参加者を取得
-              if(users.length){ //参加者がいれば
-                users.forEach(function(row) { //全ての参加者を
-                  dba.remove(row.id, function(err4) { //DBから削除
-                    if(err4){ //エラーが出れば失敗
-                      error.message = "Error: Participants remove failed";
-                      error.code = 500;
-                    }
-                  });
+    if(err1){
+      error.message = 'Error: get event info failed';
+      error.code = 500;
+      res.send(error);
+      return;
+    }
+    if(events.length == 1){
+      var id = events[0].id
+      dba.remove(id, function(err2) { //イベントを削除
+        if(!err2){ //エラーが出なければ
+          dba.get_participants(major, function(err3, users) { //削除したいイベントの参加者を取得
+            if(users.length){ //参加者がいれば
+              users.forEach(function(row) { //全ての参加者を
+                dba.remove(row.id, function(err4) { //DBから削除
+                  if(err4){ //エラーが出れば失敗
+                    error.message = 'Error: Participants remove failed';
+                    error.code = 500;
+                  }
                 });
-                if(!Object.keys(error).length){ //エラーが出ていなければ成功
-                  success.id = id;
-                  success.message = "Event & participants remove success";
-                  res.send(success);
-                }else{
-                  res.send(error);
-                }
-              }else{ //参加者がいなければ
+              });
+              if(!Object.keys(error).length){ //エラーが出ていなければ成功
                 success.id = id;
-                success.message = "Event remove success";
+                success.message = 'Event & participants remove success';
                 res.send(success);
+              }else{
+                res.send(error);
               }
-            });
-          }else{ //エラーが出れば
-            error.message = "Error: Event remove failed";
-            error.code = 500;
-            res.send(error);
-          }
-        });
-      }else if(events.length > 1){
-        error.message = "Error: Database is not valid";
-        error.code = 500;
-        res.send(error);
-      }else{
-        error.message = "Error: Event does not exist";
-        error.code = 500;
-        res.send(error);
-      }
+            }else{ //参加者がいなければ
+              success.id = id;
+              success.message = 'Event remove success';
+              res.send(success);
+            }
+          });
+        }else{ //エラーが出れば
+          error.message = 'Error: Event remove failed';
+          error.code = 500;
+          res.send(error);
+        }
+      });
+    }else if(events.length > 1){
+      error.message = 'Error: Database is not valid';
+      error.code = 500;
+      res.send(error);
     }else{
-      error.message = "Error:";
+      error.message = 'Error: Event does not exist';
       error.code = 500;
       res.send(error);
     }
@@ -391,7 +389,7 @@ router.post('/remove_user', function(req, res) {
   var id = req.body.id;
 
   if(!id){
-    error.message = "Error: id is missing";
+    error.message = 'Error: id is missing';
     error.code = 400;
     res.send(error);
     return;
@@ -400,10 +398,10 @@ router.post('/remove_user', function(req, res) {
   dba.remove(id, function(err) { //イベントを削除
     if(!err){ //エラーが出なければ
       success.id = id;
-      success.message = "User remove success";
+      success.message = 'User remove success';
       res.send(success);
     }else{ //エラーが出れば
-      error.message = "Error: User remove failed";
+      error.message = 'Error: User remove failed';
       error.code = 500;
       res.send(error);
     }
