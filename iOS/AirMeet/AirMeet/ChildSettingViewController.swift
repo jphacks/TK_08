@@ -91,7 +91,7 @@ class ChildSettingViewController: UIViewController,NSURLSessionDelegate,NSURLSes
         if code == "200"{
             
             print("User Delete Sucsess : \(json["message"])")
-            appDelegate.isChild = true
+            
             
             //非同期
             dispatch_async(dispatch_get_main_queue(), {
@@ -99,6 +99,7 @@ class ChildSettingViewController: UIViewController,NSURLSessionDelegate,NSURLSes
                 self.indicator.stopAnimation(true, completion: nil)
                 self.indicator.removeFromSuperview()
                 //Exitからsegueを呼び出し
+                self.appDelegate.isChild = true
                 self.performSegueWithIdentifier("BackSettingToMain", sender: nil)
                 //self.navigationController?.popToRootViewControllerAnimated(true)
             })

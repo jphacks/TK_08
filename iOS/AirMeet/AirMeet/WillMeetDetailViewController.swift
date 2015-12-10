@@ -1,5 +1,5 @@
 //
-//  ChildListDetailViewController.swift
+//  WillMeetDetailViewController.swift
 //  AirMeet
 //
 //  Created by koooootake on 2015/11/28.
@@ -8,24 +8,21 @@
 
 import UIKit
 
-class ChildListDetailViewController: UIViewController,UITableViewDelegate, UITableViewDataSource {
+class WillMeetDetailViewController: UIViewController,UITableViewDelegate, UITableViewDataSource {
     
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-    let testTag = [["name": "age", "detail" :"22"],["name": "趣味", "detail" :"デレステ♪"],["name": "好きなキャラ", "detail" :"ジバニャン"],["name": "得意分野", "detail" :"アプリ開発"],["name": "好きな言語", "detail" :"Swift"]]
-    
-    
     @IBOutlet weak var TagTableView: UITableView!
     
     @IBOutlet weak var backImageView: UIImageView!
     @IBOutlet weak var imageImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var tagLabel: UILabel!
-    
     @IBOutlet weak var detail: UILabel!
     
-    var tags:Dictionary<String,String>!
+    @IBOutlet weak var tagLabel: UILabel!
+
     
-    var tagCount:Int = 0
+    var tagDics = [String:String]()
+    var tagArray = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,7 +34,7 @@ class ChildListDetailViewController: UIViewController,UITableViewDelegate, UITab
         imageImageView.image = appDelegate.selectChild?.image
         nameLabel.text = appDelegate.selectChild?.name
         
-        tags = appDelegate.selectChild?.tag
+        tagDics = appDelegate.selectChild!.tag
         
         detail.text = appDelegate.selectChild?.detail
         
@@ -51,39 +48,18 @@ class ChildListDetailViewController: UIViewController,UITableViewDelegate, UITab
         imageImageView.layer.borderWidth = 3.0
         
         //タグ表示
-        /*var count:Int = 0
         
-        for (tag, detail) in (appDelegate.selectChild?.tag)! {
-            
-            print("\(tag): \(detail)")
-            let tagLabel:UILabel = UILabel(frame: CGRectMake(0,self.view.frame.height/2+50*CGFloat(count),self.view.frame.width,50))
-            tagLabel.text = "\(tag): \(detail)"
-            self.view.addSubview(tagLabel)
-            
-            count++
-        }*/
+        for (name,_) in tagDics{
+            tagArray.append(name)
+        }
         
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath:NSIndexPath) -> UITableViewCell {
         
         let cell:TagTableViewCell = tableView.dequeueReusableCellWithIdentifier("TagTableViewCell", forIndexPath: indexPath) as! TagTableViewCell
-
-       // appDelegate.selectChild?.
         
-       // let tag =
-        
-       // appDelegate.selectChild?.tag.keys[Int(indexPath.row)]
-        
-       // let tag = Array(arrayLiteral: appDelegate.selectChild?.tag.keys)[indexPath.row]
-       // print("aaa:\(tag)")
-       
-        
-        // testTagの一行分の内容を入れる
-        //let object = testTag[indexPath.row]
-        
-        //cell.TagNameLabel?.text = object["name"]!
-        //cell.TagDetailLabel?.text = object["detail"]!
+        cell.setCell("\(tagArray[indexPath.row])", detail: "\(tagDics["\(tagArray[indexPath.row)"]!)")
         
         return cell
     }
@@ -101,13 +77,6 @@ class ChildListDetailViewController: UIViewController,UITableViewDelegate, UITab
     //cellが選択されたとき
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print(indexPath.row)
-        
-        // appDelegate.selectEvent = events[indexPath.row]
-        
-       // appDelegate.selectChild = childs[indexPath.row]
-        
-        //画面遷移
-       // performSegueWithIdentifier("showDetail",sender: nil)
         
     }
     

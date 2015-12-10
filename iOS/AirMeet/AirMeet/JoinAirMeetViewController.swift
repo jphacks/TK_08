@@ -155,6 +155,8 @@ class JoinAirMeetViewController: UIViewController,UITableViewDelegate, UITableVi
             appDelegate.childID = nil
             appDelegate.isBeacon = true
             
+            self.navigationController?.popToRootViewControllerAnimated(true)
+            
         }
     }
     
@@ -339,6 +341,8 @@ class JoinAirMeetViewController: UIViewController,UITableViewDelegate, UITableVi
         let task: NSURLSessionDataTask = session.dataTaskWithRequest(urlRequest, completionHandler:
         {data, request, error in
         //結果出力
+            print("\nDidReceiveData Task ↑")
+            
             if (error != nil){
                 
                 print("False Join AirMeet : \(error)")
@@ -353,7 +357,6 @@ class JoinAirMeetViewController: UIViewController,UITableViewDelegate, UITableVi
                     //くるくるストップ
                     self.indicator.stopAnimation(true, completion: nil)
                     self.indicator.removeFromSuperview()
-                    
                     self.presentViewController(alert, animated: true, completion: nil)
                 })
                 
@@ -364,8 +367,8 @@ class JoinAirMeetViewController: UIViewController,UITableViewDelegate, UITableVi
         
         })
         
-        print("Start Session")
-        scrollView.contentOffset.y = self.navigationController!.navigationBar.frame.height
+        print("\nResume Task ↓")
+        scrollView.contentOffset.y = -(self.navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.height)
         
         self.view.addSubview(indicator)
         self.indicator.startAnimation()
@@ -396,11 +399,12 @@ class JoinAirMeetViewController: UIViewController,UITableViewDelegate, UITableVi
                 self.indicator.stopAnimation(true, completion: nil)
                 self.indicator.removeFromSuperview()
                 //画面遷移
+                self.appDelegate.isChild = true
                 self.performSegueWithIdentifier("ShowDetailChild",sender: nil)
                 
             })
             
-            appDelegate.isChild = true
+            
             
             //失敗
         }else{

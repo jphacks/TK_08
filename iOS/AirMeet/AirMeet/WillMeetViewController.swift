@@ -1,5 +1,5 @@
 //
-//  ChildListViewController.swift
+//  WillMeetViewController.swift
 //  AirMeet
 //
 //  Created by koooootake on 2015/11/28.
@@ -8,21 +8,21 @@
 
 import UIKit
 
-class ChildListViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,NSURLSessionDelegate,NSURLSessionDataDelegate{
+class WillMeetViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,NSURLSessionDelegate,NSURLSessionDataDelegate{
     
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
     @IBOutlet weak var ChildTableView: UITableView!
-    
-    //@IBOutlet weak var roomLabels: UILabel!
-    //@IBOutlet weak var eventLabel: UILabel!
+
     var childs:[ChildModel] = [ChildModel]()
-    
+        
+    var refreshControl:UIRefreshControl!
     //くるくる
     let indicator:SpringIndicator = SpringIndicator()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         //ナビゲーションバーの色
         self.navigationController?.navigationBar.barTintColor=UIColor(red: 128.0/255.0, green: 204.0/255.0, blue: 223.0/255.0, alpha: 1)//水色
         self.navigationController?.navigationBar.tintColor=UIColor.whiteColor()
@@ -30,37 +30,41 @@ class ChildListViewController: UIViewController,UITableViewDelegate,UITableViewD
         //戻るボタン
         let backButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         navigationItem.backBarButtonItem = backButtonItem
-
         
         ChildTableView.delegate = self
         ChildTableView.dataSource = self
         
-        let tag1:Dictionary<String,String> = ["年齢":"22","所属":"筑波大学","趣味":"モンハン"]
-        let tag2:Dictionary<String,String> = ["年齢":"21","所属":"東京大学","趣味":"スクフェス"]
-        let tag3:Dictionary<String,String> = ["年齢":"24","所属":"早稲田大学","趣味":"デレステ"]
+        //更新
+        //ChildTableView.frame = CGRectMake(0, self.navigationController!.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.height, self.view.frame.width, self.view.frame.height)
         
-        //子追加
-        let child1:ChildModel = ChildModel(image: UIImage(named: "go_face.png")!, backgroundImage:  UIImage(named: "go_back.png")!, name: "さとうごう", tag: tag1,detail:"がんばるぞ〜！！今日も可愛い女の子ゲットするぞ〜！！LINEもってる〜？？")
-        let child2:ChildModel = ChildModel(image: UIImage(named: "IMG_9004.JPG")!, backgroundImage:  UIImage(named: "IMG_9003.JPG")!, name: "こーたけ", tag: tag2,detail:"今日はよろしくお願いします！ピカチュウが大好きです♪")
-        let child3:ChildModel = ChildModel(image: UIImage(named: "IMG_8996.JPG")!, backgroundImage:  UIImage(named: "IMG_9002.JPG")!, name: "うぉるこふ", tag: tag3,detail:"Unity使ってます。筑波大学の3年生です。")
+        //let ChildTableViewWrapper = PullToBounceWrapper(scrollView: ChildTableView)
+        //self.view.addSubview(ChildTableViewWrapper)
+        //ChildTableViewWrapper.didPullToRefresh = {
+        //    self.UserReload()
+        //}
         
-        childs.append(child1)
-        childs.append(child2)
-        childs.append(child3)
+        //更新
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl.addTarget(self, action: "UserReload", forControlEvents: UIControlEvents.ValueChanged)
+        self.ChildTableView.addSubview(refreshControl)
         
         //ぐるぐる
         indicator.frame = CGRectMake(self.view.frame.width/2-self.view.frame.width/8,self.view.frame.height/2-self.view.frame.width/8,self.view.frame.width/4,self.view.frame.width/4)
         indicator.lineWidth = 3
+        
+        UserReload()
         
        // eventLabel.text = appDelegate.selectEvent?.eventName
        // roomLabels.text = appDelegate.selectEvent?.roomName
         
     }
     
-    //再読み込み
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        print("Reload")
+    func UserReload(){
+        
+        print("\nReload\n")
+        
+        //からにする
+        childs = []
         
         let eventID = appDelegate.selectEvent!.eventID
         var majorID = appDelegate.majorID
@@ -87,7 +91,7 @@ class ChildListViewController: UIViewController,UITableViewDelegate,UITableViewD
         }
         
         if isInEvent{
-            print("stay in")
+            print("stay")
             
             // 通信用のConfigを生成.
             let myConfig:NSURLSessionConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()
@@ -106,32 +110,43 @@ class ChildListViewController: UIViewController,UITableViewDelegate,UITableViewD
             let task:NSURLSessionDataTask = mySession.dataTaskWithRequest(request)
             
             //くるくるスタート
-            self.view.addSubview(self.indicator)
-            self.indicator.startAnimation()
+            print("\nResume Task ↓")
+            //self.view.addSubview(self.indicator)
+            //self.indicator.startAnimation()
             
-            print("Start Session")
             task.resume()
+            
             
         }else{
             print("left")
             
-            //goがだしてるalertとぶつかる、セグエをswich caseで呼び出してくか、こっちで書くかなやましい
+            //goがだしてるalertとぶつかる
             let alert = UIAlertController(title:"AirMeetを抜けました",message:"EventName : \(appDelegate.selectEvent!.eventName)\nRoomName : \(appDelegate.selectEvent!.roomName)",preferredStyle:.Alert)
             let okAction = UIAlertAction(title: "OK", style: .Default) {
                 action in
                 //Exitからsegueを呼び出し
+                self.appDelegate.isChild = true
                 self.performSegueWithIdentifier("BackToMain", sender: nil)
             }
             alert.addAction(okAction)
             
             self.presentViewController(alert, animated: true, completion: nil)
+            
         }
         
     }
     
+
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+       
+        
+    }
     
     //通信終了
     func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveData data: NSData) {
+        
+        print("\nDidReceiveData Task ↑")
         
         //Json解析
         let json = JSON(data:data)
@@ -139,51 +154,85 @@ class ChildListViewController: UIViewController,UITableViewDelegate,UITableViewD
         let code:String = "\(json["code"])"
         let message = json["message"]
        
-
         //成功
         if code == "200"{
             
-            print("User Get Sucsess : \(message)")
+            print("Sucsess User Get : \(message)")
             
-            let users = json["users"]
-            print("Users : \(users)")
             
-            for user in json["users"]{
-                print(user)
+            //ユーザデータ解析
+            for (id,detail) in json["users"]{
+                
+                print(id)
+                
+                let userJson = JSON(detail)
+                
+                print(userJson["name"])
+                print(userJson["profile"])
+                           
+                var tagDics = [String:String]()
+                
+                for item in userJson["items"]{
+                    tagDics["\(item.0)"] = "\(item.1)"
+                }
+                
+                
+                //画像を表示
+                let userImageUrl = NSURL(string: "\(userJson["image"])")
+                let backImageUrl = NSURL(string: "\(userJson["image_header"])")
+                var userImage = UIImage()
+                var backImage = UIImage()
+                
+                do{
+                    let userImageData = try NSData(contentsOfURL: userImageUrl!, options: NSDataReadingOptions.DataReadingMappedIfSafe)
+                    userImage = UIImage(data: userImageData)!
+                    
+                    let backImageData = try NSData(contentsOfURL: backImageUrl!, options: NSDataReadingOptions.DataReadingMappedIfSafe)
+                    backImage = UIImage(data: backImageData)!
+                } catch{
+                    print("False Image Get")
+                    
+                }
+                
+                //参加しているユーザモデル作成
+                let child:ChildModel = ChildModel(image: userImage, backgroundImage:  backImage, name: "\(userJson["name"])", tag: tagDics,detail:"\(userJson["profile"])")
+                childs.append(child)
+                
             }
             
-            print("UsersName : \(json["users"]["name"])")
             
             //非同期
             dispatch_async(dispatch_get_main_queue(), {
                 
                 //くるくるストップ
-                self.indicator.stopAnimation(true, completion: nil)
-                self.indicator.removeFromSuperview()
+                //self.indicator.stopAnimation(true, completion: nil)
+                //self.indicator.removeFromSuperview()
+                self.refreshControl.endRefreshing()
+                self.ChildTableView.reloadData()
                 
             })
             
-            
-            //失敗
+        //失敗
         }else{
             
-            print("User Get False : \(message)")
+            print("False User Get : \(message)")
             
-            let alert = UIAlertController(title:"False Make AirMeet",message:"\(message)",preferredStyle:UIAlertControllerStyle.Alert)
+            let alert = UIAlertController(title:"False User Get",message:"\(message)",preferredStyle:UIAlertControllerStyle.Alert)
             let okAction = UIAlertAction(title: "OK", style: .Default) {
                 action in
             }
             alert.addAction(okAction)
             //非同期
             dispatch_async(dispatch_get_main_queue(), {
-                //くるくるストップ
-                self.indicator.stopAnimation(true, completion: nil)
-                self.indicator.removeFromSuperview()
                 
+                //くるくるストップ
+                //self.indicator.stopAnimation(true, completion: nil)
+                //self.indicator.removeFromSuperview()
+                self.refreshControl.endRefreshing()
                 self.presentViewController(alert, animated: true, completion: nil)
             })
             
-                   }
+        }
         
         
     }
@@ -222,9 +271,6 @@ class ChildListViewController: UIViewController,UITableViewDelegate,UITableViewD
     // Segueで遷移時の処理
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
         if (segue.identifier == "showDetail") {
-           // let GroupVC : ChildListDetailViewController = (segue.destinationViewController as? ChildListDetailViewController)!
-           // GroupVC.groupName = selectGroup
-            
             
         }
     }

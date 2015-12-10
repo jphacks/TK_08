@@ -14,7 +14,7 @@ class ChildTableViewCell: UITableViewCell {
     @IBOutlet weak var imageImageView: UIImageView!
 
   
-    @IBOutlet weak var backImageView: SABlurImageView!
+    @IBOutlet weak var backImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     
     @IBOutlet weak var detailLabel: UILabel!
@@ -36,7 +36,32 @@ class ChildTableViewCell: UITableViewCell {
     func setCell(childModel:ChildModel){
         
         self.backImageView.image = childModel.backgroundImage
-        self.backImageView.addBlurEffect(50)
+        
+        //ぶらー
+        /*
+        let blurEffect = UIBlurEffect(style: .Light)
+        let lightBlurView = UIVisualEffectView(effect: blurEffect)
+        lightBlurView.frame = self.backImageView.bounds
+        self.backImageView.addSubview(lightBlurView)
+        */
+        
+        //self.backImageView.addBlurEffect(50)
+        
+        self.nameLabel.text = childModel.name
+        self.detailLabel.text = childModel.detail
+        
+        //文字を擦ったかんじに
+        /*
+        let lightVibrancyView =
+        vibrancyEffectView(
+            fromBlurEffect: lightBlurView.effect as! UIBlurEffect,
+            frame: backImageView.bounds)
+        lightBlurView.contentView.addSubview(lightVibrancyView)
+        
+        lightVibrancyView.contentView.addSubview(self.nameLabel)
+        lightVibrancyView.contentView.addSubview(self.detailLabel)
+
+       */
         
         self.imageImageView.image = childModel.image
         //アイコンまる
@@ -45,10 +70,17 @@ class ChildTableViewCell: UITableViewCell {
         self.imageImageView.layer.borderColor = UIColor.whiteColor().CGColor
         self.imageImageView.layer.borderWidth = 3.0
         
-        self.nameLabel.text = childModel.name
-        
-        self.detailLabel.text = childModel.detail
+
         
     
     }
+    
+    // VibrancyエフェクトのViewを生成
+    func vibrancyEffectView(fromBlurEffect effect: UIBlurEffect, frame: CGRect) -> UIVisualEffectView {
+        let vibrancyEffect = UIVibrancyEffect(forBlurEffect: effect)
+        let vibrancyView = UIVisualEffectView(effect: vibrancyEffect)
+        vibrancyView.frame = frame
+        return vibrancyView
+    }
+    
 }
