@@ -114,6 +114,7 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         
             case .Authorized, .AuthorizedWhenInUse:
                 print("iBeacon Permit")
+                sendLocalNotificationWithMessage("AirMeeeeet")
             
             case .NotDetermined:
                 print("iBeacon No Permit")
@@ -297,6 +298,7 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
             //増えたとき
             if(majorIDList.count > majorIDListOld.count){
                 print("\n\(dateFormatter.stringFromDate(now))  : Add AirMeet")
+                //sendLocalNotificationWithMessage("領域に入りました")
                 sendPush("AirMeet領域に入ったよ")
                 
                 // 通信用のConfigを生成.
@@ -461,11 +463,52 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
     
     //ローカル通知(現状機能してない)
     func sendLocalNotificationWithMessage(message: String!) {
-        let notification:UILocalNotification = UILocalNotification()
+//        let notification:UILocalNotification = UILocalNotification()
+//        notification.alertBody = message
+//        
+//        UIApplication.sharedApplication().presentLocalNotificationNow(notification)
+        
+        let notificationSettings =  UIUserNotificationSettings(forTypes:
+            [UIUserNotificationType.Sound,
+                UIUserNotificationType.Alert], categories: nil)
+        
+        
+        // アプリケーションに通知設定を登録
+        UIApplication.sharedApplication().registerUserNotificationSettings(notificationSettings)
+        
+        
+        print(message)
+        
+        // ビーコン領域をトリガーとした通知を作成(後述)
+        let notification = createRegionNotification(proximityUUID!, message: message)
+        // 通知を登録する
+        UIApplication.sharedApplication().scheduleLocalNotification(notification)
+        
+    }
+    
+    private func createRegionNotification(uuid: NSUUID, message: String) -> UILocalNotification {
+        
+        // ## ビーコン領域を作成 ##
+        let beaconRegion = CLBeaconRegion(proximityUUID: uuid, identifier: "RegionId")
+        beaconRegion.notifyEntryStateOnDisplay = false
+        beaconRegion.notifyOnEntry = true
+        // 領域に入ったときにも出たときにも通知される
+        // 今回は領域から出たときの通知はRegion側でOFFにしておく
+        beaconRegion.notifyOnExit = true
+        
+        // ## 通知を作成し、領域を設定 ##
+        let notification = UILocalNotification()
+        notification.soundName = UILocalNotificationDefaultSoundName
         notification.alertBody = message
         
-        UIApplication.sharedApplication().presentLocalNotificationNow(notification)
+        // 通知の対象となる領域 *今回のポイント
+        notification.region = beaconRegion
+        // 一度だけの通知かどうか
+        notification.regionTriggersOnce = false
+        
+        return notification
     }
+
 
     //会場情報を入れるtableViewのcellセット
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath:NSIndexPath) -> UITableViewCell {

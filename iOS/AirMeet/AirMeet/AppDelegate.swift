@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -49,21 +50,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //self.window?.makeKeyAndVisible()
         
         // アプリに登録されている全ての通知を削除
-        UIApplication.sharedApplication().cancelAllLocalNotifications()
+        //UIApplication.sharedApplication().cancelAllLocalNotifications()
+    
         
+        let notificationSettings =  UIUserNotificationSettings(forTypes:
+            [UIUserNotificationType.Sound,
+                UIUserNotificationType.Alert], categories: nil)
+
         return true
     }
 
     func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
         
-//        print("notification")
-//        let alert = UIAlertController(title:"\(notification.alertBody!)",message:nil,preferredStyle:UIAlertControllerStyle.Alert)
-//        let okAction = UIAlertAction(title: "OK", style: .Default) {
-//            action in
-//        }
-//        alert.addAction(okAction)
-//        
-//        self.window?.rootViewController!.presentViewController(alert, animated: true, completion: nil)
+        //ここに通知を受け取った時の処理を記述
 
     }
     
@@ -75,13 +74,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidEnterBackground(application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-        
-//        notification.alertAction = "AirMeet"
-//        notification.alertBody = "iBeacon範囲に入りました"
-//        notification.soundName = UILocalNotificationDefaultSoundName
-//        // あとのためにIdを割り振っておく
-//        notification.userInfo = ["notifyId": "AirMeet"]
-//        UIApplication.sharedApplication().presentLocalNotificationNow(notification)
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
@@ -96,6 +88,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
+   
+    private func createRegionNotification(uuid: NSUUID, message: String) -> UILocalNotification {
+        
+        // ## ビーコン領域を作成 ##
+        let beaconRegion = CLBeaconRegion(proximityUUID: uuid, identifier: "RegionId")
+        beaconRegion.notifyEntryStateOnDisplay = true
+        beaconRegion.notifyOnEntry = true
+        // 領域に入ったときにも出たときにも通知される
+        // 今回は領域から出たときの通知はRegion側でOFFにしておく
+        beaconRegion.notifyOnExit = false
+        
+        // ## 通知を作成し、領域を設定 ##
+        let notification = UILocalNotification()
+        notification.soundName = UILocalNotificationDefaultSoundName
+        notification.alertBody = message
+        
+        // 通知の対象となる領域 *今回のポイント
+        notification.region = beaconRegion
+        // 一度だけの通知かどうか
+        notification.regionTriggersOnce = false
+        
+        return notification
+    }
+    
+    
+    
+    
+    
+    
     func pushControll(){
         // push設定
         // 登録済みのスケジュールをすべてリセット
