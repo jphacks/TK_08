@@ -273,17 +273,35 @@ class ProfileSettingViewController: UIViewController,UITextFieldDelegate,UITextV
         switch picker.view.tag{
         //ユーザ画像
         case 0:
-            userImageView.image = image
+            // リサイズ処理　100*100の正方形
+            let size = CGSize(width: 100, height: 100)
+            UIGraphicsBeginImageContext(size)
+            image.drawInRect(CGRectMake(0, 0, size.width, size.height))
+            let resizeImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+
+            userImageView.image = resizeImage
             let defaults = NSUserDefaults.standardUserDefaults()
-            defaults.setObject(UIImagePNGRepresentation(image), forKey: "image")
+            defaults.setObject(UIImagePNGRepresentation(resizeImage), forKey: "image")
             break
         //背景画像
         case 1:
+            // リサイズ処理　画面width幅の正方形
+            let size = CGSize(width: self.view.frame.width, height: self.view.frame.width)
+            UIGraphicsBeginImageContext(size)
+            image.drawInRect(CGRectMake(0, 0, size.width, size.height))
+            let resizeImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            
+            // クリッピング処理　width: 画面サイズ　height: 120
+            
+            let cropCGImageRef = CGImageCreateWithImageInRect(resizeImage.CGImage, CGRectMake(0, (self.view.frame.width-120.0)/2.0, self.view.frame.width, 120))
+            let cropImage = UIImage(CGImage: cropCGImageRef!)
             
             ///トリミング終了した画像をここにSet
-            backImageView.image = image
+            backImageView.image = cropImage
             let defaults = NSUserDefaults.standardUserDefaults()
-            defaults.setObject(UIImagePNGRepresentation(image), forKey: "back")
+            defaults.setObject(UIImagePNGRepresentation(cropImage), forKey: "back")
             break
         default:
             break

@@ -200,10 +200,10 @@
                                         </userDefinedRuntimeAttributes>
                                         <variation key="default">
                                             <mask key="constraints">
+                                                <exclude reference="0Wb-28-mLu"/>
                                                 <exclude reference="f7U-vN-Azg"/>
                                                 <exclude reference="hXI-sZ-Arh"/>
                                                 <exclude reference="yqI-XB-1V5"/>
-                                                <exclude reference="0Wb-28-mLu"/>
                                             </mask>
                                         </variation>
                                     </textField>
@@ -234,10 +234,10 @@
                                         </userDefinedRuntimeAttributes>
                                         <variation key="default">
                                             <mask key="constraints">
+                                                <exclude reference="4LP-yl-Sir"/>
                                                 <exclude reference="c3m-Ic-xbV"/>
                                                 <exclude reference="nj9-Lp-tvN"/>
                                                 <exclude reference="unv-5S-HbU"/>
-                                                <exclude reference="4LP-yl-Sir"/>
                                             </mask>
                                         </variation>
                                     </textField>
