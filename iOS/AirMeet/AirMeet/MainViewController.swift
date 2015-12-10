@@ -130,6 +130,7 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
             case .Restricted, .Denied:
                 //デバイスから拒否状態
                 print("iBeacon Restricted")
+            
         }
         
     }
