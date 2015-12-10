@@ -51,6 +51,7 @@ class JoinAirMeetViewController: UIViewController,UITableViewDelegate, UITableVi
         TagSettingTableView.delegate = self
         TagSettingTableView.dataSource = self
         
+        
         scrollView.delegate = self
         
         eventLabel.text = "\(appDelegate.selectEvent!.eventName)"
@@ -187,11 +188,15 @@ class JoinAirMeetViewController: UIViewController,UITableViewDelegate, UITableVi
         let keyboardScreenEndFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
         let myBoundSize: CGSize = UIScreen.mainScreen().bounds.size
         
-        let txtLimit = cell.frame.origin.y + cell.frame.height + 8.0
+        // ちょうどいい感じに決め打ち
+        let txtLimit = cell.frame.origin.y + cell.frame.height + 300.0
         let kbdLimit = myBoundSize.height - keyboardScreenEndFrame.size.height
         
+        //print(txtLimit)
+        //print(kbdLimit)
+        
         if txtLimit >= kbdLimit {
-            scrollView.contentOffset.y = txtLimit - kbdLimit
+            scrollView.contentOffset.y = txtLimit - kbdLimit + 30.0
         }
     }
     
