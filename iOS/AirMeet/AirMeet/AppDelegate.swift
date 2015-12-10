@@ -48,18 +48,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //let mainViewController : UIViewController = mainStoryboard.instantiateViewControllerWithIdentifier("Main")
         //self.window!.rootViewController = mainViewController
         //self.window?.makeKeyAndVisible()
-        
-        // アプリに登録されている全ての通知を削除
-        //UIApplication.sharedApplication().cancelAllLocalNotifications()
-    
-        
-        let notificationSettings =  UIUserNotificationSettings(forTypes:
-            [UIUserNotificationType.Sound,
-                UIUserNotificationType.Alert], categories: nil)
 
         return true
     }
 
+    
+    // 使ってない
     func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
         
         //ここに通知を受け取った時の処理を記述
@@ -87,62 +81,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
-   
-    private func createRegionNotification(uuid: NSUUID, message: String) -> UILocalNotification {
-        
-        // ## ビーコン領域を作成 ##
-        let beaconRegion = CLBeaconRegion(proximityUUID: uuid, identifier: "RegionId")
-        beaconRegion.notifyEntryStateOnDisplay = true
-        beaconRegion.notifyOnEntry = true
-        // 領域に入ったときにも出たときにも通知される
-        // 今回は領域から出たときの通知はRegion側でOFFにしておく
-        beaconRegion.notifyOnExit = false
-        
-        // ## 通知を作成し、領域を設定 ##
-        let notification = UILocalNotification()
-        notification.soundName = UILocalNotificationDefaultSoundName
-        notification.alertBody = message
-        
-        // 通知の対象となる領域 *今回のポイント
-        notification.region = beaconRegion
-        // 一度だけの通知かどうか
-        notification.regionTriggersOnce = false
-        
-        return notification
-    }
-    
-    
-    
-    
-    
-    
-    func pushControll(){
-        // push設定
-        // 登録済みのスケジュールをすべてリセット
-        print("push")
-        //application!.cancelAllLocalNotifications()
-        
-        
-//        notification.alertAction = "AirMeet"
-//        notification.alertBody = "iBeacon範囲に入りました"
-//        notification.soundName = UILocalNotificationDefaultSoundName
-//        // あとのためにIdを割り振っておく
-//        notification.userInfo = ["notifyId": "AirMeet"]
-//        UIApplication.sharedApplication().presentLocalNotificationNow(notification)
-        
-        notification.alertBody = "AirMeet圏内"
-        
-        let alert = UIAlertController(title:"\(notification.alertBody!)",message:nil,preferredStyle:UIAlertControllerStyle.Alert)
-        let okAction = UIAlertAction(title: "OK", style: .Default) {
-            action in
-        }
-        alert.addAction(okAction)
-        
-        //presentViewController(alert, animated: true, completion: nil)
-        
-    }
-
 
 }
 
