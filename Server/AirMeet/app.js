@@ -19,9 +19,10 @@ var app = express();
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended : true }));
 app.use(methodOverride('_method'));
+app.use('/image', express.static(__dirname + '/image'));
 
 // (e)ルーティングの設定
-app.use('/', routes);
+app.use('/api/', routes);
 
 // (f)リクエストの受け付け
 var server = app.listen(process.env.PORT || 3000, function() {

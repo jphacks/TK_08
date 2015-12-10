@@ -13,28 +13,28 @@ var package = require('../package.json');
 var buf = fs.readFileSync('Authorized_Token');
 var token_list = buf.toString().split('\n');
 
-
 // multer
-//var app = express();
-//app.use(multer({dest:'./image/'}).array('multiInputFileName'));
 var upload = multer({ dest: './image/' })
 
 // ルーターの作成
 var router = express.Router();
 
 //認証
+
 router.use(function(req, res, next) {
+  console.log(req.url);
   var AccessToken = req.header('X-AccessToken');
   if(token_list.indexOf(AccessToken) >= 0){
     next();
   }else{
     var error ={
-      message : 'AccessToken is invalid',
+      message : 'Access Token is invalid',
       code : 400
     };
     res.send(error);
   }
 });
+
 
 // ルート
 router.get('/', function(req, res) {
@@ -168,14 +168,43 @@ router.post('/register_user', cpUpload, function(req, res) {
   var name = req.body.name;
   var profile = req.body.profile;
   var items = req.body.items;
+  console.log(req.files.image);
 
   if(req.files.image){
-    var image = 'http://airmeet.mybluemix.net/image/'+req.files.image[0].filename;
+    var tmp_path, target_name, target_path;
+    tmp_path = req.files.image[0].path;
+    target_name = id + '.' + req.files.image[0].originalname.split('.').pop();
+    var image = 'http://airmeet.mybluemix.net/image/' + target_name;
+    target_path = './image/' + target_name;
+    fs.rename(tmp_path, target_path, function(err) {
+      if (err) {
+        throw err;
+      }
+      fs.unlink(tmp_path, function() {
+        if (err) {
+          throw err;
+        }
+      });
+    });
   }else {
     var image;
   }
   if(req.files.image_header){
-    var image_header = 'http://airmeet.mybluemix.net/image/'+req.files.image_header[0].filename;
+    var tmp_path, target_name, target_path;
+    tmp_path = req.files.image_header[0].path;
+    target_name = id + '_header.' + req.files.image_header[0].originalname.split('.').pop();
+    var image_header = 'http://airmeet.mybluemix.net/image/' + target_name;
+    target_path = './image/' + target_name;
+    fs.rename(tmp_path, target_path, function(err) {
+      if (err) {
+        throw err;
+      }
+      fs.unlink(tmp_path, function() {
+        if (err) {
+          throw err;
+        }
+      });
+    });
   }else{
     var image_header;
   }
@@ -332,7 +361,7 @@ router.post('/remove_event', function(req, res) {
       return;
     }
     if(events.length == 1){
-      var id = events[0].id
+      var id = events[0].id;
       dba.remove(id, function(err2) { //イベントを削除
         if(!err2){ //エラーが出なければ
           dba.get_participants(major, function(err3, users) { //削除したいイベントの参加者を取得
