@@ -146,8 +146,17 @@ class MakeAirMeetViewController: UIViewController,UITextFieldDelegate,NSURLSessi
     }
     
     //UITextFieldが編集された直後に呼ばれるデリゲートメソッド.
+    ///ここでキーボードをかえる
     func textFieldDidBeginEditing(textField: UITextField){
- 
+        
+        ///textFiledのtagが3のやつをかえる
+        switch textField.tag{
+        case 3:
+            textField.keyboardType = UIKeyboardType.NumberPad
+        default:
+            break
+        }
+        
     }
 
     //UITextFieldが編集終了する直前に呼ばれるデリゲートメソッド.
@@ -285,10 +294,14 @@ class MakeAirMeetViewController: UIViewController,UITextFieldDelegate,NSURLSessi
                 style: UIAlertActionStyle.Default,
                 handler:{
                     (action:UIAlertAction!) -> Void in
+                    //let textField = alert.textFields![0]
                     let textField = alert.textFields![0]
+                    
+                    //textField.keyboardType = UIKeyboardType.NumberPad
+                    
                     let input_text = textField.text
 
-                    // 入力したパスコード保存(すみません：できてないかも)
+                    // 入力したパスコード保存
                     self.appDelegate.parentPass = input_text
                     print("PASS = \(self.appDelegate.parentPass!)")
                     //画面遷移
@@ -307,12 +320,22 @@ class MakeAirMeetViewController: UIViewController,UITextFieldDelegate,NSURLSessi
             })
             */
             
+            ///ここでデリゲート設定
+            alert.addTextFieldWithConfigurationHandler {
+                (textField: UITextField!) -> Void in
+                textField.delegate = self
+                textField.tag = 3
+            }
+            
             alert.addAction(okAction)
             //alert.addAction(cancelAction)
+            
+            
+            //ここあるとアラートに入力枠が2つ出てしまうので消した(momoka)
             //UIAlertControllerにtextFieldを追加
-            alert.addTextFieldWithConfigurationHandler { (textField:UITextField!) -> Void in
-            }
+            //alert.addTextFieldWithConfigurationHandler { (textField:UITextField!) -> Void in}
            
+            
             ////////こっから上だけいじった/////////////
             
             //非同期
