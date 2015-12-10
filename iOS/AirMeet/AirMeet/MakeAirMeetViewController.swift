@@ -76,6 +76,12 @@ class MakeAirMeetViewController: UIViewController,UITextFieldDelegate,NSURLSessi
         }
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        
+        appDelegate.isBeacon = true
+        
+    }
+    
     //cellに値を設定
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath:NSIndexPath) -> UITableViewCell {
         

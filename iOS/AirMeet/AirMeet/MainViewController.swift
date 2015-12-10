@@ -169,15 +169,17 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         //プロフィール更新
         }else{
             
-            //Event登録画面からの帰還時はうごきっぱなし
+            //iBeconの監視を再開したいとき
             if (appDelegate.isBeacon == true && appDelegate.selectEvent == nil){
                 
                 //iBeaconによる領域観測を開始する
+                //self.manager.delegate = self
                 print("iBeacon Start\n　|\n　∨")
                 self.manager.startMonitoringForRegion(self.region)
-                //appDelegate.isBeacon = false
-                
             }
+            
+            //Event登録画面からの帰還時はうごきっぱなし
+            
             //Eventのselectを空にする
             appDelegate.selectEvent = nil
             
@@ -193,6 +195,13 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
             backImageView.image = UIImage(data: backData)
         }
         
+    }
+    
+    //LocationManagerがモニタリングを開始したというイベントを受け取る
+    func locationManager(manager: CLLocationManager, didStartMonitoringForRegion region: CLRegion) {
+    
+        //ここですでにリージョン内にいるかを問い合わせる！！！これが大事
+        manager.requestStateForRegion(region);
     }
     
     //観測開始後に呼ばれる、領域内にいるかどうか判定する
@@ -220,7 +229,6 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
     //領域に入った時
     func locationManager(manager: CLLocationManager, didEnterRegion region: CLRegion) {
         print("Enter　↓")
-        
         //測定を開始する
         self.manager.startRangingBeaconsInRegion(self.region)
         
@@ -229,7 +237,6 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
     //領域から抜けた時
     func locationManager(manager: CLLocationManager, didExitRegion region: CLRegion) {
         print("Exit　↑")
-        
         //測定を停止する
         self.manager.stopRangingBeaconsInRegion(self.region)
         
@@ -317,6 +324,9 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
                     
                     task = mySession.dataTaskWithRequest(request)
                     
+                    //測定を停止する
+                    print("Exit　↑")
+                    self.manager.stopRangingBeaconsInRegion(self.region)
                     //iBecon停止
                     print("　∧\n　|\niBeacon Stop\n")
                     self.manager.stopMonitoringForRegion(self.region)
@@ -385,7 +395,7 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
 
         // print(data)
         let json = JSON(data:data)
-        print("JSON:\(json)\n")
+        //print("JSON:\(json)\n")
         
         //失敗
         if String(json["code"]) == "400" || String(json["code"]) == "500"{
@@ -551,9 +561,10 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         //空にする
         events = []
         EventTableView.reloadData()
-        majorIDList = []
         majorIDListOld = []
+        majorIDList = []
         appDelegate.majorID = []
+        
         
         let storyboard: UIStoryboard = UIStoryboard(name: "Parent", bundle: NSBundle.mainBundle())
         let parentViewController: MakeAirMeetViewController = storyboard.instantiateInitialViewController() as! MakeAirMeetViewController

@@ -12,6 +12,8 @@ class ProfileSettingViewController: UIViewController,UITextFieldDelegate,UITextV
     
     let defaultColor:UIColor = UIColor(red: 128.0/255.0, green: 204.0/255.0, blue: 223.0/255.0, alpha: 1)//水色
     
+    let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    
     @IBOutlet weak var backImageView: UIImageView!
     @IBOutlet weak var userImageView: UIImageView!
     
@@ -198,6 +200,9 @@ class ProfileSettingViewController: UIViewController,UITextFieldDelegate,UITextV
     //画面が消える前に呼び出し
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
+        
+        appDelegate.isBeacon = false
+        
         selectTextFiled.resignFirstResponder()
         selectTextView.resignFirstResponder()
         
