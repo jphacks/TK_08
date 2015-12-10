@@ -102,7 +102,7 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         indicator.lineWidth = 3
         
         //テストデータ（仮）
-        let event = EventModel(eventName: "testEvent", roomName: "testRoom", childNumber: 0, eventDescription: "testDescription",eventTag:["趣味","特技"], eventID: 100)
+        let event = EventModel(eventName: "testEvent", roomName: "testRoom", childNumber: 0, eventDescription: "testDescription",eventTag:["趣味","特技","出身地"], eventID: 42498)
         events.append(event)
     
         //iBeacon領域生成
@@ -401,16 +401,23 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         if String(json["code"]) == "400" || String(json["code"]) == "500"{
             
             print("\nFalse Server Connection : \(json["message"])\n")
-            session.invalidateAndCancel()
+            
+            let alert = UIAlertController(title:"False Get AirMeet",message:"\(json["message"])",preferredStyle:UIAlertControllerStyle.Alert)
+            let okAction = UIAlertAction(title: "OK", style: .Default) {
+                action in
+            }
+            alert.addAction(okAction)
             
             //iBeconStart
-            self.manager.startMonitoringForRegion(self.region)
+            //self.manager.startMonitoringForRegion(self.region)
+            session.invalidateAndCancel()
             //非同期
             dispatch_async(dispatch_get_main_queue(), {
                 
                 //くるくるストップ
                 self.indicator.stopAnimation(true, completion: nil)
                 self.indicator.removeFromSuperview()
+                self.presentViewController(alert, animated: true, completion: nil)
                 
             })
             

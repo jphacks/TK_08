@@ -118,19 +118,48 @@ class WillMeetViewController: UIViewController,UITableViewDelegate,UITableViewDa
             
             
         }else{
-            print("left")
             
-            //goがだしてるalertとぶつかる
-            let alert = UIAlertController(title:"AirMeetを抜けました",message:"EventName : \(appDelegate.selectEvent!.eventName)\nRoomName : \(appDelegate.selectEvent!.roomName)",preferredStyle:.Alert)
-            let okAction = UIAlertAction(title: "OK", style: .Default) {
-                action in
-                //Exitからsegueを呼び出し
-                self.appDelegate.isChild = true
-                self.performSegueWithIdentifier("BackToMain", sender: nil)
+            if eventID == 42498{
+                //てすとデータ
+                
+                // 通信用のConfigを生成.
+                let myConfig:NSURLSessionConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()
+                
+                // Sessionを生成.
+                let mySession:NSURLSession = NSURLSession(configuration: myConfig, delegate: self, delegateQueue: nil)
+                
+                let url = NSURL(string: "http://airmeet.mybluemix.net/api/participants?major=\(eventID)&id=\(appDelegate.childID!)")
+                
+                let request:NSMutableURLRequest = NSMutableURLRequest(URL: url!)
+                
+                request.HTTPMethod = "GET"
+                
+                request.addValue("a", forHTTPHeaderField: "X-AccessToken")
+                
+                let task:NSURLSessionDataTask = mySession.dataTaskWithRequest(request)
+                
+                //くるくるスタート
+                print("\nResume Task ↓")
+                //self.view.addSubview(self.indicator)
+                //self.indicator.startAnimation()
+                
+                task.resume()
+                
+            }else{
+                print("left")
+                
+                //goがだしてるalertとぶつかる
+                let alert = UIAlertController(title:"AirMeetを抜けました",message:"EventName : \(appDelegate.selectEvent!.eventName)\nRoomName : \(appDelegate.selectEvent!.roomName)",preferredStyle:.Alert)
+                let okAction = UIAlertAction(title: "OK", style: .Default) {
+                    action in
+                    //Exitからsegueを呼び出し
+                    self.appDelegate.isChild = true
+                    self.performSegueWithIdentifier("BackToMain", sender: nil)
+                }
+                alert.addAction(okAction)
+                
+                self.presentViewController(alert, animated: true, completion: nil)
             }
-            alert.addAction(okAction)
-            
-            self.presentViewController(alert, animated: true, completion: nil)
             
         }
         

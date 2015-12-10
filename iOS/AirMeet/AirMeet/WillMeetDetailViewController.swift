@@ -19,7 +19,6 @@ class WillMeetDetailViewController: UIViewController,UITableViewDelegate, UITabl
     @IBOutlet weak var detail: UILabel!
     
     @IBOutlet weak var tagLabel: UILabel!
-
     
     var tagDics = [String:String]()
     var tagArray = [String]()

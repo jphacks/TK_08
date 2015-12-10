@@ -8,15 +8,31 @@
 
 import UIKit
 
-class ChildSettingViewController: UIViewController,NSURLSessionDelegate,NSURLSessionDataDelegate  {
+class ChildSettingViewController: UIViewController,NSURLSessionDelegate,NSURLSessionDataDelegate,UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate  {
     
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    
+    @IBOutlet var scrollView: UIScrollView!
+    
+    @IBOutlet weak var eventBackView: UIView!
     
     @IBOutlet weak var eventLabel: UILabel!
     @IBOutlet weak var roomLabel: UILabel!
     
     @IBOutlet weak var imageImageView: UIImageView!
     @IBOutlet weak var backImageView: UIImageView!
+    
+    
+    @IBOutlet weak var userNameLabel: UILabel!
+    @IBOutlet weak var userDetailLabel: UILabel!
+    
+    var selectIndex:NSIndexPath = NSIndexPath()
+    var selectTextFiled:UITextField = UITextField()
+    
+    @IBOutlet weak var TagTableView: UITableView!
+    
+    var tagDics = [String:String]()
+    var tags:[TagModel] = [TagModel]()
     
     //くるくる
     let indicator:SpringIndicator = SpringIndicator()
@@ -27,6 +43,9 @@ class ChildSettingViewController: UIViewController,NSURLSessionDelegate,NSURLSes
         self.navigationController?.navigationBar.barTintColor=UIColor(red: 128.0/255.0, green: 204.0/255.0, blue: 223.0/255.0, alpha: 1)//水色
         self.navigationController?.navigationBar.tintColor=UIColor.whiteColor()
         
+        TagTableView.delegate = self
+        TagTableView.dataSource = self
+        
         eventLabel.text = appDelegate.selectEvent?.eventName
         roomLabel.text = appDelegate.selectEvent?.roomName
         
@@ -36,8 +55,17 @@ class ChildSettingViewController: UIViewController,NSURLSessionDelegate,NSURLSes
         imageImageView.layer.borderColor = UIColor.whiteColor().CGColor
         imageImageView.layer.borderWidth = 3.0
         
+        //event情報
+        eventBackView.layer.cornerRadius = 3.0
+        eventBackView.layer.masksToBounds = true
+        eventBackView.layer.borderColor = UIColor.lightGrayColor().CGColor
+        eventBackView.layer.borderWidth = 1.0
+        
         //ここはあとで、サーバーにおくった一時的なものに変更
         let defaults = NSUserDefaults.standardUserDefaults()
+        //最初はデフォルトの情報いれる
+        userNameLabel.text = "\(defaults.stringForKey("name")!)"
+        userDetailLabel.text = "\(defaults.stringForKey("detail")!)"
         //画像
         let imageData:NSData = defaults.objectForKey("image") as! NSData
         imageImageView.image = UIImage(data:imageData)
@@ -45,10 +73,122 @@ class ChildSettingViewController: UIViewController,NSURLSessionDelegate,NSURLSes
         let backData:NSData = defaults.objectForKey("back") as! NSData
         backImageView.image = UIImage(data: backData)
         
+        tagDics = defaults.objectForKey("tag") as! [String:String]
+        
+        //tagテーブルに値いれる
+        for name in appDelegate.selectEvent!.eventTag{
+            
+            if (tagDics["\(name)"] != nil){
+                let tagModel:TagModel = TagModel(name: "\(name)", detail: "\(tagDics["\(name)"]!)")
+                tags.append(tagModel)
+                
+            }else{
+                let tagModel:TagModel = TagModel(name: "\(name)", detail: "")
+                tags.append(tagModel)
+            }
+        }
+        
         //ぐるぐる
         indicator.frame = CGRectMake(self.view.frame.width/2-self.view.frame.width/8,self.view.frame.height/2-self.view.frame.width/8,self.view.frame.width/4,self.view.frame.width/4)
         indicator.lineWidth = 3
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        
+        super.viewWillAppear(animated)
+        //キーボード
+        let notificationCenter = NSNotificationCenter.defaultCenter()
+        notificationCenter.addObserver(self, selector: "handleKeyboardWillShowNotification:", name: UIKeyboardWillShowNotification, object: nil)
+        notificationCenter.addObserver(self, selector: "handleKeyboardWillHideNotification:", name: UIKeyboardWillHideNotification, object: nil)
+        
+    }
+    
+    
+    override func viewDidDisappear(animated: Bool) {
+        
+        super.viewDidDisappear(animated)
+        //キーボード
+        let notificationCenter = NSNotificationCenter.defaultCenter()
+        notificationCenter.removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+        notificationCenter.removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        //スクロールをはじめたらキーボードを閉じる
+        selectTextFiled.resignFirstResponder()
+        
+    }
+    
+    
+    //自動スクロール（にしゅうスクロール、可変にする？要検討）
+    func handleKeyboardWillShowNotification(notification: NSNotification) {
+        
+        let cell: SettingTagTableViewCell = TagTableView.dequeueReusableCellWithIdentifier("TagSettingTableViewCell", forIndexPath: selectIndex) as! SettingTagTableViewCell
+        
+        let userInfo = notification.userInfo!
+        let keyboardScreenEndFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
+        let myBoundSize: CGSize = UIScreen.mainScreen().bounds.size
+        
+        let txtLimit = cell.frame.origin.y + cell.frame.height + 8.0
+        let kbdLimit = myBoundSize.height - keyboardScreenEndFrame.size.height
+        
+        if txtLimit >= kbdLimit {
+            scrollView.contentOffset.y = txtLimit - kbdLimit
+        }
+    }
+    
+    func handleKeyboardWillHideNotification(notification: NSNotification) {
+        //scrollView.contentOffset.y = 0
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath:NSIndexPath) -> UITableViewCell {
+        
+        let cell: SettingTagTableViewCell = tableView.dequeueReusableCellWithIdentifier("TagSettingTableViewCell", forIndexPath: indexPath) as! SettingTagTableViewCell
+        
+        cell.setCell(tags[indexPath.row])
+        //入力されたテキストを取得するタグとデリゲート
+        cell.TagTextField.delegate = self
+        cell.TagTextField.tag = indexPath.row
+        
+        return cell
+    }
+    
+    // セクション数
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    // セクションの行数
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return tags.count
+    }
+    
+    //UITextFieldが編集開始する直前に呼ばれる
+    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+        
+        //選択されたindexを保存
+        selectIndex = NSIndexPath(forRow: textField.tag, inSection: 0)
+        //スクロールしたらキーボードが消える用
+        selectTextFiled = textField
+        return true
+    }
+    
+    //UITextFieldが編集終了する直前に呼ばれる
+    func textFieldShouldEndEditing(textField: UITextField) -> Bool {
+        
+        //tag保存
+        print("Save Tag Detail : \(textField.placeholder!) -> \(textField.text!)")
+        tagDics.updateValue("\(textField.text!)", forKey: "\(textField.placeholder!)")
+        
+        return true
+    }
+    
+    //改行ボタンが押された際に呼ばれる
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+
     
     //離脱
     @IBAction func ChildStopButton(sender: AnyObject) {
