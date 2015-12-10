@@ -20,6 +20,8 @@ class WillMeetViewController: UIViewController,UITableViewDelegate,UITableViewDa
     //くるくる
     let indicator:SpringIndicator = SpringIndicator()
     
+    var sessionTag:Int = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -108,18 +110,18 @@ class WillMeetViewController: UIViewController,UITableViewDelegate,UITableViewDa
             request.addValue("a", forHTTPHeaderField: "X-AccessToken")
             
             let task:NSURLSessionDataTask = mySession.dataTaskWithRequest(request)
-            
+            sessionTag = 0
             //くるくるスタート
             print("\nResume Task ↓")
-            //self.view.addSubview(self.indicator)
-            //self.indicator.startAnimation()
+            self.view.addSubview(self.indicator)
+            self.indicator.startAnimation()
             
             task.resume()
             
             
         }else{
             
-            if eventID == 42498{
+            if eventID == 34479{
                 //てすとデータ
                 
                 // 通信用のConfigを生成.
@@ -137,24 +139,49 @@ class WillMeetViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 request.addValue("a", forHTTPHeaderField: "X-AccessToken")
                 
                 let task:NSURLSessionDataTask = mySession.dataTaskWithRequest(request)
-                
+                sessionTag = 0
                 //くるくるスタート
                 print("\nResume Task ↓")
-                //self.view.addSubview(self.indicator)
-                //self.indicator.startAnimation()
+                self.view.addSubview(self.indicator)
+                self.indicator.startAnimation()
                 
                 task.resume()
                 
             }else{
                 print("left")
                 
+                //でーたからゆーざ消去
+                // 通信用のConfigを生成.
+                let myConfig:NSURLSessionConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()
+                
+                // Sessionを生成.
+                let mySession:NSURLSession = NSURLSession(configuration: myConfig, delegate: self, delegateQueue: nil)
+                
+                
+                let post = "id=\(appDelegate.childID!)"
+                let postData = post.dataUsingEncoding(NSUTF8StringEncoding)
+                
+                let url = NSURL(string: "http://airmeet.mybluemix.net/api/remove_user")
+                
+                let request:NSMutableURLRequest = NSMutableURLRequest(URL: url!)
+                request.HTTPMethod = "POST"
+                request.HTTPBody = postData
+                
+                request.addValue("a", forHTTPHeaderField: "X-AccessToken")
+                
+                let task:NSURLSessionDataTask = mySession.dataTaskWithRequest(request)
+                
+                print("Start Session")
+                //くるくるスタート
+                sessionTag = 1
+                self.view.addSubview(indicator)
+                self.indicator.startAnimation()
+                
                 //goがだしてるalertとぶつかる
                 let alert = UIAlertController(title:"AirMeetを抜けました",message:"EventName : \(appDelegate.selectEvent!.eventName)\nRoomName : \(appDelegate.selectEvent!.roomName)",preferredStyle:.Alert)
                 let okAction = UIAlertAction(title: "OK", style: .Default) {
                     action in
-                    //Exitからsegueを呼び出し
-                    self.appDelegate.isChild = true
-                    self.performSegueWithIdentifier("BackToMain", sender: nil)
+                        task.resume()
                 }
                 alert.addAction(okAction)
                 
@@ -177,90 +204,151 @@ class WillMeetViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
         print("\nDidReceiveData Task ↑")
         
-        //Json解析
-        let json = JSON(data:data)
+
         
-        let code:String = "\(json["code"])"
-        let message = json["message"]
+        switch sessionTag{
+        
+        //追加
+        case 0:
+            
+            //Json解析
+            let json = JSON(data:data)
+            
+            let code:String = "\(json["code"])"
+            let message = json["message"]
        
-        //成功
-        if code == "200"{
-            
-            print("Sucsess User Get : \(message)")
-            
-            
-            //ユーザデータ解析
-            for (id,detail) in json["users"]{
+            //成功
+            if code == "200"{
                 
-                print(id)
+                print("Sucsess User Get : \(message)")
                 
-                let userJson = JSON(detail)
                 
-                print(userJson["name"])
-                print(userJson["profile"])
-                           
-                var tagDics = [String:String]()
-                
-                for item in userJson["items"]{
-                    tagDics["\(item.0)"] = "\(item.1)"
+                //ユーザデータ解析
+                for (id,detail) in json["users"]{
+                    
+                    print(id)
+                    
+                    let userJson = JSON(detail)
+                    
+                    print(userJson["name"])
+                    print(userJson["profile"])
+                               
+                    var tagDics = [String:String]()
+                    
+                    for item in userJson["items"]{
+                        tagDics["\(item.0)"] = "\(item.1)"
+                    }
+                    
+                    
+                    //画像を表示
+                    let userImageUrl = NSURL(string: "\(userJson["image"])")
+                    let backImageUrl = NSURL(string: "\(userJson["image_header"])")
+                    var userImage = UIImage()
+                    var backImage = UIImage()
+                    
+                    do{
+                        let userImageData = try NSData(contentsOfURL: userImageUrl!, options: NSDataReadingOptions.DataReadingMappedIfSafe)
+                        userImage = UIImage(data: userImageData)!
+                        
+                        let backImageData = try NSData(contentsOfURL: backImageUrl!, options: NSDataReadingOptions.DataReadingMappedIfSafe)
+                        backImage = UIImage(data: backImageData)!
+                    } catch{
+                        print("False Image Get")
+                        
+                    }
+                    
+                    //参加しているユーザモデル作成
+                    let child:ChildModel = ChildModel(image: userImage, backgroundImage:  backImage, name: "\(userJson["name"])", tag: tagDics,detail:"\(userJson["profile"])")
+                    childs.append(child)
+                    
                 }
                 
                 
-                //画像を表示
-                let userImageUrl = NSURL(string: "\(userJson["image"])")
-                let backImageUrl = NSURL(string: "\(userJson["image_header"])")
-                var userImage = UIImage()
-                var backImage = UIImage()
+                //非同期
+                dispatch_async(dispatch_get_main_queue(), {
+                    
+                    //くるくるストップ
+                    self.indicator.stopAnimation(true, completion: nil)
+                    self.indicator.removeFromSuperview()
+                    self.refreshControl.endRefreshing()
+                    self.ChildTableView.reloadData()
+                    
+                })
                 
-                do{
-                    let userImageData = try NSData(contentsOfURL: userImageUrl!, options: NSDataReadingOptions.DataReadingMappedIfSafe)
-                    userImage = UIImage(data: userImageData)!
-                    
-                    let backImageData = try NSData(contentsOfURL: backImageUrl!, options: NSDataReadingOptions.DataReadingMappedIfSafe)
-                    backImage = UIImage(data: backImageData)!
-                } catch{
-                    print("False Image Get")
-                    
+            //失敗
+            }else{
+                
+                print("False User Get : \(message)")
+                
+                let alert = UIAlertController(title:"False User Get",message:"\(message)",preferredStyle:UIAlertControllerStyle.Alert)
+                let okAction = UIAlertAction(title: "OK", style: .Default) {
+                    action in
                 }
+                alert.addAction(okAction)
+                //非同期
+                dispatch_async(dispatch_get_main_queue(), {
+                    
+                    //くるくるストップ
+                    self.indicator.stopAnimation(true, completion: nil)
+                    self.indicator.removeFromSuperview()
+                    self.refreshControl.endRefreshing()
+                    self.presentViewController(alert, animated: true, completion: nil)
+                })
                 
-                //参加しているユーザモデル作成
-                let child:ChildModel = ChildModel(image: userImage, backgroundImage:  backImage, name: "\(userJson["name"])", tag: tagDics,detail:"\(userJson["profile"])")
-                childs.append(child)
+            }
+            break
+        
+        //消去
+        case 1:
+            
+            
+            //Json解析
+            let json = JSON(data:data)
+            let code:String = "\(json["code"])"
+            let message = json["message"]
+            
+            //成功
+            if code == "200"{
+                
+                print("User Delete Sucsess : \(json["message"])")
+                
+                
+                //非同期
+                dispatch_async(dispatch_get_main_queue(), {
+                    //くるくるストップ
+                    self.indicator.stopAnimation(true, completion: nil)
+                    self.indicator.removeFromSuperview()
+                    //Exitからsegueを呼び出し
+                    self.appDelegate.isChild = true
+                    self.performSegueWithIdentifier("BackToMain", sender: nil)
+                    //self.navigationController?.popToRootViewControllerAnimated(true)
+                })
+                //失敗
+            }else{
+                
+                print("User Delete Error : \(json["message"])")
+                
+                let alert = UIAlertController(title:"False Delete User",message:"\(message)",preferredStyle:UIAlertControllerStyle.Alert)
+                let okAction = UIAlertAction(title: "OK", style: .Default) {
+                    action in
+                }
+                alert.addAction(okAction)
+                
+                //非同期
+                dispatch_async(dispatch_get_main_queue(), {
+                    //くるくるストップ
+                    self.indicator.stopAnimation(true, completion: nil)
+                    self.indicator.removeFromSuperview()
+                    
+                    self.presentViewController(alert, animated: true, completion: nil)
+                    
+                })
                 
             }
             
-            
-            //非同期
-            dispatch_async(dispatch_get_main_queue(), {
-                
-                //くるくるストップ
-                //self.indicator.stopAnimation(true, completion: nil)
-                //self.indicator.removeFromSuperview()
-                self.refreshControl.endRefreshing()
-                self.ChildTableView.reloadData()
-                
-            })
-            
-        //失敗
-        }else{
-            
-            print("False User Get : \(message)")
-            
-            let alert = UIAlertController(title:"False User Get",message:"\(message)",preferredStyle:UIAlertControllerStyle.Alert)
-            let okAction = UIAlertAction(title: "OK", style: .Default) {
-                action in
-            }
-            alert.addAction(okAction)
-            //非同期
-            dispatch_async(dispatch_get_main_queue(), {
-                
-                //くるくるストップ
-                //self.indicator.stopAnimation(true, completion: nil)
-                //self.indicator.removeFromSuperview()
-                self.refreshControl.endRefreshing()
-                self.presentViewController(alert, animated: true, completion: nil)
-            })
-            
+            break
+        default:
+            break
         }
         
         

@@ -238,6 +238,7 @@ class JoinAirMeetViewController: UIViewController,UITableViewDelegate, UITableVi
         //tag保存
         print("Save Tag Detail : \(textField.placeholder!) -> \(textField.text!)")
         tagDics.updateValue("\(textField.text!)", forKey: "\(textField.placeholder!)")
+
         
         return true
     }

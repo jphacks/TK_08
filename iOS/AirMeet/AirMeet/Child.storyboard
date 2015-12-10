@@ -931,7 +931,7 @@
                                         <rect key="frame" x="0.0" y="92" width="600" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="k3T-c3-cAx" id="IIT-LB-JOo">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="49.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TagName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZWo-Fr-g9Z">
@@ -1794,8 +1794,8 @@
         <image name="TabBarAccountImage" width="53" height="53"/>
         <image name="TabBarListImage" width="53" height="53"/>
         <image name="TabBarSearchImage" width="53" height="53"/>
-        <image name="avatar.png" width="190" height="190"/>
-        <image name="background.png" width="570" height="300"/>
+        <image name="avatar.png" width="100" height="100"/>
+        <image name="background.png" width="300" height="158"/>
         <image name="go_back.png" width="600" height="120"/>
         <image name="go_face.png" width="2448" height="2448"/>
         <image name="icon-A-95.png" width="95" height="95"/>

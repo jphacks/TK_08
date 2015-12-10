@@ -102,7 +102,7 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         indicator.lineWidth = 3
         
         //テストデータ（仮）
-        let event = EventModel(eventName: "testEvent", roomName: "testRoom", childNumber: 0, eventDescription: "testDescription",eventTag:["趣味","特技","出身地"], eventID: 42498)
+        let event = EventModel(eventName: "TestEvent", roomName: "TestRoom", childNumber: 5, eventDescription: "TestDescription",eventTag:["趣味","所属"], eventID: 34479)
         events.append(event)
     
         //iBeacon領域生成
@@ -275,6 +275,11 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
                 print("left major -> [\(majorIDListOld[0])]\n")
                 sendPush("AirMeet領域から出たよ")
                 events = []
+                
+                //テストデータ（仮）
+                let event = EventModel(eventName: "TestEvent", roomName: "TestRoom", childNumber: 5, eventDescription: "TestDescription",eventTag:["趣味","所属"], eventID: 34479)
+                events.append(event)
+                
                 EventTableView.reloadData()
             }
             
