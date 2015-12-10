@@ -13,6 +13,11 @@ class JoinAirMeetViewController: UIViewController,UITableViewDelegate, UITableVi
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
     
+    @IBOutlet weak var userNameLabel: UILabel!
+    @IBOutlet weak var userDetailLabel: UILabel!
+    
+    @IBOutlet weak var eventNumberLabel: UILabel!
+    
     @IBOutlet var scrollView: UIScrollView!
     
     @IBOutlet weak var eventLabel: UILabel!
@@ -51,6 +56,7 @@ class JoinAirMeetViewController: UIViewController,UITableViewDelegate, UITableVi
         
         eventLabel.text = "\(appDelegate.selectEvent!.eventName)"
         roomLabel.text = "\(appDelegate.selectEvent!.roomName)"
+        eventNumberLabel.text = "\(appDelegate.selectEvent!.childNumber)人"
         
         //アイコンまる
         imageImageView.layer.cornerRadius = imageImageView.frame.size.width/2.0
@@ -64,20 +70,44 @@ class JoinAirMeetViewController: UIViewController,UITableViewDelegate, UITableVi
         eventBackView.layer.borderColor = UIColor.lightGrayColor().CGColor
         eventBackView.layer.borderWidth = 1.0
         
+        //最初はデフォルトの情報いれる
         let defaults = NSUserDefaults.standardUserDefaults()
+        userNameLabel.text = "\(defaults.stringForKey("name")!)"
+        userDetailLabel.text = "\(defaults.stringForKey("detail")!)"
+        
         //画像
         let imageData:NSData = defaults.objectForKey("image") as! NSData
         imageImageView.image = UIImage(data:imageData)
         let backData:NSData = defaults.objectForKey("back") as! NSData
         backImageView.image = UIImage(data: backData)
         
+        //ぶらー
+        let blurEffect = UIBlurEffect(style: .Light)
+        let lightBlurView = UIVisualEffectView(effect: blurEffect)
+        lightBlurView.frame = backImageView.bounds
+        backImageView.addSubview(lightBlurView)
+        
+        //文字を擦ったかんじに
+        let lightVibrancyView =
+        vibrancyEffectView(
+            fromBlurEffect: lightBlurView.effect as! UIBlurEffect,
+            frame: backImageView.bounds)
+        lightBlurView.contentView.addSubview(lightVibrancyView)
+        
+        lightVibrancyView.contentView.addSubview(userNameLabel)
+        lightVibrancyView.contentView.addSubview(userDetailLabel)
+        
+        
+        //戻るボタン設定
+        let backButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem = backButtonItem
+        
         //ぐるぐる
         indicator.frame = CGRectMake(self.view.frame.width/2-self.view.frame.width/8,self.view.frame.height/2-self.view.frame.width/8,self.view.frame.width/4,self.view.frame.width/4)
         indicator.lineWidth = 3
         
         tagDics = defaults.objectForKey("tag") as! [String:String]
-        print(tagDics)
-
+        
         //tagテーブルに値いれる
         for name in appDelegate.selectEvent!.eventTag{
             
@@ -94,6 +124,15 @@ class JoinAirMeetViewController: UIViewController,UITableViewDelegate, UITableVi
         
     }
     
+    // VibrancyエフェクトのViewを生成
+    func vibrancyEffectView(fromBlurEffect effect: UIBlurEffect, frame: CGRect) -> UIVisualEffectView {
+        let vibrancyEffect = UIVibrancyEffect(forBlurEffect: effect)
+        let vibrancyView = UIVisualEffectView(effect: vibrancyEffect)
+        vibrancyView.frame = frame
+        return vibrancyView
+    }
+    
+    
     override func viewWillAppear(animated: Bool) {
         
         super.viewWillAppear(animated)
@@ -101,6 +140,14 @@ class JoinAirMeetViewController: UIViewController,UITableViewDelegate, UITableVi
         let notificationCenter = NSNotificationCenter.defaultCenter()
         notificationCenter.addObserver(self, selector: "handleKeyboardWillShowNotification:", name: UIKeyboardWillShowNotification, object: nil)
         notificationCenter.addObserver(self, selector: "handleKeyboardWillHideNotification:", name: UIKeyboardWillHideNotification, object: nil)
+        
+        ///ここでは変更した内容を一時保存していれよう
+        
+        //とりあえずデフォルトの情報いれる
+        let defaults = NSUserDefaults.standardUserDefaults()
+        userNameLabel.text = "\(defaults.stringForKey("name")!)"
+        userDetailLabel.text = "\(defaults.stringForKey("detail")!)"
+
         
         //mainに戻る
         if appDelegate.isChild == true {
@@ -172,7 +219,7 @@ class JoinAirMeetViewController: UIViewController,UITableViewDelegate, UITableVi
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tags.count
     }
-   
+    
     
     //UITextFieldが編集開始する直前に呼ばれる
     func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
@@ -200,6 +247,11 @@ class JoinAirMeetViewController: UIViewController,UITableViewDelegate, UITableVi
         return true
     }
     
+    @IBAction func JoinProfileSetting(sender: AnyObject) {
+        
+    }
+    
+    
     @IBAction func ChildStartButton(sender: AnyObject) {
         
         //初期の初期設定
@@ -217,29 +269,167 @@ class JoinAirMeetViewController: UIViewController,UITableViewDelegate, UITableVi
         tagString = tagString + "}"
         
         // 通信用のConfigを生成.
-        let myConfig:NSURLSessionConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()
+        //let myConfig:NSURLSessionConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()
+        
         // Sessionを生成.
-        let mySession:NSURLSession = NSURLSession(configuration: myConfig, delegate: self, delegateQueue: nil)
+        //let mySession:NSURLSession = NSURLSession(configuration: myConfig, delegate: self, delegateQueue: nil)
         
-        let post = "major=\(appDelegate.selectEvent!.eventID)&name=\(defaults.stringForKey("name")!)&profile=\(defaults.stringForKey("detail")!)&image=test&image_header=test&items=\(tagString)"
-        let postData = post.dataUsingEncoding(NSUTF8StringEncoding)
+        //let post = "major=\(appDelegate.selectEvent!.eventID)&name=\(defaults.stringForKey("name")!)&profile=\(defaults.stringForKey("detail")!)&image=test&image_header=test&items=\(tagString)"
+        //let postData = post.dataUsingEncoding(NSUTF8StringEncoding)
         
-        let url = NSURL(string: "http://airmeet.mybluemix.net/register_user")
+        //let url = NSURL(string: "http://airmeet.mybluemix.net/register_user")
         
-        let request:NSMutableURLRequest = NSMutableURLRequest(URL: url!)
-        request.HTTPMethod = "POST"
-        request.HTTPBody = postData
+        //let request:NSMutableURLRequest = NSMutableURLRequest(URL: url!)
+        //request.HTTPMethod = "POST"
+        //request.HTTPBody = postData
+        //request.addValue("a", forHTTPHeaderField: "X-AccessToken")
         
-        request.addValue("a", forHTTPHeaderField: "X-AccessToken")
         
-        let task:NSURLSessionDataTask = mySession.dataTaskWithRequest(request)
-        print("Start Session")
+        //let task:NSURLSessionDataTask = mySession.dataTaskWithRequest(request)
+        //print("Start Session")
         //くるくるスタート
+        //sessionTag = 0
+        
+        
+        //task.resume()
+        
+        //送信する画像
+        let userImageData:NSData = NSData(data:UIImageJPEGRepresentation(imageImageView.image!, 1.0)!)
+        let backImageData:NSData = NSData(data:UIImageJPEGRepresentation(backImageView.image!, 1.0)!)
+        
+        let url = NSURL(string: "http://192.168.11.7:3000/register_user")
+        let urlRequest : NSMutableURLRequest = NSMutableURLRequest()
+        
+        if let u = url{
+            urlRequest.URL = u
+            urlRequest.HTTPMethod = "POST"
+            urlRequest.timeoutInterval = 30.0
+            urlRequest.addValue("a", forHTTPHeaderField: "X-AccessToken")
+        }
+        
+        //bodyの作成
+        //httpヘッダーの情報の登録
+        let uniqueId = NSProcessInfo.processInfo().globallyUniqueString
+        let body: NSMutableData = NSMutableData()
+        var postData :String = String()
+        let boundary:String = "---------------------------\(uniqueId)"//境界、本体に含まれないようユニークにする
+        
+        urlRequest.addValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type") //マルチパートのデータ
+        
+        //文字列のとこ
+        postData += "--\(boundary)\r\n"
+        postData += "Content-Disposition: form-data; name=\"major\"\r\n\r\n"
+        postData += "\(appDelegate.selectEvent!.eventID)\r\n"
+        
+        postData += "--\(boundary)\r\n"
+        postData += "Content-Disposition: form-data; name=\"name\"\r\n\r\n"
+        postData += "\(defaults.stringForKey("name")!)\r\n"
+        
+        postData += "--\(boundary)\r\n"
+        postData += "Content-Disposition: form-data; name=\"profile\"\r\n\r\n"
+        postData += "\(defaults.stringForKey("detail")!)\r\n"
+        
+        postData += "--\(boundary)\r\n"
+        postData += "Content-Disposition: form-data; name=\"items\"\r\n\r\n"
+        postData += "\(tagString)\r\n"
+        
+        //画像のとこ
+        postData += "--\(boundary)\r\n"
+        postData += "Content-Disposition: form-data; name=\"image\"; filename=\"UserImage.jpeg\"\r\n"
+        postData += "Content-Type: image/jpeg\r\n\r\n"
+        body.appendData(postData.dataUsingEncoding(NSUTF8StringEncoding)!)
+        body.appendData(userImageData)
+        postData = String()
+        postData += "\r\n"
+        
+        postData += "--\(boundary)\r\n"
+        postData += "Content-Disposition: form-data; name=\"image_header\"; filename=\"BackImage.jpeg\"\r\n"
+        postData += "Content-Type: image/jpeg\r\n\r\n"
+        body.appendData(postData.dataUsingEncoding(NSUTF8StringEncoding)!)
+        body.appendData(backImageData)
+        postData = String()
+        postData += "\r\n"
+        
+        postData += "\r\n--\(boundary)--\r\n"
+        
+        body.appendData(postData.dataUsingEncoding(NSUTF8StringEncoding)!) //(3)
+        
+        urlRequest.HTTPBody = NSData(data:body)
+        
+        
+        //リクエストを送信
+        let config = NSURLSessionConfiguration.defaultSessionConfiguration()
+        let session = NSURLSession(configuration: config)
+        
+        
+        let task: NSURLSessionDataTask = session.dataTaskWithRequest(urlRequest, completionHandler:
+        {data, request, error in
+        //結果出力
+            if (error != nil){
+                print("Error : \(error!)")
+            }else{
+                print(NSString(data: data!, encoding: NSUTF8StringEncoding)!)
+                self.EndMutableURLSession(data!)
+            }
+        
+        })
+        
+        print("Start Session")
         sessionTag = 0
         self.view.addSubview(indicator)
         self.indicator.startAnimation()
         
         task.resume()
+
+    }
+    
+    func EndMutableURLSession(data:NSData){
+        
+        //Json解析
+        let json = JSON(data:data)
+        let code:String = "\(json["code"])"
+        let message = json["message"]
+        
+            
+        appDelegate.childID = "\(json["id"])"
+        
+        //成功
+        if code == "200"{
+            
+            print("User Login Sucsess : \(json["message"])")
+            
+            //メインスレッドで表示
+            dispatch_async(dispatch_get_main_queue(), {
+                
+                //くるくるストップ
+                self.indicator.stopAnimation(true, completion: nil)
+                self.indicator.removeFromSuperview()
+                //画面遷移
+                self.performSegueWithIdentifier("ShowDetailChild",sender: nil)
+                
+            })
+            
+            appDelegate.isChild = true
+            
+            //失敗
+        }else{
+            print("User Login Error : \(json["message"])")
+            
+            let alert = UIAlertController(title:"False Make AirMeet",message:"\(message)",preferredStyle:UIAlertControllerStyle.Alert)
+            let okAction = UIAlertAction(title: "OK", style: .Default) {
+                action in
+            }
+            alert.addAction(okAction)
+            //メインスレッドで表示
+            dispatch_async(dispatch_get_main_queue(), {
+                //くるくるストップ
+                self.indicator.stopAnimation(true, completion: nil)
+                self.indicator.removeFromSuperview()
+                
+                self.presentViewController(alert, animated: true, completion: nil)
+            })
+        }
+        
         
     }
     
@@ -310,7 +500,7 @@ class JoinAirMeetViewController: UIViewController,UITableViewDelegate, UITableVi
                     self.indicator.removeFromSuperview()
                     self.navigationController?.popToRootViewControllerAnimated(true)
                 })
-            //失敗
+                //失敗
             }else{
                 
                 print("User Delete Error : \(json["message"])")
@@ -341,7 +531,9 @@ class JoinAirMeetViewController: UIViewController,UITableViewDelegate, UITableVi
             
         }
     }
-
+    
+    
+    
     
     @IBAction func unwindToTop(segue: UIStoryboardSegue) {
         

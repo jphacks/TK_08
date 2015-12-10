@@ -78,11 +78,11 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         userImageView.layer.borderWidth = 3.0
         
         //Facebook,Twitterアイコンまるく
-        facebookImageView.layer.cornerRadius = facebookImageView.frame.size.width/2.0
+        facebookImageView.layer.cornerRadius = 5.0//facebookImageView.frame.size.width/2.0
         facebookImageView.layer.masksToBounds = true
         facebookImageView.layer.borderColor = defaultColor.CGColor
         facebookImageView.layer.borderWidth = 1.0
-        twitterImageView.layer.cornerRadius = twitterImageView.frame.size.width/2.0
+        twitterImageView.layer.cornerRadius = 5.0//twitterImageView.frame.size.width/2.0
         twitterImageView.layer.masksToBounds = true
         twitterImageView.layer.borderColor = defaultColor.CGColor
         twitterImageView.layer.borderWidth = 1.0
@@ -524,7 +524,6 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         //eventが選択されたとき、それ以外の観測をやめたい
         print("\nSelect Event : \(events[indexPath.row].eventName)\n")
         
-        print(appDelegate.selectEvent)
         //選択したEvent情報を保持して
         appDelegate.selectEvent = events[indexPath.row]
         
