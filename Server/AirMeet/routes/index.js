@@ -22,7 +22,7 @@ var router = express.Router();
 //認証
 
 router.use(function(req, res, next) {
-  console.log(req.url);
+  //console.log(req.url);
   var AccessToken = req.header('X-AccessToken');
   if(token_list.indexOf(AccessToken) >= 0){
     next();
@@ -168,7 +168,6 @@ router.post('/register_user', cpUpload, function(req, res) {
   var name = req.body.name;
   var profile = req.body.profile;
   var items = req.body.items;
-  console.log(req.files.image);
 
   if(req.files.image){
     var tmp_path, target_name, target_path;
@@ -178,11 +177,11 @@ router.post('/register_user', cpUpload, function(req, res) {
     target_path = './image/' + target_name;
     fs.rename(tmp_path, target_path, function(err) {
       if (err) {
-        throw err;
+        console.log("Rename error");
       }
       fs.unlink(tmp_path, function() {
         if (err) {
-          throw err;
+          console.log("Unlink error");
         }
       });
     });
@@ -197,11 +196,11 @@ router.post('/register_user', cpUpload, function(req, res) {
     target_path = './image/' + target_name;
     fs.rename(tmp_path, target_path, function(err) {
       if (err) {
-        throw err;
+        console.log("Rename error");
       }
       fs.unlink(tmp_path, function() {
         if (err) {
-          throw err;
+          console.log("Unlink error");
         }
       });
     });
