@@ -146,8 +146,17 @@ class MakeAirMeetViewController: UIViewController,UITextFieldDelegate,NSURLSessi
     }
     
     //UITextFieldが編集された直後に呼ばれるデリゲートメソッド.
+    ///ここでキーボードをかえる
     func textFieldDidBeginEditing(textField: UITextField){
- 
+        
+        ///textFiledのtagが3のやつをかえる
+        switch textField.tag{
+        case 3:
+            textField.keyboardType = UIKeyboardType.NumberPad
+        default:
+            break
+        }
+        
     }
 
     //UITextFieldが編集終了する直前に呼ばれるデリゲートメソッド.
@@ -286,6 +295,9 @@ class MakeAirMeetViewController: UIViewController,UITextFieldDelegate,NSURLSessi
                 handler:{
                     (action:UIAlertAction!) -> Void in
                     let textField = alert.textFields![0]
+                    
+                    textField.keyboardType = UIKeyboardType.NumberPad
+                    
                     let input_text = textField.text
 
                     // 入力したパスコード保存(すみません：できてないかも)
@@ -306,6 +318,13 @@ class MakeAirMeetViewController: UIViewController,UITextFieldDelegate,NSURLSessi
                     //self.setDefaultName()
             })
             */
+            
+            ///ここでデリゲート設定
+            alert.addTextFieldWithConfigurationHandler {
+                (textField: UITextField!) -> Void in
+                textField.delegate = self
+                textField.tag = 3
+            }
             
             alert.addAction(okAction)
             //alert.addAction(cancelAction)
