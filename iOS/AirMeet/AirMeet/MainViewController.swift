@@ -262,109 +262,159 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
         
-        print("\(dateFormatter.stringFromDate(now)) : Child Mode \(majorIDList)")
-    
-        majorIDList = []
+        if appDelegate.selectEvent == nil{
         
-        //ibeconがないとき
-        if(beacons.count == 0) {
             
-            //最後の1つだったとき
-            if(majorIDList.count != majorIDListOld.count){
-                print("\n\(dateFormatter.stringFromDate(now))  : Left AirMeet")
-                print("left major -> [\(majorIDListOld[0])]\n")
-                sendPush("AirMeet領域から出たよ")
-                events = []
-                
-                //テストデータ（仮）
-                let event = EventModel(eventName: "TestEvent", roomName: "TestRoom", childNumber: 5, eventDescription: "TestDescription",eventTag:["趣味","所属"], eventID: 34479)
-                events.append(event)
-                
-                EventTableView.reloadData()
-            }
-            
-            appDelegate.majorID = []
-            majorIDListOld = majorIDList
-            
-            return
-        }
+            print("\(dateFormatter.stringFromDate(now)) : List \(majorIDList)")
         
-        //ibeconがあるとき、配列にする
-        for i in 0..<beacons.count{
-            majorIDList.append(beacons[i].major)
-        }
-        
-        //重複捨て
-        if(beacons.count != 0){
-            let set = NSOrderedSet(array: majorIDList)
-            majorIDList = set.array as! [NSNumber]
-        }
-        
-        //1つ前の観測から変更があったとき
-        if(majorIDList.count != majorIDListOld.count){
+            majorIDList = []
             
-            //増えたとき
-            if(majorIDList.count > majorIDListOld.count){
-                print("\n\(dateFormatter.stringFromDate(now))  : Add AirMeet")
-                //sendLocalNotificationWithMessage("領域に入りました")
-                sendPush("AirMeet領域に入ったよ")
+            //ibeconがないとき
+            if(beacons.count == 0) {
                 
-                // 通信用のConfigを生成.
-                let myConfig:NSURLSessionConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()
-                
-                // Sessionを生成.
-                let mySession:NSURLSession = NSURLSession(configuration: myConfig, delegate: self, delegateQueue: NSOperationQueue.mainQueue())
-                
-                var task:NSURLSessionDataTask!
-                
-                //新しく入ったやつを抽出
-                for newMajor in majorIDList.except(majorIDListOld){
-                    print("new major -> [\(newMajor)]\n")
+                //最後の1つだったとき
+                if(majorIDList.count != majorIDListOld.count){
+                    print("\n\(dateFormatter.stringFromDate(now))  : Left AirMeet")
+                    print("left major -> [\(majorIDListOld[0])]\n")
+                    //競合するので、保留
+                    //sendPush("AirMeet領域から出たよ")
+                    events = []
                     
-                    let url = NSURL(string: "http://airmeet.mybluemix.net/api/event_info?major=\(newMajor)")
+                    //テストデータ（仮）
+                    let event = EventModel(eventName: "TestEvent", roomName: "TestRoom", childNumber: 5, eventDescription: "TestDescription",eventTag:["趣味","所属"], eventID: 34479)
+                    events.append(event)
                     
-                    let request:NSMutableURLRequest = NSMutableURLRequest(URL: url!)
-                    request.HTTPMethod = "GET"
-                    request.addValue("a", forHTTPHeaderField: "X-AccessToken")
-                    
-                    task = mySession.dataTaskWithRequest(request)
-                    
-                    //測定を停止する
-                    print("Exit　↑")
-                    self.manager.stopRangingBeaconsInRegion(self.region)
-                    //iBecon停止
-                    print("　∧\n　|\niBeacon Stop\n")
-                    self.manager.stopMonitoringForRegion(self.region)
-                    
-                    print("Resume Task ↓")
-                    //くるくるスタート
-                    self.view.addSubview(self.indicator)
-                    self.indicator.startAnimation()
-                    
-                    task.resume()
+                    EventTableView.reloadData()
                 }
                 
-            //減った時（まだ他にもAirMeetがあるとき）
-            }else{
-                print("\n\(dateFormatter.stringFromDate(now))  : Left AirMeet")
-                sendPush("AirMeet領域から出たよ")
-                for leftMajor in majorIDListOld.except(majorIDList){
-                    print("left major -> [\(leftMajor)]\n")
-                    for (index,event) in  events.enumerate(){
-                        if event.eventID == leftMajor{
-                             events.removeAtIndex(index)
-                             EventTableView.reloadData()
-                            
-                        }
+                appDelegate.majorID = []
+                majorIDListOld = majorIDList
+                
+                return
+            }
+            
+            //ibeconがあるとき、配列にする
+            for i in 0..<beacons.count{
+                majorIDList.append(beacons[i].major)
+            }
+            
+            //重複捨て
+            if(beacons.count != 0){
+                let set = NSOrderedSet(array: majorIDList)
+                majorIDList = set.array as! [NSNumber]
+            }
+            
+            //1つ前の観測から変更があったとき
+            if(majorIDList.count != majorIDListOld.count){
+                
+                //増えたとき
+                if(majorIDList.count > majorIDListOld.count){
+                    print("\n\(dateFormatter.stringFromDate(now))  : Add AirMeet")
+                    //sendLocalNotificationWithMessage("領域に入りました")
+                    sendPush("AirMeet領域に入ったよ")
+                    
+                    // 通信用のConfigを生成.
+                    let myConfig:NSURLSessionConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()
+                    
+                    // Sessionを生成.
+                    let mySession:NSURLSession = NSURLSession(configuration: myConfig, delegate: self, delegateQueue: NSOperationQueue.mainQueue())
+                    
+                    var task:NSURLSessionDataTask!
+                    
+                    //新しく入ったやつを抽出
+                    for newMajor in majorIDList.except(majorIDListOld){
+                        print("new major -> [\(newMajor)]\n")
+                        
+                        let url = NSURL(string: "http://airmeet.mybluemix.net/api/event_info?major=\(newMajor)")
+                        
+                        let request:NSMutableURLRequest = NSMutableURLRequest(URL: url!)
+                        request.HTTPMethod = "GET"
+                        request.addValue("a", forHTTPHeaderField: "X-AccessToken")
+                        
+                        task = mySession.dataTaskWithRequest(request)
+                        
+                        //測定を停止する
+                        print("Exit　↑")
+                        self.manager.stopRangingBeaconsInRegion(self.region)
+                        //iBecon停止
+                        print("　∧\n　|\niBeacon Stop\n")
+                        self.manager.stopMonitoringForRegion(self.region)
+                        
+                        print("Resume Task ↓")
+                        //くるくるスタート
+                        self.view.addSubview(self.indicator)
+                        self.indicator.startAnimation()
+                        
+                        task.resume()
                     }
                     
-                }
+                //減った時（まだ他にもAirMeetがあるとき）
+                }else{
+                    print("\n\(dateFormatter.stringFromDate(now))  : Left AirMeet")
+                    //sendPush("AirMeet領域から出たよ")
+                    for leftMajor in majorIDListOld.except(majorIDList){
+                        print("left major -> [\(leftMajor)]\n")
+                        for (index,event) in  events.enumerate(){
+                            if event.eventID == leftMajor{
+                                 events.removeAtIndex(index)
+                                 EventTableView.reloadData()
+                                
+                            }
+                        }
+                        
+                    }
 
+                }
+                
+
+                appDelegate.majorID = majorIDList
+                majorIDListOld = majorIDList
             }
             
-
-            appDelegate.majorID = majorIDList
-            majorIDListOld = majorIDList
+        //イベントを選択しているとき
+        }else{
+            
+            print("\(dateFormatter.stringFromDate(now)) : SelectEvent -> \(appDelegate.selectEvent!.eventID)")
+            
+            var isInEvent:Bool = true
+            majorIDList = []
+            
+            if(beacons.count == 0) {
+                isInEvent = false
+            }else{
+                //ibeconがあるとき、配列にする
+                for i in 0..<beacons.count{
+                    majorIDList.append(beacons[i].major)
+                }
+                
+                for majorID in majorIDList{
+                    if majorID == appDelegate.selectEvent!.eventID{
+                        isInEvent = true
+                    }else{
+                        isInEvent = false
+                        appDelegate.selectEvent = nil
+                        
+                        
+                        
+                    }
+                }
+            }
+            
+            //選択したイベントにいたら
+            if isInEvent{
+                print("isInEvent : true")
+            //いなかったら
+            }else{
+                print("isInEvent : false")
+                
+                //let willMeetViewController = WillMeetViewController()
+                self.appDelegate.selectEvent = nil
+                //willMeetViewController.isInEvent()
+                
+                
+                
+            }
+            
         }
         
         /*

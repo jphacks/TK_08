@@ -86,6 +86,7 @@ class WillMeetViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 }else{
                     //print("not macth")
                     isInEvent = false
+                    
                 }
             }
         }else{
@@ -382,6 +383,24 @@ class WillMeetViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
         //画面遷移
         performSegueWithIdentifier("showDetail",sender: nil)
+        
+    }
+    
+    //イベントぬけたときに発動
+    internal func isInEvent(){
+        
+       
+        //self.performSegueWithIdentifier("BackToMain", sender: nil)
+
+        
+        /*let alert = UIAlertController(title:"AirMeetを抜けました",message:"",preferredStyle:.Alert)
+        let okAction = UIAlertAction(title: "OK", style: .Default) {
+                action in
+                self.performSegueWithIdentifier("BackToMain", sender: nil)
+                
+        }
+        alert.addAction(okAction)
+        self.presentViewController(alert, animated: false, completion: nil)*/
         
     }
     
