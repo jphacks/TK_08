@@ -21,6 +21,7 @@ class WillMeetDetailViewController: UIViewController,UITableViewDelegate, UITabl
     @IBOutlet weak var tagLabel: UILabel!
     
     var tagDics = [String:String]()
+    var tags:[TagModel] = [TagModel]()
     var tagArray = [String]()
     
     override func viewDidLoad() {
@@ -48,17 +49,21 @@ class WillMeetDetailViewController: UIViewController,UITableViewDelegate, UITabl
         
         //タグ表示
         
-        for (name,_) in tagDics{
-            tagArray.append(name)
+        for (name,detail) in tagDics{
+            let tagModel:TagModel = TagModel(name: "\(name)", detail: "\(detail)")
+            tags.append(tagModel)
         }
         
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath:NSIndexPath) -> UITableViewCell {
         
-        let cell:TagTableViewCell = tableView.dequeueReusableCellWithIdentifier("TagTableViewCell", forIndexPath: indexPath) as! TagTableViewCell
+        let cell: SettingTagTableViewCell = tableView.dequeueReusableCellWithIdentifier("TagTableViewCell", forIndexPath: indexPath) as! SettingTagTableViewCell
         
-        cell.setCell("\(tagArray[indexPath.row])", detail: "\(tagDics["\(tagArray[indexPath.row)"]!)")
+        cell.setCell(tags[indexPath.row])
+        //入力されたテキストを取得するタグとデリゲート
+        cell.TagTextField.tag = indexPath.row
+        cell.TagTextField.enabled = false
         
         return cell
     }

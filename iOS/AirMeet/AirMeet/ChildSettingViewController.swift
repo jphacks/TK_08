@@ -149,6 +149,7 @@ class ChildSettingViewController: UIViewController,NSURLSessionDelegate,NSURLSes
         //入力されたテキストを取得するタグとデリゲート
         cell.TagTextField.delegate = self
         cell.TagTextField.tag = indexPath.row
+        cell.TagTextField.enabled = false
         
         return cell
     }
