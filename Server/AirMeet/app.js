@@ -19,6 +19,7 @@ var app = express();
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended : true }));
 app.use(methodOverride('_method'));
+app.use('/image', express.static('./image/'));
 
 // (e)ルーティングの設定
 app.use('/', routes);
