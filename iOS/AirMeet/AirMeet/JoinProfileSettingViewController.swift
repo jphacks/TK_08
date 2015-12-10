@@ -174,7 +174,7 @@ class JoinProfileSettingViewController: UIViewController,UITextFieldDelegate,UIT
     }
     
     func handleKeyboardWillHideNotification(notification: NSNotification) {
-        scrollView.contentOffset.y = 0
+        //scrollView.contentOffset.y = 0
     }
     
     //画面が消える前に呼び出し

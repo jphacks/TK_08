@@ -27,8 +27,10 @@ class ProfileSettingViewController: UIViewController,UITextFieldDelegate,UITextV
     var selectTextFiled:UITextField = UITextField()
     var selectTextView:UITextView = UITextView()
     
-    @IBOutlet weak var userDetailLabel: UILabel!
+    @IBOutlet weak var twitterTextField: HoshiTextField!
+    @IBOutlet weak var facebookTextField: HoshiTextField!
     
+    @IBOutlet weak var userDetailLabel: UILabel!
    
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,12 +48,18 @@ class ProfileSettingViewController: UIViewController,UITextFieldDelegate,UITextV
         settingImageButton.layer.cornerRadius = settingImageButton.frame.size.width/2.0
         settingImageButton.layer.masksToBounds = true
         
+        userNameTextField.tag = 0
         userNameTextField.delegate = self
         
         userDetailTextView.layer.borderColor = defaultColor.CGColor
         userDetailTextView.layer.borderWidth = 2.0
         userDetailTextView.layer.cornerRadius = 3.0
         userDetailTextView.delegate = self
+        
+        twitterTextField.tag = 1
+        twitterTextField.delegate = self
+        facebookTextField.tag = 2
+        facebookTextField.delegate = self
         
         let defaults = NSUserDefaults.standardUserDefaults()
         
@@ -135,9 +143,21 @@ class ProfileSettingViewController: UIViewController,UITextFieldDelegate,UITextV
     
     //UITextFieldが編集終了する直前に呼ばれる
     func textFieldShouldEndEditing(textField: UITextField) -> Bool {
+        
+       // selectTextFiled = textField
         //ユーザ名保存
-        print("Save UserName : \(textField.text!)")
-        userNameString = textField.text!
+        switch textField.tag{
+        case 0:
+            print("Save UserName : \(textField.text!)")
+            userNameString = textField.text!
+            break
+        case 1:
+            break
+        case 2:
+            break
+        default:
+            break
+        }
         
         return true
     }
@@ -163,7 +183,7 @@ class ProfileSettingViewController: UIViewController,UITextFieldDelegate,UITextV
         let keyboardScreenEndFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
         let myBoundSize: CGSize = UIScreen.mainScreen().bounds.size
         
-        let txtLimit = userDetailTextView.frame.origin.y + userDetailTextView.frame.height + 8.0
+        let txtLimit = selectTextFiled.frame.origin.y + selectTextFiled.frame.height + 8.0
         let kbdLimit = myBoundSize.height - keyboardScreenEndFrame.size.height
         
         if txtLimit >= kbdLimit {
@@ -172,7 +192,7 @@ class ProfileSettingViewController: UIViewController,UITextFieldDelegate,UITextV
     }
     
     func handleKeyboardWillHideNotification(notification: NSNotification) {
-        scrollView.contentOffset.y = 0
+        //scrollView.contentOffset.y = 0
     }
     
     //画面が消える前に呼び出し

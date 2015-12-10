@@ -195,7 +195,7 @@ class JoinAirMeetViewController: UIViewController,UITableViewDelegate, UITableVi
     }
     
     func handleKeyboardWillHideNotification(notification: NSNotification) {
-        scrollView.contentOffset.y = 0
+        //scrollView.contentOffset.y = 0
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath:NSIndexPath) -> UITableViewCell {

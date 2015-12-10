@@ -86,7 +86,7 @@ class TagSettingViewController: UIViewController,UITableViewDelegate, UITableVie
     }
     
     func handleKeyboardWillHideNotification(notification: NSNotification) {
-        TagSettingTableView.contentOffset.y = 0
+        //TagSettingTableView.contentOffset.y = 0
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath:NSIndexPath) -> UITableViewCell {
