@@ -34,7 +34,6 @@ class JoinAirMeetViewController: UIViewController,UITableViewDelegate, UITableVi
     var tags:[TagModel] = [TagModel]()
     
     var tagCount:Int = 0
-    var sessionTag:Int = 0
     
     var tagDics = [String:String]()
     
@@ -268,36 +267,11 @@ class JoinAirMeetViewController: UIViewController,UITableViewDelegate, UITableVi
         
         tagString = tagString + "}"
         
-        // 通信用のConfigを生成.
-        //let myConfig:NSURLSessionConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()
-        
-        // Sessionを生成.
-        //let mySession:NSURLSession = NSURLSession(configuration: myConfig, delegate: self, delegateQueue: nil)
-        
-        //let post = "major=\(appDelegate.selectEvent!.eventID)&name=\(defaults.stringForKey("name")!)&profile=\(defaults.stringForKey("detail")!)&image=test&image_header=test&items=\(tagString)"
-        //let postData = post.dataUsingEncoding(NSUTF8StringEncoding)
-        
-        //let url = NSURL(string: "http://airmeet.mybluemix.net/register_user")
-        
-        //let request:NSMutableURLRequest = NSMutableURLRequest(URL: url!)
-        //request.HTTPMethod = "POST"
-        //request.HTTPBody = postData
-        //request.addValue("a", forHTTPHeaderField: "X-AccessToken")
-        
-        
-        //let task:NSURLSessionDataTask = mySession.dataTaskWithRequest(request)
-        //print("Start Session")
-        //くるくるスタート
-        //sessionTag = 0
-        
-        
-        //task.resume()
-        
         //送信する画像
         let userImageData:NSData = NSData(data:UIImageJPEGRepresentation(imageImageView.image!, 1.0)!)
         let backImageData:NSData = NSData(data:UIImageJPEGRepresentation(backImageView.image!, 1.0)!)
         
-        let url = NSURL(string: "http://192.168.11.7:3000/register_user")
+        let url = NSURL(string: "http://airmeet.mybluemix.net/api/register_user")
         let urlRequest : NSMutableURLRequest = NSMutableURLRequest()
         
         if let u = url{
@@ -361,21 +335,38 @@ class JoinAirMeetViewController: UIViewController,UITableViewDelegate, UITableVi
         let config = NSURLSessionConfiguration.defaultSessionConfiguration()
         let session = NSURLSession(configuration: config)
         
-        
+      
         let task: NSURLSessionDataTask = session.dataTaskWithRequest(urlRequest, completionHandler:
         {data, request, error in
         //結果出力
             if (error != nil){
-                print("Error : \(error!)")
+                
+                print("False Join AirMeet : \(error)")
+                
+                let alert = UIAlertController(title:"False Join AirMeet",message:"\(error)",preferredStyle:UIAlertControllerStyle.Alert)
+                let okAction = UIAlertAction(title: "OK", style: .Default) {
+                    action in
+                }
+                alert.addAction(okAction)
+                //メインスレッドで表示
+                dispatch_async(dispatch_get_main_queue(), {
+                    //くるくるストップ
+                    self.indicator.stopAnimation(true, completion: nil)
+                    self.indicator.removeFromSuperview()
+                    
+                    self.presentViewController(alert, animated: true, completion: nil)
+                })
+                
             }else{
-                print(NSString(data: data!, encoding: NSUTF8StringEncoding)!)
+                //print(NSString(data: data!, encoding: NSUTF8StringEncoding)!)
                 self.EndMutableURLSession(data!)
             }
         
         })
         
         print("Start Session")
-        sessionTag = 0
+        scrollView.contentOffset.y = self.navigationController!.navigationBar.frame.height
+        
         self.view.addSubview(indicator)
         self.indicator.startAnimation()
         
@@ -396,7 +387,7 @@ class JoinAirMeetViewController: UIViewController,UITableViewDelegate, UITableVi
         //成功
         if code == "200"{
             
-            print("User Login Sucsess : \(json["message"])")
+            print("Sucsess Join AirMeet : \(json["message"])")
             
             //メインスレッドで表示
             dispatch_async(dispatch_get_main_queue(), {
@@ -413,9 +404,9 @@ class JoinAirMeetViewController: UIViewController,UITableViewDelegate, UITableVi
             
             //失敗
         }else{
-            print("User Login Error : \(json["message"])")
+            print("False Join AirMeet : \(json["message"])")
             
-            let alert = UIAlertController(title:"False Make AirMeet",message:"\(message)",preferredStyle:UIAlertControllerStyle.Alert)
+            let alert = UIAlertController(title:"False Join AirMeet",message:"\(message)",preferredStyle:UIAlertControllerStyle.Alert)
             let okAction = UIAlertAction(title: "OK", style: .Default) {
                 action in
             }
@@ -433,110 +424,7 @@ class JoinAirMeetViewController: UIViewController,UITableViewDelegate, UITableVi
         
     }
     
-    //通信終了
-    func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveData data: NSData) {
-        
-        //Json解析
-        let json = JSON(data:data)
-        let code:String = "\(json["code"])"
-        let message = json["message"]
-        
-        switch sessionTag{
-        case 0:
-            
-            appDelegate.childID = "\(json["id"])"
-            
-            //成功
-            if code == "200"{
-                
-                print("User Login Sucsess : \(json["message"])")
-                
-                //メインスレッドで表示
-                dispatch_async(dispatch_get_main_queue(), {
-                    
-                    //くるくるストップ
-                    self.indicator.stopAnimation(true, completion: nil)
-                    self.indicator.removeFromSuperview()
-                    //画面遷移
-                    self.performSegueWithIdentifier("ShowDetailChild",sender: nil)
-                    
-                })
-                
-                appDelegate.isChild = true
-                
-                //失敗
-            }else{
-                print("User Login Error : \(json["message"])")
-                
-                let alert = UIAlertController(title:"False Make AirMeet",message:"\(message)",preferredStyle:UIAlertControllerStyle.Alert)
-                let okAction = UIAlertAction(title: "OK", style: .Default) {
-                    action in
-                }
-                alert.addAction(okAction)
-                //メインスレッドで表示
-                dispatch_async(dispatch_get_main_queue(), {
-                    //くるくるストップ
-                    self.indicator.stopAnimation(true, completion: nil)
-                    self.indicator.removeFromSuperview()
-                    
-                    self.presentViewController(alert, animated: true, completion: nil)
-                })
-            }
-            break
-        case 1:
-            
-            
-            //成功
-            if code == "200"{
-                
-                print("User Delete Sucsess : \(json["message"])")
-                appDelegate.isChild = false
-                appDelegate.childID = nil
-                
-                //非同期
-                dispatch_async(dispatch_get_main_queue(), {
-                    //くるくるストップ
-                    self.indicator.stopAnimation(true, completion: nil)
-                    self.indicator.removeFromSuperview()
-                    self.navigationController?.popToRootViewControllerAnimated(true)
-                })
-                //失敗
-            }else{
-                
-                print("User Delete Error : \(json["message"])")
-                
-                let alert = UIAlertController(title:"False Delete User",message:"\(message)",preferredStyle:UIAlertControllerStyle.Alert)
-                let okAction = UIAlertAction(title: "OK", style: .Default) {
-                    action in
-                }
-                alert.addAction(okAction)
-                
-                //非同期
-                dispatch_async(dispatch_get_main_queue(), {
-                    //くるくるストップ
-                    self.indicator.stopAnimation(true, completion: nil)
-                    self.indicator.removeFromSuperview()
-                    
-                    self.presentViewController(alert, animated: true, completion: nil)
-                    
-                })
-                
-            }
-            
-            break
-            
-        default:
-            break
-            
-            
-        }
-    }
-    
-    
-    
-    
     @IBAction func unwindToTop(segue: UIStoryboardSegue) {
-        
         
     }
     

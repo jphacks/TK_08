@@ -95,7 +95,7 @@ class ChildListViewController: UIViewController,UITableViewDelegate,UITableViewD
             // Sessionを生成.
             let mySession:NSURLSession = NSURLSession(configuration: myConfig, delegate: self, delegateQueue: nil)
             
-            let url = NSURL(string: "http://airmeet.mybluemix.net/participants?major=\(eventID)&id=\(appDelegate.childID!)")
+            let url = NSURL(string: "http://airmeet.mybluemix.net/api/participants?major=\(eventID)&id=\(appDelegate.childID!)")
             
             let request:NSMutableURLRequest = NSMutableURLRequest(URL: url!)
             

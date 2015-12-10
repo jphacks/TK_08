@@ -221,7 +221,7 @@ class MakeAirMeetViewController: UIViewController,UITextFieldDelegate,NSURLSessi
         let post = "event_name=\(event)&room_name=\(room)&items=\(tagArrayString)"
         let postData = post.dataUsingEncoding(NSUTF8StringEncoding)
         
-        let url = NSURL(string: "http://airmeet.mybluemix.net/register_event")
+        let url = NSURL(string: "http://airmeet.mybluemix.net/api/register_event")
         
         let request:NSMutableURLRequest = NSMutableURLRequest(URL: url!)
         request.HTTPMethod = "POST"

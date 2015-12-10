@@ -61,7 +61,7 @@ class ChildSettingViewController: UIViewController,NSURLSessionDelegate,NSURLSes
         let post = "id=\(appDelegate.childID!)"
         let postData = post.dataUsingEncoding(NSUTF8StringEncoding)
         
-        let url = NSURL(string: "http://airmeet.mybluemix.net/remove_user")
+        let url = NSURL(string: "http://airmeet.mybluemix.net/api/remove_user")
         
         let request:NSMutableURLRequest = NSMutableURLRequest(URL: url!)
         request.HTTPMethod = "POST"

@@ -108,7 +108,7 @@ class AirMeetingViewController: UIViewController, CBPeripheralManagerDelegate, N
                     
                     //print(postData!)
                     
-                    let url = NSURL(string: "http://airmeet.mybluemix.net/remove_event")
+                    let url = NSURL(string: "http://airmeet.mybluemix.net/api/remove_event")
                     
                     let request:NSMutableURLRequest = NSMutableURLRequest(URL: url!)
                     request.HTTPMethod = "POST"

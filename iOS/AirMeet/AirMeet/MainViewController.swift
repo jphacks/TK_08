@@ -309,7 +309,7 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
                 for newMajor in majorIDList.except(majorIDListOld){
                     print("new major -> [\(newMajor)]\n")
                     
-                    let url = NSURL(string: "http://airmeet.mybluemix.net/event_info?major=\(newMajor)")
+                    let url = NSURL(string: "http://airmeet.mybluemix.net/api/event_info?major=\(newMajor)")
                     
                     let request:NSMutableURLRequest = NSMutableURLRequest(URL: url!)
                     request.HTTPMethod = "GET"
