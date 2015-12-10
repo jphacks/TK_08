@@ -20,7 +20,9 @@ var upload = multer({ dest: './image/' })
 var router = express.Router();
 
 //認証
+
 router.use(function(req, res, next) {
+  console.log(req.url);
   var AccessToken = req.header('X-AccessToken');
   if(token_list.indexOf(AccessToken) >= 0){
     next();

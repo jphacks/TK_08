@@ -11,7 +11,7 @@ API一覧
 ## <a id ="register_event">イベントの登録</a>
 親機はイベント名、会場名、説明文、子機に入力させる必須項目などを設定し、サーバに送る
 ### リクエストURL
-http://airmeet.mybluemix.net/register_event
+http://airmeet.mybluemix.net/api/register_event
 
 メソッド:POST
 
@@ -52,7 +52,7 @@ http://airmeet.mybluemix.net/register_event
 
 ## <a id ="remove_event">イベントの削除</a>
 ### リクエストURL
-http://airmeet.mybluemix.net/remove_event
+http://airmeet.mybluemix.net/api/remove_event
 
 メソッド:POST
 
@@ -89,7 +89,7 @@ http://airmeet.mybluemix.net/remove_event
 
 ## <a id ="event_info">イベントの情報取得
 ### リクエストURL
-http://airmeet.mybluemix.net/event_info
+http://airmeet.mybluemix.net/api/event_info
 
 メソッド:GET
 
@@ -150,7 +150,7 @@ http://airmeet.mybluemix.net/event_info
 ## <a id ="register_user">イベントへのユーザの登録</a>
 
 ### リクエストURL
-http://airmeet.mybluemix.net/register_user
+http://airmeet.mybluemix.net/api/register_user
 
 メソッド:POST
 
@@ -192,7 +192,7 @@ http://airmeet.mybluemix.net/register_user
 
 ## <a id ="participants">イベント参加者の取得</a>
 ### リクエストURL
-http://airmeet.mybluemix.net/participants
+http://airmeet.mybluemix.net/api/participants
 
 メソッド:GET
 
@@ -258,7 +258,7 @@ http://airmeet.mybluemix.net/participants
 
 ## <a id ="remove_user">ユーザ登録の削除</a>
 ### リクエストURL
-http://airmeet.mybluemix.net/remove_user
+http://airmeet.mybluemix.net/api/remove_user
 
 メソッド:POST
 
