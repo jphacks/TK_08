@@ -150,9 +150,10 @@ class AirMeetingViewController: UIViewController, CBPeripheralManagerDelegate, N
         
         alert.addAction(okAction)
         //alert.addAction(cancelAction)
+        
+        //ここあるとアラートに入力枠が2つ出てしまうので消した(momoka)
         //UIAlertControllerにtextFieldを追加
-        alert.addTextFieldWithConfigurationHandler { (textField:UITextField!) -> Void in
-        }
+        //alert.addTextFieldWithConfigurationHandler { (textField:UITextField!) -> Void in}
         
         self.presentViewController(alert, animated: true, completion: nil)
     }

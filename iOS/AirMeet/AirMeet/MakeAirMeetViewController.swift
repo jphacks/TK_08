@@ -294,13 +294,14 @@ class MakeAirMeetViewController: UIViewController,UITextFieldDelegate,NSURLSessi
                 style: UIAlertActionStyle.Default,
                 handler:{
                     (action:UIAlertAction!) -> Void in
+                    //let textField = alert.textFields![0]
                     let textField = alert.textFields![0]
                     
-                    textField.keyboardType = UIKeyboardType.NumberPad
+                    //textField.keyboardType = UIKeyboardType.NumberPad
                     
                     let input_text = textField.text
 
-                    // 入力したパスコード保存(すみません：できてないかも)
+                    // 入力したパスコード保存
                     self.appDelegate.parentPass = input_text
                     print("PASS = \(self.appDelegate.parentPass!)")
                     //画面遷移
@@ -328,10 +329,13 @@ class MakeAirMeetViewController: UIViewController,UITextFieldDelegate,NSURLSessi
             
             alert.addAction(okAction)
             //alert.addAction(cancelAction)
+            
+            
+            //ここあるとアラートに入力枠が2つ出てしまうので消した(momoka)
             //UIAlertControllerにtextFieldを追加
-            alert.addTextFieldWithConfigurationHandler { (textField:UITextField!) -> Void in
-            }
+            //alert.addTextFieldWithConfigurationHandler { (textField:UITextField!) -> Void in}
            
+            
             ////////こっから上だけいじった/////////////
             
             //非同期
