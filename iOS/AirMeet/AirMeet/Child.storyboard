@@ -449,6 +449,7 @@
                     <connections>
                         <outlet property="TagSettingTableView" destination="9qO-jT-cYu" id="YsM-fC-GVG"/>
                         <outlet property="backImageView" destination="7mW-uL-90w" id="bYu-Kz-RHu"/>
+                        <outlet property="childStartButton" destination="f0i-Mk-WOk" id="V1G-cR-YP0"/>
                         <outlet property="eventBackView" destination="NYm-IB-JIh" id="sci-Fe-cVm"/>
                         <outlet property="eventLabel" destination="n0K-L9-qsi" id="09y-zP-IH3"/>
                         <outlet property="eventNumberLabel" destination="CT5-nx-r0s" id="u0n-Pr-Ult"/>

@@ -13,6 +13,7 @@ class JoinAirMeetViewController: UIViewController,UITableViewDelegate, UITableVi
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
     
+    
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var userDetailLabel: UILabel!
     
@@ -27,6 +28,9 @@ class JoinAirMeetViewController: UIViewController,UITableViewDelegate, UITableVi
     @IBOutlet weak var backImageView: UIImageView!
     
     @IBOutlet weak var TagSettingTableView: UITableView!
+    
+    @IBOutlet weak var childStartButton: UIButton!
+    
     
     var selectIndex:NSIndexPath = NSIndexPath()
     var selectTextFiled:UITextField = UITextField()
@@ -121,6 +125,8 @@ class JoinAirMeetViewController: UIViewController,UITableViewDelegate, UITableVi
             }
         }
         
+        ///これでとれるよ！
+        print("参加するボタンのHeight : \(childStartButton.frame.height)")
         
     }
     
@@ -189,14 +195,14 @@ class JoinAirMeetViewController: UIViewController,UITableViewDelegate, UITableVi
         let myBoundSize: CGSize = UIScreen.mainScreen().bounds.size
         
         // ちょうどいい感じに決め打ち
-        let txtLimit = cell.frame.origin.y + cell.frame.height + 300.0
+        let txtLimit = cell.frame.origin.y + cell.frame.height + TagSettingTableView.frame.y //300.0
         let kbdLimit = myBoundSize.height - keyboardScreenEndFrame.size.height
         
         //print(txtLimit)
         //print(kbdLimit)
         
         if txtLimit >= kbdLimit {
-            scrollView.contentOffset.y = txtLimit - kbdLimit + 30.0
+            scrollView.contentOffset.y = txtLimit - kbdLimit //+ 30.0
         }
     }
     
