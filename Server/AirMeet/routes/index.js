@@ -13,14 +13,13 @@ var package = require('../package.json');
 var buf = fs.readFileSync('Authorized_Token');
 var token_list = buf.toString().split('\n');
 
-// multer
+// 画像の保存ディレクトリ設定
 var upload = multer({ dest: './image/' })
 
 // ルーターの作成
 var router = express.Router();
 
-//認証
-
+// 認証
 router.use(function(req, res, next) {
   //console.log(req.url);
   var AccessToken = req.header('X-AccessToken');
@@ -41,11 +40,11 @@ router.get('/', function(req, res) {
     res.send('Hello World');
 });
 
+
 //-----------------------------------------------------------//
 // イベント登録
 //-----------------------------------------------------------//
 router.post('/register_event', function(req, res) {
-//router.get('/register_event', function(req, res) {
   var success = {
     major : null,
     message : null,
@@ -53,11 +52,11 @@ router.post('/register_event', function(req, res) {
   };
   var error = {};
 
-  var id = uuid.v4();
-  var en = req.body.event_name;
-  var rn = req.body.room_name;
-  var desc = req.body.description;
-  var items = req.body.items;
+  var id = uuid.v4(),
+      en = req.body.event_name,
+      rn = req.body.room_name,
+      desc = req.body.description,
+      items = req.body.items;
 
   if(!en){
     error.message = 'Error: event_name is missing';
@@ -103,19 +102,27 @@ router.post('/register_event', function(req, res) {
 // イベント情報を取得
 //-----------------------------------------------------------//
 router.get('/event_info', function(req, res) {
-  var success = {};
-  var error = {};
+  var success = {},
+      error = {};
+
   var major = Number(req.query.major);
-  console.log(major);
+
   if(!major){
     error.message = 'Error: major is missing';
     error.code = 400;
     res.send(error);
     return;
   }
+  console.log(major);
 
-
+  // が
   dba.event_info(major, function(err1, events) {
+    if(err1){
+      error.message = 'Error: Database error';
+      error.code = 500;
+      res.send(error);
+      return;
+    }
     if(events.length == 1){
       success = events[0].value;
       dba.participants_count(major, function(err2, c){
@@ -128,18 +135,17 @@ router.get('/event_info', function(req, res) {
         }
         success.code = 200;
         res.send(success);
-
       });
     }else if(events.length > 1){
       error.message = 'Error: Database is invalid';
       error.code = 500;
+      res.send(error);
+      return;
     }else{
       error.message = 'Error: Event does not exist';
       error.code = 400;
-    }
-
-    if(Object.keys(error).length){
       res.send(error);
+      return;
     }
   });
 });
@@ -163,11 +169,11 @@ router.post('/register_user', cpUpload, function(req, res) {
     return;
   }
 
-  var id = uuid.v4();
-  var major = Number(req.body.major);
-  var name = req.body.name;
-  var profile = req.body.profile;
-  var items = req.body.items;
+  var id = uuid.v4(),
+      major = Number(req.body.major),
+      name = req.body.name,
+      profile = req.body.profile,
+      items = req.body.items;
 
   if(req.files.image){
     var tmp_path, target_name, target_path;
@@ -274,8 +280,8 @@ router.get('/participants', function(req, res) {
   };
   var error = {};
 
-  var major = Number(req.query.major);
-  var id = req.query.id;
+  var major = Number(req.query.major),
+      id = req.query.id;
 
   if(!major){
     error.message = 'Error: major is missing';
@@ -343,8 +349,8 @@ router.post('/remove_event', function(req, res) {
     code : 200
   };
   var error = {};
+
   var major = Number(req.body.major);
-  //console.log(major);
   if(!major){
     error.message = 'Error: major is missing';
     error.code = 400;
@@ -425,15 +431,15 @@ router.post('/remove_user', function(req, res) {
   }
 
   dba.remove(id, function(err) { //イベントを削除
-    if(!err){ //エラーが出なければ
-      success.id = id;
-      success.message = 'User remove success';
-      res.send(success);
-    }else{ //エラーが出れば
+    if(err){ //エラーが出なければ
       error.message = 'Error: User remove failed';
       error.code = 500;
       res.send(error);
+      return;
     }
+    success.id = id;
+    success.message = 'User remove success';
+    res.send(success);
   });
 });
 

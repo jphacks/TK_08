@@ -4,5 +4,6 @@ config/
 *~
 *#*#
 test.sh
+template.sh
 Authorized_Token
 image/

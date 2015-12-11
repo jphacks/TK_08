@@ -11,10 +11,6 @@ var routes = require('./routes');
 // (b)アプリケーションの作成
 var app = express();
 
-// (c)ビューの設定
-//app.set('views', path.join(__dirname, 'views'));
-//app.set('view engine', 'ejs');
-
 // (d)ミドルウェアの設定
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended : true }));
