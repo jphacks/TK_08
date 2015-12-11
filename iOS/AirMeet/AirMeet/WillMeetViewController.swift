@@ -155,7 +155,7 @@ class WillMeetViewController: UIViewController,UITableViewDelegate,UITableViewDa
         }else{
             
             //てすとデータ
-            if eventID == 34479{
+            if eventID == 33285{
                 print("test")
                 
                 // 通信用のConfigを生成.

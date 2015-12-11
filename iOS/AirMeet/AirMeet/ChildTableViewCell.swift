@@ -38,6 +38,9 @@ class ChildTableViewCell: UITableViewCell {
         
         self.backImageView.image = childModel.backgroundImage
         
+        self.backImageView.layer.cornerRadius = 3.0
+        self.backImageView.layer.masksToBounds = true
+        
         //黒いのかぶせる
         //let backCoverView:UIView = UIView(frame: self.backImageView.frame)
         //backImageView.backgroundColor = UIColor(red: 128.0/255.0, green: 204.0/255.0, blue: 223.0/255.0, alpha: 1)
