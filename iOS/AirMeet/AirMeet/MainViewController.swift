@@ -106,7 +106,7 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         indicator.lineWidth = 3
         
         //テストデータ（仮）
-        let event = EventModel(eventName: "TestEvent", roomName: "TestRoom", childNumber: 5, eventDescription: "TestDescription",eventTag:["趣味","所属"], eventID: testID)
+        let event = EventModel(eventName: "TestEvent", roomName: "TestRoom", childNumber: 5, eventDescription: "TestDescription",eventTag:["発表内容","趣味","所属","好きなプログラミング言語"], eventID: testID)
         events.append(event)
     
         //iBeacon領域生成
@@ -155,7 +155,7 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
             defaults.setObject("空気 会太郎", forKey: "name")
             defaults.setObject("よろしくおねがいします", forKey: "detail")
             
-            let tagDics = ["所属名":"","住んでいる都道府県":"","趣味":"","専門分野":"","特技":"","発表内容":"","性別":"","年齢":""]
+            let tagDics = ["所属名":"","住んでいる都道府県":"","趣味":"","専門分野":"","特技":"","発表内容":"","性別":"","年齢":"","好きなプログラミング言語":""]
             defaults.setObject(tagDics, forKey: "tag")
             
             defaults.setObject(UIImagePNGRepresentation(userImageView.image!), forKey: "image")

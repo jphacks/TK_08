@@ -537,10 +537,11 @@
                                                         <mask key="constraints">
                                                             <exclude reference="I9J-nT-P5F"/>
                                                             <exclude reference="fVY-cS-Pa6"/>
+                                                            <exclude reference="tmM-jT-chV"/>
                                                         </mask>
                                                     </variation>
                                                 </imageView>
-                                                <imageView userInteractionEnabled="NO" alpha="0.65000000000000002" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="RmM-K3-Kw0">
+                                                <imageView userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="RmM-K3-Kw0">
                                                     <rect key="frame" x="14" y="0.0" width="572" height="111"/>
                                                     <animations/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -653,6 +654,7 @@
                                                 </label>
                                             </subviews>
                                             <animations/>
+                                            <color key="backgroundColor" red="0.93861333550000003" green="0.97000002860000001" blue="0.93348710410000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstItem="RmM-K3-Kw0" firstAttribute="bottom" secondItem="nbr-aX-gGD" secondAttribute="bottomMargin" id="0wP-I2-wLG"/>
                                                 <constraint firstItem="gu3-61-A8x" firstAttribute="leading" secondItem="nbr-aX-gGD" secondAttribute="leadingMargin" constant="-8" id="1Y4-G4-yTr"/>
