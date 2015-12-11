@@ -22,14 +22,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var isParent: Bool!//trueは親がeventをたててるところからかえってきたとき
     var isBeacon: Bool!//trueはiBeconの監視をしたいとき
     
+    var isInEvent: Bool!//イベントないにいるかいないか
+    
     var selectEvent: EventModel?
     var selectChild: ChildModel?
     
     var childID: String?
     var parentID: String?
-    
-    var majorID:[NSNumber] = []
-    var majorIDOld:[NSNumber] = []
     
     var parentPass: String?
 
@@ -81,6 +80,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
+    
 
 }
 

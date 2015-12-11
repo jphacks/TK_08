@@ -8,14 +8,45 @@
 
 import UIKit
 
+
+
+
+
 class WillMeetViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,NSURLSessionDelegate,NSURLSessionDataDelegate{
+    
+    
+    //Mainが変更したら呼び出されるようにしたけれど、ViewControllerが上手く継承？できない
+    class isEvent:UIViewController {
+        var isEvent: Bool = true {
+            willSet {
+                print("isEvent willSet:\(isEvent) -> \(isEvent)")
+            }
+            didSet {
+                print("isEvent didSet :\(isEvent) -> \(isEvent)")
+                let alert = UIAlertController(title:"AirMeetを抜けました",message:"",preferredStyle:.Alert)
+                //EventName : \(appDelegate.selectEvent!.eventName)\nRoomName : \(appDelegate.selectEvent!.roomName)
+                let okAction = UIAlertAction(title: "OK", style: .Default) {
+                    action in
+                }
+                alert.addAction(okAction)
+                
+                //WillMeetViewController.presentViewController(alert, animated: true, completion: nil)
+                //WillMeetViewController.presentViewController(alert)
+                self.presentViewController(alert, animated: true, completion: nil)
+                
+            }
+        }
+        
+    }
+
+    
     
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
     @IBOutlet weak var ChildTableView: UITableView!
-
+    
     var childs:[ChildModel] = [ChildModel]()
-        
+    
     var refreshControl:UIRefreshControl!
     //くるくる
     let indicator:SpringIndicator = SpringIndicator()
@@ -54,11 +85,35 @@ class WillMeetViewController: UIViewController,UITableViewDelegate,UITableViewDa
         indicator.frame = CGRectMake(self.view.frame.width/2-self.view.frame.width/8,self.view.frame.height/2-self.view.frame.width/8,self.view.frame.width/4,self.view.frame.width/4)
         indicator.lineWidth = 3
         
+        
+       // let a = "aaa"
+        
+       // a.addObserver(self, forKeyPath: "name", options: .New, context: nil)
+        
         UserReload()
+        /*
+        //1秒ごとに監視
+        var timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("onHigenobita"), userInfo: nil, repeats: true);
+        func onHigenobita(){
+            
+            print("Check : \(appDelegate.isInEvent)")
+            
+            if appDelegate.isInEvent == false{
+                let alert = UIAlertController(title:"AirMeetを抜けました",message:"",preferredStyle:.Alert)
+                //EventName : \(appDelegate.selectEvent!.eventName)\nRoomName : \(appDelegate.selectEvent!.roomName)
+                let okAction = UIAlertAction(title: "OK", style: .Default) {
+                    action in
+                }
+                alert.addAction(okAction)
+                
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
+        }*/
         
-       // eventLabel.text = appDelegate.selectEvent?.eventName
-       // roomLabels.text = appDelegate.selectEvent?.roomName
+        // eventLabel.text = appDelegate.selectEvent?.eventName
+        // roomLabels.text = appDelegate.selectEvent?.roomName
         
+        //print(isInEvent)
     }
     
     func UserReload(){
@@ -69,31 +124,8 @@ class WillMeetViewController: UIViewController,UITableViewDelegate,UITableViewDa
         childs = []
         
         let eventID = appDelegate.selectEvent!.eventID
-        var majorID = appDelegate.majorID
-        var isInEvent:Bool = true
         
-        //truefalseチェック
-        //print("eventID : \(eventID)")
-        //print("majorID : \(majorID)")
-        
-        //処理
-        if(majorID.count != 0){
-            for i in 0..<majorID.count{
-                if(majorID[i] == eventID){
-                    isInEvent = true
-                    //print("match")
-                    break
-                }else{
-                    //print("not macth")
-                    isInEvent = false
-                    
-                }
-            }
-        }else{
-            isInEvent = false
-        }
-        
-        if isInEvent{
+        if appDelegate.isInEvent == true{
             print("stay")
             
             // 通信用のConfigを生成.
@@ -122,8 +154,9 @@ class WillMeetViewController: UIViewController,UITableViewDelegate,UITableViewDa
             
         }else{
             
+            //てすとデータ
             if eventID == 34479{
-                //てすとデータ
+                print("test")
                 
                 // 通信用のConfigを生成.
                 let myConfig:NSURLSessionConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()
@@ -180,9 +213,10 @@ class WillMeetViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 
                 //goがだしてるalertとぶつかる
                 let alert = UIAlertController(title:"AirMeetを抜けました",message:"EventName : \(appDelegate.selectEvent!.eventName)\nRoomName : \(appDelegate.selectEvent!.roomName)",preferredStyle:.Alert)
+                //EventName : \(appDelegate.selectEvent!.eventName)\nRoomName : \(appDelegate.selectEvent!.roomName)
                 let okAction = UIAlertAction(title: "OK", style: .Default) {
                     action in
-                        task.resume()
+                    task.resume()
                 }
                 alert.addAction(okAction)
                 
@@ -193,10 +227,10 @@ class WillMeetViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
     }
     
-
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-       
+        
         
     }
     
@@ -205,11 +239,11 @@ class WillMeetViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
         print("\nDidReceiveData Task ↑")
         
-
+        
         
         switch sessionTag{
-        
-        //追加
+            
+            //追加
         case 0:
             
             //Json解析
@@ -217,7 +251,7 @@ class WillMeetViewController: UIViewController,UITableViewDelegate,UITableViewDa
             
             let code:String = "\(json["code"])"
             let message = json["message"]
-       
+            
             //成功
             if code == "200"{
                 
@@ -233,7 +267,7 @@ class WillMeetViewController: UIViewController,UITableViewDelegate,UITableViewDa
                     
                     print(userJson["name"])
                     print(userJson["profile"])
-                               
+                    
                     var tagDics = [String:String]()
                     
                     for item in userJson["items"]{
@@ -276,7 +310,7 @@ class WillMeetViewController: UIViewController,UITableViewDelegate,UITableViewDa
                     
                 })
                 
-            //失敗
+                //失敗
             }else{
                 
                 print("False User Get : \(message)")
@@ -298,8 +332,8 @@ class WillMeetViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 
             }
             break
-        
-        //消去
+            
+            //消去
         case 1:
             
             
@@ -377,7 +411,7 @@ class WillMeetViewController: UIViewController,UITableViewDelegate,UITableViewDa
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print("Select User : \(indexPath.row)")
         
-       // appDelegate.selectEvent = events[indexPath.row]
+        // appDelegate.selectEvent = events[indexPath.row]
         
         appDelegate.selectChild = childs[indexPath.row]
         
@@ -386,23 +420,7 @@ class WillMeetViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
     }
     
-    //イベントぬけたときに発動
-    internal func isInEvent(){
-        
-       
-        //self.performSegueWithIdentifier("BackToMain", sender: nil)
-
-        
-        /*let alert = UIAlertController(title:"AirMeetを抜けました",message:"",preferredStyle:.Alert)
-        let okAction = UIAlertAction(title: "OK", style: .Default) {
-                action in
-                self.performSegueWithIdentifier("BackToMain", sender: nil)
-                
-        }
-        alert.addAction(okAction)
-        self.presentViewController(alert, animated: false, completion: nil)*/
-        
-    }
+    
     
     // Segueで遷移時の処理
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {

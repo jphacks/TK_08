@@ -268,7 +268,7 @@ class MakeAirMeetViewController: UIViewController,UITextFieldDelegate,NSURLSessi
         //Json解析
         let json = JSON(data:data)
         let code:String = "\(json["code"])"
-        print("JSON:\(json)\n")
+        //print("JSON:\(json)\n")
         //成功
         if code == "200"{
             
@@ -303,7 +303,7 @@ class MakeAirMeetViewController: UIViewController,UITextFieldDelegate,NSURLSessi
 
                     // 入力したパスコード保存
                     self.appDelegate.parentPass = input_text
-                    print("PASS = \(self.appDelegate.parentPass!)")
+                    
                     //画面遷移
                     self.performSegueWithIdentifier("startSegue",sender: nil)
 

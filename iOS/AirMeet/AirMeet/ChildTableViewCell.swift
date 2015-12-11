@@ -13,6 +13,7 @@ class ChildTableViewCell: UITableViewCell {
     
     @IBOutlet weak var imageImageView: UIImageView!
 
+    //@IBOutlet weak var backImageView: SABlurImageView!
   
     @IBOutlet weak var backImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
@@ -37,13 +38,18 @@ class ChildTableViewCell: UITableViewCell {
         
         self.backImageView.image = childModel.backgroundImage
         
+        //黒いのかぶせる
+        //let backCoverView:UIView = UIView(frame: self.backImageView.frame)
+        //backImageView.backgroundColor = UIColor(red: 128.0/255.0, green: 204.0/255.0, blue: 223.0/255.0, alpha: 1)
+        //self.backImageView.addSubview(backCoverView)
+        
         //ぶらー
-        /*
-        let blurEffect = UIBlurEffect(style: .Light)
-        let lightBlurView = UIVisualEffectView(effect: blurEffect)
-        lightBlurView.frame = self.backImageView.bounds
-        self.backImageView.addSubview(lightBlurView)
-        */
+        
+        //let blurEffect = UIBlurEffect(style: .Light)
+        //let lightBlurView = UIVisualEffectView(effect: blurEffect)
+        //lightBlurView.frame = self.backImageView.bounds
+        //self.backImageView.addSubview(lightBlurView)
+        
         
         //self.backImageView.addBlurEffect(50)
         

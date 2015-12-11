@@ -67,6 +67,8 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         appDelegate.isChild = false
         appDelegate.isParent = false
         appDelegate.isBeacon = true
+        appDelegate.isInEvent = false
+
         
         EventTableView.delegate = self
         EventTableView.dataSource = self
@@ -261,6 +263,7 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         let now = NSDate()
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
+        appDelegate.isInEvent = false
         
         if appDelegate.selectEvent == nil{
         
@@ -287,7 +290,6 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
                     EventTableView.reloadData()
                 }
                 
-                appDelegate.majorID = []
                 majorIDListOld = majorIDList
                 
                 return
@@ -366,10 +368,9 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
 
                 }
                 
-
-                appDelegate.majorID = majorIDList
                 majorIDListOld = majorIDList
             }
+        
             
         //イベントを選択しているとき
         }else{
@@ -403,15 +404,18 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
             //選択したイベントにいたら
             if isInEvent{
                 print("isInEvent : true")
+                appDelegate.isInEvent = true
             //いなかったら
             }else{
                 print("isInEvent : false")
+                //let isEventChange = WillMeetViewController.isEvent()
                 
-                //let willMeetViewController = WillMeetViewController()
-                self.appDelegate.selectEvent = nil
-                //willMeetViewController.isInEvent()
-                
-                
+                //let isEventChange = WillMeetViewController.isEvent()
+                //isEventChange.isEvent = false
+
+                appDelegate.isInEvent = false
+                //appDelegate.selectEvent = nil
+            
                 
             }
             
@@ -625,8 +629,6 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         EventTableView.reloadData()
         majorIDListOld = []
         majorIDList = []
-        appDelegate.majorID = []
-        
         
         let storyboard: UIStoryboard = UIStoryboard(name: "Parent", bundle: NSBundle.mainBundle())
         let parentViewController: MakeAirMeetViewController = storyboard.instantiateInitialViewController() as! MakeAirMeetViewController

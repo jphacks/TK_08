@@ -90,7 +90,7 @@ class AirMeetingViewController: UIViewController, CBPeripheralManagerDelegate, N
                     //成功をつたえるalert
                     let sucsessAlert: UIAlertController = UIAlertController(title: "PASS Sucsess", message: "", preferredStyle: .Alert)
                     self.presentViewController(sucsessAlert, animated: true) { () -> Void in
-                        let delay = 2.0 * Double(NSEC_PER_SEC)
+                        let delay = 1.0 * Double(NSEC_PER_SEC)
                         let time  = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
                         dispatch_after(time, dispatch_get_main_queue(), {
                             self.dismissViewControllerAnimated(true, completion: nil)
@@ -125,17 +125,18 @@ class AirMeetingViewController: UIViewController, CBPeripheralManagerDelegate, N
                     self.indicator.startAnimation()
                     
                     task.resume()
+                    
                 }else{
                     //失敗をつたえるalert
                     let falseAlert: UIAlertController = UIAlertController(title: "PASS False", message: "", preferredStyle: .Alert)
                     self.presentViewController(falseAlert, animated: true) { () -> Void in
-                        let delay = 2.0 * Double(NSEC_PER_SEC)
+                        let delay = 1.0 * Double(NSEC_PER_SEC)
                         let time  = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
                         dispatch_after(time, dispatch_get_main_queue(), {
                             self.dismissViewControllerAnimated(true, completion: nil)
                         })
                     }
-                    print("false")
+                    //print("false")
                     
                 }
                 
@@ -180,7 +181,7 @@ class AirMeetingViewController: UIViewController, CBPeripheralManagerDelegate, N
         
         //Json解析
         let json = JSON(data:data)
-        print("JSON:\(json)\n")
+        //print("JSON:\(json)\n")
         
         let code:String = "\(json["code"])"
         
