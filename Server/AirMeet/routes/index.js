@@ -84,11 +84,13 @@ router.post('/register_event', function(req, res) {
         if(err){
           error.message = 'Error: Event registration failed';
           error.code = 500;
-          res.send(error)
+          res.send(error);
+          return;
         }else{
           success.major = major;
           success.message = 'Event registration success';
           res.send(success);
+          return;
         }
       });
     });
@@ -115,7 +117,7 @@ router.get('/event_info', function(req, res) {
   }
   console.log(major);
 
-  // が
+  // イベントが存在するか確認
   dba.event_info(major, function(err1, events) {
     if(err1){
       error.message = 'Error: Database error';
@@ -123,7 +125,7 @@ router.get('/event_info', function(req, res) {
       res.send(error);
       return;
     }
-    if(events.length == 1){
+    if(events.length == 1){ // イベントが存在すれば
       success = events[0].value;
       dba.participants_count(major, function(err2, c){
         if(err2){
@@ -136,12 +138,12 @@ router.get('/event_info', function(req, res) {
         success.code = 200;
         res.send(success);
       });
-    }else if(events.length > 1){
+    }else if(events.length > 1){ // イベントが2つ以上ならエラー
       error.message = 'Error: Database is invalid';
       error.code = 500;
       res.send(error);
       return;
-    }else{
+    }else{ //イベントが存在しなければエラー
       error.message = 'Error: Event does not exist';
       error.code = 400;
       res.send(error);
@@ -161,7 +163,7 @@ router.post('/register_user', cpUpload, function(req, res) {
     message : null,
     code : 200
   };
-  var error = {};
+  var error = {};s
   if(!req.is('multipart/form-data')){
     error.message = 'Error: Cannot use '+req.header('Content-Type')+'. Use multipart/form-data'
     error.code = 400
