@@ -26,6 +26,8 @@ class ChildSettingViewController: UIViewController,NSURLSessionDelegate,NSURLSes
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var userDetailLabel: UILabel!
     
+    @IBOutlet weak var eventNumberLabel: UILabel!
+    
     var selectIndex:NSIndexPath = NSIndexPath()
     var selectTextFiled:UITextField = UITextField()
     
@@ -60,6 +62,8 @@ class ChildSettingViewController: UIViewController,NSURLSessionDelegate,NSURLSes
         eventBackView.layer.masksToBounds = true
         eventBackView.layer.borderColor = UIColor.lightGrayColor().CGColor
         eventBackView.layer.borderWidth = 1.0
+        
+        eventNumberLabel.text = "\(appDelegate.selectEvent!.childNumber)人"
         
         //ここはあとで、サーバーにおくった一時的なものに変更
         let defaults = NSUserDefaults.standardUserDefaults()

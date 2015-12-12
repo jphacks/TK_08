@@ -381,6 +381,7 @@ class JoinAirMeetViewController: UIViewController,UITableViewDelegate, UITableVi
                 })
                 
             }else{
+                
                 //print(NSString(data: data!, encoding: NSUTF8StringEncoding)!)
                 self.EndMutableURLSession(data!)
             }

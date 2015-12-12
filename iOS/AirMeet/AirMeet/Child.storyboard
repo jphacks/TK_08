@@ -462,12 +462,12 @@
                                         </userDefinedRuntimeAttributes>
                                         <variation key="default">
                                             <mask key="constraints">
-                                                <exclude reference="WYB-aL-JPs"/>
                                                 <exclude reference="1MN-KZ-eVV"/>
+                                                <exclude reference="HSs-gN-EoG"/>
+                                                <exclude reference="WYB-aL-JPs"/>
+                                                <exclude reference="axY-gh-Ye4"/>
                                                 <exclude reference="h9z-x6-duF"/>
                                                 <exclude reference="ygz-Nf-9d1"/>
-                                                <exclude reference="axY-gh-Ye4"/>
-                                                <exclude reference="HSs-gN-EoG"/>
                                             </mask>
                                         </variation>
                                     </imageView>
@@ -929,6 +929,7 @@
                                         <color key="backgroundColor" red="0.9386133355406493" green="0.97000002861022949" blue="0.9334871040723568" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <outlet property="backImageView" destination="RmM-K3-Kw0" id="njN-AA-2RT"/>
+                                            <outlet property="blackImageView" destination="gu3-61-A8x" id="PxU-kF-lA0"/>
                                             <outlet property="detailLabel" destination="Kft-lb-nwY" id="TLO-6k-1eM"/>
                                             <outlet property="imageImageView" destination="ces-ek-Na2" id="r7p-ky-0s4"/>
                                             <outlet property="nameLabel" destination="PS7-ua-4V4" id="pwe-o4-pjM"/>
@@ -1151,7 +1152,7 @@
                             </view>
                         </subviews>
                         <animations/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.50196078430000002" green="0.80000000000000004" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="Rod-hW-4zX" firstAttribute="top" secondItem="l1A-QK-Tc3" secondAttribute="top" id="1RA-NT-wWg"/>
                             <constraint firstAttribute="trailing" secondItem="Rod-hW-4zX" secondAttribute="trailing" id="3Bt-zD-uip"/>
@@ -1646,10 +1647,10 @@
                                         </userDefinedRuntimeAttributes>
                                         <variation key="default">
                                             <mask key="constraints">
+                                                <exclude reference="7ab-IK-ayb"/>
                                                 <exclude reference="BCX-OR-ix2"/>
                                                 <exclude reference="iF6-Pp-2nM"/>
                                                 <exclude reference="vf4-0r-zai"/>
-                                                <exclude reference="7ab-IK-ayb"/>
                                             </mask>
                                         </variation>
                                     </imageView>
@@ -1671,10 +1672,10 @@
                                         </userDefinedRuntimeAttributes>
                                         <variation key="default">
                                             <mask key="constraints">
-                                                <exclude reference="lsq-Hd-SkD"/>
                                                 <exclude reference="BGy-xd-oaz"/>
                                                 <exclude reference="cVC-RX-f41"/>
                                                 <exclude reference="fIm-16-z9w"/>
+                                                <exclude reference="lsq-Hd-SkD"/>
                                             </mask>
                                         </variation>
                                     </imageView>
@@ -1728,12 +1729,12 @@
                                         </userDefinedRuntimeAttributes>
                                         <variation key="default">
                                             <mask key="constraints">
-                                                <exclude reference="h6z-jD-y1o"/>
                                                 <exclude reference="3Ph-zg-O0s"/>
                                                 <exclude reference="9Tl-LH-jqN"/>
+                                                <exclude reference="h6z-jD-y1o"/>
+                                                <exclude reference="hyk-6c-NhO"/>
                                                 <exclude reference="iW7-RR-ykN"/>
                                                 <exclude reference="nlk-NX-PDs"/>
-                                                <exclude reference="hyk-6c-NhO"/>
                                             </mask>
                                         </variation>
                                     </imageView>
@@ -1909,6 +1910,7 @@
                         <outlet property="backImageView" destination="IGS-I3-QXA" id="dSb-2N-p7z"/>
                         <outlet property="eventBackView" destination="AE7-5B-fJo" id="F4o-ec-wFd"/>
                         <outlet property="eventLabel" destination="eWV-XM-LfK" id="1Pq-ec-G8Q"/>
+                        <outlet property="eventNumberLabel" destination="Pb5-iq-bg0" id="gw3-n0-LUe"/>
                         <outlet property="imageImageView" destination="NdH-aN-NgG" id="maw-L9-IhO"/>
                         <outlet property="roomLabel" destination="yE5-US-H1c" id="Qsk-FN-A4F"/>
                         <outlet property="scrollView" destination="oaW-Ol-jQt" id="NzS-tl-nTL"/>

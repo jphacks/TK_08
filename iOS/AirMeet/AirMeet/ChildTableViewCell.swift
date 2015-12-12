@@ -20,6 +20,7 @@ class ChildTableViewCell: UITableViewCell {
     
     @IBOutlet weak var detailLabel: UILabel!
     
+    @IBOutlet weak var blackImageView: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -28,10 +29,22 @@ class ChildTableViewCell: UITableViewCell {
         
     }
     
+    
+    override func setHighlighted(highlighted: Bool, animated: Bool) {
+        //super.setHighlighted(highlighted, animated: animated)
+        //self.blackImageView.backgroundColor = UIColor(white: 0.2, alpha: 0.1)
+        
+        if highlighted{
+            self.blackImageView.backgroundColor = UIColor(white: 0.5, alpha: 0.3)
+        }else{
+            self.blackImageView.backgroundColor = UIColor(white: 0.0, alpha: 0.3)
+        }
+    }
+    
     override func setSelected(selected: Bool, animated: Bool) {
         //super.setSelected(selected, animated: animated)
         
-        // Configure the view for the selected state
+        //self.blackImageView.backgroundColor = UIColor(white: 0.2, alpha: 0.5)
     }
     
     func setCell(childModel:ChildModel){
@@ -40,6 +53,8 @@ class ChildTableViewCell: UITableViewCell {
         
         self.backImageView.layer.cornerRadius = 3.0
         self.backImageView.layer.masksToBounds = true
+        
+        //self.blackImageView.backgroundColor = UIColor(white: 0.2, alpha: 0.5)
         
         //黒いのかぶせる
         //let backCoverView:UIView = UIView(frame: self.backImageView.frame)

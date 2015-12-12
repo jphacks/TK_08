@@ -43,7 +43,7 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
     @IBOutlet weak var EventTableView: UITableView!
     var events:[EventModel] = [EventModel]()
     
-    let testID:NSNumber = 29243
+    let testID:NSNumber = 36653
     
     //くるくる
     let indicator:SpringIndicator = SpringIndicator()

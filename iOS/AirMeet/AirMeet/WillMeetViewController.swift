@@ -40,7 +40,7 @@ class WillMeetViewController: UIViewController,UITableViewDelegate,UITableViewDa
     }
 
     
-    let testID:NSNumber = 29243
+    let testID:NSNumber = 36653
     
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
@@ -89,10 +89,17 @@ class WillMeetViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
         
        // let a = "aaa"
-        
        // a.addObserver(self, forKeyPath: "name", options: .New, context: nil)
         
         UserReload()
+        self.view.addSubview(self.indicator)
+        self.indicator.startAnimation()
+        
+        //self.refreshControl.  endRefreshing()
+        
+        
+        //self.view.addSubview(self.indicator)
+        //self.indicator.startAnimation()
         /*
         //1秒ごとに監視
         var timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("onHigenobita"), userInfo: nil, repeats: true);
@@ -148,8 +155,8 @@ class WillMeetViewController: UIViewController,UITableViewDelegate,UITableViewDa
             sessionTag = 0
             //くるくるスタート
             print("\nResume Task ↓")
-            self.view.addSubview(self.indicator)
-            self.indicator.startAnimation()
+            //self.view.addSubview(self.indicator)
+            //self.indicator.startAnimation()
             // タッチイベントを無効にする.
             UIApplication.sharedApplication().beginIgnoringInteractionEvents()
             
@@ -180,8 +187,8 @@ class WillMeetViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 sessionTag = 0
                 //くるくるスタート
                 print("\nResume Task ↓")
-                self.view.addSubview(self.indicator)
-                self.indicator.startAnimation()
+                //self.view.addSubview(self.indicator)
+                //self.indicator.startAnimation()
                 // タッチイベントを無効にする.
                 UIApplication.sharedApplication().beginIgnoringInteractionEvents()
                 
@@ -214,16 +221,16 @@ class WillMeetViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 print("Start Session")
                 //くるくるスタート
                 sessionTag = 1
-                self.view.addSubview(indicator)
-                self.indicator.startAnimation()
-                // タッチイベントを無効にする.
-                UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+                //self.view.addSubview(indicator)
+                //self.indicator.startAnimation()
                 
                 //goがだしてるalertとぶつかる
                 let alert = UIAlertController(title:"AirMeetを抜けました",message:"EventName : \(appDelegate.selectEvent!.eventName)\nRoomName : \(appDelegate.selectEvent!.roomName)",preferredStyle:.Alert)
                 //EventName : \(appDelegate.selectEvent!.eventName)\nRoomName : \(appDelegate.selectEvent!.roomName)
                 let okAction = UIAlertAction(title: "OK", style: .Default) {
                     action in
+                    // タッチイベントを無効にする.
+                    UIApplication.sharedApplication().beginIgnoringInteractionEvents()
                     task.resume()
                 }
                 alert.addAction(okAction)
@@ -266,7 +273,9 @@ class WillMeetViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 
                 print("Sucsess User Get : \(message)")
                 print("Number : \(json["count"])")
-                //appDelegate.selectEvent
+                
+                let numberString:String = "\(json["count"])"
+                appDelegate.selectEvent?.childNumber = Int(numberString)!
                 
                 //ユーザデータ解析
                 for (id,detail) in json["users"]{
@@ -403,6 +412,7 @@ class WillMeetViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
         let cell:ChildTableViewCell = tableView.dequeueReusableCellWithIdentifier("ChildTableViewCell", forIndexPath: indexPath) as! ChildTableViewCell
         cell.setCell(childs[indexPath.row])
+        cell.selectionStyle = .None
         
         return cell
     }
