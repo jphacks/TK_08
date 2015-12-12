@@ -259,7 +259,20 @@ class JoinAirMeetViewController: UIViewController,UITableViewDelegate, UITableVi
         //tag保存
         print("Save Tag Detail : \(textField.placeholder!) -> \(textField.text!)")
         tagDics.updateValue("\(textField.text!)", forKey: "\(textField.placeholder!)")
-
+        
+        tags = []
+        //tagテーブルに値いれる
+        for name in appDelegate.selectEvent!.eventTag{
+            
+            if (tagDics["\(name)"] != nil){
+                let tagModel:TagModel = TagModel(name: "\(name)", detail: "\(tagDics["\(name)"]!)")
+                tags.append(tagModel)
+                
+            }else{
+                let tagModel:TagModel = TagModel(name: "\(name)", detail: "")
+                tags.append(tagModel)
+            }
+        }
         
         return true
     }
