@@ -51,7 +51,6 @@ class ChildTagViewController: UIViewController,UITableViewDelegate, UITableViewD
 
             }
             
-
             tagDics = [:]
             
         }
@@ -66,11 +65,18 @@ class ChildTagViewController: UIViewController,UITableViewDelegate, UITableViewD
         
         tagNames = tagNames.sort({$0 < $1})
         
+      //  var pastValue:String = ""
+        
         for tagName in tagNames {
             for tag:TagModel in tags {
                 if tagName == tag.name {
-                    print("\(tag.name):\(tag.detail)")
-                    sortTags.append(tag)
+                    //print("\(tag.name):\(tag.detail)")
+                    
+                   // if pastValue != tag.detail{
+                        sortTags.append(tag)
+                   // }
+                    
+                   // pastValue = "\(tag.detail)"
                 }
             }
         }
