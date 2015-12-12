@@ -153,9 +153,9 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
             
             //デフォルト
             defaults.setObject("空気 会太郎", forKey: "name")
-            defaults.setObject("よろしくおねがいします", forKey: "detail")
+            defaults.setObject("本日はよろしくおねがいします！", forKey: "detail")
             
-            let tagDics = ["所属名":"","住んでいる都道府県":"","趣味":"","専門分野":"","特技":"","発表内容":"","性別":"","年齢":"","好きなプログラミング言語":""]
+            let tagDics = ["所属":"","出身":"","住んでいる都道府県":"","趣味":"","専門分野":"","特技":"","発表内容":"","展示内容":"","過去の作品":"","受賞歴":"","チャームポイント":"","性別":"","年齢":"","身長":"","血液型":"","好きなプログラミング言語":"","好きな言葉":"","好きな食べ物":"","好きな音楽":"","好きなスポーツ":"","好きなゲーム":"","好きな芸能人":"","本日のファッションポイント":"","本日のファッション（上半身）":"","本日のファッション（下半身）":"","好きな色":"","好みのタイプ":"","将来の夢":"","学歴":""]
             defaults.setObject(tagDics, forKey: "tag")
             
             defaults.setObject(UIImagePNGRepresentation(userImageView.image!), forKey: "image")

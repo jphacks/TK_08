@@ -105,7 +105,7 @@
                                             </mask>
                                         </variation>
                                     </textField>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" text="detail" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="NiN-1L-FWY">
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="NiN-1L-FWY">
                                         <rect key="frame" x="18" y="256" width="564" height="130"/>
                                         <animations/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -140,28 +140,22 @@
                                             </mask>
                                         </variation>
                                     </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JIv-J6-gT9">
-                                        <rect key="frame" x="0.0" y="410" width="600" height="50"/>
-                                        <animations/>
-                                        <color key="backgroundColor" red="0.50196078430000002" green="0.80000000000000004" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="50" id="zEl-Ga-YbC"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                        <state key="normal" title="Tag Setting">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <segue destination="eyu-aK-SqW" kind="show" id="YER-PP-Npv"/>
-                                        </connections>
-                                    </button>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="header-next.png" translatesAutoresizingMaskIntoConstraints="NO" id="DdL-C6-igu">
-                                        <rect key="frame" x="550" y="420" width="50" height="30"/>
+                                        <rect key="frame" x="572" y="410" width="20" height="40"/>
                                         <animations/>
+                                        <color key="tintColor" red="0.50196078430000002" green="0.80000000000000004" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="50" id="Axq-lx-a4j"/>
+                                            <constraint firstAttribute="width" constant="20" id="FQi-IT-uT2"/>
+                                            <constraint firstAttribute="height" constant="40" id="LMw-BF-FCu"/>
                                             <constraint firstAttribute="height" constant="30" id="k8T-Z3-SPU"/>
                                         </constraints>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="Axq-lx-a4j"/>
+                                                <exclude reference="k8T-Z3-SPU"/>
+                                            </mask>
+                                        </variation>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="自己紹介　80" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bCl-89-6r0">
                                         <rect key="frame" x="18" y="236" width="564" height="20"/>
@@ -174,7 +168,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Twitter" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="Fbc-ay-x6i" customClass="HoshiTextField" customModule="AirMeet" customModuleProvider="target">
-                                        <rect key="frame" x="18" y="480" width="564" height="50"/>
+                                        <rect key="frame" x="18" y="470" width="564" height="50"/>
                                         <animations/>
                                         <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
@@ -208,7 +202,7 @@
                                         </variation>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="FaceBook" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="qe9-nG-Zju" customClass="HoshiTextField" customModule="AirMeet" customModuleProvider="target">
-                                        <rect key="frame" x="18" y="538" width="564" height="50"/>
+                                        <rect key="frame" x="18" y="528" width="564" height="50"/>
                                         <animations/>
                                         <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
@@ -241,6 +235,21 @@
                                             </mask>
                                         </variation>
                                     </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JIv-J6-gT9">
+                                        <rect key="frame" x="0.0" y="410" width="600" height="40"/>
+                                        <animations/>
+                                        <color key="backgroundColor" red="0.50196078430000002" green="0.80000000000000004" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="zEl-Ga-YbC"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <state key="normal" title="Tag Setting">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="eyu-aK-SqW" kind="show" id="YER-PP-Npv"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -261,6 +270,7 @@
                                     <constraint firstAttribute="trailing" secondItem="SBH-by-qU5" secondAttribute="trailing" id="OmA-je-eFj"/>
                                     <constraint firstItem="Fbc-ay-x6i" firstAttribute="leading" secondItem="BeF-J1-LVs" secondAttribute="leading" constant="18" id="P8U-89-BSN"/>
                                     <constraint firstItem="Fbc-ay-x6i" firstAttribute="top" secondItem="JIv-J6-gT9" secondAttribute="bottom" constant="20" id="Pa0-g0-JG9"/>
+                                    <constraint firstAttribute="trailing" secondItem="DdL-C6-igu" secondAttribute="trailing" constant="8" id="STP-Qe-7a1"/>
                                     <constraint firstItem="QIN-uk-ThB" firstAttribute="leading" secondItem="BeF-J1-LVs" secondAttribute="leading" constant="18" id="TUO-DC-n0Y"/>
                                     <constraint firstItem="Vry-TD-O9p" firstAttribute="top" secondItem="BeF-J1-LVs" secondAttribute="top" constant="72" id="TcV-vq-Crl"/>
                                     <constraint firstItem="NiN-1L-FWY" firstAttribute="top" secondItem="bCl-89-6r0" secondAttribute="bottom" id="TuV-AC-tRi"/>
@@ -291,6 +301,7 @@
                                         <exclude reference="HkF-42-z7L"/>
                                         <exclude reference="dCf-V1-qRM"/>
                                         <exclude reference="mxT-C8-May"/>
+                                        <exclude reference="Ewo-ME-imP"/>
                                     </mask>
                                 </variation>
                             </view>

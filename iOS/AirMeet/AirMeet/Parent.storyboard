@@ -52,7 +52,7 @@
                                 </variation>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="　　参加者に公開を求める情報" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E9v-vA-3ou">
-                                <rect key="frame" x="0.0" y="162" width="600" height="25"/>
+                                <rect key="frame" x="0.0" y="144" width="600" height="25"/>
                                 <animations/>
                                 <color key="backgroundColor" red="0.50196078430000002" green="0.80000000000000004" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -83,7 +83,7 @@
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="vOe-84-jLz">
-                                <rect key="frame" x="0.0" y="187" width="600" height="345"/>
+                                <rect key="frame" x="0.0" y="169" width="600" height="363"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -133,6 +133,39 @@
                                     </mask>
                                 </variation>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zGu-ng-LoL">
+                                <rect key="frame" x="500" y="144" width="100" height="25"/>
+                                <animations/>
+                                <color key="backgroundColor" red="0.50196078430000002" green="0.80000000000000004" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="7j6-Fn-cXF"/>
+                                    <constraint firstAttribute="width" constant="68" id="L7j-k0-qZM"/>
+                                    <constraint firstAttribute="height" constant="25" id="MPS-FD-hME"/>
+                                    <constraint firstAttribute="height" constant="68" id="UOA-Nq-bbn"/>
+                                    <constraint firstAttribute="width" constant="100" id="XkI-aQ-0wM"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="25" id="emw-QL-81j"/>
+                                    <constraint firstAttribute="width" constant="100" id="fsH-28-ZTM"/>
+                                    <constraint firstAttribute="height" constant="25" id="k21-QS-3ib"/>
+                                </constraints>
+                                <state key="normal" title="＋">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="35"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="7j6-Fn-cXF"/>
+                                        <exclude reference="L7j-k0-qZM"/>
+                                        <exclude reference="MPS-FD-hME"/>
+                                        <exclude reference="UOA-Nq-bbn"/>
+                                        <exclude reference="XkI-aQ-0wM"/>
+                                        <exclude reference="emw-QL-81j"/>
+                                    </mask>
+                                </variation>
+                            </button>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -141,6 +174,7 @@
                             <constraint firstItem="aZA-qq-qfr" firstAttribute="trailing" secondItem="v7z-Cn-0ym" secondAttribute="trailingMargin" id="4KL-vO-Whm"/>
                             <constraint firstItem="w8d-3a-hVh" firstAttribute="trailing" secondItem="v7z-Cn-0ym" secondAttribute="trailingMargin" id="4OY-cW-0wg"/>
                             <constraint firstItem="E9v-vA-3ou" firstAttribute="leading" secondItem="v7z-Cn-0ym" secondAttribute="leadingMargin" constant="-20" id="7IJ-RB-5nu"/>
+                            <constraint firstItem="E9v-vA-3ou" firstAttribute="top" secondItem="w8d-3a-hVh" secondAttribute="bottom" constant="8" id="AdW-72-ejb"/>
                             <constraint firstItem="vOe-84-jLz" firstAttribute="top" secondItem="E9v-vA-3ou" secondAttribute="bottom" id="AxB-cX-Hkj"/>
                             <constraint firstItem="w8d-3a-hVh" firstAttribute="top" secondItem="aZA-qq-qfr" secondAttribute="bottom" constant="8" id="EpY-in-Oo9"/>
                             <constraint firstItem="Ec5-aq-o9H" firstAttribute="trailing" secondItem="v7z-Cn-0ym" secondAttribute="trailingMargin" id="KlW-Pi-ceB"/>
@@ -158,8 +192,10 @@
                             <constraint firstItem="vOe-84-jLz" firstAttribute="leading" secondItem="v7z-Cn-0ym" secondAttribute="leadingMargin" constant="-20" id="lcF-jW-JM4"/>
                             <constraint firstItem="Ec5-aq-o9H" firstAttribute="leading" secondItem="v7z-Cn-0ym" secondAttribute="leadingMargin" id="lgt-RI-i1H"/>
                             <constraint firstItem="w8d-3a-hVh" firstAttribute="leading" secondItem="v7z-Cn-0ym" secondAttribute="leadingMargin" id="nmn-Y2-7pv"/>
+                            <constraint firstItem="zGu-ng-LoL" firstAttribute="centerY" secondItem="E9v-vA-3ou" secondAttribute="centerY" id="oEP-eX-OwZ"/>
                             <constraint firstItem="aZA-qq-qfr" firstAttribute="trailing" secondItem="v7z-Cn-0ym" secondAttribute="trailingMargin" id="rTy-os-CaE"/>
                             <constraint firstItem="aZA-qq-qfr" firstAttribute="top" secondItem="DlO-hl-LXM" secondAttribute="bottom" constant="8" id="tCn-qH-fsr"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="zGu-ng-LoL" secondAttribute="trailing" constant="-20" id="wvb-m3-eLJ"/>
                             <constraint firstItem="aZA-qq-qfr" firstAttribute="top" secondItem="DlO-hl-LXM" secondAttribute="bottom" constant="44" id="zul-QU-Yn0"/>
                         </constraints>
                         <variation key="default">
@@ -170,6 +206,7 @@
                                 <exclude reference="ORc-dk-AJ7"/>
                                 <exclude reference="gep-Qi-INu"/>
                                 <exclude reference="hHL-3a-fVX"/>
+                                <exclude reference="kLk-fb-hB8"/>
                             </mask>
                         </variation>
                     </view>

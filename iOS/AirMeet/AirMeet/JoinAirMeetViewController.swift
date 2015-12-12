@@ -84,7 +84,7 @@ class JoinAirMeetViewController: UIViewController,UITableViewDelegate, UITableVi
         imageImageView.image = UIImage(data:imageData)
         let backData:NSData = defaults.objectForKey("back") as! NSData
         backImageView.image = UIImage(data: backData)
-        
+        /*
         //ぶらー
         let blurEffect = UIBlurEffect(style: .Light)
         let lightBlurView = UIVisualEffectView(effect: blurEffect)
@@ -100,6 +100,7 @@ class JoinAirMeetViewController: UIViewController,UITableViewDelegate, UITableVi
         
         lightVibrancyView.contentView.addSubview(userNameLabel)
         lightVibrancyView.contentView.addSubview(userDetailLabel)
+        */
         
         
         //戻るボタン設定
