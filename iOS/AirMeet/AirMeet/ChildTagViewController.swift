@@ -33,8 +33,9 @@ class ChildTagViewController: UIViewController,UITableViewDelegate, UITableViewD
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        //tagDics = [String:String]()
-        //tags = [TagModel]()
+       
+        tags = []
+        sortTags = []
         
         for child in appDelegate.allChilds{
             
@@ -52,7 +53,6 @@ class ChildTagViewController: UIViewController,UITableViewDelegate, UITableViewD
             }
             
             tagDics = [:]
-            
         }
         
         //そーと
@@ -70,10 +70,11 @@ class ChildTagViewController: UIViewController,UITableViewDelegate, UITableViewD
         for tagName in tagNames {
             for tag:TagModel in tags {
                 if tagName == tag.name {
-                    //print("\(tag.name):\(tag.detail)")
+                   // print("\(tag.name):\(tag.detail)")
                     
                    // if pastValue != tag.detail{
-                        sortTags.append(tag)
+                    sortTags.append(tag)
+                    print(sortTags)
                    // }
                     
                    // pastValue = "\(tag.detail)"

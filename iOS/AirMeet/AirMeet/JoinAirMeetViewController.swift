@@ -180,6 +180,10 @@ class JoinAirMeetViewController: UIViewController,UITableViewDelegate, UITableVi
         notificationCenter.removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
         notificationCenter.removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
         
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setObject(tagDics, forKey: "tag")
+        defaults.synchronize()
+        
         
     }
     
