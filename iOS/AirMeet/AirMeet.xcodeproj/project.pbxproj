@@ -411,8 +411,8 @@
 				46435BEC1C0AB9FE00361ABA /* JoinAirMeetViewController.swift */,
 				46339EF91C195AEB0088974B /* JoinProfileSettingViewController.swift */,
 				46B611631C09560C00102AC0 /* WillMeet */,
-				46B611661C09562E00102AC0 /* Setting */,
 				46B611651C09562000102AC0 /* Tag */,
+				46B611661C09562E00102AC0 /* Setting */,
 				46B611641C09561600102AC0 /* Meeted */,
 			);
 			name = Child;

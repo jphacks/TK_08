@@ -131,6 +131,7 @@ class WillMeetViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
         //からにする
         childs = []
+        appDelegate.allChilds = []
         
         let eventID = appDelegate.selectEvent!.eventID
         
@@ -314,6 +315,7 @@ class WillMeetViewController: UIViewController,UITableViewDelegate,UITableViewDa
                     //参加しているユーザモデル作成
                     let child:ChildModel = ChildModel(image: userImage, backgroundImage:  backImage, name: "\(userJson["name"])", tag: tagDics,detail:"\(userJson["profile"])")
                     childs.append(child)
+                    appDelegate.allChilds.append(child)
                     
                     
                 }

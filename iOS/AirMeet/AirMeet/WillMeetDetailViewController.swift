@@ -11,6 +11,7 @@ import UIKit
 class WillMeetDetailViewController: UIViewController,UITableViewDelegate, UITableViewDataSource {
     
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    
     @IBOutlet weak var TagTableView: UITableView!
     
     @IBOutlet weak var backImageView: UIImageView!

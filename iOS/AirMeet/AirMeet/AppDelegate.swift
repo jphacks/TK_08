@@ -27,6 +27,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var selectEvent: EventModel?
     var selectChild: ChildModel?
     
+    var allChilds:[ChildModel] = [ChildModel]()
+    
     var childID: String?
     var parentID: String?
     
