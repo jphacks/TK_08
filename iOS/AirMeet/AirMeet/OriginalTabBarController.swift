@@ -19,15 +19,16 @@ class OriginalTabBarController: UITabBarController {
         let selectedColor:UIColor = UIColor(red: 65.0/255.0, green: 168.0/255.0, blue: 186.0/255.0, alpha: 1)//水色
 
         ///ボタンをいいかんじに
-        let fontFamily: UIFont! = UIFont(name: "Hiragino Kaku Gothic ProN",size:10)
+        //let fontFamily: UIFont! = UIFont(name: "Hiragino Kaku Gothic ProN",size:10)
+        let fontFamily: UIFont! = UIFont.systemFontOfSize(10)
         
         // 選択時・非選択時の文字色を変更する
         /// なぜか非選択時の文字色を指定すると文字が切れる（特に「g」の下のほう）
         let selectedAttributes = [NSFontAttributeName: fontFamily, NSForegroundColorAttributeName: selectedColor]
-//        let nomalAttributes = [NSFontAttributeName: fontFamily, NSForegroundColorAttributeName: UIColor.whiteColor()]
+        let nomalAttributes = [NSFontAttributeName: fontFamily, NSForegroundColorAttributeName: UIColor.whiteColor()]
         
         UITabBarItem.appearance().setTitleTextAttributes(selectedAttributes, forState: UIControlState.Selected)
-//        UITabBarItem.appearance().setTitleTextAttributes(nomalAttributes, forState: UIControlState.Normal)
+        UITabBarItem.appearance().setTitleTextAttributes(nomalAttributes, forState: UIControlState.Normal)
         
         // 選択時のアイコンの色
         UITabBar.appearance().tintColor = selectedColor

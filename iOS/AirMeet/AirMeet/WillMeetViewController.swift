@@ -40,6 +40,7 @@ class WillMeetViewController: UIViewController,UITableViewDelegate,UITableViewDa
     }
 
     
+    let testID:NSNumber = 29243
     
     let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
@@ -79,6 +80,7 @@ class WillMeetViewController: UIViewController,UITableViewDelegate,UITableViewDa
         //更新
         self.refreshControl = UIRefreshControl()
         self.refreshControl.addTarget(self, action: "UserReload", forControlEvents: UIControlEvents.ValueChanged)
+        self.refreshControl.backgroundColor = UIColor(red: 128.0/255.0, green: 204.0/255.0, blue: 223.0/255.0, alpha: 1)
         self.ChildTableView.addSubview(refreshControl)
         
         //ぐるぐる
@@ -148,6 +150,8 @@ class WillMeetViewController: UIViewController,UITableViewDelegate,UITableViewDa
             print("\nResume Task ↓")
             self.view.addSubview(self.indicator)
             self.indicator.startAnimation()
+            // タッチイベントを無効にする.
+            UIApplication.sharedApplication().beginIgnoringInteractionEvents()
             
             task.resume()
             
@@ -155,7 +159,7 @@ class WillMeetViewController: UIViewController,UITableViewDelegate,UITableViewDa
         }else{
             
             //てすとデータ
-            if eventID == 33285{
+            if eventID == testID{
                 print("test")
                 
                 // 通信用のConfigを生成.
@@ -178,6 +182,8 @@ class WillMeetViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 print("\nResume Task ↓")
                 self.view.addSubview(self.indicator)
                 self.indicator.startAnimation()
+                // タッチイベントを無効にする.
+                UIApplication.sharedApplication().beginIgnoringInteractionEvents()
                 
                 task.resume()
                 
@@ -210,6 +216,8 @@ class WillMeetViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 sessionTag = 1
                 self.view.addSubview(indicator)
                 self.indicator.startAnimation()
+                // タッチイベントを無効にする.
+                UIApplication.sharedApplication().beginIgnoringInteractionEvents()
                 
                 //goがだしてるalertとぶつかる
                 let alert = UIAlertController(title:"AirMeetを抜けました",message:"EventName : \(appDelegate.selectEvent!.eventName)\nRoomName : \(appDelegate.selectEvent!.roomName)",preferredStyle:.Alert)
@@ -238,7 +246,8 @@ class WillMeetViewController: UIViewController,UITableViewDelegate,UITableViewDa
     func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveData data: NSData) {
         
         print("\nDidReceiveData Task ↑")
-        
+        // タッチイベントを有効にする.
+        UIApplication.sharedApplication().endIgnoringInteractionEvents()
         
         
         switch sessionTag{
@@ -256,7 +265,8 @@ class WillMeetViewController: UIViewController,UITableViewDelegate,UITableViewDa
             if code == "200"{
                 
                 print("Sucsess User Get : \(message)")
-                
+                print("Number : \(json["count"])")
+                //appDelegate.selectEvent
                 
                 //ユーザデータ解析
                 for (id,detail) in json["users"]{
@@ -296,6 +306,7 @@ class WillMeetViewController: UIViewController,UITableViewDelegate,UITableViewDa
                     let child:ChildModel = ChildModel(image: userImage, backgroundImage:  backImage, name: "\(userJson["name"])", tag: tagDics,detail:"\(userJson["profile"])")
                     childs.append(child)
                     
+                    
                 }
                 
                 
@@ -307,7 +318,6 @@ class WillMeetViewController: UIViewController,UITableViewDelegate,UITableViewDa
                     self.indicator.removeFromSuperview()
                     self.refreshControl.endRefreshing()
                     self.ChildTableView.reloadData()
-                    
                 })
                 
                 //失敗

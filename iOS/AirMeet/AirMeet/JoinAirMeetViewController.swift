@@ -84,6 +84,9 @@ class JoinAirMeetViewController: UIViewController,UITableViewDelegate, UITableVi
         imageImageView.image = UIImage(data:imageData)
         let backData:NSData = defaults.objectForKey("back") as! NSData
         backImageView.image = UIImage(data: backData)
+        
+        backImageView.layer.cornerRadius = 3.0
+        backImageView.layer.masksToBounds = true
         /*
         //ぶらー
         let blurEffect = UIBlurEffect(style: .Light)
@@ -127,7 +130,7 @@ class JoinAirMeetViewController: UIViewController,UITableViewDelegate, UITableVi
         }
         
         ///これでとれるよ！
-        print("参加するボタンのHeight : \(childStartButton.frame.height)")
+        //print("参加するボタンのHeight : \(childStartButton.frame.height)")
         
     }
     
@@ -357,6 +360,8 @@ class JoinAirMeetViewController: UIViewController,UITableViewDelegate, UITableVi
         {data, request, error in
         //結果出力
             print("\nDidReceiveData Task ↑")
+            // タッチイベントを有効にする.
+            UIApplication.sharedApplication().endIgnoringInteractionEvents()
             
             if (error != nil){
                 
@@ -387,6 +392,8 @@ class JoinAirMeetViewController: UIViewController,UITableViewDelegate, UITableVi
         
         self.view.addSubview(indicator)
         self.indicator.startAnimation()
+        // タッチイベントを無効にする.
+        UIApplication.sharedApplication().beginIgnoringInteractionEvents()
         
         task.resume()
 

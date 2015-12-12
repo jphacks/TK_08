@@ -43,7 +43,7 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
     @IBOutlet weak var EventTableView: UITableView!
     var events:[EventModel] = [EventModel]()
     
-    let testID:NSNumber = 33285
+    let testID:NSNumber = 29243
     
     //くるくる
     let indicator:SpringIndicator = SpringIndicator()
@@ -106,7 +106,7 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         indicator.lineWidth = 3
         
         //テストデータ（仮）
-        let event = EventModel(eventName: "TestEvent", roomName: "TestRoom", childNumber: 5, eventDescription: "TestDescription",eventTag:["発表内容","趣味","所属","好きなプログラミング言語"], eventID: testID)
+        let event = EventModel(eventName: "Test Event", roomName: "Test Room", childNumber: 5, eventDescription: "Test Description",eventTag:["発表内容","趣味","所属","好きなプログラミング言語"], eventID: testID)
         events.append(event)
     
         //iBeacon領域生成
@@ -286,9 +286,8 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
                     events = []
                     
                     //テストデータ（仮）
-                    let event = EventModel(eventName: "TestEvent", roomName: "TestRoom", childNumber: 5, eventDescription: "TestDescription",eventTag:["趣味","所属"], eventID: 33285)
+                    let event = EventModel(eventName: "Test Event", roomName: "Test Room", childNumber: 5, eventDescription: "Test Description",eventTag:["発表内容","趣味","所属","好きなプログラミング言語"], eventID: testID)
                     events.append(event)
-                    
                     EventTableView.reloadData()
                 }
                 
@@ -397,9 +396,7 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
                             isInEvent = true
                         }else{
                             isInEvent = false
-                            appDelegate.selectEvent = nil
-                            
-                            
+                            appDelegate.selectEvent = nil   
                             
                         }
                     }
