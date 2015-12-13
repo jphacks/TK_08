@@ -89,6 +89,10 @@
 		46B6118E1C09F83500102AC0 /* go_face.png in Resources */ = {isa = PBXBuildFile; fileRef = 46B6118D1C09F83500102AC0 /* go_face.png */; };
 		46B611901C09F85900102AC0 /* go_back.png in Resources */ = {isa = PBXBuildFile; fileRef = 46B6118F1C09F85900102AC0 /* go_back.png */; };
 		46B611921C09F92500102AC0 /* icon-A-95.png in Resources */ = {isa = PBXBuildFile; fileRef = 46B611911C09F92500102AC0 /* icon-A-95.png */; };
+		46EF2BC51C1D3A0D00807429 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46EF2BC11C1D3A0D00807429 /* Configuration.swift */; };
+		46EF2BC61C1D3A0D00807429 /* TouchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46EF2BC21C1D3A0D00807429 /* TouchView.swift */; };
+		46EF2BC71C1D3A0D00807429 /* UIWindow+Swizzle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46EF2BC31C1D3A0D00807429 /* UIWindow+Swizzle.swift */; };
+		46EF2BC81C1D3A0D00807429 /* Visualizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46EF2BC41C1D3A0D00807429 /* Visualizer.swift */; };
 		C77446A01C0A0CCA006AB841 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C774469F1C0A0CCA006AB841 /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
 
@@ -200,6 +204,10 @@
 		46B6118D1C09F83500102AC0 /* go_face.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = go_face.png; sourceTree = "<group>"; };
 		46B6118F1C09F85900102AC0 /* go_back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = go_back.png; sourceTree = "<group>"; };
 		46B611911C09F92500102AC0 /* icon-A-95.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-A-95.png"; sourceTree = "<group>"; };
+		46EF2BC11C1D3A0D00807429 /* Configuration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
+		46EF2BC21C1D3A0D00807429 /* TouchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchView.swift; sourceTree = "<group>"; };
+		46EF2BC31C1D3A0D00807429 /* UIWindow+Swizzle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIWindow+Swizzle.swift"; sourceTree = "<group>"; };
+		46EF2BC41C1D3A0D00807429 /* Visualizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Visualizer.swift; sourceTree = "<group>"; };
 		C774469F1C0A0CCA006AB841 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -367,6 +375,7 @@
 				4693CEA51C120B400034328D /* SpringIndicator */,
 				465F306A1C0E7243008842B8 /* SABlurImageView */,
 				465F306B1C0E7243008842B8 /* TextFieldEffects */,
+				46EF2BC01C1D3A0D00807429 /* Touch */,
 				46B611751C096ED000102AC0 /* Image */,
 				46B611261C09447D00102AC0 /* Assets.xcassets */,
 				46B611281C09447D00102AC0 /* LaunchScreen.storyboard */,
@@ -509,6 +518,17 @@
 				46B611801C09773B00102AC0 /* EventModel.swift */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		46EF2BC01C1D3A0D00807429 /* Touch */ = {
+			isa = PBXGroup;
+			children = (
+				46EF2BC11C1D3A0D00807429 /* Configuration.swift */,
+				46EF2BC21C1D3A0D00807429 /* TouchView.swift */,
+				46EF2BC31C1D3A0D00807429 /* UIWindow+Swizzle.swift */,
+				46EF2BC41C1D3A0D00807429 /* Visualizer.swift */,
+			);
+			path = Touch;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -678,14 +698,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				46B611831C0977E200102AC0 /* EventTableViewCell.swift in Sources */,
+				46EF2BC81C1D3A0D00807429 /* Visualizer.swift in Sources */,
 				469AB7C81C0D871C000C6393 /* TagModel.swift in Sources */,
 				46B6117F1C09726300102AC0 /* ChildModel.swift in Sources */,
 				465F307F1C0E72CF008842B8 /* IsaoTextField.swift in Sources */,
 				46B611221C09447D00102AC0 /* MainViewController.swift in Sources */,
 				465F30801C0E72CF008842B8 /* JiroTextField.swift in Sources */,
+				46EF2BC61C1D3A0D00807429 /* TouchView.swift in Sources */,
 				465F30691C0E7172008842B8 /* OriginalTabBarController.swift in Sources */,
 				46339F081C19C3340088974B /* WaveView.swift in Sources */,
 				46B611601C09527F00102AC0 /* ChildMeetViewController.swift in Sources */,
+				46EF2BC51C1D3A0D00807429 /* Configuration.swift in Sources */,
 				463524C71C0CB0DD003BF381 /* MyMenuTableViewController.swift in Sources */,
 				465F30671C0E6FE7008842B8 /* ENSideMenuNavigationController.swift in Sources */,
 				465F30841C0E72CF008842B8 /* TextFieldsEffects.swift in Sources */,
@@ -696,6 +719,7 @@
 				4693CEF21C1434B10034328D /* SelectTagTableViewCell.swift in Sources */,
 				46B611201C09447D00102AC0 /* AppDelegate.swift in Sources */,
 				46B611811C09773B00102AC0 /* EventModel.swift in Sources */,
+				46EF2BC71C1D3A0D00807429 /* UIWindow+Swizzle.swift in Sources */,
 				46339F041C19C3340088974B /* BounceView.swift in Sources */,
 				465F30861C0E72CF008842B8 /* YoshikoTextField.swift in Sources */,
 				46B611521C09487600102AC0 /* MakeAirMeetViewController.swift in Sources */,

@@ -36,6 +36,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
+        
+        //タッチ
+        var config = Configuration()
+        config.defaultSize = CGSize(width: 30, height: 30)
+        Visualizer.start(config)
+        
          //self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         
         //Navigationbar色
