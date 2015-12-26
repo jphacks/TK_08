@@ -106,7 +106,7 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
         indicator.lineWidth = 3
         
         //テストデータ（仮）
-        let event = EventModel(eventName: "JPHacks", roomName: "東京大学", childNumber: 5, eventDescription: "Test Description",eventTag:["発表内容","趣味","所属","好きなプログラミング言語"], eventID: testID)
+        let event = EventModel(eventName: "JPHACKS", roomName: "東京大学", childNumber: 5, eventDescription: "Test Description",eventTag:["発表内容","趣味","所属","好きなプログラミング言語"], eventID: testID)
         events.append(event)
     
         //iBeacon領域生成
@@ -286,7 +286,7 @@ class MainViewController: UIViewController,UITableViewDelegate, UITableViewDataS
                     events = []
                     
                     //テストデータ（仮）
-                    let event = EventModel(eventName: "JPHacks", roomName: "東京大学", childNumber: 5, eventDescription: "Test Description",eventTag:["発表内容","趣味","所属","好きなプログラミング言語"], eventID: testID)
+                    let event = EventModel(eventName: "JPHACKS", roomName: "東京大学", childNumber: 5, eventDescription: "Test Description",eventTag:["発表内容","趣味","所属","好きなプログラミング言語"], eventID: testID)
                     events.append(event)
                     EventTableView.reloadData()
                 }
